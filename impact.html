@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact | LOIND</title>
+    <style>
+        /* --- 공통 레이아웃 유지 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #fff; 
+            color: #000; 
+            font-family: 'Pretendard', -apple-system, sans-serif; 
+            display: flex; 
+        }
+
+        /* --- [수정] 상단 내비게이션: 우측 정렬 & 텍스트 축소 --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; 
+            justify-content: space-between; /* 양 끝 배치 */
+            padding: 0 50px;
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid #f2f2f2;
+        }
+
+        /* 로고 영역 */
+        .logo-area { 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none; 
+        }
+        .logo-main { 
+            font-size: 1.5rem; font-weight: 900; color: #000; 
+            letter-spacing: 2px; 
+        }
+
+        /* 로고 호버 시 나타나는 슬로건 */
+        .logo-slogan {
+            font-size: 0.7rem; font-weight: 700; color: #8e55ff;
+            margin-left: 15px; padding-left: 15px;
+            border-left: 1px solid #eee;
+            opacity: 0; 
+            transform: translateX(-10px);
+            transition: all 0.4s ease;
+            white-space: nowrap;
+        }
+        .logo-area:hover .logo-slogan { 
+            opacity: 1; 
+            transform: translateX(0); 
+        }
+        
+        /* 우측 상시 노출 메뉴 & 폰트 크기 축소 */
+        .nav-menu { 
+            display: flex; 
+            gap: 35px; 
+        }
+        .nav-item { 
+            color: #000; 
+            text-decoration: none; 
+            font-size: 0.85rem; /* 글씨 크기 축소 */
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            transition: opacity 0.3s; 
+        }
+        .nav-item:hover { opacity: 0.5; }
+
+        /* --- 좌측 사이드바 (유지) --- */
+        .side-nav {
+            position: fixed; top: 80px; left: 0; width: 250px; height: calc(100vh - 80px);
+            padding: 50px; border-right: 1px solid #f2f2f2; background: #fff;
+        }
+        .side-nav ul { list-style: none; }
+        .side-nav li { margin-bottom: 20px; }
+        .side-nav a { color: #ccc; text-decoration: none; font-weight: 700; font-size: 0.85rem; transition: 0.3s; letter-spacing: 1px; }
+        .side-nav a.active { color: #000; }
+
+        /* --- 컨텐츠 영역 --- */
+        .content { margin-left: 250px; padding: 130px 80px 100px; width: 100%; }
+        
+        .biz-header { margin-bottom: 80px; }
+        .biz-header h2 { font-size: 4rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 25px; }
+        .biz-header p { font-size: 1.25rem; color: #666; max-width: 700px; line-height: 1.6; word-break: keep-all; }
+
+        .impact-visual-box {
+            width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            margin-bottom: 60px;
+            transition: background-image 0.5s ease;
+            position: relative;
+        }
+
+        .impact-tabs {
+            display: flex;
+            gap: 1px;
+            background: #f2f2f2;
+            margin-bottom: 100px;
+            border: 1px solid #f2f2f2;
+        }
+        .tab-item {
+            flex: 1;
+            padding: 25px;
+            background: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            text-align: left;
+        }
+        .tab-item.active { background: #000; color: #fff; }
+        .tab-item .tab-num { display: block; font-size: 0.7rem; font-weight: 700; margin-bottom: 5px; color: #8e55ff; }
+        .tab-item.active .tab-num { color: #fff; }
+        .tab-item .tab-label { font-size: 1.1rem; font-weight: 800; }
+
+        .biz-section { display: flex; border-top: 1.5px solid #000; padding-top: 60px; }
+        
+        .biz-label { flex: 1; position: sticky; top: 130px; height: fit-content; padding-right: 40px; }
+        .biz-label span { color: #8e55ff; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; }
+        .biz-label h3 { font-size: 2.2rem; margin-top: 20px; line-height: 1.2; font-weight: 800; letter-spacing: -1px; }
+
+        .biz-items { flex: 1.6; display: flex; flex-direction: column; gap: 60px; }
+        
+        .item-row { display: flex; align-items: flex-start; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid #f2f2f2; }
+        .item-row:last-child { border-bottom: none; }
+
+        .item-info { flex: 1; }
+        .item-info .year { font-size: 0.9rem; color: #999; font-weight: 700; margin-bottom: 10px; display: block; }
+        .item-info h4 { font-size: 1.6rem; font-weight: 800; margin-bottom: 15px; color: #000; }
+        .item-info p { color: #666; font-size: 1.05rem; line-height: 1.7; word-break: keep-all; }
+
+        .item-icon { 
+            width: 70px; height: 70px; background: #f8f9fa; border-radius: 20px; 
+            display: flex; align-items: center; justify-content: center; 
+            border: 1px solid #eee; flex-shrink: 0; font-size: 1.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .side-nav { display: none; } 
+            .content { margin-left: 0; padding: 100px 40px; width: 100%; }
+            .biz-section { flex-direction: column; gap: 50px; }
+            .impact-tabs { flex-wrap: wrap; }
+            .logo-slogan { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo-area">
+            <span class="logo-main">LOIND</span>
+            <span class="logo-slogan">THE GREATEST EXPERIENCE</span>
+        </a>
+        <div class="nav-menu">
+            <a href="about.html" class="nav-item">about</a>
+            <a href="business.html" class="nav-item">business</a>
+            <a href="impact.html" class="nav-item">impact</a>
+            <a href="story.html" class="nav-item">story</a>
+            <a href="contact.html" class="nav-item">contact</a>
+        </div>
+    </nav>
+
+    <aside class="side-nav">
+        <ul>
+            <li><a href="#" class="active" id="side-0" onclick="updateImpact(0)">DISCOVER</a></li>
+            <li><a href="#" id="side-1" onclick="updateImpact(1)">CONNECT</a></li>
+            <li><a href="#" id="side-2" onclick="updateImpact(2)">EXPAND</a></li>
+            <li><a href="#" id="side-3" onclick="updateImpact(3)">INNOVATE</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+        <div class="biz-header">
+            <h2>Impact</h2>
+            <p>우리는 기술과 창의성을 결합하여 일상의 모든 순간에 <br>새로운 경험을 더하는 비즈니스 생태계를 구축합니다.</p>
+        </div>
+
+        <div class="impact-visual-box" id="bg-view" style="background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069');"></div>
+
+        <div class="impact-tabs">
+            <div class="tab-item active" onclick="updateImpact(0)">
+                <span class="tab-num">01</span>
+                <span class="tab-label">Platform</span>
+            </div>
+            <div class="tab-item" onclick="updateImpact(1)">
+                <span class="tab-num">02</span>
+                <span class="tab-label">Commerce</span>
+            </div>
+            <div class="tab-item" onclick="updateImpact(2)">
+                <span class="tab-num">03</span>
+                <span class="tab-label">Fintech</span>
+            </div>
+            <div class="tab-item" onclick="updateImpact(3)">
+                <span class="tab-num">04</span>
+                <span class="tab-label">AI Tech</span>
+            </div>
+        </div>
+
+        <section class="biz-section">
+            <div class="biz-label">
+                <span id="target-category">01 Platform</span>
+                <h3 id="target-title">경험을 연결하는<br>디지털 플랫폼</h3>
+            </div>
+            <div class="biz-items" id="target-list">
+                </div>
+        </section>
+    </main>
+
+    <script>
+        const impactData = [
+            {
+                category: "01 Platform",
+                title: "궁금증을 해결하는 검색에서<br>새로움을 발견하는 탐색까지",
+                bg: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2069",
+                items: [
+                    { year: "2026", name: "에이전틱 서치 'LOIND' 서비스", desc: "사용자의 의도를 파악하고 실행을 돕는 차세대 AI 검색 경험을 설계합니다.", icon: "🔍" },
+                    { year: "2025", name: "지능형 답변 엔진", desc: "단순 나열이 아닌 정제된 지식을 전달하는 검색 혁신을 이룹니다.", icon: "🧠" }
+                ]
+            },
+            {
+                category: "02 Commerce",
+                title: "판매자는 고객을 자주, 쉽게<br>사용자는 혜택을 쉽고, 스마트하게",
+                bg: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=2070",
+                items: [
+                    { year: "2026", name: "커머스 자동화 솔루션", desc: "판매자의 재고 관리부터 마케팅까지 AI가 돕는 통합 시스템입니다.", icon: "🛒" },
+                    { year: "2025", name: "개인화 쇼핑 큐레이션", desc: "취향을 분석하여 최적의 상품을 매칭하는 스마트 스토어 경험을 제공합니다.", icon: "🛍️" }
+                ]
+            },
+            {
+                category: "03 Fintech",
+                title: "간편결제를 넘어<br>금융을 넓히는 기술",
+                bg: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070",
+                items: [
+                    { year: "2026", name: "차세대 로인드 페이", desc: "오프라인 어디서나 결제가 가능한 초간편 금융 에코시스템을 구축합니다.", icon: "💳" }
+                ]
+            },
+            {
+                category: "04 AI Tech",
+                title: "인간의 일상을 돕는<br>생성형 AI 기술의 대중화",
+                bg: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070",
+                items: [
+                    { year: "2026", name: "LOIND Generative AI", desc: "텍스트, 이미지, 영상을 자유롭게 생성하는 로인드만의 모델을 서비스합니다.", icon: "✨" }
+                ]
+            }
+        ];
+
+        function updateImpact(idx) {
+            const data = impactData[idx];
+            
+            document.getElementById('bg-view').style.backgroundImage = `url('${data.bg}')`;
+            document.getElementById('target-category').innerText = data.category;
+            document.getElementById('target-title').innerHTML = data.title;
+            
+            const listHtml = data.items.map(item => `
+                <div class="item-row">
+                    <div class="item-info">
+                        <span class="year">${item.year}</span>
+                        <h4>${item.name}</h4>
+                        <p>${item.desc}</p>
+                    </div>
+                    <div class="item-icon">${item.icon}</div>
+                </div>
+            `).join('');
+            document.getElementById('target-list').innerHTML = listHtml;
+
+            const tabs = document.querySelectorAll('.tab-item');
+            tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+            
+            const sideLinks = document.querySelectorAll('.side-nav a');
+            sideLinks.forEach((s, i) => s.classList.toggle('active', i === idx));
+        }
+
+        window.onload = () => updateImpact(0);
+    </script>
+</body>
+</html>

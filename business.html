@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business | LOIND</title>
+    <style>
+        /* --- 공통 레이아웃 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #fff; color: #000; font-family: 'Pretendard', -apple-system, sans-serif; display: flex; }
+
+        /* --- [수정] 상단 네비게이션: 우측 정렬 & 텍스트 축소 --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; 
+            justify-content: space-between; /* 양 끝 배치 */
+            padding: 0 50px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid #f2f2f2;
+        }
+
+        /* 로고 영역 */
+        .logo-area { 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none; 
+        }
+        .logo-main { 
+            font-size: 1.5rem; font-weight: 900; color: #000; 
+            letter-spacing: 2px; 
+        }
+
+        /* 로고 호버 시 나타나는 슬로건 */
+        .logo-slogan {
+            font-size: 0.7rem; font-weight: 700; color: #8e55ff;
+            margin-left: 15px; padding-left: 15px;
+            border-left: 1px solid #eee;
+            opacity: 0; 
+            transform: translateX(-10px);
+            transition: all 0.4s ease;
+            white-space: nowrap;
+        }
+        .logo-area:hover .logo-slogan { 
+            opacity: 1; 
+            transform: translateX(0); 
+        }
+        
+        /* [수정] 우측 상시 노출 메뉴 & 폰트 크기 축소 */
+        .nav-menu { 
+            display: flex; 
+            gap: 35px; 
+        }
+        .nav-item { 
+            color: #000; 
+            text-decoration: none; 
+            font-size: 0.85rem; /* 글씨 크기 줄임 */
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; /* 자간 조정 */
+            transition: opacity 0.3s; 
+        }
+        .nav-item:hover { opacity: 0.5; }
+
+        /* --- 좌측 사이드바 --- */
+        .side-nav {
+            position: fixed; top: 80px; left: 0; width: 250px; height: calc(100vh - 80px);
+            padding: 50px; border-right: 1px solid #f2f2f2; background: #fff;
+        }
+        .side-nav ul { list-style: none; }
+        .side-nav li { margin-bottom: 25px; }
+        .side-nav a { color: #ccc; text-decoration: none; font-weight: 700; font-size: 0.8rem; transition: 0.3s; letter-spacing: 1px; }
+        .side-nav a.active, .side-nav a:hover { color: #000; }
+
+        /* --- 우측 컨텐츠 영역 --- */
+        .content { margin-left: 250px; padding: 130px 80px 100px; width: 100%; }
+        
+        .biz-header { margin-bottom: 100px; }
+        .biz-header h2 { font-size: 4rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 25px; }
+        .biz-header p { font-size: 1.25rem; color: #666; max-width: 800px; line-height: 1.6; word-break: keep-all; }
+
+        .biz-section { display: flex; border-top: 1.5px solid #000; padding-top: 60px; margin-bottom: 120px; }
+        .biz-label { flex: 0.8; position: sticky; top: 130px; height: fit-content; padding-right: 20px; }
+        .biz-label span { color: #8e55ff; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
+        .biz-label h3 { font-size: 2.2rem; margin-top: 15px; font-weight: 800; letter-spacing: -1px; line-height: 1.2; word-break: keep-all; }
+
+        .service-grid { flex: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        
+        .service-card {
+            background: #f8f9fa; padding: 45px; border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; flex-direction: column; gap: 25px;
+            border: 1px solid transparent;
+        }
+        .service-card:hover { 
+            background: #fff; border-color: #000; 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
+        }
+
+        .service-icon { 
+            width: 65px; height: 65px; background: #fff; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; border: 1px solid #f2f2f2;
+        }
+
+        .service-info h4 { font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; color: #000; letter-spacing: -0.5px; }
+        .service-info p { color: #555; font-size: 1.05rem; line-height: 1.7; word-break: keep-all; }
+
+        @media (max-width: 1400px) { .service-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1100px) {
+            .side-nav { display: none; }
+            .content { margin-left: 0; padding: 100px 30px; }
+            .biz-section { flex-direction: column; }
+            .biz-label { margin-bottom: 40px; position: static; }
+            .logo-slogan { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo-area">
+            <span class="logo-main">LOIND</span>
+            <span class="logo-slogan">THE GREATEST EXPERIENCE</span>
+        </a>
+        <div class="nav-menu">
+            <a href="about.html" class="nav-item">about</a>
+            <a href="business.html" class="nav-item">business</a>
+            <a href="impact.html" class="nav-item">impact</a>
+            <a href="story.html" class="nav-item">story</a>
+            <a href="contact.html" class="nav-item">contact</a>
+        </div>
+    </nav>
+
+    <aside class="side-nav">
+        <ul>
+            <li><a href="#" class="active">PLATFORM</a></li>
+            <li><a href="#">COMMERCE</a></li>
+            <li><a href="#">FINTECH</a></li>
+            <li><a href="#">AI TECH</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+        <div class="biz-header">
+            <h2>Business</h2>
+            <p>우리는 보통의 기준을 한 단계 높이는<br>특별한 비즈니스 문법을 설계합니다.</p>
+        </div>
+
+        <section class="biz-section">
+            <div class="biz-label">
+                <span>01 Platform</span>
+                <h3>Digital<br>Foundation</h3>
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-icon">🧠</div>
+                    <div class="service-info">
+                        <h4>LOIND CORE</h4>
+                        <p>사용자의 의도를 파고드는 지능형 엔진을 통해 검색 그 이상의 결론을 제시합니다.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <div class="service-info">
+                        <h4>Hyper Connect</h4>
+                        <p>모든 디지털 접점을 하나의 세계관으로 묶어 브랜드의 주도권을 강화합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="biz-section">
+            <div class="biz-label">
+                <span>02 Commerce</span>
+                <h3>New Standard<br>Trade</h3>
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-icon">💎</div>
+                    <div class="service-info">
+                        <h4>Sync Store</h4>
+                        <p>브랜드의 철학이 시스템과 완벽히 동기화된, 팬덤 중심의 독보적 커머스 환경을 구축합니다.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📦</div>
+                    <div class="service-info">
+                        <h4>Value Delivery</h4>
+                        <p>단순한 배송을 넘어, 브랜드의 실체를 고객의 일상에 이식하는 특별한 방식을 제안합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

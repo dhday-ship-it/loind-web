@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story | LOIND</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', sans-serif; background: #fff; color: #111; }
+        ul { list-style: none; }
+
+        /* --- [수정] 상단 네비게이션: 우측 정렬 & 텍스트 축소 --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; 
+            justify-content: space-between; /* 양 끝 배치 */
+            padding: 0 50px;
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid #f2f2f2;
+        }
+
+        /* 로고 영역 */
+        .logo-area { 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none; 
+        }
+        .logo-main { 
+            font-size: 1.5rem; font-weight: 900; color: #000; 
+            letter-spacing: 2px; 
+        }
+
+        /* 로고 호버 시 나타나는 슬로건 */
+        .logo-slogan {
+            font-size: 0.7rem; font-weight: 700; color: #8e55ff;
+            margin-left: 15px; padding-left: 15px;
+            border-left: 1px solid #eee;
+            opacity: 0; 
+            transform: translateX(-10px);
+            transition: all 0.4s ease;
+            white-space: nowrap;
+        }
+        .logo-area:hover .logo-slogan { 
+            opacity: 1; 
+            transform: translateX(0); 
+        }
+        
+        /* 우측 상시 노출 메뉴 & 폰트 크기 축소 */
+        .nav-menu { 
+            display: flex; 
+            gap: 35px; 
+        }
+        .nav-item { 
+            color: #000; 
+            text-decoration: none; 
+            font-size: 0.85rem; /* 글씨 크기 축소 */
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            transition: opacity 0.3s; 
+        }
+        .nav-item:hover { opacity: 0.5; }
+
+        /* --- 기존 Story 페이지 스타일 유지 --- */
+        .story-header {
+            text-align: center;
+            padding: 160px 20px 80px;
+        }
+        .story-header h1 { font-size: 3rem; font-weight: 800; margin-bottom: 20px; letter-spacing: -1px; }
+        .story-header p { color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; word-break: keep-all; }
+
+        .filter-nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            border-bottom: 1px solid #eee;
+            margin: 0 80px 50px;
+            padding-bottom: 20px;
+        }
+        .filter-item {
+            font-weight: 700;
+            color: #999;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.95rem;
+            position: relative;
+        }
+        .filter-item.active { color: #000; }
+        .filter-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -22px; left: 0; width: 100%; height: 2px; background: #000;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px 25px;
+            padding: 0 80px 100px;
+        }
+
+        .story-card {
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease;
+        }
+        .story-card:hover { transform: translateY(-10px); }
+
+        .card-img {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-meta { font-size: 0.8rem; color: #888; font-weight: 600; margin-bottom: 10px; }
+        .card-meta span { margin-right: 10px; color: #8e55ff; }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            word-break: keep-all;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #777;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 1024px) {
+            .story-grid { grid-template-columns: repeat(2, 1fr); padding: 0 40px; }
+            .filter-nav { margin: 0 40px 50px; }
+            .logo-slogan { display: none; }
+        }
+        @media (max-width: 768px) {
+            .story-grid { grid-template-columns: 1fr; }
+            .story-header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo-area">
+            <span class="logo-main">LOIND</span>
+            <span class="logo-slogan">THE GREATEST EXPERIENCE</span>
+        </a>
+        <div class="nav-menu">
+            <a href="about.html" class="nav-item">about</a>
+            <a href="business.html" class="nav-item">business</a>
+            <a href="impact.html" class="nav-item">impact</a>
+            <a href="story.html" class="nav-item">story</a>
+            <a href="contact.html" class="nav-item">contact</a>
+        </div>
+    </nav>
+
+    <header class="story-header">
+        <h1>당신에게 최적화될<br>AI Agent 🔮</h1>
+        <p>검색, 커머스, 테크 등 로인드 서비스 전반에 걸친 인공지능 기술 도입과<br>사용자 중심의 맞춤형 서비스 이야기를 전합니다.</p>
+    </header>
+
+    <ul class="filter-nav">
+        <li><a href="#" class="filter-item active">All</a></li>
+        <li><a href="#" class="filter-item">Leader's View</a></li>
+        <li><a href="#" class="filter-item">Culture</a></li>
+        <li><a href="#" class="filter-item">Service</a></li>
+        <li><a href="#" class="filter-item">Tech</a></li>
+        <li><a href="#" class="filter-item">Impact</a></li>
+    </ul>
+
+    <main class="story-grid">
+        <a href="#" class="story-card">
+            <div class="card-img"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070"></div>
+            <div class="card-meta"><span>People</span> 2026.01.23</div>
+            <h3 class="card-title">'몰입'과 '효율'에 관한 로인드의 생각</h3>
+            <div class="card-tag">커리어 서비스</div><div class="card-tag">리더십</div>
+        </a>
+
+        <a href="#" class="story-card">
+            <div class="card-img"><img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070"></div>
+            <div class="card-meta"><span>Tech</span> 2025.12.19</div>
+            <h3 class="card-title">시대를 이끄는 검색 기술의 진화, LOIND Search 2.0</h3>
+            <div class="card-tag">AI 검색</div><div class="card-tag">Tech</div>
+        </a>
+
+        <a href="#" class="story-card">
+            <div class="card-img"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070"></div>
+            <div class="card-meta"><span>Culture</span> 2025.12.10</div>
+            <h3 class="card-title">한 걸음 더 나아가게 만드는 문화, 로인드 네트워킹 데이</h3>
+            <div class="card-tag">사내문화</div><div class="card-tag">성장</div>
+        </a>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOIND: We create the greatest experience</title>
+    <style>
+        /* --- 기본 스타일 리셋 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Pretendard', -apple-system, sans-serif; 
+            line-height: 1.6;
+        }
+
+        /* --- 상단 내비게이션 초기 상태 --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; 
+            justify-content: space-between; 
+            padding: 0 50px;
+            z-index: 1000;
+            
+            /* 초기: 완전 투명 */
+            background: rgba(0, 0, 0, 0); 
+            backdrop-filter: blur(0px); 
+            -webkit-backdrop-filter: blur(0px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0);
+            
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* 좀 더 부드러운 가속도 */
+        }
+
+        /* [활성화] 히어로 섹션이 끝날 때 붙을 스타일 */
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.7); /* 좀 더 명확한 구분감을 위해 0.7로 조정 */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-area { display: flex; align-items: center; text-decoration: none; }
+        .logo-main { font-size: 1.5rem; font-weight: 900; color: #fff; letter-spacing: 2px; }
+        
+        .logo-slogan {
+            font-size: 0.7rem; font-weight: 700; color: #a374ff; 
+            margin-left: 15px; padding-left: 15px;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            opacity: 0; 
+            transform: translateX(-10px);
+            transition: all 0.4s ease;
+            white-space: nowrap;
+        }
+        .logo-area:hover .logo-slogan { opacity: 1; transform: translateX(0); }
+
+        .nav-menu { display: flex; gap: 35px; }
+        .nav-item { 
+            color: rgba(255, 255, 255, 0.8); 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            transition: all 0.3s; 
+        }
+        .nav-item:hover { color: #fff; }
+
+        /* --- 히어로 섹션 --- */
+        .hero {
+            height: 100vh; /* 화면 꽉 차게 */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), #000), 
+                        url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80') center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 15px; font-weight: 800; }
+        .hero p { font-size: 1.4rem; color: #ccc; }
+
+        /* --- 본문 내용들 --- */
+        .section-title { text-align: center; margin: 120px 0 40px; font-size: 2.5rem; }
+        .speaker-container { display: flex; justify-content: center; gap: 20px; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
+        .speaker-card { flex: 1; height: 380px; background: #1a1a1a; border-radius: 20px; transition: 0.3s; }
+        .speaker-card.active { border: 4px solid #8e55ff; }
+        .speaker-card:hover { transform: translateY(-10px); }
+
+        .session-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1200px; margin: 100px auto; padding: 0 20px; }
+        .session-card { background: #111; border: 1px solid #333; padding: 45px; border-radius: 24px; min-height: 280px; display: flex; flex-direction: column; justify-content: space-between; }
+        .session-card h3 { font-size: 1.7rem; }
+        .session-card .tags { color: #888; font-size: 1rem; }
+
+        .location-section { background: #fff; color: #000; max-width: 1200px; margin: 100px auto; border-radius: 30px; display: flex; overflow: hidden; }
+        .map-area { flex: 1.2; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 2rem; min-height: 550px; }
+        .info-area { flex: 1; padding: 70px; }
+        .info-area h2 { font-size: 3rem; margin: 10px 0; }
+        .btn-black { display: inline-block; background: #000; color: #fff; padding: 18px 35px; border-radius: 12px; text-decoration: none; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .speaker-container, .session-grid, .location-section { flex-direction: column; }
+            .navbar { padding: 0 20px; }
+            .logo-slogan { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="mainNavbar">
+        <a href="index.html" class="logo-area">
+            <span class="logo-main">LOIND</span>
+            <span class="logo-slogan">THE GREATEST EXPERIENCE</span>
+        </a>
+        <div class="nav-menu">
+            <a href="about.html" class="nav-item">about</a>
+            <a href="business.html" class="nav-item">business</a>
+            <a href="impact.html" class="nav-item">impact</a>
+            <a href="story.html" class="nav-item">story</a>
+            <a href="contact.html" class="nav-item">contact</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="heroSection">
+        <div style="font-size: 60px; margin-bottom: 25px;">✨</div>
+        <h1>We create the greatest experience</h1>
+        <p>Innovate your core business value with LOIND</p>
+    </section>
+
+    <h2 class="section-title">We Create</h2>
+    <div class="speaker-container">
+        <div class="speaker-card"></div>
+        <div class="speaker-card active"></div>
+        <div class="speaker-card"></div>
+        <div class="speaker-card"></div>
+    </div>
+
+    <div class="session-grid">
+        <div class="session-card">
+            <h3>에이전틱 서치: 개인화와<br>실행까지 연결하는 검색 경험</h3>
+            <p class="tags">최재호 LOIND 발견/탐색 프로젝트 부문장</p>
+        </div>
+        <div class="session-card">
+            <h3>두 개의 에이전트, 하나의<br>플랫폼 : LOIND Ads 로드맵</h3>
+            <p class="tags">윤종호 LOIND 광고 프로젝트 부문장</p>
+        </div>
+    </div>
+
+    <section class="location-section">
+        <div class="map-area">MAP VIEW</div>
+        <div class="info-area">
+            <span class="label" style="color: #888;">Location</span>
+            <h2>COEX</h2>
+            <p>그랜드볼룸, 아셈볼룸, 오디토리움</p>
+            <a href="#" class="btn-black" style="margin-top: 30px;">교통정보 보기 ↗</a>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 60px; color: #444; border-top: 1px solid #222;">
+        © 2026 LOIND. All Rights Reserved.
+    </footer>
+
+    <script>
+        const navbar = document.getElementById('mainNavbar');
+        const hero = document.getElementById('heroSection');
+        
+        window.addEventListener('scroll', () => {
+            // 히어로 섹션의 높이값을 가져옵니다.
+            const heroHeight = hero.offsetHeight;
+            
+            // 현재 스크롤 위치가 히어로 섹션의 80% 지점을 지날 때 나타나도록 설정 (조절 가능)
+            if (window.scrollY > (heroHeight * 0.8)) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+</body>
+</html>
