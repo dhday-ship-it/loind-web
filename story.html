@@ -1,205 +1,517 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Story | LOIND</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background: #fff; color: #111; }
-        ul { list-style: none; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+      }
+      body {
+        background-color: #fff;
+        color: #000;
+        font-family: "Pretendard", sans-serif;
+      }
 
-        /* --- [수정] 상단 네비게이션: 우측 정렬 & 텍스트 축소 --- */
-        .navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-            display: flex; align-items: center; 
-            justify-content: space-between; /* 양 끝 배치 */
-            padding: 0 50px;
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
-            z-index: 1000; border-bottom: 1px solid #f2f2f2;
-        }
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 50px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid #f2f2f2;
+        transition: 0.3s;
+      }
+      h1 .main {
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+      }
+      .slogan {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #8e55ff;
+        margin-left: 5px;
+        border-left: 1px solid #eee;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: 0.4s;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      h1:hover .slogan {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      nav ul {
+        display: flex;
+        gap: 35px;
+      }
+      nav li {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: 0.3s;
+      }
+      nav li:hover {
+        opacity: 0.5;
+      }
 
-        /* 로고 영역 */
-        .logo-area { 
-            display: flex; 
-            align-items: center; 
-            text-decoration: none; 
-        }
-        .logo-main { 
-            font-size: 1.5rem; font-weight: 900; color: #000; 
-            letter-spacing: 2px; 
-        }
+      #visual {
+        background: #8e55ff
+          url("https://i.pinimg.com/736x/a5/cc/77/a5cc776be06aa4edc66524fe6f069d2f.jpg")
+          no-repeat center/cover;
+        width: 100%;
+        height: 40vh;
+        padding-top: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        color: #fff;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+      }
+      #visual h3 {
+        font-size: 2.5rem;
+      }
 
-        /* 로고 호버 시 나타나는 슬로건 */
-        .logo-slogan {
-            font-size: 0.7rem; font-weight: 700; color: #8e55ff;
-            margin-left: 15px; padding-left: 15px;
-            border-left: 1px solid #eee;
-            opacity: 0; 
-            transform: translateX(-10px);
-            transition: all 0.4s ease;
-            white-space: nowrap;
-        }
-        .logo-area:hover .logo-slogan { 
-            opacity: 1; 
-            transform: translateX(0); 
-        }
-        
-        /* 우측 상시 노출 메뉴 & 폰트 크기 축소 */
-        .nav-menu { 
-            display: flex; 
-            gap: 35px; 
-        }
-        .nav-item { 
-            color: #000; 
-            text-decoration: none; 
-            font-size: 0.85rem; /* 글씨 크기 축소 */
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            transition: opacity 0.3s; 
-        }
-        .nav-item:hover { opacity: 0.5; }
+      section {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
+      }
 
-        /* --- 기존 Story 페이지 스타일 유지 --- */
-        .story-header {
-            text-align: center;
-            padding: 160px 20px 80px;
-        }
-        .story-header h1 { font-size: 3rem; font-weight: 800; margin-bottom: 20px; letter-spacing: -1px; }
-        .story-header p { color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; word-break: keep-all; }
+      .mainCategory {
+        display: flex;
+        width: fit-content;
+        margin: 0 auto 40px;
+        background: #f4f4f4;
+        border-radius: 40px;
+        padding: 5px;
+      }
+      .mainCategory li {
+        cursor: pointer;
+        padding: 10px 35px;
+        border-radius: 35px;
+        font-weight: 500;
+        color: #888;
+        transition: 0.3s;
+      }
+      .mainCategory li.active {
+        background: #fff;
+        color: #8e55ff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        font-weight: 700;
+      }
 
-        .filter-nav {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            border-bottom: 1px solid #eee;
-            margin: 0 80px 50px;
-            padding-bottom: 20px;
-        }
-        .filter-item {
-            font-weight: 700;
-            color: #999;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.95rem;
-            position: relative;
-        }
-        .filter-item.active { color: #000; }
-        .filter-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -22px; left: 0; width: 100%; height: 2px; background: #000;
-        }
+      #sub {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 50px;
+      }
+      #sub li {
+        position: relative;
+        cursor: pointer;
+        color: #aaa;
+        transition: 0.3s;
+        font-size: 1rem;
+      }
+      #sub li.on {
+        color: #000;
+        font-weight: 700;
+      }
+      #sub li::before {
+        content: "";
+        width: 4px;
+        height: 4px;
+        background: #8e55ff;
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%) scale(0);
+        border-radius: 50%;
+        transition: 0.3s;
+      }
+      #sub li.on::before {
+        transform: translateX(-50%) scale(1);
+      }
 
-        .story-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px 25px;
-            padding: 0 80px 100px;
-        }
+      #storyBoard {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+      }
+      #storyBoard li {
+        width: calc(33.333% - 17px);
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        transition: 0.4s;
+        border: 1px solid #f2f2f2;
+        cursor: pointer;
+      }
+      #storyBoard li:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      #storyBoard li .img_box {
+        width: 100%;
+        aspect-ratio: 16/10;
+        overflow: hidden;
+        background: #eee;
+      }
+      #storyBoard li .img_box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.5s;
+      }
+      #storyBoard li:hover .img_box img {
+        transform: scale(1.1);
+      }
+      #storyBoard li .txt_box {
+        padding: 25px;
+      }
+      #storyBoard li h4 {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+        font-weight: 700;
+      }
+      #storyBoard li p {
+        font-size: 0.95rem;
+        color: #666;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
 
-        .story-card {
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.3s ease;
-        }
-        .story-card:hover { transform: translateY(-10px); }
+      .empty {
+        width: 100%;
+        text-align: center;
+        padding: 100px 0;
+        color: #ccc;
+      }
 
-        .card-img {
-            width: 100%;
-            aspect-ratio: 16 / 10;
-            background-color: #f4f4f4;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+      .modal_overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+      }
+      .modal_overlay.active {
+        display: flex;
+      }
+      .modal_content {
+        background: #fff;
+        width: 90%;
+        max-width: 600px;
+        border-radius: 20px;
+        position: relative;
+        padding: 40px;
+        transform: translateY(50px);
+        transition: 0.3s;
+      }
+      .modal_overlay.active .modal_content {
+        transform: translateY(0);
+      }
+      .close_btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #aaa;
+      }
+      .modal_body img {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      .modal_body h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: #8e55ff;
+      }
+      .modal_body p {
+        line-height: 1.8;
+        color: #444;
+      }
 
-        .card-meta { font-size: 0.8rem; color: #888; font-weight: 600; margin-bottom: 10px; }
-        .card-meta span { margin-right: 10px; color: #8e55ff; }
+      @media (max-width: 900px) {
+        header {
+          padding: 0 30px;
+        }
+        nav ul {
+          gap: 20px;
+        }
+        .slogan {
+          display: none;
+        }
+        #storyBoard li {
+          width: calc(50% - 13px);
+        }
+      }
 
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-            line-height: 1.4;
-            margin-bottom: 15px;
-            word-break: keep-all;
+      @media (max-width: 600px) {
+        header {
+          height: auto;
+          padding: 15px 20px;
+          flex-direction: column;
+          gap: 15px;
         }
-
-        .card-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #f8f9fa;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            color: #777;
-            margin-right: 5px;
+        nav ul {
+          gap: 15px;
+          flex-wrap: wrap;
+          justify-content: center;
         }
-
-        @media (max-width: 1024px) {
-            .story-grid { grid-template-columns: repeat(2, 1fr); padding: 0 40px; }
-            .filter-nav { margin: 0 40px 50px; }
-            .logo-slogan { display: none; }
+        #visual {
+          height: 30vh;
+          padding-top: 120px;
         }
-        @media (max-width: 768px) {
-            .story-grid { grid-template-columns: 1fr; }
-            .story-header h1 { font-size: 2.2rem; }
+        #visual h3 {
+          font-size: 1.8rem;
         }
+        #storyBoard li {
+          width: 100%;
+        }
+        .modal_content {
+          padding: 30px 20px;
+        }
+      }
     </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <a href="index.html" class="logo-area">
-            <span class="logo-main">LOIND</span>
-            <span class="logo-slogan">THE GREATEST EXPERIENCE</span>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="index.html">
+          <span class="main">LOIND</span>
+          <span class="slogan">THE GREATEST EXPERIENCE</span>
         </a>
-        <div class="nav-menu">
-            <a href="about.html" class="nav-item">about</a>
-            <a href="service.html" class="nav-item">service</a>
-            <a href="story.html" class="nav-item">story</a>
-            <a href="contact.html" class="nav-item">contact</a>
-        </div>
-    </nav>
-
-    <header class="story-header">
-        <h1>당신에게 최적화될<br>AI Agent 🔮</h1>
-        <p>검색, 커머스, 테크 등 로인드 서비스 전반에 걸친 인공지능 기술 도입과<br>사용자 중심의 맞춤형 서비스 이야기를 전합니다.</p>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="business.html">BUSINESS</a></li>
+          <li><a href="impact.html">IMPACT</a></li>
+          <li><a href="story.html">STORY</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
     </header>
 
-    <ul class="filter-nav">
-        <li><a href="#" class="filter-item active">All</a></li>
-        <li><a href="#" class="filter-item">Leader's View</a></li>
-        <li><a href="#" class="filter-item">Culture</a></li>
-        <li><a href="#" class="filter-item">Service</a></li>
-        <li><a href="#" class="filter-item">Tech</a></li>
-        <li><a href="#" class="filter-item">Impact</a></li>
-    </ul>
+    <div id="visual">
+      <h3>로인드의 이야기</h3>
+      <p>멋진 기업! 우리 회사!</p>
+    </div>
 
-    <main class="story-grid">
-        <a href="#" class="story-card">
-            <div class="card-img"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070"></div>
-            <div class="card-meta"><span>People</span> 2026.01.23</div>
-            <h3 class="card-title">'몰입'과 '효율'에 관한 로인드의 생각</h3>
-            <div class="card-tag">커리어 서비스</div><div class="card-tag">리더십</div>
-        </a>
+    <section>
+      <ul class="mainCategory">
+        <li id="business" class="active">비즈니스</li>
+        <li id="impact">임팩트</li>
+      </ul>
+      <ul id="sub"></ul>
+      <ul id="storyBoard"></ul>
+    </section>
 
-        <a href="#" class="story-card">
-            <div class="card-img"><img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070"></div>
-            <div class="card-meta"><span>Tech</span> 2025.12.19</div>
-            <h3 class="card-title">시대를 이끄는 검색 기술의 진화, LOIND Search 2.0</h3>
-            <div class="card-tag">AI 검색</div><div class="card-tag">Tech</div>
-        </a>
+    <div id="modal" class="modal_overlay">
+      <div class="modal_content">
+        <button class="close_btn">&times;</button>
+        <div class="modal_body"></div>
+      </div>
+    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+        query,
+        orderBy,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        <a href="#" class="story-card">
-            <div class="card-img"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070"></div>
-            <div class="card-meta"><span>Culture</span> 2025.12.10</div>
-            <h3 class="card-title">한 걸음 더 나아가게 만드는 문화, 로인드 네트워킹 데이</h3>
-            <div class="card-tag">사내문화</div><div class="card-tag">성장</div>
-        </a>
-    </main>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
+        authDomain: "loind-472cd.firebaseapp.com",
+        projectId: "loind-472cd",
+        storageBucket: "loind-472cd.firebasestorage.app",
+        messagingSenderId: "405998534289",
+        appId: "1:405998534289:web:0f861bc822e1ea5391c930",
+        measurementId: "G-5B5MM51YH2",
+      };
 
-</body>
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // 전역 변수들
+      let storyData = { platform: [], commerce: [], 착한일: [], 착한일2: [] };
+      const subData = {
+        business: ["platform", "commerce"],
+        impact: ["착한일", "착한일2"],
+      };
+
+      const sub = document.querySelector("#sub");
+      const storyBoard = document.querySelector("#storyBoard");
+      const mainCategory = document.querySelectorAll(".mainCategory li");
+      const modal = document.querySelector("#modal");
+      const modalBody = document.querySelector(".modal_body");
+      const closeBtn = document.querySelector(".close_btn");
+
+      // [핵심] Firebase 서버에서 데이터 로드
+      async function loadStories() {
+        storyBoard.innerHTML = "<li class='empty'>데이터를 불러오는 중...</li>";
+        try {
+          // 최신순 정렬해서 가져오기
+          const q = query(
+            collection(db, "stories"),
+            orderBy("createdAt", "desc")
+          );
+          const querySnapshot = await getDocs(q);
+
+          // storyData 초기화
+          storyData = { platform: [], commerce: [], 착한일: [], 착한일2: [] };
+
+          if (querySnapshot.empty) {
+            console.log("등록된 데이터가 없습니다.");
+          }
+
+          querySnapshot.forEach((doc) => {
+            const item = doc.data();
+            if (storyData[item.category]) {
+              storyData[item.category].push({ ...item, id: doc.id });
+            }
+          });
+
+          // 데이터 로드 완료 후 화면 그리기 시작
+          renderSub("business");
+        } catch (e) {
+          console.error("데이터 로드 실패: ", e);
+          storyBoard.innerHTML =
+            "<li class='empty'>서버 연결 오류가 발생했습니다.</li>";
+        }
+      }
+
+      // 서브 메뉴 생성
+      function renderSub(type) {
+        sub.innerHTML = "";
+        subData[type].forEach((item) => {
+          const li = document.createElement("li");
+          li.innerText = item;
+          sub.appendChild(li);
+        });
+
+        const firstLi = sub.querySelector("li");
+        if (firstLi) {
+          firstLi.classList.add("on");
+          renderStoryBoard(subData[type][0]);
+        }
+      }
+
+      // 카드 목록 생성
+      function renderStoryBoard(subName) {
+        storyBoard.innerHTML = "";
+        let html = "";
+
+        if (storyData[subName] && storyData[subName].length > 0) {
+          storyData[subName].forEach((item, index) => {
+            html += `
+                <li data-category="${subName}" data-index="${index}">
+                  <div class="img_box"><img src="${item.img}" alt="${item.title}"></div>
+                  <div class="txt_box">
+                    <h4>${item.title}</h4>
+                    <p>${item.text}</p>
+                  </div>
+                </li>`;
+          });
+        } else {
+          html = "<li class='empty'>등록된 스토리가 없습니다.</li>";
+        }
+        storyBoard.innerHTML = html;
+      }
+
+      // 메인 카테고리 클릭 이벤트
+      mainCategory.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          mainCategory.forEach((li) => li.classList.remove("active"));
+          btn.classList.add("active");
+          renderSub(btn.id);
+        });
+      });
+
+      // 서브 메뉴 클릭 이벤트 (이벤트 위임)
+      sub.addEventListener("click", (e) => {
+        if (e.target.tagName === "LI") {
+          sub.querySelectorAll("li").forEach((li) => li.classList.remove("on"));
+          e.target.classList.add("on");
+          renderStoryBoard(e.target.innerText);
+        }
+      });
+
+      // 카드 클릭 시 모달 열기
+      storyBoard.addEventListener("click", (e) => {
+        const card = e.target.closest("li");
+        if (!card || card.classList.contains("empty")) return;
+
+        const category = card.dataset.category;
+        const index = card.dataset.index;
+        const targetData = storyData[category][index];
+
+        modalBody.innerHTML = `
+            <img src="${targetData.img}" alt="${targetData.title}">
+            <h2>${targetData.title}</h2>
+            <p>${targetData.text}</p>
+            <div style="margin-top:20px; padding-top:20px; border-top:1px solid #eee; color:#444; line-height:1.8;">
+              ${
+                targetData.detail
+                  ? targetData.detail.replace(/\n/g, "<br>")
+                  : "상세 정보가 없습니다."
+              }
+            </div>
+          `;
+
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      });
+
+      closeBtn.addEventListener("click", closeModal);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      function closeModal() {
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+
+      // [실행] 페이지 로드 시 서버 데이터 호출
+      loadStories();
+    </script>
+  </body>
 </html>
