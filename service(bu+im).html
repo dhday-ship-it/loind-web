@@ -22,7 +22,7 @@
         .nav-menu { display: flex; gap: 30px; }
         .nav-item { color: #666; text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
 
-        /* --- [3] 사이드바 --- */
+        /* --- [3] 사이드바 (정의 문구 추가) --- */
         .side-nav {
             position: fixed; top: 80px; left: 0; width: 280px; height: calc(100vh - 80px);
             padding: 40px 20px; border-right: 1px solid #f2f2f2; background: #fff;
@@ -35,7 +35,13 @@
         }
         .side-group-box.active { border-color: #000; background: #fafafa; }
         .side-label { display: block; font-size: 0.75rem; font-weight: 900; margin-bottom: 8px; letter-spacing: 0.05em; }
-        .side-definition { display: block; font-size: 0.72rem; color: #888; line-height: 1.5; margin-bottom: 16px; word-break: keep-all; font-weight: 500; }
+        
+        /* 추가된 정의 문구 스타일 */
+        .side-definition { 
+            display: block; font-size: 0.72rem; color: #888; line-height: 1.5; 
+            margin-bottom: 16px; word-break: keep-all; font-weight: 500;
+        }
+        
         .sub-link-list { list-style: none; padding-left: 10px; border-left: 1px solid #eee; }
         .sub-link { color: #aaa; font-size: 0.68rem; font-weight: 600; margin-bottom: 4px; display: block; transition: 0.2s; }
         .side-group-box:hover .sub-link { color: #666; }
@@ -53,7 +59,6 @@
         .page-header { padding: 80px 8% 60px; max-width: 1400px; }
         .page-header h2 { font-size: 3.5rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -0.04em; }
         .page-header p { font-size: 1.2rem; color: #666; line-height: 1.6; margin-bottom: 50px; }
-        .page-header p strong { color: #111; font-weight: 800; }
 
         .shortcut-header { font-size: 0.7rem; font-weight: 800; color: #999; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.1em; }
         .link-group-wrapper { display: flex; gap: 100px; border-top: 1px solid #f2f2f2; padding-top: 40px; }
@@ -69,8 +74,9 @@
         /* --- [5] 서비스 섹션 --- */
         .service-section { padding: 120px 8%; border-top: 1px solid #f2f2f2; }
         .section-header { margin-bottom: 60px; max-width: 900px; }
-        .section-header h3 { font-size: 2.4rem; font-weight: 900; margin-bottom: 20px; color: #000; letter-spacing: -0.02em; }
-        .section-header p { font-size: 1.05rem; color: #777; line-height: 1.8; word-break: keep-all; font-weight: 500; }
+        .section-header span { color: #8e55ff; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.1em; display: block; margin-bottom: 12px; }
+        .section-header h3 { font-size: 2.4rem; font-weight: 900; margin-bottom: 20px; }
+        .section-header p { font-size: 1.05rem; color: #777; line-height: 1.8; word-break: keep-all; }
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 24px; }
         .service-card {
@@ -101,7 +107,7 @@
         <div class="side-menu-top">
             <div class="side-group-box active" onclick="scrollToSection('business', this)">
                 <span class="side-label">BUSINESS</span>
-                <span class="side-definition">우리가 가진 탁월함으로 비즈니스의 정점에 닿는 일</span>
+                <span class="side-definition">우리만의 방식으로 본연에 집중할 수 있는 최상의 비즈니스 환경을 설계하는 일</span>
                 <div class="sub-link-list">
                     <span class="sub-link">LOIND Core</span>
                     <span class="sub-link">Hyper Connect</span>
@@ -112,7 +118,7 @@
 
             <div class="side-group-box" onclick="scrollToSection('impact', this)">
                 <span class="side-label">IMPACT</span>
-                <span class="side-definition">우리가 가진 사랑으로 새로운 기회와 위로를 만드는 일</span>
+                <span class="side-definition">우리만의 방식으로 새로운 기회와 위로를 만드는 일</span>
                 <div class="sub-link-list">
                     <span class="sub-link">Mission Sync</span>
                     <span class="sub-link">Care Search</span>
@@ -126,7 +132,7 @@
     <main class="content">
         <div class="page-header">
             <h2>Service</h2>
-            <p>우리는 전문적인 <strong>비즈니스</strong>로 시장의 기준을 세우고,<br>진정성 있는 <strong>임팩트</strong>로 세상의 빈곳을 채웁니다.</p>
+            <p>우리는 전문적인 <strong>비즈니스</strong>로 시장의 기준을 세우고, 진정성 있는 <strong>임팩트</strong>로 세상의 빈곳을 채웁니다.</p>
 
             <h5 class="shortcut-header">서비스 바로가기</h5>
             <div class="link-group-wrapper">
@@ -152,8 +158,9 @@
 
         <section class="service-section" id="business">
             <div class="section-header">
-                <h3>01. Business Architecture</h3>
-                <p>압도적인 전문성으로 파트너의 비즈니스 퍼포먼스를 극대화하는 프로페셔널의 영역입니다.</p>
+                <span>01. Marketplace Excellence</span>
+                <h3>Business Solutions</h3>
+                <p>에이전시 매니지먼트와 유통 인프라 구축을 통해 파트너의 비즈니스 퍼포먼스를 극대화합니다.</p>
             </div>
             <div class="grid-container">
                 <article class="service-card"><div class="card-info"><span class="card-tag">Management</span><h4>LOIND Core</h4><p>브랜드의 정체성을 시장에 각인시키는 전략적 매니지먼트와 통합 브랜딩 솔루션을 제공합니다.</p></div></article>
@@ -163,8 +170,9 @@
 
         <section class="service-section" id="impact">
             <div class="section-header">
-                <h3>02. Social Impact</h3>
-                <p>사랑의 마음으로 이웃과 공동체에 실질적인 변화를 소망하는 소셜 임팩트 영역입니다.</p>
+                <span>02. Social Flourishing</span>
+                <h3>Social Impact</h3>
+                <p>비즈니스에서 얻은 결실을 통해 세상의 사각지대에 온기를 전합니다.</p>
             </div>
             <div class="grid-container">
                 <article class="service-card"><div class="card-info"><span class="card-tag">Church Support</span><h4>Mission Sync</h4><p>디지털 자립이 필요한 소규모 공동체와 미자립교회에 필요한 기술 및 인프라를 기부하고 운영을 돕습니다.</p></div></article>
