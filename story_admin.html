@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | LOIND Story Management</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Pretendard", sans-serif;
+        background: #f5f5f7;
+        padding: 50px;
+        color: #333;
+      }
+
+      h1 {
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      h1 span {
+        font-size: 1rem;
+        background: #8e55ff;
+        color: #fff;
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+
+      /* 입력 폼 섹션 */
+      .input_section {
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        margin-bottom: 40px;
+      }
+      .grid_form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 0.9rem;
+      }
+      textarea {
+        grid-column: span 2;
+        height: 100px;
+        resize: none;
+      }
+      .full {
+        grid-column: span 2;
+      }
+
+      button#add_btn {
+        grid-column: span 2;
+        padding: 15px;
+        background: #8e55ff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: 0.3s;
+      }
+      button#add_btn:hover {
+        background: #7644e0;
+      }
+
+      /* 데이터 테이블 */
+      .list_section {
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        font-size: 0.85rem;
+      }
+      th {
+        background: #f9f9f9;
+        color: #666;
+        font-weight: 600;
+      }
+      .thumb {
+        width: 60px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+      .del_btn {
+        background: #ff4d4d;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .del_btn:hover {
+        background: #e60000;
+      }
+
+      .nav_links {
+        margin-bottom: 20px;
+      }
+      .nav_links a {
+        color: #8e55ff;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav_links">
+      <a href="story.html">← 사용자 페이지로 돌아가기</a>
+    </div>
+
+    <h1>Story 관리자 <span>Admin</span></h1>
+
+    <div class="input_section">
+      <div class="grid_form">
+        <select id="new_category">
+          <option value="platform">platform</option>
+          <option value="commerce">commerce</option>
+          <option value="착한일">착한일</option>
+          <option value="착한일2">착한일2</option>
+        </select>
+        <input type="text" id="new_title" placeholder="제목을 입력하세요" />
+        <input
+          type="text"
+          id="new_img"
+          class="full"
+          placeholder="이미지 URL (https://...)"
+        />
+        <input
+          type="text"
+          id="new_text"
+          class="full"
+          placeholder="목록에 보일 짧은 요약 문구"
+        />
+        <textarea
+          id="new_detail"
+          placeholder="팝업 상세 내용을 입력하세요"
+        ></textarea>
+        <button id="add_btn">새 스토리 데이터 등록하기</button>
+      </div>
+    </div>
+
+    <div class="list_section">
+      <h3>등록된 데이터 목록</h3>
+      <table id="data_table">
+        <thead>
+          <tr>
+            <th>카테고리</th>
+            <th>이미지</th>
+            <th>제목</th>
+            <th>설명</th>
+            <th>관리</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script type="module">
+      // 관리자 페이지 접속 시 비밀번호 확인
+      const password = prompt("관리자 비밀번호를 입력하세요.");
+      if (password !== "1234") {
+        // 본인이 사용할 비밀번호
+        alert("권한이 없습니다.");
+        location.href = "index.html"; // 틀리면 메인으로 쫓아냄
+      }
+      // 1. 필요한 도구들 빠짐없이 import
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+        getDocs,
+        deleteDoc,
+        doc,
+        query,
+        orderBy,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
+        authDomain: "loind-472cd.firebaseapp.com",
+        projectId: "loind-472cd",
+        storageBucket: "loind-472cd.firebasestorage.app",
+        messagingSenderId: "405998534289",
+        appId: "1:405998534289:web:0f861bc822e1ea5391c930",
+        measurementId: "G-5B5MM51YH2",
+      };
+
+      // 3. 초기화 및 전역 변수 선언
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // 에러 방지를 위해 변수들을 미리 선언합니다.
+      const tableBody = document.querySelector("#data_table tbody");
+      const addBtn = document.querySelector("#add_btn");
+
+      // [기능 1] 서버에서 데이터 불러와서 테이블 렌더링
+      async function renderTable() {
+        if (!tableBody) return;
+        tableBody.innerHTML =
+          "<tr><td colspan='5' style='text-align:center; padding:20px;'>데이터 불러오는 중...</td></tr>";
+
+        try {
+          // 최신순 정렬 (createdAt 기준)
+          const q = query(
+            collection(db, "stories"),
+            orderBy("createdAt", "desc")
+          );
+          const querySnapshot = await getDocs(q);
+
+          tableBody.innerHTML = "";
+
+          if (querySnapshot.empty) {
+            tableBody.innerHTML =
+              "<tr><td colspan='5' style='text-align:center; padding:20px;'>등록된 데이터가 없습니다.</td></tr>";
+            return;
+          }
+
+          querySnapshot.forEach((docSnap) => {
+            const item = docSnap.data();
+            const id = docSnap.id;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td><strong>${item.category}</strong></td>
+              <td><img src="${
+                item.img
+              }" style="width:60px; height:40px; object-fit:cover; border-radius:4px;"></td>
+              <td>${item.title}</td>
+              <td>${item.text ? item.text.substring(0, 15) : ""}...</td>
+              <td><button class="del_btn" data-id="${id}" style="background:#ff4d4d; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">삭제</button></td>
+            `;
+            tableBody.appendChild(tr);
+          });
+        } catch (e) {
+          console.error("데이터 로드 실패: ", e);
+          tableBody.innerHTML =
+            "<tr><td colspan='5' style='text-align:center; color:red;'>데이터 로드 실패 (Rules 설정을 확인하세요)</td></tr>";
+        }
+      }
+
+      // [기능 2] 데이터 추가 버튼 클릭
+      if (addBtn) {
+        addBtn.addEventListener("click", async () => {
+          const category = document.querySelector("#new_category").value;
+          const title = document.querySelector("#new_title").value;
+          const img = document.querySelector("#new_img").value;
+          const text = document.querySelector("#new_text").value;
+          const detail = document.querySelector("#new_detail").value;
+
+          if (!title || !img) {
+            alert("제목과 이미지는 필수입니다!");
+            return;
+          }
+
+          const data = {
+            category,
+            title,
+            img,
+            text,
+            detail,
+            createdAt: new Date(),
+          };
+
+          try {
+            await addDoc(collection(db, "stories"), data);
+            alert("서버에 성공적으로 등록되었습니다!");
+
+            // 입력창 비우기
+            document
+              .querySelectorAll("input, textarea")
+              .forEach((el) => (el.value = ""));
+            // 목록 새로고침
+            renderTable();
+          } catch (e) {
+            alert("에러 발생: " + e.message);
+            console.error("에러 상세: ", e);
+          }
+        });
+      }
+
+      // [기능 3] 삭제 버튼 클릭 (이벤트 위임 방식)
+      if (tableBody) {
+        tableBody.addEventListener("click", async (e) => {
+          if (e.target.classList.contains("del_btn")) {
+            const id = e.target.dataset.id;
+            if (confirm("정말 삭제하시겠습니까?")) {
+              try {
+                await deleteDoc(doc(db, "stories", id));
+                alert("삭제되었습니다.");
+                renderTable();
+              } catch (e) {
+                alert("삭제 실패: " + e.message);
+              }
+            }
+          }
+        });
+      }
+
+      // 최초 실행
+      renderTable();
+    </script>
+  </body>
+</html>
