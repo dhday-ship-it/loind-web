@@ -76,11 +76,28 @@
         .service-card {
             background: #fff; padding: 40px; border-radius: 24px; border: 1px solid #f0f0f0;
             display: flex; flex-direction: column; gap: 20px; transition: 0.4s;
+            cursor: pointer; /* 클릭 가능 표시 */
         }
         .service-card:hover { border-color: #8e55ff; box-shadow: 0 20px 40px rgba(142,85,255,0.06); transform: translateY(-5px); }
         .card-tag { font-size: 0.7rem; font-weight: 800; color: #8e55ff; text-transform: uppercase; margin-bottom: 8px; display: block; }
         .card-info h4 { font-size: 1.3rem; font-weight: 800; margin-bottom: 12px; color: #000; }
         .card-info p { font-size: 0.95rem; color: #666; line-height: 1.7; word-break: keep-all; }
+
+        /* --- [추가] 상세 페이지 오버레이 스타일 --- */
+        .detail-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.98); z-index: 2000;
+            display: none; padding: 100px 8%; overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+        .detail-overlay.active { display: block; }
+        .detail-close { position: fixed; top: 40px; right: 50px; font-weight: 800; cursor: pointer; border-bottom: 2px solid #000; }
+        .detail-content { max-width: 900px; margin: 0 auto; }
+        .detail-content h1 { font-size: 3rem; font-weight: 900; margin-bottom: 30px; }
+        .detail-text { font-size: 1.1rem; color: #444; line-height: 1.8; margin-bottom: 40px; }
+        .detail-list { list-style: none; border-top: 1px solid #eee; padding-top: 40px; }
+        .detail-list li { margin-bottom: 20px; font-weight: 600; display: flex; align-items: flex-start; gap: 15px; }
+        .detail-list li::before { content: "0"attr(data-num); color: #8e55ff; font-size: 0.8rem; margin-top: 5px; }
 
         @media (max-width: 1200px) { .content { margin-left: 0; } .side-nav { display: none; } }
     </style>
@@ -152,28 +169,117 @@
 
         <section class="service-section" id="business">
             <div class="section-header">
-                <h3>01. Business Architecture</h3>
+                <h3>Business Architecture</h3>
                 <p>압도적인 전문성으로 파트너의 비즈니스 퍼포먼스를 극대화하는 프로페셔널의 영역입니다.</p>
             </div>
             <div class="grid-container">
-                <article class="service-card"><div class="card-info"><span class="card-tag">Management</span><h4>LOIND Core</h4><p>브랜드의 정체성을 시장에 각인시키는 전략적 매니지먼트와 통합 브랜딩 솔루션을 제공합니다.</p></div></article>
-                <article class="service-card"><div class="card-info"><span class="card-tag">Infrastructure</span><h4>Hyper Connect</h4><p>복잡한 유통 경로를 단순화하고 생산자와 소비자를 가장 효율적으로 잇는 지능형 네트워크를 구축합니다.</p></div></article>
+                <article class="service-card" onclick="openDetail('core')">
+                    <div class="card-info">
+                        <span class="card-tag">Management</span>
+                        <h4>LOIND Core</h4>
+                        <p>브랜드의 정체성을 시장에 각인시키는 전략적 매니지먼트와 통합 브랜딩 솔루션을 제공합니다.</p>
+                    </div>
+                </article>
+                <article class="service-card" onclick="openDetail('connect')">
+                    <div class="card-info">
+                        <span class="card-tag">Infrastructure</span>
+                        <h4>Hyper Connect</h4>
+                        <p>복잡한 유통 경로를 단순화하고 생산자와 소비자를 가장 효율적으로 잇는 지능형 네트워크를 구축합니다.</p>
+                    </div>
+                </article>
             </div>
         </section>
 
         <section class="service-section" id="impact">
             <div class="section-header">
-                <h3>02. Social Impact</h3>
+                <h3>Social Impact</h3>
                 <p>사랑의 마음으로 이웃과 공동체에 실질적인 변화를 소망하는 소셜 임팩트 영역입니다.</p>
             </div>
             <div class="grid-container">
-                <article class="service-card"><div class="card-info"><span class="card-tag">Church Support</span><h4>Mission Sync</h4><p>디지털 자립이 필요한 소규모 공동체와 미자립교회에 필요한 기술 및 인프라를 기부하고 운영을 돕습니다.</p></div></article>
-                <article class="service-card"><div class="card-info"><span class="card-tag">Senior Care</span><h4>Care Search</h4><p>고립된 어르신들의 생활 패턴을 살피고 필요한 도움을 적시에 연결하는 지역사회 케어 시스템을 운영합니다.</p></div></article>
+                <article class="service-card" onclick="openDetail('mission')">
+                    <div class="card-info">
+                        <span class="card-tag">Church Support</span>
+                        <h4>Mission Sync</h4>
+                        <p>디지털 자립이 필요한 소규모 공동체와 미자립교회에 필요한 기술 및 인프라를 기부하고 운영을 돕습니다.</p>
+                    </div>
+                </article>
+                <article class="service-card" onclick="openDetail('care')">
+                    <div class="card-info">
+                        <span class="card-tag">Senior Care</span>
+                        <h4>Care Search</h4>
+                        <p>고립된 어르신들의 생활 패턴을 살피고 필요한 도움을 적시에 연결하는 지역사회 케어 시스템을 운영합니다.</p>
+                    </div>
+                </article>
             </div>
         </section>
     </main>
 
+    <div id="detailOverlay" class="detail-overlay">
+        <div class="detail-close" onclick="closeDetail()">CLOSE</div>
+        <div class="detail-content">
+            <span id="dt-tag" class="card-tag"></span>
+            <h1 id="dt-title"></h1>
+            <p id="dt-text" class="detail-text"></p>
+            <ul id="dt-list" class="detail-list"></ul>
+        </div>
+    </div>
+
     <script>
+        /* 상세 페이지 데이터 */
+        const detailData = {
+            core: {
+                tag: 'Management',
+                title: 'LOIND Core',
+                text: '단순한 심볼 제작을 넘어 브랜드의 영혼과 시장 경쟁력을 설계합니다. 파트너가 가진 유니크한 가치를 발굴하여 소비자에게 각인되는 압도적인 브랜드 경험을 구축합니다.',
+                list: ['브랜드 전략 및 포지셔닝 설계', '비주얼 아이덴티티(BI) 시스템 구축', '마케팅 커뮤니케이션 전략 수립']
+            },
+            connect: {
+                tag: 'Infrastructure',
+                title: 'Hyper Connect',
+                text: '복잡하고 비효율적인 유통 과정을 혁신합니다. 데이터 기반의 지능형 네트워크를 통해 생산부터 최종 소비까지의 경로를 최단 거리로 연결합니다.',
+                list: ['스마트 유통망 프로세스 설계', '실시간 공급망 트래킹 시스템', '글로벌 파트너십 매칭 인프라']
+            },
+            mission: {
+                tag: 'Church Support',
+                title: 'Mission Sync',
+                text: '기술의 격차가 사역의 격차가 되지 않도록 돕습니다. 미자립 공동체와 교회가 세상과 원활하게 소통할 수 있도록 필수적인 디지털 인프라를 무상 지원합니다.',
+                list: ['커뮤니티 전용 웹/앱 플랫폼 구축', '라이브 스트리밍 및 미디어 장비 지원', '디지털 소통 역량 강화 교육']
+            },
+            care: {
+                tag: 'Senior Care',
+                title: 'Care Search',
+                text: '사각지대에 놓인 이웃을 기술로 보호합니다. 고독사를 예방하고 고립된 삶에 온기를 더하는 데이터 기반의 지역사회 돌봄 안전망을 실현합니다.',
+                list: ['생활 패턴 분석 AI 케어 시스템', '지역 네트워크 긴급 대응 프로세스', '맞춤형 복지 서비스 연계 솔루션']
+            }
+        };
+
+        /* 상세 페이지 열기 */
+        function openDetail(id) {
+            const data = detailData[id];
+            document.getElementById('dt-tag').innerText = data.tag;
+            document.getElementById('dt-title').innerText = data.title;
+            document.getElementById('dt-text').innerText = data.text;
+            
+            const listUl = document.getElementById('dt-list');
+            listUl.innerHTML = '';
+            data.list.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.setAttribute('data-num', index + 1);
+                li.innerText = item;
+                listUl.appendChild(li);
+            });
+
+            document.getElementById('detailOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden'; // 배경 스크롤 차단
+        }
+
+        /* 상세 페이지 닫기 */
+        function closeDetail() {
+            document.getElementById('detailOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto'; // 배경 스크롤 재개
+        }
+
+        /* 기존 스크롤 함수 */
         function scrollToSection(id, element) {
             document.querySelectorAll('.side-group-box').forEach(box => box.classList.remove('active'));
             element.classList.add('active');
