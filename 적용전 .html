@@ -3,97 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | LOIND</title>
+    <title>Contact | LOIND</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
-        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #fff; color: #111; font-family: 'Pretendard', sans-serif; line-height: 1.6; display: flex; }
+        body { font-family: 'Pretendard', sans-serif; background: #fff; color: #111; line-height: 1.2; }
 
-        /* --- [1] 네비게이션 & 사이드바 --- */
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid #f2f2f2; }
-        .logo-main { font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; text-decoration: none; color: #000; }
-        .nav-menu { display: flex; gap: 30px; }
-        .nav-item { color: #666; text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
-
-        .side-nav { position: fixed; top: 80px; left: 0; width: 250px; height: calc(100vh - 80px); padding: 60px 50px; border-right: 1px solid #f2f2f2; background: #fff; z-index: 100; }
-        .side-nav ul { list-style: none; }
-        .side-nav li { margin-bottom: 25px; }
-        .side-nav a { color: #bbb; text-decoration: none; font-weight: 600; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; }
-        .side-nav a.active, .side-nav a:hover { color: #000; }
-
-        /* --- [2] 메인 컨텐츠 영역 --- */
-        .content { margin-left: 250px; padding-top: 80px; width: 100%; }
-
-        /* --- [3] 비디오 섹션 (요청사항 반영: 둥근 모서리 및 크기 조절) --- */
-        .video-section { padding: 60px 10% 20px; max-width: 1400px; }
-        .video-container { 
-            position: relative; 
-            width: 100%; 
-            height: 520px; 
-            border-radius: 40px; /* 모서리 둥글게 */
-            overflow: hidden; 
-            background-color: #000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+        /* --- 상단 네비게이션 (유지) --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            display: flex; align-items: center; 
+            justify-content: space-between;
+            padding: 0 50px;
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid #f2f2f2;
         }
-        .video-container video { width: 100%; height: 100%; object-fit: cover; }
-        .video-overlay { 
-            position: absolute; 
-            top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.15); /* 영상미를 위해 옅은 틴트 처리 */
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center; 
-            color: #fff; 
+        .logo-area { display: flex; align-items: center; text-decoration: none; }
+        .logo-main { font-size: 1.5rem; font-weight: 900; color: #000; letter-spacing: 2px; }
+        .logo-slogan {
+            font-size: 0.7rem; font-weight: 700; color: #8e55ff;
+            margin-left: 15px; padding-left: 15px;
+            border-left: 1px solid #eee;
+            opacity: 0; transform: translateX(-10px);
+            transition: all 0.4s ease; white-space: nowrap;
         }
-        .video-overlay h1 { font-size: 3rem; font-weight: 800; line-height: 1.3; letter-spacing: -1.5px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .logo-area:hover .logo-slogan { opacity: 1; transform: translateX(0); }
+        .nav-menu { display: flex; gap: 35px; }
+        .nav-item { color: #000; text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: opacity 0.3s; }
+        .nav-item:hover { opacity: 0.5; }
 
-        /* --- [4] 아티클 섹션 공통 스타일 --- */
-        section { padding: 100px 10%; max-width: 1400px; border-bottom: 1px solid #f2f2f2; }
-        .num { font-size: 0.75rem; font-weight: 800; color: #8e55ff; letter-spacing: 2px; margin-bottom: 20px; display: block; }
-        .section-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 50px; letter-spacing: -1.5px; }
+        /* --- 컨테이너 (유지) --- */
+        .contact-container {
+            max-width: 1400px; margin: 0 auto; padding: 150px 80px; min-height: 80vh;
+        }
+        .contact-header {
+            margin-bottom: 120px; border-bottom: 1px solid #111; padding-bottom: 40px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+        }
+        .contact-header h1 { font-size: 6rem; font-weight: 900; letter-spacing: -4px; }
+        .contact-header p { font-size: 1.1rem; color: #666; margin-bottom: 10px; text-align: right; line-height: 1.6; }
 
-        /* 01. Mission */
-        .mission-box { background-color: #f9f9fb; border-radius: 30px; padding: 60px; }
-        .mission-text { font-size: 1.6rem; font-weight: 700; color: #333; word-break: keep-all; }
-        .mission-text span { color: #8e55ff; }
+        .contact-content { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; }
+        .info-left { display: flex; flex-direction: column; gap: 60px; }
+        .info-box .label { display: block; font-size: 0.8rem; font-weight: 800; color: #8e55ff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .info-box .value { font-size: 2.2rem; font-weight: 700; letter-spacing: -1px; word-break: break-all; }
 
-        /* 02. Identity */
-        .identity-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; margin-top: 20px; }
-        .id-card { background: #111; border-radius: 24px; padding: 80px; color: #fff; text-align: center; }
-        .id-card h3 { font-size: 4rem; font-weight: 900; letter-spacing: 12px; }
-        .id-info-card { background: #f4f4f4; border-radius: 24px; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
-        .color-palette { display: flex; gap: 15px; margin-top: 20px; }
-        .color-dot { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ddd; }
+        .info-right { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; }
 
-        /* 03. Core Value */
-        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-        .value-item h4 { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; border-bottom: 2px solid #111; display: inline-block; padding-bottom: 5px; }
-        .value-item p { color: #666; font-size: 1rem; line-height: 1.7; }
+        /* --- [수정] 명함 섹션: 요청 정보 반영 및 저장 버튼용 세팅 --- */
+        .brand-seal {
+            text-align: right;
+            border: 1px solid #eee;
+            padding: 40px;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #fff; /* 저장 시 배경색 필요 */
+        }
+        .brand-seal .logo { font-size: 2.5rem; font-weight: 900; letter-spacing: -2px; }
+        .brand-seal .biz-info { font-size: 0.85rem; color: #111; line-height: 1.5; font-weight: 500; }
+        .brand-seal .tag { font-size: 0.9rem; color: #999; font-weight: 500; margin-top: 10px; border-top: 1px solid #f2f2f2; padding-top: 10px; }
 
-        /* 04. History (카카오뱅크 스타일 타임라인) */
-        .history-wrap { position: relative; padding-left: 40px; }
-        .history-line { position: absolute; left: 0; top: 10px; bottom: 0; width: 2px; background: #eee; }
-        .history-year-group { position: relative; margin-bottom: 80px; }
-        .history-dot { position: absolute; left: -46px; top: 12px; width: 14px; height: 14px; border-radius: 50%; background: #000; border: 4px solid #fff; z-index: 2; }
-        .history-row { display: flex; margin-bottom: 20px; }
-        .history-month { width: 60px; font-weight: 800; color: #8e55ff; flex-shrink: 0; }
-        .history-detail { font-size: 1.1rem; font-weight: 500; color: #333; }
+        /* 저장 아이콘 버튼 */
+        .save-card-btn {
+            margin-top: 15px;
+            background: none; border: none; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.8rem; font-weight: 700; color: #bbb;
+            transition: color 0.3s;
+        }
+        .save-card-btn:hover { color: #111; }
+        .save-card-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .sns-wrap { display: flex; gap: 20px; margin-top: 40px; }
+        .sns-wrap a { font-size: 1rem; font-weight: 700; text-decoration: none; color: #111; border-bottom: 1px solid #111; padding-bottom: 2px; transition: 0.3s; }
+        .sns-wrap a:hover { color: #8e55ff; border-color: #8e55ff; }
+
+        .footer-dark { background: #111; padding: 80px; color: #fff; display: flex; justify-content: space-between; align-items: flex-start; }
+        .f-left p { color: #555; font-size: 0.9rem; margin-top: 10px; }
+        .f-right { text-align: right; }
+        .btn-top { width: 45px; height: 45px; background: #222; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-bottom: 20px; cursor: pointer; }
 
         @media (max-width: 1024px) {
-            .side-nav { display: none; }
-            .content { margin-left: 0; }
-            .identity-grid, .value-grid { grid-template-columns: 1fr; }
-            .video-container { height: 350px; }
-            .video-overlay h1 { font-size: 1.8rem; }
+            .logo-slogan { display: none; }
+            .contact-content { grid-template-columns: 1fr; gap: 60px; }
+            .info-right { align-items: flex-start; }
+            .contact-header h1 { font-size: 4rem; }
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <a href="index.html" class="logo-main">LOIND</a>
+        <a href="index.html" class="logo-area">
+            <span class="logo-main">LOIND</span>
+            <span class="logo-slogan">THE GREATEST EXPERIENCE</span>
+        </a>
         <div class="nav-menu">
             <a href="about.html" class="nav-item">about</a>
             <a href="business.html" class="nav-item">business</a>
@@ -103,105 +111,84 @@
         </div>
     </nav>
 
-    <aside class="side-nav">
-        <ul>
-            <li><a href="#mission" class="active">01 MISSION</a></li>
-            <li><a href="#identity">02 IDENTITY</a></li>
-            <li><a href="#value">03 VALUE</a></li>
-            <li><a href="#history">04 HISTORY</a></li>
-        </ul>
-    </aside>
-
-    <main class="content">
-        <div class="video-section">
-            <div class="video-container">
-                <video autoplay muted loop playsinline poster="">
-                    <source src="https://www.kakaobank.com/view/video/KO/main-intro-visual-video_pc.mp4" type="video/mp4">
-                    사용자의 브라우저가 비디오를 지원하지 않습니다.
-                </video>
-                <div class="video-overlay">
-                    <h1>Connecting Tech with Human<br>LOIND Experience</h1>
-                </div>
-            </div>
+    <main class="contact-container">
+        <div class="contact-header">
+            <h1>CONTACT.</h1>
+            <p>프로젝트 문의 및 파트너십 제안은<br>언제나 열려있습니다.</p>
         </div>
 
-        <section id="mission">
-            <span class="num">01 / MISSION</span>
-            <h2 class="section-title">우리의 지향점</h2>
-            <div class="mission-box">
-                <p class="mission-text">
-                    LOIND는 기술이 사람의 감각에 닿는 순간을 설계합니다.<br>
-                    단순한 연결을 넘어, <span>최고의 경험</span>을 전달하는 것이 우리의 소명입니다.
-                </p>
+        <div class="contact-content">
+            <div class="info-left">
+                <div class="info-box">
+                    <span class="label">Project Inquiry</span>
+                    <span class="value">hello@loind.com</span>
+                </div>
+                <div class="info-box">
+                    <span class="label">Partnership</span>
+                    <span class="value">partner@loind.com</span>
+                </div>
+                <div class="info-box">
+                    <span class="label">Office</span>
+                    <span class="value">115, Wangsimni-ro, Seongdong-gu,<br>Seoul, Korea</span>
+                </div>
+                
+                <div class="sns-wrap">
+                    <a href="#">INSTAGRAM</a>
+                    <a href="#">LINKEDIN</a>
+                    <a href="#">BEHANCE</a>
+                </div>
             </div>
-        </section>
 
-        <section id="identity">
-            <span class="num">02 / IDENTITY</span>
-            <h2 class="section-title">브랜드 시스템</h2>
-            <div class="identity-grid">
-                <div class="id-card">
-                    <h3>LOIND</h3>
-                </div>
-                <div class="id-info-card">
-                    <p style="font-weight: 800; margin-bottom: 10px;">Visual Language</p>
-                    <p style="color: #666; font-size: 0.95rem;">단단한 직선과 여백의 조화를 통해 신뢰와 확장성을 표현합니다.</p>
-                    <div class="color-palette">
-                        <div class="color-dot" style="background: #111;"></div>
-                        <div class="color-dot" style="background: #007bff;"></div>
-                        <div class="color-dot" style="background: #fff;"></div>
+            <div class="info-right">
+                <div class="brand-seal" id="cardArea">
+                    <div class="logo">LOIND</div>
+                    <div class="biz-info">
+                        <p style="font-weight: 800; margin-bottom: 5px;">(주)로인드 (LOIND Co., Ltd.)</p>
+                        <p>사업자등록번호 : 375-88-00197</p>
+                        <p>대표이사 : 정대희</p>
+                        <div class="tag">Beyond the Technology.</div>
                     </div>
                 </div>
+                
+                <button class="save-card-btn" onclick="saveAsPng()">
+                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    명함 저장 (PNG)
+                </button>
             </div>
-        </section>
-
-        <section id="value">
-            <span class="num">03 / CORE VALUE</span>
-            <h2 class="section-title">핵심 가치</h2>
-            <div class="value-grid">
-                <div class="value-item">
-                    <h4>Trust</h4>
-                    <p>정직한 과정을 통해 결과의 가치를 증명하고 고객과의 약속을 지킵니다.</p>
-                </div>
-                <div class="value-item">
-                    <h4>Innovation</h4>
-                    <p>당연한 것에 의문을 던지며 끊임없이 더 나은 방식을 탐구합니다.</p>
-                </div>
-                <div class="value-item">
-                    <h4>Intuition</h4>
-                    <p>복잡함을 덜어내고 본질에 집중하여 직관적인 경험을 설계합니다.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="history" style="border-bottom: none;">
-            <span class="num">04 / HISTORY</span>
-            <h2 class="section-title">우리의 여정</h2>
-            <div class="history-wrap">
-                <div class="history-line"></div>
-                <div class="history-year-group">
-                    <div class="history-dot"></div>
-                    <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px;">2026</h3>
-                    <div class="history-row">
-                        <span class="history-month">02월</span>
-                        <p class="history-detail">글로벌 통합 사이트 loind.com 오픈</p>
-                    </div>
-                    <div class="history-row">
-                        <span class="history-month">01월</span>
-                        <p class="history-detail">북미 디자인 파트너십 허브 구축</p>
-                    </div>
-                </div>
-                <div class="history-year-group">
-                    <div class="history-dot"></div>
-                    <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px;">2025</h3>
-                    <div class="history-row">
-                        <span class="history-month">10월</span>
-                        <p class="history-detail">브랜드 이노베이션 어워드 대상 수상</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
     </main>
+
+    <footer class="footer-dark">
+        <div class="f-left">
+            <nav style="margin-bottom: 20px;">
+                <a href="#" style="color:#fff; text-decoration:none; margin-right:20px;">About</a>
+                <a href="#" style="color:#fff; text-decoration:none; margin-right:20px;">Sessions</a>
+                <a href="#" style="color:#fff; text-decoration:none; margin-right:20px;">Programs</a>
+                <a href="#" style="color:#fff; text-decoration:none;">FAQ</a>
+            </nav>
+            <p>© 2026 LOIND. All rights reserved.</p>
+        </div>
+        <div class="f-right">
+            <div class="btn-top" onclick="window.scrollTo({top:0, behavior:'smooth'})">▲</div>
+            <p style="color:#fff; font-weight:700;">DL_DANGS@NAVERCORP.COM</p>
+            <p style="color:#555; margin-top:5px;">개인정보 처리방침</p>
+        </div>
+    </footer>
+
+    <script>
+        function saveAsPng() {
+            const card = document.getElementById('cardArea');
+            html2canvas(card, {
+                scale: 3, // 화질을 위해 3배율 저장
+                backgroundColor: "#ffffff"
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'LOIND_Business_Card.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+    </script>
 
 </body>
 </html>
