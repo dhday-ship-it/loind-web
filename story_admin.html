@@ -3,216 +3,419 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin | LOIND Story Management</title>
+    <title>LOIND | admin</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
     <style>
+      :root {
+        --bg: #ffffff;
+        --accent: #000000;
+        --sub-text: #86868b;
+        --border: #e5e5e7;
+        --soft-gray: #f5f5f7;
+        --ease: cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
       }
       body {
-        font-family: "Pretendard", sans-serif;
-        background: #f5f5f7;
-        padding: 50px;
-        color: #333;
-        display: none; /* 비밀번호 확인 전까지 숨김 */
-      }
-      h1 {
-        margin-bottom: 30px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      h1 span {
-        font-size: 1rem;
-        background: #8e55ff;
-        color: #fff;
-        padding: 4px 12px;
-        border-radius: 20px;
+        font-family: "Pretendard", -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--accent);
+        display: none; /* 인증 전 숨김 */
+        line-height: 1.5;
       }
 
-      .input_section {
-        background: #fff;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-        margin-bottom: 40px;
+      /* [Header] Nav Links Added */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: saturate(180%) blur(20px);
+        z-index: 1000;
+        border-bottom: 1px solid var(--border);
       }
-      .grid_form {
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+      .brand {
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 3px;
+        cursor: pointer;
+      }
+
+      nav {
+        display: flex;
+        gap: 25px;
+      }
+      nav a {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--sub-text);
+        text-decoration: none;
+        letter-spacing: 1px;
+        transition: var(--ease);
+      }
+      nav a:hover {
+        color: var(--accent);
+      }
+      nav a.active {
+        color: var(--accent);
+      }
+
+      .nav-meta {
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: 1px;
+        border: 1px solid var(--accent);
+        padding: 3px 8px;
+        border-radius: 4px;
+      }
+
+      /* Hero Section */
+      main {
+        max-width: 800px;
+        margin: 120px auto;
+        padding: 0 40px;
+      }
+      .hero {
+        margin-bottom: 80px;
+      }
+      .hero h1 {
+        font-size: 42px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        margin-bottom: 10px;
+      }
+      .hero p {
+        font-size: 15px;
+        color: var(--sub-text);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Editorial Form */
+      .editor-container {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
+        grid-template-columns: 1fr;
+        gap: 45px;
+        margin-bottom: 120px;
       }
+
+      .input-block {
+        position: relative;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
+        transition: var(--ease);
+      }
+      .input-block:focus-within {
+        border-bottom-color: var(--accent);
+      }
+
+      .input-block label {
+        display: block;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--sub-text);
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        letter-spacing: 1.5px;
+      }
+
       input,
       select,
       textarea {
         width: 100%;
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 0.9rem;
+        border: none;
+        background: transparent;
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--accent);
+        padding: 5px 0;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: #d2d2d7;
+      }
+      select {
+        appearance: none;
+        cursor: pointer;
       }
       textarea {
-        grid-column: span 2;
-        height: 100px;
+        height: 120px;
         resize: none;
-      }
-      .full {
-        grid-column: span 2;
-      }
-      .file_label {
-        grid-column: span 2;
-        font-size: 0.9rem;
-        font-weight: bold;
-        color: #8e55ff;
-        margin-bottom: -10px;
+        font-size: 16px;
+        line-height: 1.8;
       }
 
-      button#add_btn {
-        grid-column: span 2;
-        padding: 15px;
-        background: #8e55ff;
+      /* Asset Upload with Underlined URL */
+      .asset-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .asset-box {
+        background: var(--soft-gray);
+        border-radius: 12px;
+        padding: 40px;
+        text-align: center;
+        border: 1px dashed transparent;
+        transition: var(--ease);
+        cursor: pointer;
+      }
+      .asset-box:hover {
+        background: #f0f0f2;
+        border-color: #d2d2d7;
+      }
+      .asset-box p {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--sub-text);
+      }
+      #new_img_file {
+        display: none;
+      }
+
+      /* Action Buttons */
+      .btn-primary {
+        background: var(--accent);
         color: #fff;
         border: none;
-        border-radius: 8px;
+        padding: 20px 50px;
+        border-radius: 40px;
+        font-size: 15px;
+        font-weight: 700;
         cursor: pointer;
-        font-weight: bold;
-        font-size: 1rem;
-        transition: 0.3s;
+        transition: all 0.4s var(--ease);
+        display: inline-block;
+        margin-top: 20px;
       }
-      button#add_btn:hover {
-        background: #7644e0;
+      .btn-primary:hover {
+        transform: scale(1.02);
+        filter: brightness(1.2);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       }
-      button#add_btn:disabled {
-        background: #ccc;
+      .btn-primary:disabled {
+        background: #d2d2d7;
+        transform: none;
         cursor: not-allowed;
       }
 
-      .list_section {
-        background: #fff;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      /* Archive (List) */
+      .archive-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 15px;
       }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
+      .archive-header h2 {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -1px;
       }
-      th,
-      td {
-        padding: 15px;
-        text-align: left;
-        border-bottom: 1px solid #eee;
-        font-size: 0.85rem;
+
+      .archive-item {
+        display: grid;
+        grid-template-columns: 80px 1fr auto;
+        align-items: center;
+        padding: 25px 0;
+        border-bottom: 1px solid var(--border);
+        transition: var(--ease);
       }
-      th {
-        background: #f9f9f9;
-        color: #666;
-        font-weight: 600;
+      .archive-item:hover {
+        opacity: 0.6;
       }
-      .thumb {
-        width: 80px;
-        height: 50px;
+
+      .archive-item img {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
         object-fit: cover;
-        border-radius: 4px;
+        background: var(--soft-gray);
+      }
+      .archive-item-info h4 {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        letter-spacing: -0.5px;
+      }
+      .archive-item-info p {
+        font-size: 11px;
+        color: var(--sub-text);
+        font-weight: 700;
+        text-transform: uppercase;
       }
 
-      .edit_btn {
-        background: #4da3ff;
-        color: #fff;
-        border: none;
-        padding: 6px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-right: 5px;
+      .archive-actions {
+        display: flex;
+        gap: 20px;
       }
-      .del_btn {
-        background: #ff4d4d;
-        color: #fff;
+      .archive-actions button {
+        background: none;
         border: none;
-        padding: 6px 10px;
-        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 800;
         cursor: pointer;
+        color: var(--accent);
+        transition: 0.2s;
+      }
+      .del-btn {
+        color: #ff3b30 !important;
       }
 
-      .nav_links {
-        margin-bottom: 20px;
-      }
-      .nav_links a {
-        color: #8e55ff;
-        font-weight: 600;
-        text-decoration: underline;
+      @media (max-width: 600px) {
+        header {
+          padding: 0 20px;
+        }
+        .header-left nav {
+          display: none;
+        }
+        main {
+          margin: 100px auto;
+          padding: 0 25px;
+        }
+        .hero h1 {
+          font-size: 32px;
+        }
+        .archive-item {
+          grid-template-columns: 60px 1fr;
+        }
+        .archive-actions {
+          grid-column: 2;
+          margin-top: 10px;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="nav_links">
-      <a href="story.html">← 사용자 페이지로 돌아가기</a>
-    </div>
+    <header>
+      <div class="brand" onclick="location.href='story.html'">LOIND</div>
+      <nav>
+        <a href="about.html">ABOUT</a>
+        <a href="service.html">SERVICE</a>
+        <a href="story.html" class="active">STORY</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+    </header>
 
-    <h1>Story 관리자 <span>Admin</span></h1>
+    <main>
+      <section class="hero">
+        <h1>Admin.</h1>
+        <p>Manage and Curate Brand Content</p>
+      </section>
 
-    <div class="input_section">
-      <div class="grid_form">
-        <select id="new_category">
-          <option value="platform">platform</option>
-          <option value="commerce">commerce</option>
-          <option value="착한일">착한일</option>
-          <option value="착한일2">착한일2</option>
-        </select>
-        <input type="text" id="new_title" placeholder="제목을 입력하세요" />
+      <section class="editor-container">
+        <div class="input-block">
+          <label>Classification</label>
+          <select id="new_category">
+            <option value="PLATFORM">PLATFORM</option>
+            <option value="COMMERCE">COMMERCE</option>
+            <option value="SOCIAL IMPACT">SOCIAL IMPACT</option>
+            <option value="CULTURE">CULTURE</option>
+          </select>
+        </div>
 
-        <p class="file_label">
-          이미지 파일 첨부 (파일을 선택하면 URL 입력보다 우선 적용됩니다)
-        </p>
-        <input type="file" id="new_img_file" class="full" accept="image/*" />
-        <input
-          type="text"
-          id="new_img_url"
-          class="full"
-          placeholder="또는 이미지 URL 직접 입력 (https://...)"
-        />
+        <div class="input-block">
+          <label>Story Title</label>
+          <input type="text" id="new_title" placeholder="제목을 입력하세요" />
+        </div>
 
-        <input
-          type="text"
-          id="new_text"
-          class="full"
-          placeholder="목록에 보일 짧은 요약 문구"
-        />
-        <textarea
-          id="new_detail"
-          placeholder="팝업 상세 내용을 입력하세요"
-        ></textarea>
-        <button id="add_btn">새 스토리 데이터 등록하기</button>
-      </div>
-    </div>
+        <div class="asset-group">
+          <label
+            style="
+              font-size: 11px;
+              font-weight: 800;
+              color: var(--sub-text);
+              letter-spacing: 1.5px;
+            "
+            >VISUAL ASSET</label
+          >
+          <div
+            class="asset-box"
+            onclick="document.getElementById('new_img_file').click()"
+          >
+            <p id="file_status">SELECT LOCAL IMAGE</p>
+            <input type="file" id="new_img_file" accept="image/*" />
+          </div>
+          <div class="input-block">
+            <input
+              type="text"
+              id="new_img_url"
+              placeholder="또는 이미지 URL 주소를 입력하세요"
+            />
+          </div>
+        </div>
 
-    <div class="list_section">
-      <h3>등록된 데이터 목록</h3>
-      <table id="data_table">
-        <thead>
-          <tr>
-            <th>이미지</th>
-            <th>제목</th>
-            <th>관리</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+        <div class="input-block">
+          <label>Short Summary</label>
+          <input type="text" id="new_text" placeholder="한 줄 요약 문구" />
+        </div>
+
+        <div class="input-block">
+          <label>Detailed Narrative</label>
+          <textarea
+            id="new_detail"
+            placeholder="이야기를 상세히 들려주세요..."
+          ></textarea>
+        </div>
+
+        <div>
+          <button id="add_btn" class="btn-primary">PUBLISH STORY</button>
+          <button
+            id="cancel_edit"
+            style="
+              display: none;
+              margin-left: 25px;
+              background: none;
+              border: none;
+              color: var(--sub-text);
+              cursor: pointer;
+              font-size: 14px;
+              font-weight: 700;
+              text-decoration: underline;
+            "
+          >
+            Cancel Edit
+          </button>
+        </div>
+      </section>
+
+      <section class="archive-section">
+        <div class="archive-header">
+          <h2>Archive.</h2>
+        </div>
+        <div id="story_list"></div>
+      </section>
+    </main>
 
     <script type="module">
-      // 1. 비밀번호 체크 (가장 먼저 실행)
       const masterPassword = "1234";
-      if (prompt("관리자 인증이 필요합니다.") === masterPassword) {
+      if (prompt("암호를 입력하세요.") === masterPassword) {
         document.body.style.display = "block";
       } else {
-        alert("비밀번호가 틀렸습니다.");
+        alert("ACCESS DENIED");
         location.href = "story.html";
       }
 
-      // 2. Firebase SDK import
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
         getFirestore,
@@ -246,129 +449,110 @@
       const db = getFirestore(app);
       const storage = getStorage(app);
 
-      const tableBody = document.querySelector("#data_table tbody");
+      const listContainer = document.querySelector("#story_list");
       const addBtn = document.querySelector("#add_btn");
-      let editId = null; // 수정 모드 확인용 변수
+      const cancelBtn = document.querySelector("#cancel_edit");
+      const fileInput = document.querySelector("#new_img_file");
+      const fileStatus = document.querySelector("#file_status");
+      let editId = null;
 
-      // [기능 1] 데이터 목록 불러오기 (이미지, 제목만)
-      async function renderTable() {
-        tableBody.innerHTML =
-          "<tr><td colspan='3' style='text-align:center; padding:20px;'>로드 중...</td></tr>";
-        try {
-          const q = query(
-            collection(db, "stories"),
-            orderBy("createdAt", "desc")
-          );
-          const querySnapshot = await getDocs(q);
-          tableBody.innerHTML = "";
+      fileInput.onchange = () => {
+        if (fileInput.files[0])
+          fileStatus.innerText = `READY: ${fileInput.files[0].name.substring(
+            0,
+            15
+          )}...`;
+      };
 
-          querySnapshot.forEach((docSnap) => {
-            const item = docSnap.data();
-            const id = docSnap.id;
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td><img src="${item.img}" class="thumb"></td>
-              <td><strong>${item.title}</strong><br><small style="color:#999">${item.category}</small></td>
-              <td>
-                <button class="edit_btn" data-id="${id}">수정</button>
-                <button class="del_btn" data-id="${id}">삭제</button>
-              </td>
-            `;
-            tableBody.appendChild(tr);
-          });
-        } catch (e) {
-          console.error(e);
-          tableBody.innerHTML =
-            "<tr><td colspan='3' style='text-align:center; color:red;'>로드 실패</td></tr>";
-        }
+      async function fetchStories() {
+        listContainer.innerHTML =
+          "<p style='color:#d2d2d7; font-size:14px;'>Loading archive...</p>";
+        const q = query(
+          collection(db, "stories"),
+          orderBy("createdAt", "desc")
+        );
+        const snapshot = await getDocs(q);
+        listContainer.innerHTML = "";
+        snapshot.forEach((docSnap) => {
+          const item = docSnap.data();
+          const id = docSnap.id;
+          const div = document.createElement("div");
+          div.className = "archive-item";
+          div.innerHTML = `
+            <img src="${item.img}">
+            <div class="archive-item-info">
+              <h4>${item.title}</h4>
+              <p>${item.category}</p>
+            </div>
+            <div class="archive-actions">
+              <button class="edit-btn" data-id="${id}">EDIT</button>
+              <button class="del-btn" data-id="${id}">REMOVE</button>
+            </div>
+          `;
+          listContainer.appendChild(div);
+        });
       }
 
-      // [기능 2] 데이터 등록/수정 실행
-      addBtn.addEventListener("click", async () => {
-        const file = document.querySelector("#new_img_file").files[0];
-        let imageUrl = document.querySelector("#new_img_url").value;
+      addBtn.onclick = async () => {
+        const file = fileInput.files[0];
+        let url = document.querySelector("#new_img_url").value;
         const title = document.querySelector("#new_title").value;
-
-        if (!title) return alert("제목은 필수입니다!");
-
+        if (!title) return alert("제목을 입력하세요.");
         addBtn.disabled = true;
-        addBtn.innerText = editId ? "수정 중..." : "등록 중...";
-
+        addBtn.innerText = "PUBLISHING...";
         try {
-          // 파일이 선택된 경우 Storage에 업로드 후 URL 추출
           if (file) {
-            const storageRef = ref(
-              storage,
-              "images/" + Date.now() + "_" + file.name
-            );
-            const snapshot = await uploadBytes(storageRef, file);
-            imageUrl = await getDownloadURL(snapshot.ref);
+            const sRef = ref(storage, `images/${Date.now()}_${file.name}`);
+            const upload = await uploadBytes(sRef, file);
+            url = await getDownloadURL(upload.ref);
           }
-
-          if (!imageUrl) {
-            addBtn.disabled = false;
-            addBtn.innerText = "등록하기";
-            return alert("이미지 파일이나 URL 중 하나는 입력해야 합니다!");
-          }
-
-          const data = {
+          const payload = {
             category: document.querySelector("#new_category").value,
-            title: title,
-            img: imageUrl,
+            title,
+            img: url,
             text: document.querySelector("#new_text").value,
             detail: document.querySelector("#new_detail").value,
             createdAt: new Date(),
           };
-
           if (editId) {
-            // 수정 모드
-            await updateDoc(doc(db, "stories", editId), data);
-            alert("수정되었습니다!");
-            editId = null;
-            addBtn.innerText = "새 스토리 데이터 등록하기";
+            await updateDoc(doc(db, "stories", editId), payload);
           } else {
-            // 신규 등록 모드
-            await addDoc(collection(db, "stories"), data);
-            alert("성공적으로 등록되었습니다!");
+            await addDoc(collection(db, "stories"), payload);
           }
-
           location.reload();
         } catch (e) {
-          alert("오류: " + e.message);
+          alert(e.message);
           addBtn.disabled = false;
         }
-      });
+      };
 
-      // [기능 3] 수정/삭제 버튼 클릭 핸들러 (이벤트 위임)
-      tableBody.addEventListener("click", async (e) => {
+      listContainer.onclick = async (e) => {
         const id = e.target.dataset.id;
-
-        // 삭제 로직
-        if (e.target.classList.contains("del_btn")) {
-          if (confirm("정말 삭제하시겠습니까?")) {
-            await deleteDoc(doc(db, "stories", id));
-            renderTable();
-          }
+        if (!id) return;
+        if (
+          e.target.classList.contains("del-btn") &&
+          confirm("Remove this story?")
+        ) {
+          await deleteDoc(doc(db, "stories", id));
+          fetchStories();
         }
-
-        // 수정 로직 (입력창에 데이터 채우기)
-        if (e.target.classList.contains("edit_btn")) {
-          const q = await getDocs(collection(db, "stories"));
-          const item = q.docs.find((d) => d.id === id).data();
-
+        if (e.target.classList.contains("edit-btn")) {
+          const snapshot = await getDocs(collection(db, "stories"));
+          const item = snapshot.docs.find((d) => d.id === id).data();
           document.querySelector("#new_category").value = item.category;
           document.querySelector("#new_title").value = item.title;
           document.querySelector("#new_img_url").value = item.img;
           document.querySelector("#new_text").value = item.text;
           document.querySelector("#new_detail").value = item.detail;
-
           editId = id;
-          addBtn.innerText = "선택한 데이터 수정 완료하기";
+          addBtn.innerText = "UPDATE STORY";
+          cancelBtn.style.display = "inline-block";
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
-      });
+      };
 
-      renderTable();
+      cancelBtn.onclick = () => location.reload();
+      fetchStories();
     </script>
   </body>
 </html>
