@@ -1,293 +1,690 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Service | LOIND</title>
     <style>
-        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 
-        /* --- [1] 기본 레이아웃 --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        body { background-color: #fff; color: #111; font-family: 'Pretendard', sans-serif; display: flex; line-height: 1.5; letter-spacing: -0.02em; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+      }
+      body {
+        background-color: #fff;
+        color: #000;
+        font-family: "Pretendard", sans-serif;
+      }
 
-        /* --- [2] 네비게이션 --- */
-        .navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 50px; background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid #f2f2f2;
+      /*header*/
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 50px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid #f2f2f2;
+        transition: 0.3s;
+      }
+      h1 .main {
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+      }
+      .slogan {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #8e55ff;
+        margin-left: 5px;
+        border-left: 1px solid #eee;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: 0.4s;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      h1:hover .slogan {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      nav ul {
+        display: flex;
+        gap: 35px;
+      }
+      nav li {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: 0.3s;
+      }
+      nav li:hover {
+        opacity: 0.5;
+      }
+      /*header end*/
+
+      /* --- [3] 사이드바 --- */
+      .side-nav {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 280px;
+        height: calc(100vh - 80px);
+        padding: 40px 20px;
+        border-right: 1px solid #f2f2f2;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .side-group-box {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid #f2f2f2;
+        border-radius: 20px;
+        padding: 24px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+        cursor: pointer;
+      }
+      .side-group-box.active {
+        border-color: #000;
+        background: #fafafa;
+      }
+      .side-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 900;
+        margin-bottom: 8px;
+        letter-spacing: 0.05em;
+      }
+      .side-definition {
+        display: block;
+        font-size: 0.72rem;
+        color: #888;
+        line-height: 1.5;
+        margin-bottom: 16px;
+        word-break: keep-all;
+        font-weight: 500;
+      }
+      .sub-link-list {
+        list-style: none;
+        padding-left: 10px;
+        border-left: 1px solid #eee;
+      }
+      .sub-link {
+        color: #aaa;
+        font-size: 0.68rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: block;
+        transition: 0.2s;
+      }
+      .side-group-box:hover .sub-link {
+        color: #666;
+      }
+
+      .btn-top {
+        width: 100%;
+        height: 54px;
+        background: #fff;
+        border: 1px solid #f2f2f2;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+        color: #999;
+        text-decoration: none;
+        font-size: 0.7rem;
+        font-weight: 800;
+        gap: 8px;
+        margin-top: auto;
+      }
+      .btn-top:hover {
+        background: #000;
+        color: #fff;
+        border-color: #000;
+      }
+
+      /* --- [4] 메인 컨텐츠 --- */
+      .content {
+        margin-left: 280px;
+        padding-top: 80px;
+        width: 100%;
+        scroll-behavior: smooth;
+      }
+      .page-header {
+        padding: 80px 8% 60px;
+        max-width: 1400px;
+      }
+      .page-header h2 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        letter-spacing: -0.04em;
+      }
+      .page-header p {
+        font-size: 1.2rem;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 50px;
+      }
+      .page-header p strong {
+        color: #111;
+        font-weight: 800;
+      }
+
+      .shortcut-header {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #999;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .link-group-wrapper {
+        display: flex;
+        gap: 100px;
+        border-top: 1px solid #f2f2f2;
+        padding-top: 40px;
+      }
+      .link-group {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .group-tag {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #8e55ff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .group-tag::after {
+        content: "";
+        width: 20px;
+        height: 1px;
+        background: #e0e0e0;
+      }
+      .link-items {
+        display: flex;
+        gap: 30px;
+      }
+      .service-link-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: #111;
+        transition: 0.3s;
+      }
+      .service-link-item:hover {
+        transform: translateY(-4px);
+      }
+      .link-icon {
+        width: 52px;
+        height: 52px;
+        background: #f9f9fb;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        border: 1px solid #eee;
+        transition: 0.3s;
+      }
+      .link-name {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #444;
+      }
+
+      /* --- [5] 서비스 섹션 --- */
+      .service-section {
+        padding: 120px 8%;
+        border-top: 1px solid #f2f2f2;
+      }
+      .section-header {
+        margin-bottom: 60px;
+        max-width: 900px;
+      }
+      .section-header h3 {
+        font-size: 2.4rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        color: #000;
+        letter-spacing: -0.02em;
+      }
+      .section-header p {
+        font-size: 1.05rem;
+        color: #777;
+        line-height: 1.8;
+        word-break: keep-all;
+        font-weight: 500;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 24px;
+      }
+      .service-card {
+        background: #fff;
+        padding: 40px;
+        border-radius: 24px;
+        border: 1px solid #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        transition: 0.4s;
+        cursor: pointer; /* 클릭 가능 표시 */
+      }
+      .service-card:hover {
+        border-color: #8e55ff;
+        box-shadow: 0 20px 40px rgba(142, 85, 255, 0.06);
+        transform: translateY(-5px);
+      }
+      .card-tag {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #8e55ff;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        display: block;
+      }
+      .card-info h4 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+        color: #000;
+      }
+      .card-info p {
+        font-size: 0.95rem;
+        color: #666;
+        line-height: 1.7;
+        word-break: keep-all;
+      }
+
+      /* --- [추가] 상세 페이지 오버레이 스타일 --- */
+      .detail-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        z-index: 2000;
+        display: none;
+        padding: 100px 8%;
+        overflow-y: auto;
+        backdrop-filter: blur(10px);
+      }
+      .detail-overlay.active {
+        display: block;
+      }
+      .detail-close {
+        position: fixed;
+        top: 40px;
+        right: 50px;
+        font-weight: 800;
+        cursor: pointer;
+        border-bottom: 2px solid #000;
+      }
+      .detail-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .detail-content h1 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 30px;
+      }
+      .detail-text {
+        font-size: 1.1rem;
+        color: #444;
+        line-height: 1.8;
+        margin-bottom: 40px;
+      }
+      .detail-list {
+        list-style: none;
+        border-top: 1px solid #eee;
+        padding-top: 40px;
+      }
+      .detail-list li {
+        margin-bottom: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      .detail-list li::before {
+        content: "0" attr(data-num);
+        color: #8e55ff;
+        font-size: 0.8rem;
+        margin-top: 5px;
+      }
+
+      @media (max-width: 1200px) {
+        .content {
+          margin-left: 0;
         }
-        .logo-main { font-size: 1.4rem; font-weight: 900; color: #000; letter-spacing: 2px; text-decoration: none; }
-        .nav-menu { display: flex; gap: 30px; }
-        .nav-item { color: #666; text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
-
-        /* --- [3] 사이드바 --- */
         .side-nav {
-            position: fixed; top: 80px; left: 0; width: 280px; height: calc(100vh - 80px);
-            padding: 40px 20px; border-right: 1px solid #f2f2f2; background: #fff;
-            display: flex; flex-direction: column; justify-content: space-between;
+          display: none;
         }
-        .side-group-box {
-            display: block; text-decoration: none; color: inherit;
-            border: 1px solid #f2f2f2; border-radius: 20px; padding: 24px;
-            margin-bottom: 20px; transition: 0.3s; cursor: pointer;
+      }
+
+      @media (max-width: 900px) {
+        header {
+          padding: 0 30px;
         }
-        .side-group-box.active { border-color: #000; background: #fafafa; }
-        .side-label { display: block; font-size: 0.75rem; font-weight: 900; margin-bottom: 8px; letter-spacing: 0.05em; }
-        .side-definition { display: block; font-size: 0.72rem; color: #888; line-height: 1.5; margin-bottom: 16px; word-break: keep-all; font-weight: 500; }
-        .sub-link-list { list-style: none; padding-left: 10px; border-left: 1px solid #eee; }
-        .sub-link { color: #aaa; font-size: 0.68rem; font-weight: 600; margin-bottom: 4px; display: block; transition: 0.2s; }
-        .side-group-box:hover .sub-link { color: #666; }
-
-        .btn-top {
-            width: 100%; height: 54px; background: #fff; border: 1px solid #f2f2f2;
-            border-radius: 14px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s; color: #999; text-decoration: none;
-            font-size: 0.7rem; font-weight: 800; gap: 8px; margin-top: auto;
+        nav ul {
+          gap: 20px;
         }
-        .btn-top:hover { background: #000; color: #fff; border-color: #000; }
-
-        /* --- [4] 메인 컨텐츠 --- */
-        .content { margin-left: 280px; padding-top: 80px; width: 100%; scroll-behavior: smooth; }
-        .page-header { padding: 80px 8% 60px; max-width: 1400px; }
-        .page-header h2 { font-size: 3.5rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -0.04em; }
-        .page-header p { font-size: 1.2rem; color: #666; line-height: 1.6; margin-bottom: 50px; }
-        .page-header p strong { color: #111; font-weight: 800; }
-
-        .shortcut-header { font-size: 0.7rem; font-weight: 800; color: #999; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.1em; }
-        .link-group-wrapper { display: flex; gap: 100px; border-top: 1px solid #f2f2f2; padding-top: 40px; }
-        .link-group { display: flex; flex-direction: column; gap: 20px; }
-        .group-tag { font-size: 0.7rem; font-weight: 800; color: #8e55ff; display: flex; align-items: center; gap: 10px; }
-        .group-tag::after { content: ""; width: 20px; height: 1px; background: #e0e0e0; }
-        .link-items { display: flex; gap: 30px; }
-        .service-link-item { display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; color: #111; transition: 0.3s; }
-        .service-link-item:hover { transform: translateY(-4px); }
-        .link-icon { width: 52px; height: 52px; background: #f9f9fb; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border: 1px solid #eee; transition: 0.3s; }
-        .link-name { font-size: 0.75rem; font-weight: 700; color: #444; }
-
-        /* --- [5] 서비스 섹션 --- */
-        .service-section { padding: 120px 8%; border-top: 1px solid #f2f2f2; }
-        .section-header { margin-bottom: 60px; max-width: 900px; }
-        .section-header h3 { font-size: 2.4rem; font-weight: 900; margin-bottom: 20px; color: #000; letter-spacing: -0.02em; }
-        .section-header p { font-size: 1.05rem; color: #777; line-height: 1.8; word-break: keep-all; font-weight: 500; }
-
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 24px; }
-        .service-card {
-            background: #fff; padding: 40px; border-radius: 24px; border: 1px solid #f0f0f0;
-            display: flex; flex-direction: column; gap: 20px; transition: 0.4s;
-            cursor: pointer; /* 클릭 가능 표시 */
+        .slogan {
+          display: none;
         }
-        .service-card:hover { border-color: #8e55ff; box-shadow: 0 20px 40px rgba(142,85,255,0.06); transform: translateY(-5px); }
-        .card-tag { font-size: 0.7rem; font-weight: 800; color: #8e55ff; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .card-info h4 { font-size: 1.3rem; font-weight: 800; margin-bottom: 12px; color: #000; }
-        .card-info p { font-size: 0.95rem; color: #666; line-height: 1.7; word-break: keep-all; }
+      }
 
-        /* --- [추가] 상세 페이지 오버레이 스타일 --- */
-        .detail-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.98); z-index: 2000;
-            display: none; padding: 100px 8%; overflow-y: auto;
-            backdrop-filter: blur(10px);
+      @media (max-width: 600px) {
+        header {
+          height: auto;
+          padding: 15px 20px;
+          flex-direction: column;
+          gap: 15px;
         }
-        .detail-overlay.active { display: block; }
-        .detail-close { position: fixed; top: 40px; right: 50px; font-weight: 800; cursor: pointer; border-bottom: 2px solid #000; }
-        .detail-content { max-width: 900px; margin: 0 auto; }
-        .detail-content h1 { font-size: 3rem; font-weight: 900; margin-bottom: 30px; }
-        .detail-text { font-size: 1.1rem; color: #444; line-height: 1.8; margin-bottom: 40px; }
-        .detail-list { list-style: none; border-top: 1px solid #eee; padding-top: 40px; }
-        .detail-list li { margin-bottom: 20px; font-weight: 600; display: flex; align-items: flex-start; gap: 15px; }
-        .detail-list li::before { content: "0"attr(data-num); color: #8e55ff; font-size: 0.8rem; margin-top: 5px; }
-
-        @media (max-width: 1200px) { .content { margin-left: 0; } .side-nav { display: none; } }
+        nav ul {
+          gap: 15px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
     </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <a href="index.html" class="logo-main">LOIND</a>
-        <div class="nav-menu">
-            <a href="about.html" class="nav-item">about</a>
-            <a href="service.html" class="nav-item" style="color:#000">service</a>
-            <a href="story.html" class="nav-item">story</a>
-            <a href="contact.html" class="nav-item">contact</a>
-        </div>
-    </nav>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="index.html">
+          <span class="main">LOIND</span>
+          <span class="slogan">THE GREATEST EXPERIENCE</span>
+        </a>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="service.html">SERVICE</a></li>
+          <li><a href="story.html">STORY</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+    </header>
 
     <aside class="side-nav">
-        <div class="side-menu-top">
-            <div class="side-group-box active" onclick="scrollToSection('business', this)">
-                <span class="side-label">BUSINESS</span>
-                <span class="side-definition">우리가 가진 탁월함으로 비즈니스의 정점에 닿는 일</span>
-                <div class="sub-link-list">
-                    <span class="sub-link">LOIND Core</span>
-                    <span class="sub-link">Hyper Connect</span>
-                    <span class="sub-link">Sync Commerce</span>
-                    <span class="sub-link">Safe Protocol</span>
-                </div>
-            </div>
-
-            <div class="side-group-box" onclick="scrollToSection('impact', this)">
-                <span class="side-label">IMPACT</span>
-                <span class="side-definition">우리가 가진 사랑으로 새로운 기회와 위로를 만드는 일</span>
-                <div class="sub-link-list">
-                    <span class="sub-link">Mission Sync</span>
-                    <span class="sub-link">Care Search</span>
-                    <span class="sub-link">Open Contribution</span>
-                </div>
-            </div>
+      <div class="side-menu-top">
+        <div
+          class="side-group-box active"
+          onclick="scrollToSection('business', this)"
+        >
+          <span class="side-label">BUSINESS</span>
+          <span class="side-definition"
+            >우리가 가진 탁월함으로 비즈니스의 정점에 닿는 일</span
+          >
+          <div class="sub-link-list">
+            <span class="sub-link">LOIND Core</span>
+            <span class="sub-link">Hyper Connect</span>
+            <span class="sub-link">Sync Commerce</span>
+            <span class="sub-link">Safe Protocol</span>
+          </div>
         </div>
-        <a href="#" class="btn-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">TOP ↑</a>
+
+        <div class="side-group-box" onclick="scrollToSection('impact', this)">
+          <span class="side-label">IMPACT</span>
+          <span class="side-definition"
+            >우리가 가진 사랑으로 새로운 기회와 위로를 만드는 일</span
+          >
+          <div class="sub-link-list">
+            <span class="sub-link">Mission Sync</span>
+            <span class="sub-link">Care Search</span>
+            <span class="sub-link">Open Contribution</span>
+          </div>
+        </div>
+      </div>
+      <a
+        href="#"
+        class="btn-top"
+        onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+        >TOP ↑</a
+      >
     </aside>
 
     <main class="content">
-        <div class="page-header">
-            <h2>Service</h2>
-            <p>우리는 전문적인 <strong>비즈니스</strong>로 시장의 기준을 세우고,<br>진정성 있는 <strong>임팩트</strong>로 세상의 빈곳을 채웁니다.</p>
+      <div class="page-header">
+        <h2>Service</h2>
+        <p>
+          우리는 전문적인 <strong>비즈니스</strong>로 시장의 기준을 세우고,<br />진정성
+          있는 <strong>임팩트</strong>로 세상의 빈곳을 채웁니다.
+        </p>
 
-            <h5 class="shortcut-header">서비스 바로가기</h5>
-            <div class="link-group-wrapper">
-                <div class="link-group">
-                    <span class="group-tag">BUSINESS</span>
-                    <div class="link-items">
-                        <a href="#" target="_blank" class="service-link-item"><div class="link-icon">🧠</div><span class="link-name">Core</span></a>
-                        <a href="#" target="_blank" class="service-link-item"><div class="link-icon">⚡</div><span class="link-name">Connect</span></a>
-                        <a href="#" target="_blank" class="service-link-item"><div class="link-icon">🛍️</div><span class="link-name">Sync</span></a>
-                        <a href="#" target="_blank" class="service-link-item"><div class="link-icon">🛡️</div><span class="link-name">Safe</span></a>
-                    </div>
-                </div>
-                <div class="link-group">
-                    <span class="group-tag">IMPACT</span>
-                    <div class="link-items">
-                        <a href="#" target="_blank" class="service-link-item"><div class="link-icon">⛪</div><span class="link-name">Mission</span></a>
-                        <a href="#" target="_blank" class="service-link-item"><div class="link-icon">👵</div><span class="link-name">Care</span></a>
-                        <a href="#" target="_blank" class="service-link-item"><div class="link-icon">🎁</div><span class="link-name">Share</span></a>
-                    </div>
-                </div>
+        <h5 class="shortcut-header">서비스 바로가기</h5>
+        <div class="link-group-wrapper">
+          <div class="link-group">
+            <span class="group-tag">BUSINESS</span>
+            <div class="link-items">
+              <a href="#" target="_blank" class="service-link-item"
+                ><div class="link-icon">🧠</div>
+                <span class="link-name">Core</span></a
+              >
+              <a href="#" target="_blank" class="service-link-item"
+                ><div class="link-icon">⚡</div>
+                <span class="link-name">Connect</span></a
+              >
+              <a href="#" target="_blank" class="service-link-item"
+                ><div class="link-icon">🛍️</div>
+                <span class="link-name">Sync</span></a
+              >
+              <a href="#" target="_blank" class="service-link-item"
+                ><div class="link-icon">🛡️</div>
+                <span class="link-name">Safe</span></a
+              >
             </div>
+          </div>
+          <div class="link-group">
+            <span class="group-tag">IMPACT</span>
+            <div class="link-items">
+              <a href="#" target="_blank" class="service-link-item"
+                ><div class="link-icon">⛪</div>
+                <span class="link-name">Mission</span></a
+              >
+              <a href="#" target="_blank" class="service-link-item"
+                ><div class="link-icon">👵</div>
+                <span class="link-name">Care</span></a
+              >
+              <a href="#" target="_blank" class="service-link-item"
+                ><div class="link-icon">🎁</div>
+                <span class="link-name">Share</span></a
+              >
+            </div>
+          </div>
         </div>
+      </div>
 
-        <section class="service-section" id="business">
-            <div class="section-header">
-                <h3>Business</h3>
-                <p>압도적인 전문성으로 파트너의 비즈니스 퍼포먼스를 극대화하는 프로페셔널의 영역입니다.</p>
+      <section class="service-section" id="business">
+        <div class="section-header">
+          <h3>Business</h3>
+          <p>
+            압도적인 전문성으로 파트너의 비즈니스 퍼포먼스를 극대화하는
+            프로페셔널의 영역입니다.
+          </p>
+        </div>
+        <div class="grid-container">
+          <article class="service-card" onclick="openDetail('core')">
+            <div class="card-info">
+              <span class="card-tag">Management</span>
+              <h4>LOIND Core</h4>
+              <p>
+                브랜드의 정체성을 시장에 각인시키는 전략적 매니지먼트와 통합
+                브랜딩 솔루션을 제공합니다.
+              </p>
             </div>
-            <div class="grid-container">
-                <article class="service-card" onclick="openDetail('core')">
-                    <div class="card-info">
-                        <span class="card-tag">Management</span>
-                        <h4>LOIND Core</h4>
-                        <p>브랜드의 정체성을 시장에 각인시키는 전략적 매니지먼트와 통합 브랜딩 솔루션을 제공합니다.</p>
-                    </div>
-                </article>
-                <article class="service-card" onclick="openDetail('connect')">
-                    <div class="card-info">
-                        <span class="card-tag">Infrastructure</span>
-                        <h4>Hyper Connect</h4>
-                        <p>복잡한 유통 경로를 단순화하고 생산자와 소비자를 가장 효율적으로 잇는 지능형 네트워크를 구축합니다.</p>
-                    </div>
-                </article>
+          </article>
+          <article class="service-card" onclick="openDetail('connect')">
+            <div class="card-info">
+              <span class="card-tag">Infrastructure</span>
+              <h4>Hyper Connect</h4>
+              <p>
+                복잡한 유통 경로를 단순화하고 생산자와 소비자를 가장 효율적으로
+                잇는 지능형 네트워크를 구축합니다.
+              </p>
             </div>
-        </section>
+          </article>
+        </div>
+      </section>
 
-        <section class="service-section" id="impact">
-            <div class="section-header">
-                <h3>Impact</h3>
-                <p>사랑의 마음으로 이웃과 공동체에 실질적인 변화를 소망하는 소셜 임팩트 영역입니다.</p>
+      <section class="service-section" id="impact">
+        <div class="section-header">
+          <h3>Impact</h3>
+          <p>
+            사랑의 마음으로 이웃과 공동체에 실질적인 변화를 소망하는 소셜 임팩트
+            영역입니다.
+          </p>
+        </div>
+        <div class="grid-container">
+          <article class="service-card" onclick="openDetail('mission')">
+            <div class="card-info">
+              <span class="card-tag">Church Support</span>
+              <h4>Mission Sync</h4>
+              <p>
+                디지털 자립이 필요한 소규모 공동체와 미자립교회에 필요한 기술 및
+                인프라를 기부하고 운영을 돕습니다.
+              </p>
             </div>
-            <div class="grid-container">
-                <article class="service-card" onclick="openDetail('mission')">
-                    <div class="card-info">
-                        <span class="card-tag">Church Support</span>
-                        <h4>Mission Sync</h4>
-                        <p>디지털 자립이 필요한 소규모 공동체와 미자립교회에 필요한 기술 및 인프라를 기부하고 운영을 돕습니다.</p>
-                    </div>
-                </article>
-                <article class="service-card" onclick="openDetail('care')">
-                    <div class="card-info">
-                        <span class="card-tag">Senior Care</span>
-                        <h4>Care Search</h4>
-                        <p>고립된 어르신들의 생활 패턴을 살피고 필요한 도움을 적시에 연결하는 지역사회 케어 시스템을 운영합니다.</p>
-                    </div>
-                </article>
+          </article>
+          <article class="service-card" onclick="openDetail('care')">
+            <div class="card-info">
+              <span class="card-tag">Senior Care</span>
+              <h4>Care Search</h4>
+              <p>
+                고립된 어르신들의 생활 패턴을 살피고 필요한 도움을 적시에
+                연결하는 지역사회 케어 시스템을 운영합니다.
+              </p>
             </div>
-        </section>
+          </article>
+        </div>
+      </section>
     </main>
 
     <div id="detailOverlay" class="detail-overlay">
-        <div class="detail-close" onclick="closeDetail()">CLOSE</div>
-        <div class="detail-content">
-            <span id="dt-tag" class="card-tag"></span>
-            <h1 id="dt-title"></h1>
-            <p id="dt-text" class="detail-text"></p>
-            <ul id="dt-list" class="detail-list"></ul>
-        </div>
+      <div class="detail-close" onclick="closeDetail()">CLOSE</div>
+      <div class="detail-content">
+        <span id="dt-tag" class="card-tag"></span>
+        <h1 id="dt-title"></h1>
+        <p id="dt-text" class="detail-text"></p>
+        <ul id="dt-list" class="detail-list"></ul>
+      </div>
     </div>
 
     <script>
-        /* 상세 페이지 데이터 */
-        const detailData = {
-            core: {
-                tag: 'Management',
-                title: 'LOIND Core',
-                text: '단순한 심볼 제작을 넘어 브랜드의 영혼과 시장 경쟁력을 설계합니다. 파트너가 가진 유니크한 가치를 발굴하여 소비자에게 각인되는 압도적인 브랜드 경험을 구축합니다.',
-                list: ['브랜드 전략 및 포지셔닝 설계', '비주얼 아이덴티티(BI) 시스템 구축', '마케팅 커뮤니케이션 전략 수립']
-            },
-            connect: {
-                tag: 'Infrastructure',
-                title: 'Hyper Connect',
-                text: '복잡하고 비효율적인 유통 과정을 혁신합니다. 데이터 기반의 지능형 네트워크를 통해 생산부터 최종 소비까지의 경로를 최단 거리로 연결합니다.',
-                list: ['스마트 유통망 프로세스 설계', '실시간 공급망 트래킹 시스템', '글로벌 파트너십 매칭 인프라']
-            },
-            mission: {
-                tag: 'Church Support',
-                title: 'Mission Sync',
-                text: '기술의 격차가 사역의 격차가 되지 않도록 돕습니다. 미자립 공동체와 교회가 세상과 원활하게 소통할 수 있도록 필수적인 디지털 인프라를 무상 지원합니다.',
-                list: ['커뮤니티 전용 웹/앱 플랫폼 구축', '라이브 스트리밍 및 미디어 장비 지원', '디지털 소통 역량 강화 교육']
-            },
-            care: {
-                tag: 'Senior Care',
-                title: 'Care Search',
-                text: '사각지대에 놓인 이웃을 기술로 보호합니다. 고독사를 예방하고 고립된 삶에 온기를 더하는 데이터 기반의 지역사회 돌봄 안전망을 실현합니다.',
-                list: ['생활 패턴 분석 AI 케어 시스템', '지역 네트워크 긴급 대응 프로세스', '맞춤형 복지 서비스 연계 솔루션']
-            }
-        };
+      /* 상세 페이지 데이터 */
+      const detailData = {
+        core: {
+          tag: "Management",
+          title: "LOIND Core",
+          text: "단순한 심볼 제작을 넘어 브랜드의 영혼과 시장 경쟁력을 설계합니다. 파트너가 가진 유니크한 가치를 발굴하여 소비자에게 각인되는 압도적인 브랜드 경험을 구축합니다.",
+          list: [
+            "브랜드 전략 및 포지셔닝 설계",
+            "비주얼 아이덴티티(BI) 시스템 구축",
+            "마케팅 커뮤니케이션 전략 수립",
+          ],
+        },
+        connect: {
+          tag: "Infrastructure",
+          title: "Hyper Connect",
+          text: "복잡하고 비효율적인 유통 과정을 혁신합니다. 데이터 기반의 지능형 네트워크를 통해 생산부터 최종 소비까지의 경로를 최단 거리로 연결합니다.",
+          list: [
+            "스마트 유통망 프로세스 설계",
+            "실시간 공급망 트래킹 시스템",
+            "글로벌 파트너십 매칭 인프라",
+          ],
+        },
+        mission: {
+          tag: "Church Support",
+          title: "Mission Sync",
+          text: "기술의 격차가 사역의 격차가 되지 않도록 돕습니다. 미자립 공동체와 교회가 세상과 원활하게 소통할 수 있도록 필수적인 디지털 인프라를 무상 지원합니다.",
+          list: [
+            "커뮤니티 전용 웹/앱 플랫폼 구축",
+            "라이브 스트리밍 및 미디어 장비 지원",
+            "디지털 소통 역량 강화 교육",
+          ],
+        },
+        care: {
+          tag: "Senior Care",
+          title: "Care Search",
+          text: "사각지대에 놓인 이웃을 기술로 보호합니다. 고독사를 예방하고 고립된 삶에 온기를 더하는 데이터 기반의 지역사회 돌봄 안전망을 실현합니다.",
+          list: [
+            "생활 패턴 분석 AI 케어 시스템",
+            "지역 네트워크 긴급 대응 프로세스",
+            "맞춤형 복지 서비스 연계 솔루션",
+          ],
+        },
+      };
 
-        /* 상세 페이지 열기 */
-        function openDetail(id) {
-            const data = detailData[id];
-            document.getElementById('dt-tag').innerText = data.tag;
-            document.getElementById('dt-title').innerText = data.title;
-            document.getElementById('dt-text').innerText = data.text;
-            
-            const listUl = document.getElementById('dt-list');
-            listUl.innerHTML = '';
-            data.list.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.setAttribute('data-num', index + 1);
-                li.innerText = item;
-                listUl.appendChild(li);
-            });
+      /* 상세 페이지 열기 */
+      function openDetail(id) {
+        const data = detailData[id];
+        document.getElementById("dt-tag").innerText = data.tag;
+        document.getElementById("dt-title").innerText = data.title;
+        document.getElementById("dt-text").innerText = data.text;
 
-            document.getElementById('detailOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden'; // 배경 스크롤 차단
-        }
+        const listUl = document.getElementById("dt-list");
+        listUl.innerHTML = "";
+        data.list.forEach((item, index) => {
+          const li = document.createElement("li");
+          li.setAttribute("data-num", index + 1);
+          li.innerText = item;
+          listUl.appendChild(li);
+        });
 
-        /* 상세 페이지 닫기 */
-        function closeDetail() {
-            document.getElementById('detailOverlay').classList.remove('active');
-            document.body.style.overflow = 'auto'; // 배경 스크롤 재개
-        }
+        document.getElementById("detailOverlay").classList.add("active");
+        document.body.style.overflow = "hidden"; // 배경 스크롤 차단
+      }
 
-        /* 기존 스크롤 함수 */
-        function scrollToSection(id, element) {
-            document.querySelectorAll('.side-group-box').forEach(box => box.classList.remove('active'));
-            element.classList.add('active');
-            const target = document.getElementById(id);
-            const offset = 80;
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-        }
+      /* 상세 페이지 닫기 */
+      function closeDetail() {
+        document.getElementById("detailOverlay").classList.remove("active");
+        document.body.style.overflow = "auto"; // 배경 스크롤 재개
+      }
+
+      /* 기존 스크롤 함수 */
+      function scrollToSection(id, element) {
+        document
+          .querySelectorAll(".side-group-box")
+          .forEach((box) => box.classList.remove("active"));
+        element.classList.add("active");
+        const target = document.getElementById(id);
+        const offset = 80;
+        const targetPosition =
+          target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: targetPosition, behavior: "smooth" });
+      }
     </script>
-</body>
+  </body>
 </html>
