@@ -1,335 +1,518 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LOIND: We create the greatest experience</title>
-    <style>
-      /* --- 기본 스타일 리셋 --- */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      ul {
-        list-style: none;
-      }
-      body {
-        background-color: #000;
-        color: #fff;
-        font-family: "Pretendard", -apple-system, sans-serif;
-        line-height: 1.6;
-      }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LOIND | The Greatest Experience</title>
 
-      /* --- 상단 내비게이션 초기 상태 --- */
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 50px;
-        z-index: 1000;
-        /* 초기: 완전 투명 */
-        background: rgba(0, 0, 0, 0);
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0);
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* 좀 더 부드러운 가속도 */
-      }
+        <style>
+            /* --- [1. RESET & CURSOR] --- */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                -webkit-font-smoothing: antialiased;
+                cursor: none !important;
+            }
+            body {
+                background-color: #fff;
+                color: #000;
+                font-family: 'Pretendard', sans-serif;
+                overflow-x: hidden;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
 
-      /* [활성화] 히어로 섹션이 끝날 때 붙을 스타일 */
-      header.scrolled {
-        background: rgba(
-          0,
-          0,
-          0,
-          0.7
-        ); /* 좀 더 명확한 구분감을 위해 0.7로 조정 */
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
+            #cursor {
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                background: #8e55ff;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99999;
+                will-change: transform;
+            }
+            #cursor.hover {
+                background: #7236ff;
+                box-shadow: 0 0 20px rgba(142, 85, 255, 0.6);
+            }
+            #cursor.grabbing {
+                transform: scale(0.6);
+                background: #333;
+            }
 
-      h1 .main {
-        font-size: 1.5rem;
-        font-weight: 900;
-        letter-spacing: 2px;
-      }
-      .slogan {
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #8e55ff;
-        margin-left: 5px;
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: 0.4s;
-        white-space: nowrap;
-        display: inline-block;
-      }
-      h1:hover .slogan {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      nav ul {
-        display: flex;
-        gap: 35px;
-      }
-      nav li {
-        font-size: 0.85rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        transition: 0.3s;
-      }
-      nav li:hover {
-        opacity: 0.5;
-      }
-      /* --- 히어로 섹션 --- */
-      .hero {
-        height: 100vh; /* 화면 꽉 차게 */
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), #000),
-          url("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80")
-            center/cover;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-      .hero h1 {
-        font-size: 3.5rem;
-        margin-bottom: 15px;
-        font-weight: 800;
-      }
-      .hero p {
-        font-size: 1.4rem;
-        color: #ccc;
-      }
+            /* --- [2. LOADER] --- */
+            #loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            }
+            .loader-text {
+                font-size: 1.5rem;
+                font-weight: 900;
+                letter-spacing: 10px;
+            }
 
-      /* --- 본문 내용들 --- */
-      .section-title {
-        text-align: center;
-        margin: 120px 0 40px;
-        font-size: 2.5rem;
-      }
-      .speaker-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        padding: 0 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .speaker-card {
-        flex: 1;
-        height: 380px;
-        background: #1a1a1a;
-        border-radius: 20px;
-        transition: 0.3s;
-      }
-      .speaker-card.active {
-        border: 4px solid #8e55ff;
-      }
-      .speaker-card:hover {
-        transform: translateY(-10px);
-      }
+            /* --- [3. HEADER] --- */
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 50px;
+                background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(15px);
+                z-index: 1000;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+            h1 .main {
+                font-size: 1.3rem;
+                font-weight: 900;
+                letter-spacing: 2px;
+            }
+            nav ul {
+                display: flex;
+                gap: 35px;
+                list-style: none;
+            }
+            nav li {
+                font-size: 0.8rem;
+                font-weight: 800;
+            }
 
-      .session-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 25px;
-        max-width: 1200px;
-        margin: 100px auto;
-        padding: 0 20px;
-      }
-      .session-card {
-        background: #111;
-        border: 1px solid #333;
-        padding: 45px;
-        border-radius: 24px;
-        min-height: 280px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      .session-card h3 {
-        font-size: 1.7rem;
-      }
-      .session-card .tags {
-        color: #888;
-        font-size: 1rem;
-      }
+            /* --- [4. MAIN VISUAL (50vh)] --- */
+            #visual-portal {
+                width: 100%;
+                height: 50vh;
+                display: grid;
+                grid-template-columns: 1.4fr 1fr;
+                padding-top: 80px;
+                border-bottom: 1px solid #f2f2f2;
+            }
+            .hero-main {
+                position: relative;
+                overflow: hidden;
+                background: #f9f9f9;
+            }
+            .hero-main img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .hero-caption {
+                position: absolute;
+                bottom: 40px;
+                left: 60px;
+                z-index: 10;
+            }
+            .hero-caption h2 {
+                font-size: clamp(2.5rem, 4vw, 3.5rem);
+                font-weight: 900;
+                line-height: 1.1;
+                letter-spacing: -2px;
+            }
 
-      .location-section {
-        background: #fff;
-        color: #000;
-        max-width: 1200px;
-        margin: 100px auto;
-        border-radius: 30px;
-        display: flex;
-        overflow: hidden;
-      }
-      .map-area {
-        flex: 1.2;
-        background: #e0e0e0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 2rem;
-        min-height: 550px;
-      }
-      .info-area {
-        flex: 1;
-        padding: 70px;
-      }
-      .info-area h2 {
-        font-size: 3rem;
-        margin: 10px 0;
-      }
-      .btn-black {
-        display: inline-block;
-        background: #000;
-        color: #fff;
-        padding: 18px 35px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: bold;
-      }
+            .hero-side {
+                padding: 40px 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 30px;
+                border-left: 1px solid #f2f2f2;
+            }
+            .side-post span {
+                font-size: 0.7rem;
+                font-weight: 800;
+                color: #8e55ff;
+                display: block;
+                margin-bottom: 5px;
+            }
+            .side-post h4 {
+                font-size: 1rem;
+                font-weight: 700;
+                line-height: 1.4;
+                color: #333;
+            }
 
-      @media (max-width: 768px) {
-        .hero h1 {
-          font-size: 2.5rem;
-        }
-        .speaker-container,
-        .session-grid,
-        .location-section {
-          flex-direction: column;
-        }
-        .navbar {
-          padding: 0 20px;
-        }
-        .logo-slogan {
-          display: none;
-        }
-      }
+            /* --- [5. STORY SECTION] --- */
+            .section-story {
+                padding: 120px 0 100px 50px;
+                overflow: visible !important;
+            }
+            .section-title {
+                padding-right: 50px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 100px;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 25px;
+            }
+            .section-title h3 {
+                font-size: 2rem;
+                font-weight: 900;
+            }
 
-      @media (max-width: 900px) {
-        header {
-          padding: 0 30px;
-        }
-        nav ul {
-          gap: 20px;
-        }
-        .slogan {
-          display: none;
-        }
-      }
+            .story-container {
+                display: flex;
+                gap: 40px;
+                overflow-x: auto;
+                padding: 40px 50px 80px 0; /* 호버 공간 확보 */
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                user-select: none;
+                cursor: grab;
+            }
+            .story-container::-webkit-scrollbar {
+                display: none;
+            }
 
-      @media (max-width: 600px) {
-        header {
-          height: auto;
-          padding: 15px 20px;
-          flex-direction: column;
-          gap: 15px;
-        }
-        nav ul {
-          gap: 15px;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>
-        <a href="index.html">
-          <span class="main">LOIND</span>
-          <span class="slogan">THE GREATEST EXPERIENCE</span>
-        </a>
-      </h1>
-      <nav>
-        <ul>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="service.html">SERVICE</a></li>
-          <li><a href="story.html">STORY</a></li>
-          <li><a href="contact.html">CONTACT</a></li>
-        </ul>
-      </nav>
-    </header>
+            .story-item {
+                flex: 0 0 500px;
+                border-radius: 24px;
+                overflow: hidden;
+                border: 1px solid #f0f0f0;
+                transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+                background: #fff;
+            }
+            .story-item:hover {
+                transform: translateY(-40px);
+                border-color: #8e55ff;
+                box-shadow: 0 40px 70px rgba(142, 85, 255, 0.15);
+            }
+            .story-img {
+                width: 100%;
+                aspect-ratio: 16/11;
+                overflow: hidden;
+                background: #f5f5f5;
+                pointer-events: none;
+            }
+            .story-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .story-txt {
+                padding: 35px;
+                pointer-events: none;
+            }
+            .story-txt h4 {
+                font-size: 1.4rem;
+                font-weight: 800;
+                margin-bottom: 12px;
+            }
+            .story-txt p {
+                font-size: 1rem;
+                color: #666;
+                line-height: 1.6;
+            }
 
-    <section class="hero" id="heroSection">
-      <div style="font-size: 60px; margin-bottom: 25px">✨</div>
-      <h1>We create the greatest experience</h1>
-      <p>Innovate your core business value with LOIND</p>
-    </section>
+            /* --- [6. VISUAL ARCHIVE] --- */
+            .section-visual {
+                padding: 150px 50px;
+                border-top: 1px solid #f2f2f2;
+            }
+            .v-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 60px 0;
+                border-bottom: 1px solid #eee;
+                position: relative;
+            }
+            .v-title {
+                font-size: 3.5rem;
+                font-weight: 900;
+                color: #eee;
+                transition: 0.5s;
+            }
+            .v-img-float {
+                position: absolute;
+                right: 10%;
+                top: 50%;
+                transform: translateY(-50%) scale(0.8);
+                width: 480px;
+                height: 300px;
+                border-radius: 24px;
+                overflow: hidden;
+                opacity: 0;
+                visibility: hidden;
+                transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+                z-index: 1;
+                pointer-events: none;
+            }
+            .v-img-float img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .v-item:hover .v-title {
+                color: #000;
+                transform: translateX(40px);
+            }
+            .v-item:hover .v-img-float {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(-50%) scale(1);
+                right: 5%;
+            }
 
-    <h2 class="section-title">We Create</h2>
-    <div class="speaker-container">
-      <div class="speaker-card"></div>
-      <div class="speaker-card active"></div>
-      <div class="speaker-card"></div>
-      <div class="speaker-card"></div>
-    </div>
+            footer {
+                padding: 100px 50px;
+                border-top: 1px solid #f2f2f2;
+                color: #bbb;
+                display: flex;
+                justify-content: space-between;
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader"><div class="loader-text">LOIND</div></div>
+        <div id="cursor"></div>
 
-    <div class="session-grid">
-      <div class="session-card">
-        <h3>에이전틱 서치: 개인화와<br />실행까지 연결하는 검색 경험</h3>
-        <p class="tags">최재호 LOIND 발견/탐색 프로젝트 부문장</p>
-      </div>
-      <div class="session-card">
-        <h3>두 개의 에이전트, 하나의<br />플랫폼 : LOIND Ads 로드맵</h3>
-        <p class="tags">윤종호 LOIND 광고 프로젝트 부문장</p>
-      </div>
-    </div>
+        <header>
+            <h1>
+                <a href="index.html"><span class="main">LOIND</span></a>
+            </h1>
+            <nav>
+                <ul>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="service.html">SERVICE</a></li>
+                    <li><a href="story.html">STORY</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <section class="location-section">
-      <div class="map-area">MAP VIEW</div>
-      <div class="info-area">
-        <span class="label" style="color: #888">Location</span>
-        <h2>COEX</h2>
-        <p>그랜드볼룸, 아셈볼룸, 오디토리움</p>
-        <a href="#" class="btn-black" style="margin-top: 30px"
-          >교통정보 보기 ↗</a
-        >
-      </div>
-    </section>
+        <main id="mainContent" style="opacity: 0">
+            <section id="visual-portal">
+                <div class="hero-main">
+                    <img
+                        src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000"
+                        alt="Main Visual"
+                    />
+                    <div class="hero-caption">
+                        <h2>Designing<br />Future Value.</h2>
+                    </div>
+                </div>
+                <div class="hero-side">
+                    <div class="side-post">
+                        <span>Insight</span>
+                        <h4>
+                            브랜드의 본질을 찾아가는 로인드만의 디자인 프로세스
+                        </h4>
+                    </div>
+                    <div class="side-post">
+                        <span>Update</span>
+                        <h4>2026 웹 트렌드: 인터랙티브 디자인의 새로운 지표</h4>
+                    </div>
+                    <div class="side-post">
+                        <span>Studio</span>
+                        <h4>새로운 영감을 위한 오피스 리뉴얼 프로젝트 완료</h4>
+                    </div>
+                </div>
+            </section>
 
-    <footer
-      style="
-        text-align: center;
-        padding: 60px;
-        color: #444;
-        border-top: 1px solid #222;
-      "
-    >
-      © 2026 LOIND. All Rights Reserved.
-    </footer>
+            <section class="section-story">
+                <div class="section-title">
+                    <h3>STORIES</h3>
+                    <span
+                        style="
+                            font-size: 0.75rem;
+                            font-weight: 800;
+                            color: #8e55ff;
+                        "
+                        >DRAG OR SCROLL →</span
+                    >
+                </div>
+                <div class="story-container" id="storyBoard"></div>
+            </section>
 
-    <script>
-      const header = document.querySelector("header");
-      const hero = document.getElementById("heroSection");
+            <section class="section-visual">
+                <div class="section-title"><h3>VISUAL ARCHIVE</h3></div>
+                <div class="v-accordion">
+                    <div class="v-item">
+                        <h4 class="v-title">CORE IDENTITY</h4>
+                        <div class="v-img-float">
+                            <img
+                                src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1200"
+                            />
+                        </div>
+                    </div>
+                    <div class="v-item">
+                        <h4 class="v-title">DIGITAL FLOW</h4>
+                        <div class="v-img-float">
+                            <img
+                                src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1200"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-      window.addEventListener("scroll", () => {
-        // 히어로 섹션의 높이값을 가져옵니다.
-        const heroHeight = hero.offsetHeight;
+        <footer>
+            <div>LOIND STUDIO.</div>
+            <div>© 2026 LOIND.</div>
+        </footer>
 
-        // 현재 스크롤 위치가 히어로 섹션의 80% 지점을 지날 때 나타나도록 설정 (조절 가능)
-        if (window.scrollY > heroHeight * 0.8) {
-          header.classList.add("scrolled");
-        } else {
-          header.classList.remove("scrolled");
-        }
-      });
-    </script>
-  </body>
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+            import {
+                getFirestore,
+                collection,
+                getDocs,
+                query,
+                orderBy,
+                limit,
+            } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+            const firebaseConfig = {
+                apiKey: 'AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U',
+                authDomain: 'loind-472cd.firebaseapp.com',
+                projectId: 'loind-472cd',
+                appId: '1:405998534289:web:0f861bc822e1ea5391c930',
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            // [1] 커서
+            const cursor = document.querySelector('#cursor');
+            const xTo = gsap.quickTo(cursor, 'x', {
+                duration: 0.1,
+                ease: 'power3',
+            });
+            const yTo = gsap.quickTo(cursor, 'y', {
+                duration: 0.1,
+                ease: 'power3',
+            });
+            window.addEventListener('mousemove', (e) => {
+                xTo(e.clientX - 5);
+                yTo(e.clientY - 5);
+            });
+
+            document.addEventListener('mouseover', (e) => {
+                if (e.target.closest('a, .story-item, .v-item')) {
+                    cursor.classList.add('hover');
+                    gsap.to(cursor, { scale: 3, duration: 0.3 });
+                }
+            });
+            document.addEventListener('mouseout', (e) => {
+                if (e.target.closest('a, .story-item, .v-item')) {
+                    cursor.classList.remove('hover');
+                    gsap.to(cursor, { scale: 1, duration: 0.3 });
+                }
+            });
+
+            // [2] 로더
+            window.addEventListener('load', () => {
+                gsap.timeline()
+                    .to('#loader', {
+                        opacity: 0,
+                        duration: 0.6,
+                        delay: 0.5,
+                        onComplete: () =>
+                            document.querySelector('#loader').remove(),
+                    })
+                    .to('#mainContent', { opacity: 1, duration: 0.8 }, '-=0.2');
+            });
+
+            // [3] 드래그 & 개선된 휠 스크롤
+            const slider = document.querySelector('.story-container');
+            let isDown = false,
+                startX,
+                scrollLeft;
+
+            slider.addEventListener(
+                'wheel',
+                (e) => {
+                    const isAtEnd =
+                        slider.scrollLeft + slider.clientWidth >=
+                        slider.scrollWidth - 1;
+                    const isAtStart = slider.scrollLeft <= 0;
+
+                    // 가로 스크롤이 더 할 게 있을 때만 세로 스크롤 막기
+                    if (
+                        !(
+                            (e.deltaY > 0 && isAtEnd) ||
+                            (e.deltaY < 0 && isAtStart)
+                        )
+                    ) {
+                        e.preventDefault();
+                        slider.scrollLeft += e.deltaY * 1.5;
+                    }
+                },
+                { passive: false },
+            );
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('grabbing');
+                cursor.classList.add('grabbing');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            window.addEventListener('mouseup', () => {
+                isDown = false;
+                cursor.classList.remove('grabbing');
+            });
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+
+            // [4] 데이터 로드
+            async function loadStories() {
+                const storyBoard = document.querySelector('#storyBoard');
+                try {
+                    const q = query(
+                        collection(db, 'stories'),
+                        orderBy('createdAt', 'desc'),
+                        limit(8),
+                    );
+                    const querySnapshot = await getDocs(q);
+                    storyBoard.innerHTML = '';
+                    querySnapshot.forEach((doc) => {
+                        const item = doc.data();
+                        const div = document.createElement('div');
+                        div.className = 'story-item';
+                        div.innerHTML = `<div class="story-img"><img src="${item.img}"></div><div class="story-txt"><h4>${item.title}</h4><p>${item.text}</p></div>`;
+                        div.onclick = () => {
+                            if (!isDown) location.href = 'story.html';
+                        };
+                        storyBoard.appendChild(div);
+                    });
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            loadStories();
+        </script>
+    </body>
 </html>

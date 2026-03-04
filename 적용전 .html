@@ -1,439 +1,518 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LOIND: The Greatest Experience</title>
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  <style>
-    /* --- 1. 통일된 컬러 및 기초 설정 --- */
-    :root {
-      --primary-color: #8e55ff;
-      --bg-color: #050505;
-      --text-main: #ffffff;
-      --text-sub: #a0a0a0;
-      --border-color: rgba(255, 255, 255, 0.1); 
-      
-      --glass-bg: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --glass-blur: blur(20px);
-    }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LOIND | The Greatest Experience</title>
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      font-family: "Pretendard", -apple-system, sans-serif;
-      word-break: keep-all;
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    /* --- 2. 내비게이션 --- */
-    header {
-      position: fixed; top: 0; width: 100%; height: 90px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 60px; z-index: 1000;
-      border-bottom: 1px solid transparent;
-      transition: all 0.4s ease;
-    }
-    header.scrolled {
-      background: rgba(5, 5, 5, 0.85); 
-      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-      border-bottom: 1px solid var(--border-color);
-      height: 70px;
-    }
-    h1 .main { font-size: 1.4rem; font-weight: 900; letter-spacing: 1px; }
-    .slogan {
-      font-size: 0.65rem; font-weight: 700; color: var(--primary-color);
-      margin-left: 8px; opacity: 0; transform: translateY(5px); transition: 0.3s; display: inline-block;
-    }
-    h1:hover .slogan { opacity: 1; transform: translateY(0); }
-    nav ul { display: flex; gap: 40px; }
-    nav li { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em; transition: 0.3s; }
-    nav li:hover { color: var(--primary-color); }
+        <style>
+            /* --- [1. RESET & CURSOR] --- */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                -webkit-font-smoothing: antialiased;
+                cursor: none !important;
+            }
+            body {
+                background-color: #fff;
+                color: #000;
+                font-family: 'Pretendard', sans-serif;
+                overflow-x: hidden;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
 
-    /* --- 3. 히어로 섹션 --- */
-    .hero {
-      height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 0 60px;
-      background: linear-gradient(to bottom, rgba(5,5,5,0.3), var(--bg-color)), url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80') center/cover;
-    }
-    .hero-label { color: var(--primary-color); font-weight: 700; margin-bottom: 20px; font-size: 1.1rem; letter-spacing: 1px; }
-    .hero h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; }
-    .hero p { font-size: 1.5rem; margin-top: 30px; color: var(--text-sub); max-width: 600px; }
+            #cursor {
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                background: #8e55ff;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99999;
+                will-change: transform;
+            }
+            #cursor.hover {
+                background: #7236ff;
+                box-shadow: 0 0 20px rgba(142, 85, 255, 0.6);
+            }
+            #cursor.grabbing {
+                transform: scale(0.6);
+                background: #333;
+            }
 
-    /* --- 4. [NEW] 핵심 가치 (Core Values) 아티클 섹션 --- */
-    .core-values-section {
-      padding: 80px 60px 40px; /* 히어로와 대시보드 사이를 부드럽게 연결 */
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-    .core-values-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 60px;
-      border-top: 1px solid var(--border-color);
-      padding-top: 80px;
-    }
-    .core-value-item {
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease;
-    }
-    .core-value-item:hover {
-      transform: translateY(-10px);
-    }
-    .core-value-num {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--primary-color);
-      margin-bottom: 20px;
-      font-family: monospace;
-    }
-    .core-value-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      line-height: 1.3;
-      color: #fff;
-    }
-    .core-value-desc {
-      font-size: 1.1rem;
-      color: var(--text-sub);
-      line-height: 1.6;
-    }
+            /* --- [2. LOADER] --- */
+            #loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            }
+            .loader-text {
+                font-size: 1.5rem;
+                font-weight: 900;
+                letter-spacing: 10px;
+            }
 
-    /* --- 5. 메인 레이아웃 (포커스 & 세션) --- */
-    .kff-layout { padding: 40px 60px 120px; max-width: 1600px; margin: 0 auto; }
-    .kff-big-title {
-      font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 800; line-height: 0.9;
-      letter-spacing: -0.03em; margin-bottom: 60px; text-transform: uppercase;
-      color: #fff;
-    }
+            /* --- [3. HEADER] --- */
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 50px;
+                background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(15px);
+                z-index: 1000;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+            h1 .main {
+                font-size: 1.3rem;
+                font-weight: 900;
+                letter-spacing: 2px;
+            }
+            nav ul {
+                display: flex;
+                gap: 35px;
+                list-style: none;
+            }
+            nav li {
+                font-size: 0.8rem;
+                font-weight: 800;
+            }
 
-    /* --- 포커스 대시보드 --- */
-    .climate-focus-wrapper {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-      border-radius: 24px; padding: 60px; margin-bottom: 150px;
-      display: flex; flex-direction: column; gap: 50px; border: 1px solid var(--border-color);
-    }
-    .dashboard-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
-    .dashboard-left { flex: 1; max-width: 600px; }
-    .dashboard-left h2 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.2; font-weight: 700; margin-bottom: 15px; }
-    .dashboard-left p { font-size: 1.1rem; color: #ccc; margin-bottom: 30px; }
-    
-    .search-box {
-      display: flex; background: var(--glass-bg); border: 1px solid var(--glass-border);
-      border-radius: 8px; padding: 15px 20px; backdrop-filter: var(--glass-blur); margin-bottom: 20px;
-    }
-    .search-box input { flex: 1; background: transparent; border: none; color: #fff; font-size: 1rem; outline: none; font-family: inherit; }
-    .search-box input::placeholder { color: rgba(255, 255, 255, 0.4); }
-    .search-box svg { width: 20px; height: 20px; fill: #fff; opacity: 0.5; }
-    
-    .tags { display: flex; flex-wrap: wrap; gap: 10px; }
-    .tags span {
-      background: rgba(255, 255, 255, 0.1); border: 1px solid var(--glass-border);
-      padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;
-      backdrop-filter: var(--glass-blur); cursor: pointer; transition: background 0.3s;
-    }
-    .tags span:hover { background: rgba(255, 255, 255, 0.2); }
+            /* --- [4. MAIN VISUAL (50vh)] --- */
+            #visual-portal {
+                width: 100%;
+                height: 50vh;
+                display: grid;
+                grid-template-columns: 1.4fr 1fr;
+                padding-top: 80px;
+                border-bottom: 1px solid #f2f2f2;
+            }
+            .hero-main {
+                position: relative;
+                overflow: hidden;
+                background: #f9f9f9;
+            }
+            .hero-main img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .hero-caption {
+                position: absolute;
+                bottom: 40px;
+                left: 60px;
+                z-index: 10;
+            }
+            .hero-caption h2 {
+                font-size: clamp(2.5rem, 4vw, 3.5rem);
+                font-weight: 900;
+                line-height: 1.1;
+                letter-spacing: -2px;
+            }
 
-    .dashboard-right { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 50%; }
-    .glass-card {
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      backdrop-filter: var(--glass-blur); border-radius: 12px; padding: 25px; transition: transform 0.3s;
-    }
-    .glass-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.08); }
-    .glass-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .glass-card-header h3 { font-size: 1.2rem; font-weight: 700; margin: 0; }
-    .glass-card-header .icon {
-      width: 28px; height: 28px; background: rgba(255,255,255,0.15); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
-    }
-    .glass-card ul li { margin-bottom: 10px; }
-    .glass-card ul a { display: flex; justify-content: space-between; font-size: 0.9rem; color: #bbb; font-weight: 500; transition: 0.2s;}
-    .glass-card ul a:hover { color: #fff; }
+            .hero-side {
+                padding: 40px 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 30px;
+                border-left: 1px solid #f2f2f2;
+            }
+            .side-post span {
+                font-size: 0.7rem;
+                font-weight: 800;
+                color: #8e55ff;
+                display: block;
+                margin-bottom: 5px;
+            }
+            .side-post h4 {
+                font-size: 1rem;
+                font-weight: 700;
+                line-height: 1.4;
+                color: #333;
+            }
 
-    .article-section {
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      backdrop-filter: var(--glass-blur); border-radius: 16px; padding: 30px;
-    }
-    .article-header { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; color: #aaa; margin-bottom: 25px; padding: 0 10px; }
-    .article-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .article-card { display: flex; gap: 15px; align-items: center; cursor: pointer; padding: 10px; border-radius: 10px; transition: background 0.3s; }
-    .article-card:hover { background: rgba(255, 255, 255, 0.08); }
-    .article-thumb { width: 90px; height: 90px; background-color: #222; border-radius: 8px; flex-shrink: 0; background-size: cover; background-position: center;}
-    .article-info { display: flex; flex-direction: column; justify-content: center; height: 90px; padding: 5px 0; }
-    .article-info .category { font-size: 0.75rem; font-weight: 700; color: var(--primary-color); }
-    .article-info h4 { font-size: 0.95rem; font-weight: 700; line-height: 1.3; margin: 5px 0; color: #eee; }
-    .article-info .meta { font-size: 0.75rem; color: #777; display: flex; gap: 10px;}
+            /* --- [5. STORY SECTION] --- */
+            .section-story {
+                padding: 120px 0 100px 50px;
+                overflow: visible !important;
+            }
+            .section-title {
+                padding-right: 50px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 100px;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 25px;
+            }
+            .section-title h3 {
+                font-size: 2rem;
+                font-weight: 900;
+            }
 
-    /* --- 세션 리스트 --- */
-    .kff-list-container { border-top: 1px solid var(--border-color); }
-    .kff-list-row {
-      display: grid; grid-template-columns: 180px 1fr 250px;
-      padding: 50px 0; border-bottom: 1px solid var(--border-color); align-items: center;
-      transition: background 0.3s, padding-left 0.3s;
-    }
-    .kff-list-row:hover { background: rgba(255,255,255,0.02); padding-left: 20px; }
-    .kff-list-row .time { font-weight: 700; font-size: 1.2rem; color: var(--primary-color); }
-    .kff-list-row .subject { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
-    .kff-list-row .author { text-align: right; font-weight: 600; font-size: 1.1rem; color: var(--text-sub); }
+            .story-container {
+                display: flex;
+                gap: 40px;
+                overflow-x: auto;
+                padding: 40px 50px 80px 0; /* 호버 공간 확보 */
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                user-select: none;
+                cursor: grab;
+            }
+            .story-container::-webkit-scrollbar {
+                display: none;
+            }
 
-    /* --- 6. 로케이션 영역 --- */
-    .location-wrap {
-      display: grid; grid-template-columns: 1fr 1fr; min-height: 500px;
-      border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
-    }
-    .map-box { background: #111; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #444; font-weight: 800; }
-    .info-box { padding: 100px 60px; display: flex; flex-direction: column; justify-content: center; }
-    .info-box h2 { font-size: 3.5rem; font-weight: 800; margin: 15px 0; }
-    .info-box p { font-size: 1.2rem; color: var(--text-sub); }
-    .btn-more {
-      display: inline-block; padding: 15px 40px; border: 1px solid var(--border-color);
-      font-weight: 700; margin-top: 40px; border-radius: 50px; transition: 0.3s; align-self: flex-start;
-    }
-    .btn-more:hover { background: #fff; color: #000; }
+            .story-item {
+                flex: 0 0 500px;
+                border-radius: 24px;
+                overflow: hidden;
+                border: 1px solid #f0f0f0;
+                transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+                background: #fff;
+            }
+            .story-item:hover {
+                transform: translateY(-40px);
+                border-color: #8e55ff;
+                box-shadow: 0 40px 70px rgba(142, 85, 255, 0.15);
+            }
+            .story-img {
+                width: 100%;
+                aspect-ratio: 16/11;
+                overflow: hidden;
+                background: #f5f5f5;
+                pointer-events: none;
+            }
+            .story-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .story-txt {
+                padding: 35px;
+                pointer-events: none;
+            }
+            .story-txt h4 {
+                font-size: 1.4rem;
+                font-weight: 800;
+                margin-bottom: 12px;
+            }
+            .story-txt p {
+                font-size: 1rem;
+                color: #666;
+                line-height: 1.6;
+            }
 
-    /* --- 7. 푸터 --- */
-    footer {
-      padding: 60px; display: flex; justify-content: space-between; font-weight: 600; font-size: 0.9rem; color: #666;
-    }
+            /* --- [6. VISUAL ARCHIVE] --- */
+            .section-visual {
+                padding: 150px 50px;
+                border-top: 1px solid #f2f2f2;
+            }
+            .v-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 60px 0;
+                border-bottom: 1px solid #eee;
+                position: relative;
+            }
+            .v-title {
+                font-size: 3.5rem;
+                font-weight: 900;
+                color: #eee;
+                transition: 0.5s;
+            }
+            .v-img-float {
+                position: absolute;
+                right: 10%;
+                top: 50%;
+                transform: translateY(-50%) scale(0.8);
+                width: 480px;
+                height: 300px;
+                border-radius: 24px;
+                overflow: hidden;
+                opacity: 0;
+                visibility: hidden;
+                transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+                z-index: 1;
+                pointer-events: none;
+            }
+            .v-img-float img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .v-item:hover .v-title {
+                color: #000;
+                transform: translateX(40px);
+            }
+            .v-item:hover .v-img-float {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(-50%) scale(1);
+                right: 5%;
+            }
 
-    /* --- 반응형 --- */
-    @media (max-width: 1200px) {
-      .dashboard-top { flex-direction: column; align-items: stretch; }
-      .dashboard-right { width: 100%; }
-      .article-grid { grid-template-columns: repeat(2, 1fr); }
-      .core-values-grid { gap: 30px; }
-    }
-    @media (max-width: 1024px) {
-      header { padding: 0 30px; }
-      .kff-list-row { grid-template-columns: 1fr; gap: 15px; }
-      .kff-list-row .author { text-align: left; }
-      .location-wrap { grid-template-columns: 1fr; }
-      .map-box { min-height: 300px; }
-      .climate-focus-wrapper { padding: 40px 30px; }
-      .core-values-section, .kff-layout { padding-left: 30px; padding-right: 30px; }
-    }
-    @media (max-width: 768px) {
-      .dashboard-right { grid-template-columns: 1fr; }
-      .article-grid { grid-template-columns: 1fr; }
-      .kff-layout, .hero { padding: 60px 30px; }
-      .kff-big-title { font-size: 3rem; }
-      .core-values-grid { grid-template-columns: 1fr; padding-top: 40px; }
-    }
-  </style>
-</head>
-<body>
+            footer {
+                padding: 100px 50px;
+                border-top: 1px solid #f2f2f2;
+                color: #bbb;
+                display: flex;
+                justify-content: space-between;
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader"><div class="loader-text">LOIND</div></div>
+        <div id="cursor"></div>
 
-  <header id="mainHeader">
-    <h1>
-      <a href="index.html">
-        <span class="main">LOIND</span>
-        <span class="slogan">THE GREATEST EXPERIENCE</span>
-      </a>
-    </h1>
-    <nav>
-      <ul>
-        <li><a href="about.html">ABOUT</a></li>
-        <li><a href="service.html">SERVICE</a></li>
-        <li><a href="story.html">STORY</a></li>
-        <li><a href="contact.html">CONTACT</a></li>
-      </ul>
-    </nav>
-  </header>
+        <header>
+            <h1>
+                <a href="index.html"><span class="main">LOIND</span></a>
+            </h1>
+            <nav>
+                <ul>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="service.html">SERVICE</a></li>
+                    <li><a href="story.html">STORY</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </nav>
+        </header>
 
-  <section class="hero" id="heroSection">
-    <div class="hero-label">PREMIUM EXPERIENCE AGENCY</div>
-    <h1>We create the<br>greatest experience</h1>
-    <p>Innovate your core business value with LOIND's strategic insight and creative execution.</p>
-  </section>
+        <main id="mainContent" style="opacity: 0">
+            <section id="visual-portal">
+                <div class="hero-main">
+                    <img
+                        src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000"
+                        alt="Main Visual"
+                    />
+                    <div class="hero-caption">
+                        <h2>Designing<br />Future Value.</h2>
+                    </div>
+                </div>
+                <div class="hero-side">
+                    <div class="side-post">
+                        <span>Insight</span>
+                        <h4>
+                            브랜드의 본질을 찾아가는 로인드만의 디자인 프로세스
+                        </h4>
+                    </div>
+                    <div class="side-post">
+                        <span>Update</span>
+                        <h4>2026 웹 트렌드: 인터랙티브 디자인의 새로운 지표</h4>
+                    </div>
+                    <div class="side-post">
+                        <span>Studio</span>
+                        <h4>새로운 영감을 위한 오피스 리뉴얼 프로젝트 완료</h4>
+                    </div>
+                </div>
+            </section>
 
-  <section class="core-values-section">
-    <div class="core-values-grid">
-      <div class="core-value-item">
-        <div class="core-value-num">01</div>
-        <h3 class="core-value-title">Strategic<br>Insight</h3>
-        <p class="core-value-desc">데이터와 깊이 있는 리서치를 바탕으로 비즈니스의 본질을 꿰뚫어 봅니다. 단순한 예측을 넘어 시장을 선도하는 전략적 방향성을 제시합니다.</p>
-      </div>
-      <div class="core-value-item">
-        <div class="core-value-num">02</div>
-        <h3 class="core-value-title">Creative<br>Execution</h3>
-        <p class="core-value-desc">기존의 틀을 깨는 아이디어를 압도적인 시각적 결과물로 구현합니다. 브랜드의 메시지를 가장 강렬하고 아름다운 방식으로 타겟에게 전달합니다.</p>
-      </div>
-      <div class="core-value-item">
-        <div class="core-value-num">03</div>
-        <h3 class="core-value-title">Sustainable<br>Impact</h3>
-        <p class="core-value-desc">우리가 창조하는 경험은 일회성에 그치지 않습니다. 브랜드와 소비자가 함께 성장하며 사회에 긍정적인 변화를 일으키는 지속 가능한 영향력을 만듭니다.</p>
-      </div>
-    </div>
-  </section>
+            <section class="section-story">
+                <div class="section-title">
+                    <h3>STORIES</h3>
+                    <span
+                        style="
+                            font-size: 0.75rem;
+                            font-weight: 800;
+                            color: #8e55ff;
+                        "
+                        >DRAG OR SCROLL →</span
+                    >
+                </div>
+                <div class="story-container" id="storyBoard"></div>
+            </section>
 
-  <div class="kff-layout">
-    
-    <div class="climate-focus-wrapper">
-      <div class="dashboard-top">
-        <div class="dashboard-left">
-          <h2>LOIND</h2>
-          <p>THE GREATEST EXPERIENCE</p>
-          
-          <div class="search-box">
-            <input type="text" placeholder="검색어를 입력하세요">
-            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-          </div>
-          
-          <div class="tags">
-            <span>#전환금융</span>
-            <span>#탄소중립</span>
-            <span>#기후위기</span>
-            <span>#녹색채권</span>
-            <span>#ESG 투자</span>
-          </div>
-        </div>
+            <section class="section-visual">
+                <div class="section-title"><h3>VISUAL ARCHIVE</h3></div>
+                <div class="v-accordion">
+                    <div class="v-item">
+                        <h4 class="v-title">CORE IDENTITY</h4>
+                        <div class="v-img-float">
+                            <img
+                                src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1200"
+                            />
+                        </div>
+                    </div>
+                    <div class="v-item">
+                        <h4 class="v-title">DIGITAL FLOW</h4>
+                        <div class="v-img-float">
+                            <img
+                                src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1200"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-        <div class="dashboard-right">
-          <div class="glass-card">
-            <div class="glass-card-header">
-              <h3>뉴스와 정책</h3>
-              <div class="icon">📰</div>
-            </div>
-            <ul>
-              <li><a href="#">뉴스&오피니언 <span>→</span></a></li>
-              <li><a href="#">국내 정책자료 <span>→</span></a></li>
-              <li><a href="#">유용한 링크 <span>→</span></a></li>
-            </ul>
-          </div>
-          
-          <div class="glass-card">
-            <div class="glass-card-header">
-              <h3>리서치</h3>
-              <div class="icon">📊</div>
-            </div>
-            <ul>
-              <li><a href="#">우리금융 인사이트 <span>→</span></a></li>
-              <li><a href="#">국내외 연구자료 <span>→</span></a></li>
-            </ul>
-          </div>
+        <footer>
+            <div>LOIND STUDIO.</div>
+            <div>© 2026 LOIND.</div>
+        </footer>
 
-          <div class="glass-card">
-            <div class="glass-card-header">
-              <h3>마켓</h3>
-              <div class="icon">📈</div>
-            </div>
-            <ul>
-              <li><a href="#">케이스 스터디 <span>→</span></a></li>
-              <li><a href="#">컴퍼니&피플 <span>→</span></a></li>
-            </ul>
-          </div>
+        <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+            import {
+                getFirestore,
+                collection,
+                getDocs,
+                query,
+                orderBy,
+                limit,
+            } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
-          <div class="glass-card">
-            <div class="glass-card-header">
-              <h3>미디어 셀렉션</h3>
-              <div class="icon">🎬</div>
-            </div>
-            <ul>
-              <li><a href="#">강연&책소개 <span>→</span></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+            const firebaseConfig = {
+                apiKey: 'AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U',
+                authDomain: 'loind-472cd.firebaseapp.com',
+                projectId: 'loind-472cd',
+                appId: '1:405998534289:web:0f861bc822e1ea5391c930',
+            };
 
-      <div class="article-section">
-        <div class="article-header">
-          <span class="time">• 14:38:30 (Seoul)</span>
-          <span class="date">MAR 4th, 2026</span>
-        </div>
-        
-        <div class="article-grid">
-          <div class="article-card">
-            <div class="article-thumb" style="background-image: url('https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?auto=format&fit=crop&w=200&q=80');"></div>
-            <div class="article-info">
-              <div>
-                <div class="category">우리금융 인사이트</div>
-                <h4>[해외 기후투자공사 분석 시리즈] ④ 일본 녹색투자공사...</h4>
-              </div>
-              <div class="meta"><span>우리금융경영연구소</span> <span>2025-11-14</span></div>
-            </div>
-          </div>
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
 
-          <div class="article-card">
-            <div class="article-thumb" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=200&q=80');"></div>
-            <div class="article-info">
-              <div>
-                <div class="category">국내외 연구자료</div>
-                <h4>2024 한국 ESG금융 백서</h4>
-              </div>
-              <div class="meta"><span>한국사회책임투자포럼</span> <span>2026-02-23</span></div>
-            </div>
-          </div>
+            // [1] 커서
+            const cursor = document.querySelector('#cursor');
+            const xTo = gsap.quickTo(cursor, 'x', {
+                duration: 0.1,
+                ease: 'power3',
+            });
+            const yTo = gsap.quickTo(cursor, 'y', {
+                duration: 0.1,
+                ease: 'power3',
+            });
+            window.addEventListener('mousemove', (e) => {
+                xTo(e.clientX - 5);
+                yTo(e.clientY - 5);
+            });
 
-          <div class="article-card">
-            <div class="article-thumb" style="background-image: url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=200&q=80');"></div>
-            <div class="article-info">
-              <div>
-                <div class="category">케이스 스터디</div>
-                <h4>[2026-1호] 필리핀 ACEN 석탄발전소 매...</h4>
-              </div>
-              <div class="meta"><span>Rocky Mountain</span> <span>2026-02-03</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <h2 class="kff-big-title">Sessions</h2>
-    <div class="kff-list-container">
-      <div class="kff-list-row">
-        <div class="time">14:00 - 14:40</div>
-        <div class="subject">에이전틱 서치: 개인화와 실행까지 연결하는 검색 경험</div>
-        <div class="author">최재호 부문장</div>
-      </div>
-      <div class="kff-list-row">
-        <div class="time">14:40 - 15:20</div>
-        <div class="subject">두 개의 에이전트, 하나의 플랫폼 : LOIND Ads 로드맵</div>
-        <div class="author">윤종호 부문장</div>
-      </div>
-      <div class="kff-list-row">
-        <div class="time">15:20 - 16:00</div>
-        <div class="subject">The Future of Brand Experience with AI Architecture</div>
-        <div class="author">LOIND Creative Team</div>
-      </div>
-    </div>
+            document.addEventListener('mouseover', (e) => {
+                if (e.target.closest('a, .story-item, .v-item')) {
+                    cursor.classList.add('hover');
+                    gsap.to(cursor, { scale: 3, duration: 0.3 });
+                }
+            });
+            document.addEventListener('mouseout', (e) => {
+                if (e.target.closest('a, .story-item, .v-item')) {
+                    cursor.classList.remove('hover');
+                    gsap.to(cursor, { scale: 1, duration: 0.3 });
+                }
+            });
 
-  </div>
+            // [2] 로더
+            window.addEventListener('load', () => {
+                gsap.timeline()
+                    .to('#loader', {
+                        opacity: 0,
+                        duration: 0.6,
+                        delay: 0.5,
+                        onComplete: () =>
+                            document.querySelector('#loader').remove(),
+                    })
+                    .to('#mainContent', { opacity: 1, duration: 0.8 }, '-=0.2');
+            });
 
-  <section class="location-wrap">
-    <div class="map-box">MAP PREVIEW</div>
-    <div class="info-box">
-      <div style="color: var(--primary-color); font-weight: 700;">LOCATION</div>
-      <h2>COEX</h2>
-      <p>그랜드볼룸, 아셈볼룸, 오디토리움</p>
-      <a href="#" class="btn-more">GET DIRECTIONS ↗</a>
-    </div>
-  </section>
+            // [3] 드래그 & 개선된 휠 스크롤
+            const slider = document.querySelector('.story-container');
+            let isDown = false,
+                startX,
+                scrollLeft;
 
-  <footer>
-    <div>© 2026 LOIND. All Rights Reserved.</div>
-    <div style="display: flex; gap: 40px;">
-        <span>PRIVACY POLICY</span>
-        <span>INSTAGRAM</span>
-    </div>
-  </footer>
+            slider.addEventListener(
+                'wheel',
+                (e) => {
+                    const isAtEnd =
+                        slider.scrollLeft + slider.clientWidth >=
+                        slider.scrollWidth - 1;
+                    const isAtStart = slider.scrollLeft <= 0;
 
-  <script>
-    const header = document.getElementById("mainHeader");
-    window.addEventListener("scroll", () => {
-      // 다크 테마에 맞게 스크롤 시 헤더 디자인 변경
-      if (window.scrollY > 100) {
-        header.classList.add("scrolled");
-      } else {
-        header.classList.remove("scrolled");
-      }
-    });
-  </script>
-</body>
+                    // 가로 스크롤이 더 할 게 있을 때만 세로 스크롤 막기
+                    if (
+                        !(
+                            (e.deltaY > 0 && isAtEnd) ||
+                            (e.deltaY < 0 && isAtStart)
+                        )
+                    ) {
+                        e.preventDefault();
+                        slider.scrollLeft += e.deltaY * 1.5;
+                    }
+                },
+                { passive: false },
+            );
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('grabbing');
+                cursor.classList.add('grabbing');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            window.addEventListener('mouseup', () => {
+                isDown = false;
+                cursor.classList.remove('grabbing');
+            });
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+
+            // [4] 데이터 로드
+            async function loadStories() {
+                const storyBoard = document.querySelector('#storyBoard');
+                try {
+                    const q = query(
+                        collection(db, 'stories'),
+                        orderBy('createdAt', 'desc'),
+                        limit(8),
+                    );
+                    const querySnapshot = await getDocs(q);
+                    storyBoard.innerHTML = '';
+                    querySnapshot.forEach((doc) => {
+                        const item = doc.data();
+                        const div = document.createElement('div');
+                        div.className = 'story-item';
+                        div.innerHTML = `<div class="story-img"><img src="${item.img}"></div><div class="story-txt"><h4>${item.title}</h4><p>${item.text}</p></div>`;
+                        div.onclick = () => {
+                            if (!isDown) location.href = 'story.html';
+                        };
+                        storyBoard.appendChild(div);
+                    });
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            loadStories();
+        </script>
+    </body>
 </html>
