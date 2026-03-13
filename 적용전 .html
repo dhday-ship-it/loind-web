@@ -1,518 +1,919 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>LOIND | The Greatest Experience</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Service | LOIND</title>
+    <style>
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-        />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+      }
+      body {
+        background-color: #fff;
+        color: #000;
+        font-family: "Pretendard", sans-serif;
+      }
 
-        <style>
-            /* --- [1. RESET & CURSOR] --- */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                -webkit-font-smoothing: antialiased;
-                cursor: none !important;
-            }
-            body {
-                background-color: #fff;
-                color: #000;
-                font-family: 'Pretendard', sans-serif;
-                overflow-x: hidden;
-            }
-            a {
-                color: inherit;
-                text-decoration: none;
-            }
+      /*header*/
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 50px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid #f2f2f2;
+        transition: 0.3s;
+      }
+      h1 .main {
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+      }
+      .slogan {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #8e55ff;
+        margin-left: 5px;
+        border-left: 1px solid #eee;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: 0.4s;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      h1:hover .slogan {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      nav ul {
+        display: flex;
+        gap: 35px;
+      }
+      nav li {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: 0.3s;
+      }
+      nav li:hover {
+        opacity: 0.5;
+      }
 
-            #cursor {
-                position: fixed;
-                width: 10px;
-                height: 10px;
-                background: #8e55ff;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 99999;
-                will-change: transform;
-            }
-            #cursor.hover {
-                background: #7236ff;
-                box-shadow: 0 0 20px rgba(142, 85, 255, 0.6);
-            }
-            #cursor.grabbing {
-                transform: scale(0.6);
-                background: #333;
-            }
+      /* --- [3] 사이드바 --- */
+      .side-nav {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 280px;
+        height: calc(100vh - 80px);
+        padding: 40px 20px;
+        border-right: 1px solid #f2f2f2;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .side-group-box {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid #f2f2f2;
+        border-radius: 20px;
+        padding: 24px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+        cursor: pointer;
+      }
+      .side-group-box.active {
+        border-color: #000;
+        background: #fafafa;
+      }
+      .side-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 900;
+        margin-bottom: 8px;
+        letter-spacing: 0.05em;
+      }
+      .side-definition {
+        display: block;
+        font-size: 0.72rem;
+        color: #888;
+        line-height: 1.5;
+        margin-bottom: 16px;
+        word-break: keep-all;
+        font-weight: 500;
+      }
+      .sub-link-list {
+        list-style: none;
+        padding-left: 10px;
+        border-left: 1px solid #eee;
+      }
+      .sub-link {
+        color: #aaa;
+        font-size: 0.68rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: block;
+        transition: 0.2s;
+      }
+      .side-group-box:hover .sub-link {
+        color: #666;
+      }
+      .btn-top {
+        width: 100%;
+        height: 54px;
+        background: #fff;
+        border: 1px solid #f2f2f2;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+        color: #999;
+        text-decoration: none;
+        font-size: 0.7rem;
+        font-weight: 800;
+        gap: 8px;
+        margin-top: auto;
+      }
+      .btn-top:hover {
+        background: #000;
+        color: #fff;
+        border-color: #000;
+      }
 
-            /* --- [2. LOADER] --- */
-            #loader {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: #fff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10000;
-            }
-            .loader-text {
-                font-size: 1.5rem;
-                font-weight: 900;
-                letter-spacing: 10px;
-            }
+      /* --- [4] 메인 컨텐츠 --- */
+      .content {
+        margin-left: 280px;
+        padding-top: 80px;
+        width: 100%;
+        scroll-behavior: smooth;
+      }
+      .page-header {
+        padding: 80px 8% 60px;
+        max-width: 1400px;
+      }
+      .page-header h2 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        letter-spacing: -0.04em;
+      }
+      .page-header p {
+        font-size: 1.2rem;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 50px;
+      }
+      .page-header p strong {
+        color: #111;
+        font-weight: 800;
+      }
+      .shortcut-header {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #999;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .link-group-wrapper {
+        display: flex;
+        gap: 100px;
+        border-top: 1px solid #f2f2f2;
+        padding-top: 40px;
+      }
+      .link-group {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .group-tag {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #8e55ff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .group-tag::after {
+        content: "";
+        width: 20px;
+        height: 1px;
+        background: #e0e0e0;
+      }
+      .link-items {
+        display: flex;
+        gap: 30px;
+      }
+      .service-link-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: #111;
+        transition: 0.3s;
+      }
+      .service-link-item:hover {
+        transform: translateY(-4px);
+      }
+      .link-icon {
+        width: 52px;
+        height: 52px;
+        background: #f9f9fb;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        border: 1px solid #eee;
+        transition: 0.3s;
+      }
+      .link-name {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #444;
+      }
 
-            /* --- [3. HEADER] --- */
-            header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 80px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 50px;
-                background: rgba(255, 255, 255, 0.8);
-                backdrop-filter: blur(15px);
-                z-index: 1000;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            }
-            h1 .main {
-                font-size: 1.3rem;
-                font-weight: 900;
-                letter-spacing: 2px;
-            }
-            nav ul {
-                display: flex;
-                gap: 35px;
-                list-style: none;
-            }
-            nav li {
-                font-size: 0.8rem;
-                font-weight: 800;
-            }
+      /* --- [5] 서비스 섹션 --- */
+      .service-section {
+        padding: 120px 8%;
+        border-top: 1px solid #f2f2f2;
+      }
+      .section-header {
+        margin-bottom: 60px;
+        max-width: 900px;
+      }
+      .section-header h3 {
+        font-size: 2.4rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        color: #000;
+        letter-spacing: -0.02em;
+      }
+      .section-header p {
+        font-size: 1.05rem;
+        color: #777;
+        line-height: 1.8;
+        word-break: keep-all;
+        font-weight: 500;
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 24px;
+      }
+      .service-card {
+        background: #fff;
+        padding: 40px;
+        border-radius: 24px;
+        border: 1px solid #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        transition: 0.4s;
+        cursor: pointer;
+      }
+      .service-card:hover {
+        border-color: #8e55ff;
+        box-shadow: 0 20px 40px rgba(142, 85, 255, 0.06);
+        transform: translateY(-5px);
+      }
+      .card-tag {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #8e55ff;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        display: block;
+      }
+      .card-info h4 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+        color: #000;
+      }
+      .card-info p {
+        font-size: 0.95rem;
+        color: #666;
+        line-height: 1.7;
+        word-break: keep-all;
+      }
 
-            /* --- [4. MAIN VISUAL (50vh)] --- */
-            #visual-portal {
-                width: 100%;
-                height: 50vh;
-                display: grid;
-                grid-template-columns: 1.4fr 1fr;
-                padding-top: 80px;
-                border-bottom: 1px solid #f2f2f2;
-            }
-            .hero-main {
-                position: relative;
-                overflow: hidden;
-                background: #f9f9f9;
-            }
-            .hero-main img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .hero-caption {
-                position: absolute;
-                bottom: 40px;
-                left: 60px;
-                z-index: 10;
-            }
-            .hero-caption h2 {
-                font-size: clamp(2.5rem, 4vw, 3.5rem);
-                font-weight: 900;
-                line-height: 1.1;
-                letter-spacing: -2px;
-            }
+      /* ====================================================
+         LOER 상세 오버레이 — 리디자인
+      ==================================================== */
+      .detail-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: none;
+        overflow-y: auto;
+        background: #0a0a0a;
+      }
+      .detail-overlay.active {
+        display: block;
+        animation: overlayIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes overlayIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
 
-            .hero-side {
-                padding: 40px 60px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                gap: 30px;
-                border-left: 1px solid #f2f2f2;
-            }
-            .side-post span {
-                font-size: 0.7rem;
-                font-weight: 800;
-                color: #8e55ff;
-                display: block;
-                margin-bottom: 5px;
-            }
-            .side-post h4 {
-                font-size: 1rem;
-                font-weight: 700;
-                line-height: 1.4;
-                color: #333;
-            }
+      /* 닫기 버튼 */
+      .detail-close {
+        position: fixed;
+        top: 36px;
+        right: 48px;
+        z-index: 2100;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        color: rgba(255,255,255,0.5);
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      .detail-close:hover { color: #fff; }
+      .detail-close::before {
+        content: '';
+        display: block;
+        width: 18px;
+        height: 1px;
+        background: currentColor;
+      }
 
-            /* --- [5. STORY SECTION] --- */
-            .section-story {
-                padding: 120px 0 100px 50px;
-                overflow: visible !important;
-            }
-            .section-title {
-                padding-right: 50px;
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                margin-bottom: 100px;
-                border-bottom: 1px solid #eee;
-                padding-bottom: 25px;
-            }
-            .section-title h3 {
-                font-size: 2rem;
-                font-weight: 900;
-            }
+      /* 내부 레이아웃 */
+      .loer-wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 100px 60px 120px;
+      }
 
-            .story-container {
-                display: flex;
-                gap: 40px;
-                overflow-x: auto;
-                padding: 40px 50px 80px 0; /* 호버 공간 확보 */
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-                user-select: none;
-                cursor: grab;
-            }
-            .story-container::-webkit-scrollbar {
-                display: none;
-            }
+      /* ── 상단 헤더 블록 ── */
+      .loer-hero {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: end;
+        padding-bottom: 70px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        margin-bottom: 80px;
+      }
+      .loer-badge {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        color: #8e55ff;
+        border: 1px solid rgba(142,85,255,0.4);
+        border-radius: 100px;
+        padding: 6px 16px;
+        margin-bottom: 28px;
+        text-transform: uppercase;
+      }
+      .loer-title {
+        font-size: clamp(3.5rem, 7vw, 5.5rem);
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-bottom: 8px;
+      }
+      .loer-subtitle {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: rgba(255,255,255,0.28);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .loer-identity-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 20px;
+      }
+      .loer-identity-label {
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        color: rgba(255,255,255,0.3);
+        text-transform: uppercase;
+      }
+      .loer-identity-text {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.88);
+        line-height: 1.5;
+        letter-spacing: -0.01em;
+        word-break: keep-all;
+      }
+      .loer-mission-line {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.4);
+        line-height: 1.7;
+        font-weight: 500;
+        word-break: keep-all;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.08);
+      }
 
-            .story-item {
-                flex: 0 0 500px;
-                border-radius: 24px;
-                overflow: hidden;
-                border: 1px solid #f0f0f0;
-                transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
-                background: #fff;
-            }
-            .story-item:hover {
-                transform: translateY(-40px);
-                border-color: #8e55ff;
-                box-shadow: 0 40px 70px rgba(142, 85, 255, 0.15);
-            }
-            .story-img {
-                width: 100%;
-                aspect-ratio: 16/11;
-                overflow: hidden;
-                background: #f5f5f5;
-                pointer-events: none;
-            }
-            .story-img img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .story-txt {
-                padding: 35px;
-                pointer-events: none;
-            }
-            .story-txt h4 {
-                font-size: 1.4rem;
-                font-weight: 800;
-                margin-bottom: 12px;
-            }
-            .story-txt p {
-                font-size: 1rem;
-                color: #666;
-                line-height: 1.6;
-            }
+      /* ── 본문 그리드 ── */
+      .loer-body {
+        display: grid;
+        grid-template-columns: 5fr 4fr;
+        gap: 40px;
+        align-items: start;
+      }
 
-            /* --- [6. VISUAL ARCHIVE] --- */
-            .section-visual {
-                padding: 150px 50px;
-                border-top: 1px solid #f2f2f2;
-            }
-            .v-item {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 60px 0;
-                border-bottom: 1px solid #eee;
-                position: relative;
-            }
-            .v-title {
-                font-size: 3.5rem;
-                font-weight: 900;
-                color: #eee;
-                transition: 0.5s;
-            }
-            .v-img-float {
-                position: absolute;
-                right: 10%;
-                top: 50%;
-                transform: translateY(-50%) scale(0.8);
-                width: 480px;
-                height: 300px;
-                border-radius: 24px;
-                overflow: hidden;
-                opacity: 0;
-                visibility: hidden;
-                transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1);
-                z-index: 1;
-                pointer-events: none;
-            }
-            .v-img-float img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .v-item:hover .v-title {
-                color: #000;
-                transform: translateX(40px);
-            }
-            .v-item:hover .v-img-float {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(-50%) scale(1);
-                right: 5%;
-            }
+      /* What We Do */
+      .loer-section-label {
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        color: #8e55ff;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .loer-main-copy {
+        font-size: 1.05rem;
+        color: rgba(255,255,255,0.6);
+        line-height: 1.9;
+        font-weight: 400;
+        word-break: keep-all;
+        margin-bottom: 48px;
+      }
+      .loer-main-copy strong {
+        color: rgba(255,255,255,0.92);
+        font-weight: 700;
+      }
 
-            footer {
-                padding: 100px 50px;
-                border-top: 1px solid #f2f2f2;
-                color: #bbb;
-                display: flex;
-                justify-content: space-between;
-                font-weight: 700;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="loader"><div class="loader-text">LOIND</div></div>
-        <div id="cursor"></div>
+      /* 서비스 태그 리스트 */
+      .loer-services {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .loer-service-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 22px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        transition: 0.25s;
+      }
+      .loer-service-item:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+      .loer-service-num {
+        font-size: 0.65rem;
+        font-weight: 800;
+        color: rgba(142,85,255,0.5);
+        letter-spacing: 0.05em;
+        width: 28px;
+        flex-shrink: 0;
+      }
+      .loer-service-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: rgba(255,255,255,0.6);
+        transition: color 0.2s;
+      }
+      .loer-service-item:hover .loer-service-name {
+        color: #fff;
+      }
 
-        <header>
-            <h1>
-                <a href="index.html"><span class="main">LOIND</span></a>
-            </h1>
-            <nav>
-                <ul>
-                    <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="service.html">SERVICE</a></li>
-                    <li><a href="story.html">STORY</a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
-                </ul>
-            </nav>
-        </header>
+      /* 오른쪽 사이드 카드 */
+      .loer-side-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .loer-side-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 28px 32px;
+        transition: border-color 0.3s;
+      }
+      .loer-side-card:hover {
+        border-color: rgba(142,85,255,0.35);
+      }
+      .loer-side-card-label {
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        color: rgba(255,255,255,0.3);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .loer-side-card-value {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.6;
+        word-break: keep-all;
+      }
 
-        <main id="mainContent" style="opacity: 0">
-            <section id="visual-portal">
-                <div class="hero-main">
-                    <img
-                        src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000"
-                        alt="Main Visual"
-                    />
-                    <div class="hero-caption">
-                        <h2>Designing<br />Future Value.</h2>
-                    </div>
-                </div>
-                <div class="hero-side">
-                    <div class="side-post">
-                        <span>Insight</span>
-                        <h4>
-                            브랜드의 본질을 찾아가는 로인드만의 디자인 프로세스
-                        </h4>
-                    </div>
-                    <div class="side-post">
-                        <span>Update</span>
-                        <h4>2026 웹 트렌드: 인터랙티브 디자인의 새로운 지표</h4>
-                    </div>
-                    <div class="side-post">
-                        <span>Studio</span>
-                        <h4>새로운 영감을 위한 오피스 리뉴얼 프로젝트 완료</h4>
-                    </div>
-                </div>
-            </section>
+      /* 키워드 태그 */
+      .loer-keyword-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .loer-keyword-tag {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.55);
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 100px;
+        padding: 6px 14px;
+        letter-spacing: 0.04em;
+      }
 
-            <section class="section-story">
-                <div class="section-title">
-                    <h3>STORIES</h3>
-                    <span
-                        style="
-                            font-size: 0.75rem;
-                            font-weight: 800;
-                            color: #8e55ff;
-                        "
-                        >DRAG OR SCROLL →</span
-                    >
-                </div>
-                <div class="story-container" id="storyBoard"></div>
-            </section>
+      /* ── 하단 포지셔닝 풀블리드 ── */
+      .loer-positioning {
+        margin-top: 80px;
+        padding: 56px 64px;
+        background: rgba(142,85,255,0.07);
+        border: 1px solid rgba(142,85,255,0.2);
+        border-radius: 28px;
+        position: relative;
+        overflow: hidden;
+      }
+      .loer-positioning::before {
+        content: 'LOER';
+        position: absolute;
+        right: -10px;
+        bottom: -30px;
+        font-size: 9rem;
+        font-weight: 900;
+        color: rgba(142,85,255,0.06);
+        letter-spacing: -0.05em;
+        pointer-events: none;
+        user-select: none;
+      }
+      .loer-positioning-label {
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        color: #8e55ff;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .loer-positioning-text {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: rgba(255,255,255,0.7);
+        line-height: 1.8;
+        max-width: 640px;
+        word-break: keep-all;
+      }
+      .loer-positioning-text strong {
+        color: #fff;
+        font-weight: 800;
+      }
 
-            <section class="section-visual">
-                <div class="section-title"><h3>VISUAL ARCHIVE</h3></div>
-                <div class="v-accordion">
-                    <div class="v-item">
-                        <h4 class="v-title">CORE IDENTITY</h4>
-                        <div class="v-img-float">
-                            <img
-                                src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1200"
-                            />
-                        </div>
-                    </div>
-                    <div class="v-item">
-                        <h4 class="v-title">DIGITAL FLOW</h4>
-                        <div class="v-img-float">
-                            <img
-                                src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1200"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+      /* responsive */
+      @media (max-width: 900px) {
+        .loer-wrap { padding: 80px 30px 100px; }
+        .loer-hero  { grid-template-columns: 1fr; gap: 40px; }
+        .loer-body  { grid-template-columns: 1fr; }
+        .loer-positioning { padding: 40px 32px; }
+      }
 
-        <footer>
-            <div>LOIND STUDIO.</div>
-            <div>© 2026 LOIND.</div>
-        </footer>
+      /* 기존 미디어쿼리 유지 */
+      @media (max-width: 1200px) {
+        .content { margin-left: 0; }
+        .side-nav { display: none; }
+      }
+      @media (max-width: 900px) {
+        header { padding: 0 30px; }
+        nav ul { gap: 20px; }
+        .slogan { display: none; }
+      }
+      @media (max-width: 600px) {
+        header {
+          height: auto;
+          padding: 15px 20px;
+          flex-direction: column;
+          gap: 15px;
+        }
+        nav ul { gap: 15px; flex-wrap: wrap; justify-content: center; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="index.html">
+          <span class="main">LOIND</span>
+          <span class="slogan">THE GREATEST EXPERIENCE</span>
+        </a>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="service.html">SERVICE</a></li>
+          <li><a href="story.html">STORY</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+    </header>
 
-        <script type="module">
-            import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-            import {
-                getFirestore,
-                collection,
-                getDocs,
-                query,
-                orderBy,
-                limit,
-            } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+    <aside class="side-nav">
+      <div class="side-menu-top">
+        <div class="side-group-box active" onclick="scrollToSection('business', this)">
+          <span class="side-label">BUSINESS</span>
+          <span class="side-definition">우리가 가진 탁월함으로 비즈니스의 정점에 닿는 일</span>
+          <div class="sub-link-list">
+            <span class="sub-link">LOER</span>
+            <span class="sub-link">Hyper Connect</span>
+          </div>
+        </div>
+        <div class="side-group-box" onclick="scrollToSection('impact', this)">
+          <span class="side-label">IMPACT</span>
+          <span class="side-definition">우리가 가진 사랑으로 새로운 기회와 위로를 만드는 일</span>
+          <div class="sub-link-list">
+            <span class="sub-link">Mission Sync</span>
+            <span class="sub-link">Care Search</span>
+            <span class="sub-link">Open Contribution</span>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="btn-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">TOP ↑</a>
+    </aside>
 
-            const firebaseConfig = {
-                apiKey: 'AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U',
-                authDomain: 'loind-472cd.firebaseapp.com',
-                projectId: 'loind-472cd',
-                appId: '1:405998534289:web:0f861bc822e1ea5391c930',
-            };
+    <main class="content">
+      <div class="page-header">
+        <h2>Service</h2>
+        <p>
+          우리는 전문적인 <strong>비즈니스</strong>로 시장의 기준을 세우고,<br />진정성
+          있는 <strong>임팩트</strong>로 세상의 빈곳을 채웁니다.
+        </p>
+        <h5 class="shortcut-header">서비스 바로가기</h5>
+        <div class="link-group-wrapper">
+          <div class="link-group">
+            <span class="group-tag">BUSINESS</span>
+            <div class="link-items">
+              <a href="#" target="_blank" class="service-link-item"><div class="link-icon">🧠</div><span class="link-name">Core</span></a>
+              <a href="#" target="_blank" class="service-link-item"><div class="link-icon">⚡</div><span class="link-name">Connect</span></a>
+              <a href="#" target="_blank" class="service-link-item"><div class="link-icon">🛍️</div><span class="link-name">Sync</span></a>
+              <a href="#" target="_blank" class="service-link-item"><div class="link-icon">🛡️</div><span class="link-name">Safe</span></a>
+            </div>
+          </div>
+          <div class="link-group">
+            <span class="group-tag">IMPACT</span>
+            <div class="link-items">
+              <a href="#" target="_blank" class="service-link-item"><div class="link-icon">⛪</div><span class="link-name">Mission</span></a>
+              <a href="#" target="_blank" class="service-link-item"><div class="link-icon">👵</div><span class="link-name">Care</span></a>
+              <a href="#" target="_blank" class="service-link-item"><div class="link-icon">🎁</div><span class="link-name">Share</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
+      <section class="service-section" id="business">
+        <div class="section-header">
+          <h3>Business</h3>
+          <p>압도적인 전문성으로 파트너의 비즈니스 퍼포먼스를 극대화하는 프로페셔널의 영역입니다.</p>
+        </div>
+        <div class="grid-container">
+          <article class="service-card" onclick="openDetail('core')">
+            <div class="card-info">
+              <span class="card-tag">AGENCY</span>
+              <h4>LOER</h4>
+              <p>LO-ER (로어): 'loind' + 'Doer(실행자)'. 로인드 안에서 실제로 발로 뛰는 사람들. 부드러운 발음 속에 강한 실행력을 담았습니다.</p>
+            </div>
+          </article>
+          <article class="service-card" onclick="openDetail('connect')">
+            <div class="card-info">
+              <span class="card-tag">Infrastructure</span>
+              <h4>Hyper Connect</h4>
+              <p>복잡한 유통 경로를 단순화하고 생산자와 소비자를 가장 효율적으로 잇는 지능형 네트워크를 구축합니다.</p>
+            </div>
+          </article>
+        </div>
+      </section>
 
-            // [1] 커서
-            const cursor = document.querySelector('#cursor');
-            const xTo = gsap.quickTo(cursor, 'x', {
-                duration: 0.1,
-                ease: 'power3',
-            });
-            const yTo = gsap.quickTo(cursor, 'y', {
-                duration: 0.1,
-                ease: 'power3',
-            });
-            window.addEventListener('mousemove', (e) => {
-                xTo(e.clientX - 5);
-                yTo(e.clientY - 5);
-            });
+      <section class="service-section" id="impact">
+        <div class="section-header">
+          <h3>Impact</h3>
+          <p>사랑의 마음으로 이웃과 공동체에 실질적인 변화를 소망하는 소셜 임팩트 영역입니다.</p>
+        </div>
+        <div class="grid-container">
+          <article class="service-card" onclick="openDetail('mission')">
+            <div class="card-info">
+              <span class="card-tag">Church Support</span>
+              <h4>Mission Sync</h4>
+              <p>디지털 자립이 필요한 소규모 공동체와 미자립교회에 필요한 기술 및 인프라를 기부하고 운영을 돕습니다.</p>
+            </div>
+          </article>
+          <article class="service-card" onclick="openDetail('care')">
+            <div class="card-info">
+              <span class="card-tag">Senior Care</span>
+              <h4>Care Search</h4>
+              <p>고립된 어르신들의 생활 패턴을 살피고 필요한 도움을 적시에 연결하는 지역사회 케어 시스템을 운영합니다.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
 
-            document.addEventListener('mouseover', (e) => {
-                if (e.target.closest('a, .story-item, .v-item')) {
-                    cursor.classList.add('hover');
-                    gsap.to(cursor, { scale: 3, duration: 0.3 });
-                }
-            });
-            document.addEventListener('mouseout', (e) => {
-                if (e.target.closest('a, .story-item, .v-item')) {
-                    cursor.classList.remove('hover');
-                    gsap.to(cursor, { scale: 1, duration: 0.3 });
-                }
-            });
+    <!-- ====== LOER 상세 오버레이 ====== -->
+    <div id="detailOverlay" class="detail-overlay">
+      <div class="detail-close" onclick="closeDetail()">CLOSE</div>
 
-            // [2] 로더
-            window.addEventListener('load', () => {
-                gsap.timeline()
-                    .to('#loader', {
-                        opacity: 0,
-                        duration: 0.6,
-                        delay: 0.5,
-                        onComplete: () =>
-                            document.querySelector('#loader').remove(),
-                    })
-                    .to('#mainContent', { opacity: 1, duration: 0.8 }, '-=0.2');
-            });
+      <!-- LOER 전용 레이아웃 -->
+      <div id="loerDetail" class="loer-wrap" style="display:none;">
+        <div class="loer-hero">
+          <div>
+            <span class="loer-badge">LOIND Agency</span>
+            <div class="loer-title">LOER</div>
+            <div class="loer-subtitle">'loind' + 'Doer' — 실행하는 사람들</div>
+          </div>
+          <div class="loer-identity-block">
+            <div>
+              <div class="loer-identity-label">Identity</div>
+              <div class="loer-identity-text">우리는 생각을 실체로 만드는<br>장인의 손이다.</div>
+            </div>
+            <div class="loer-mission-line">
+              탁월함을 추구하는 이들의 생각을,<br>
+              loind의 기준으로, 타협 없이 현실에 구현한다.
+            </div>
+          </div>
+        </div>
 
-            // [3] 드래그 & 개선된 휠 스크롤
-            const slider = document.querySelector('.story-container');
-            let isDown = false,
-                startX,
-                scrollLeft;
+        <div class="loer-body">
+          <div>
+            <div class="loer-section-label">What We Do</div>
+            <p class="loer-main-copy">
+              아이디어는 누구나 가질 수 있다.<br>
+              <strong>LOER는 그것을 현실의 질감으로 끌어낸다.</strong><br><br>
+              단순한 대행이 아니다. 무형의 생각이 유형의 결과물이 되는 순간까지 —
+              숙련된 기술과 loind의 기준이 함께 작동한다.
+            </p>
 
-            slider.addEventListener(
-                'wheel',
-                (e) => {
-                    const isAtEnd =
-                        slider.scrollLeft + slider.clientWidth >=
-                        slider.scrollWidth - 1;
-                    const isAtStart = slider.scrollLeft <= 0;
+            <div class="loer-section-label">Service</div>
+            <div class="loer-services">
+              <div class="loer-service-item">
+                <span class="loer-service-num">01</span>
+                <span class="loer-service-name">브랜드 전략 및 포지셔닝 설계</span>
+              </div>
+              <div class="loer-service-item">
+                <span class="loer-service-num">02</span>
+                <span class="loer-service-name">비주얼 아이덴티티(BI) 시스템 구축</span>
+              </div>
+              <div class="loer-service-item">
+                <span class="loer-service-num">03</span>
+                <span class="loer-service-name">마케팅 커뮤니케이션 전략 수립</span>
+              </div>
+              <div class="loer-service-item">
+                <span class="loer-service-num">04</span>
+                <span class="loer-service-name">콘텐츠 크리에이션 & 캠페인 실행</span>
+              </div>
+            </div>
+          </div>
 
-                    // 가로 스크롤이 더 할 게 있을 때만 세로 스크롤 막기
-                    if (
-                        !(
-                            (e.deltaY > 0 && isAtEnd) ||
-                            (e.deltaY < 0 && isAtStart)
-                        )
-                    ) {
-                        e.preventDefault();
-                        slider.scrollLeft += e.deltaY * 1.5;
-                    }
-                },
-                { passive: false },
-            );
+          <div class="loer-side-stack">
+            <div class="loer-side-card">
+              <div class="loer-side-card-label">Character</div>
+              <div class="loer-keyword-tags">
+                <span class="loer-keyword-tag">세련됨</span>
+                <span class="loer-keyword-tag">고난도</span>
+                <span class="loer-keyword-tag">신뢰</span>
+                <span class="loer-keyword-tag">완성도</span>
+              </div>
+            </div>
+            <div class="loer-side-card">
+              <div class="loer-side-card-label">Name Origin</div>
+              <div class="loer-side-card-value">
+                loind + Doer(실행자)<br>
+                <span style="color:rgba(255,255,255,0.35); font-size:0.82rem; font-weight:400;">부드러운 발음 속에 강한 실행력</span>
+              </div>
+            </div>
+            <div class="loer-side-card">
+              <div class="loer-side-card-label">Type</div>
+              <div class="loer-side-card-value">Full-service Agency</div>
+            </div>
+          </div>
+        </div>
 
-            slider.addEventListener('mousedown', (e) => {
-                isDown = true;
-                slider.classList.add('grabbing');
-                cursor.classList.add('grabbing');
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
-            });
-            window.addEventListener('mouseup', () => {
-                isDown = false;
-                cursor.classList.remove('grabbing');
-            });
-            slider.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 2;
-                slider.scrollLeft = scrollLeft - walk;
-            });
+        <div class="loer-positioning">
+          <div class="loer-positioning-label">Positioning</div>
+          <p class="loer-positioning-text">
+            loind가 <strong>본질을 정의</strong>한다면, LOER는 그것을 <strong>세상에 꺼낸다.</strong><br>
+            머리와 손. 기준과 실행. 둘은 분리되지 않는다.
+          </p>
+        </div>
+      </div>
 
-            // [4] 데이터 로드
-            async function loadStories() {
-                const storyBoard = document.querySelector('#storyBoard');
-                try {
-                    const q = query(
-                        collection(db, 'stories'),
-                        orderBy('createdAt', 'desc'),
-                        limit(8),
-                    );
-                    const querySnapshot = await getDocs(q);
-                    storyBoard.innerHTML = '';
-                    querySnapshot.forEach((doc) => {
-                        const item = doc.data();
-                        const div = document.createElement('div');
-                        div.className = 'story-item';
-                        div.innerHTML = `<div class="story-img"><img src="${item.img}"></div><div class="story-txt"><h4>${item.title}</h4><p>${item.text}</p></div>`;
-                        div.onclick = () => {
-                            if (!isDown) location.href = 'story.html';
-                        };
-                        storyBoard.appendChild(div);
-                    });
-                } catch (e) {
-                    console.error(e);
-                }
-            }
-            loadStories();
-        </script>
-    </body>
+      <!-- 기타 서비스용 기존 레이아웃 (fallback) -->
+      <div id="genericDetail" style="display:none; max-width:900px; margin:120px auto; padding:0 60px;">
+        <span id="dt-tag" class="card-tag" style="color:#8e55ff;"></span>
+        <h1 id="dt-title" style="font-size:3rem; font-weight:900; color:#fff; margin:16px 0 30px; letter-spacing:-0.03em;"></h1>
+        <p id="dt-text" style="font-size:1.05rem; color:rgba(255,255,255,0.55); line-height:1.9; margin-bottom:50px;"></p>
+        <ul id="dt-list" style="list-style:none; border-top:1px solid rgba(255,255,255,0.1); padding-top:40px;"></ul>
+      </div>
+    </div>
+
+    <script>
+      const detailData = {
+        connect: {
+          tag: "Infrastructure",
+          title: "Hyper Connect",
+          text: "복잡하고 비효율적인 유통 과정을 혁신합니다. 데이터 기반의 지능형 네트워크를 통해 생산부터 최종 소비까지의 경로를 최단 거리로 연결합니다.",
+          list: ["스마트 유통망 프로세스 설계", "실시간 공급망 트래킹 시스템", "글로벌 파트너십 매칭 인프라"],
+        },
+        mission: {
+          tag: "Church Support",
+          title: "Mission Sync",
+          text: "기술의 격차가 사역의 격차가 되지 않도록 돕습니다. 미자립 공동체와 교회가 세상과 원활하게 소통할 수 있도록 필수적인 디지털 인프라를 무상 지원합니다.",
+          list: ["커뮤니티 전용 웹/앱 플랫폼 구축", "라이브 스트리밍 및 미디어 장비 지원", "디지털 소통 역량 강화 교육"],
+        },
+        care: {
+          tag: "Senior Care",
+          title: "Care Search",
+          text: "사각지대에 놓인 이웃을 기술로 보호합니다. 고독사를 예방하고 고립된 삶에 온기를 더하는 데이터 기반의 지역사회 돌봄 안전망을 실현합니다.",
+          list: ["생활 패턴 분석 AI 케어 시스템", "지역 네트워크 긴급 대응 프로세스", "맞춤형 복지 서비스 연계 솔루션"],
+        },
+      };
+
+      function openDetail(id) {
+        const overlay = document.getElementById("detailOverlay");
+        const loerEl = document.getElementById("loerDetail");
+        const genericEl = document.getElementById("genericDetail");
+
+        if (id === "core") {
+          loerEl.style.display = "block";
+          genericEl.style.display = "none";
+        } else {
+          loerEl.style.display = "none";
+          genericEl.style.display = "block";
+
+          const data = detailData[id];
+          document.getElementById("dt-tag").innerText = data.tag;
+          document.getElementById("dt-title").innerText = data.title;
+          document.getElementById("dt-text").innerText = data.text;
+          const listUl = document.getElementById("dt-list");
+          listUl.innerHTML = "";
+          data.list.forEach((item, index) => {
+            const li = document.createElement("li");
+            li.setAttribute("data-num", index + 1);
+            li.style.cssText = "margin-bottom:20px; font-weight:600; display:flex; align-items:flex-start; gap:15px; color:rgba(255,255,255,0.75);";
+            const num = document.createElement("span");
+            num.style.cssText = "color:#8e55ff; font-size:0.8rem; margin-top:3px; font-weight:800;";
+            num.innerText = `0${index + 1}`;
+            li.appendChild(num);
+            li.appendChild(document.createTextNode(item));
+            listUl.appendChild(li);
+          });
+        }
+
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeDetail() {
+        document.getElementById("detailOverlay").classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+
+      // ESC 키로 닫기
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeDetail();
+      });
+
+      function scrollToSection(id, element) {
+        document.querySelectorAll(".side-group-box").forEach((box) => box.classList.remove("active"));
+        element.classList.add("active");
+        const target = document.getElementById(id);
+        const offset = 80;
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: targetPosition, behavior: "smooth" });
+      }
+    </script>
+  </body>
 </html>
