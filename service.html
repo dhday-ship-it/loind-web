@@ -27,9 +27,6 @@
       overflow-x:hidden;
     }
 
-    /* ════════════════════════════
-       HEADER — 원본 유지
-    ════════════════════════════ */
     header {
       position:fixed; top:0; left:0; width:100%; height:80px;
       display:flex; align-items:center; justify-content:space-between;
@@ -49,9 +46,6 @@
     nav li { font-size:.85rem; font-weight:700; text-transform:uppercase; transition:.3s; }
     nav li:hover { opacity:.5; }
 
-    /* ════════════════════════════
-       SIDEBAR
-    ════════════════════════════ */
     .side-nav {
       position:fixed; top:80px; left:0;
       width:var(--side-w); height:calc(100vh - 80px);
@@ -59,30 +53,24 @@
       background:#fff; border-right:1px solid var(--line);
       display:flex; flex-direction:column; z-index:900;
     }
-
-    /* 세로 타임라인 느낌 */
     .side-track {
       flex:1;
       position:relative;
       padding-left:22px;
     }
-    /* 왼쪽 세로선 */
     .side-track::before {
       content:'';
       position:absolute; left:6px; top:4px;
       width:1px; bottom:0;
       background:var(--line);
     }
-
     .side-group { margin-bottom:28px; }
-
     .side-group-label {
       font-size:.58rem; font-weight:900; letter-spacing:.16em;
       text-transform:uppercase; color:var(--purple);
       margin-bottom:10px;
       display:flex; align-items:center; gap:8px;
     }
-    /* 라벨 앞 도트 */
     .side-group-label::before {
       content:'';
       position:absolute; left:3px;
@@ -90,12 +78,12 @@
       border-radius:50%; background:var(--purple);
       box-shadow:0 0 0 3px rgba(142,85,255,.15);
     }
-
-    .side-group-label.impact-label { color:#666; }
+    .side-group-label.agency-label { color:#555; }
+    .side-group-label.agency-label::before { background:#555; box-shadow:none; }
+    .side-group-label.impact-label { color:#aaa; }
     .side-group-label.impact-label::before { background:#ccc; box-shadow:none; }
 
     .side-items { display:flex; flex-direction:column; gap:2px; }
-
     .side-item {
       display:flex; align-items:center; gap:9px;
       padding:7px 10px; border-radius:7px;
@@ -110,7 +98,6 @@
       background:#ddd; flex-shrink:0; transition:.2s;
     }
     .side-item:hover .side-dot { background:var(--purple); }
-
     .side-foot {
       padding-top:16px; border-top:1px solid var(--line);
     }
@@ -122,12 +109,8 @@
     }
     .btn-top:hover { background:var(--ink); color:#fff; border-color:var(--ink); }
 
-    /* ════════════════════════════
-       MAIN
-    ════════════════════════════ */
     .content { margin-left:var(--side-w); padding-top:80px; }
 
-    /* ─── HERO ─── */
     .hero {
       min-height:calc(100vh - 80px);
       display:grid;
@@ -136,8 +119,6 @@
       position:relative;
       overflow:hidden;
     }
-
-    /* 배경 퍼플 그라디언트 블러 장식 */
     .hero-glow {
       position:absolute;
       width:500px; height:500px;
@@ -146,7 +127,6 @@
       top:-100px; right:-80px;
       pointer-events:none;
     }
-
     .hero-inner {
       display:flex;
       flex-direction:column;
@@ -154,7 +134,6 @@
       padding:80px 0 60px;
       max-width:860px;
     }
-
     .hero-kicker {
       display:inline-flex; align-items:center; gap:10px;
       font-size:.62rem; font-weight:900; letter-spacing:.2em;
@@ -165,7 +144,6 @@
     .hero-kicker::before {
       content:''; width:20px; height:1px; background:var(--purple);
     }
-
     .hero-title {
       font-size:clamp(3rem,5.5vw,5rem);
       font-weight:800; letter-spacing:-.05em; line-height:1.06;
@@ -174,8 +152,6 @@
       opacity:0; animation:fadeUp .65s .2s forwards;
     }
     .hero-title em { font-style:normal; color:var(--purple); }
-
-    /* 히어로 하단 2컬럼 */
     .hero-bottom {
       display:grid; grid-template-columns:1fr 1fr; gap:48px;
       padding-bottom:64px;
@@ -188,7 +164,6 @@
       align-self:start; padding-top:4px;
     }
     .hero-desc strong { color:var(--ink); font-weight:700; }
-
     .hero-chips-col {
       display:flex; flex-direction:column; gap:24px;
     }
@@ -197,7 +172,8 @@
       text-transform:uppercase; color:var(--purple);
       margin-bottom:8px;
     }
-    .chips-group-label.impact { color:#888; }
+    .chips-group-label.agency { color:#555; }
+    .chips-group-label.impact { color:#aaa; }
     .chips-row { display:flex; gap:7px; flex-wrap:wrap; }
     .chip {
       display:inline-flex; align-items:center;
@@ -206,39 +182,23 @@
       color:#666; transition:.2s; cursor:pointer; text-decoration:none;
     }
     .chip:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-a10); }
-
-    /* 스크롤 힌트 */
     .hero-scroll {
       padding:24px 0 40px;
       display:flex; align-items:center; gap:12px;
       opacity:0; animation:fadeUp .6s .5s forwards;
     }
-    .scroll-line {
-      width:32px; height:1px; background:var(--line);
-    }
+    .scroll-line { width:32px; height:1px; background:var(--line); }
     .scroll-text {
       font-size:.58rem; font-weight:800; letter-spacing:.14em;
       text-transform:uppercase; color:#ccc;
     }
-
     @keyframes fadeUp {
       from { opacity:0; transform:translateY(18px); }
       to   { opacity:1; transform:none; }
     }
 
-    /* ─── 서비스 영역 — 편집 레이아웃 ─── */
-    /*
-      핵심 구조:
-      왼쪽(sticky) 레이블 + 오른쪽 카드 스택
-      → 스크롤하면 카드들이 레이블 옆을 흘러 지나감
-      → 슬라이드 느낌 완전 제거
-    */
+    .services-wrap { padding:0 7% 0 6%; }
 
-    .services-wrap {
-      padding:0 7% 0 6%;
-    }
-
-    /* 하나의 카테고리 행 */
     .cat-row {
       display:grid;
       grid-template-columns:200px 1fr;
@@ -248,8 +208,6 @@
       position:relative;
     }
     .cat-row:last-child { border-bottom:none; padding-bottom:120px; }
-
-    /* 왼쪽 sticky 레이블 */
     .cat-label-col {
       position:sticky;
       top:calc(80px + 40px);
@@ -261,7 +219,8 @@
       text-transform:uppercase; color:var(--purple);
       margin-bottom:12px; display:block;
     }
-    .cat-eyebrow.impact { color:#888; }
+    .cat-eyebrow.agency { color:#555; }
+    .cat-eyebrow.impact { color:#aaa; }
     .cat-name {
       font-size:1.9rem; font-weight:800;
       letter-spacing:-.04em; line-height:1.1;
@@ -278,13 +237,7 @@
       letter-spacing:-.06em; line-height:1;
       color:var(--ink); opacity:.04;
     }
-
-    /* 오른쪽 카드 스택 */
-    .cat-cards {
-      display:flex; flex-direction:column; gap:20px;
-    }
-
-    /* 카드 — 테두리 없는 소프트 스타일 */
+    .cat-cards { display:flex; flex-direction:column; gap:20px; }
     .svc-card {
       background:#fafafa;
       border-radius:20px;
@@ -307,7 +260,6 @@
       box-shadow:none;
     }
     .svc-card:hover::after { opacity:1; }
-
     .svc-tag {
       font-size:.58rem; font-weight:900; letter-spacing:.14em;
       text-transform:uppercase; color:var(--purple);
@@ -344,8 +296,6 @@
       background:var(--purple); border-color:var(--purple);
       color:#fff; transform:rotate(45deg);
     }
-
-    /* reveal */
     .reveal {
       opacity:0; transform:translateY(16px);
       transition:opacity .5s cubic-bezier(.16,1,.3,1),
@@ -354,10 +304,8 @@
     .reveal.vis { opacity:1; transform:none; }
     .rd1 { transition-delay:.05s; }
     .rd2 { transition-delay:.12s; }
+    .rd3 { transition-delay:.19s; }
 
-    /* ════════════════════════════
-       DETAIL OVERLAY
-    ════════════════════════════ */
     .detail-overlay {
       position:fixed; inset:0; z-index:2000;
       display:none; overflow-y:auto; background:#0a0a0a;
@@ -379,7 +327,6 @@
     .detail-close:hover { color:#fff; }
     .detail-close::before { content:''; display:block; width:18px; height:1px; background:currentColor; }
 
-    /* LOER detail */
     .loer-wrap { max-width:1040px; margin:0 auto; padding:96px 60px 120px; }
     .loer-hero {
       display:grid; grid-template-columns:1fr 1fr; gap:56px;
@@ -423,9 +370,6 @@
 
     #genericDetail { display:none; max-width:840px; margin:110px auto; padding:0 56px; }
 
-    /* ════════════════════════════
-       RESPONSIVE
-    ════════════════════════════ */
     @media (max-width:1100px) {
       .content { margin-left:0; }
       .side-nav { display:none; }
@@ -451,12 +395,11 @@
 </head>
 <body>
 
-  <!-- HEADER 원본 유지 -->
   <header>
     <h1>
       <a href="index.html">
         <span class="main">LOIND</span>
-        <span class="slogan">THE GREATEST EXPERIENCE</span>
+        <span class="slogan">Masterpieces for the excellent</span>
       </a>
     </h1>
     <nav>
@@ -473,13 +416,24 @@
   <aside class="side-nav">
     <div class="side-track">
       <div class="side-group">
-        <span class="side-group-label">Business</span>
+        <span class="side-group-label">Creative Studio</span>
         <div class="side-items">
-          <div class="side-item active" data-target="loer" onclick="goTo('loer',this)">
-            <span class="side-dot"></span>LOER
+          <div class="side-item active" data-target="music" onclick="goTo('music',this)">
+            <span class="side-dot"></span>Music
           </div>
-          <div class="side-item" data-target="connect" onclick="goTo('connect',this)">
-            <span class="side-dot"></span>Hyper Connect
+          <div class="side-item" data-target="film" onclick="goTo('film',this)">
+            <span class="side-dot"></span>Film
+          </div>
+          <div class="side-item" data-target="goods" onclick="goTo('goods',this)">
+            <span class="side-dot"></span>Goods
+          </div>
+        </div>
+      </div>
+      <div class="side-group">
+        <span class="side-group-label agency-label">Agency</span>
+        <div class="side-items">
+          <div class="side-item" data-target="loer" onclick="goTo('loer',this)">
+            <span class="side-dot"></span>LOER
           </div>
         </div>
       </div>
@@ -500,28 +454,35 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="content">
 
-    <!-- ── HERO ── -->
+    <!-- HERO -->
     <section class="hero" id="top">
       <div class="hero-glow"></div>
       <div class="hero-inner">
         <span class="hero-kicker">What We Offer</span>
         <h1 class="hero-title">
-          비즈니스의 <em>정점</em>과<br>세상의 <em>빈곳</em>을<br>채웁니다.
+          걸작을 <em>창조</em>하고,<br>비즈니스를 <em>실현</em>하며,<br>세상에 <em>온기</em>를 더합니다.
         </h1>
         <div class="hero-bottom">
           <p class="hero-desc">
-            우리는 전문적인 <strong>비즈니스</strong>로 시장의 기준을 세우고,
-            진정성 있는 <strong>임팩트</strong>로 세상에 온기를 더합니다.
+            <strong>Creative Studio</strong>로 걸작을 만들고,
+            <strong>Agency</strong>로 탁월함을 구현하며,
+            <strong>Impact</strong>로 세상에 진정성 있는 변화를 만듭니다.
           </p>
           <div class="hero-chips-col">
             <div>
-              <div class="chips-group-label">Business</div>
+              <div class="chips-group-label">Creative Studio</div>
+              <div class="chips-row">
+                <a href="#music" class="chip">Music</a>
+                <a href="#film" class="chip">Film</a>
+                <a href="#goods" class="chip">Goods</a>
+              </div>
+            </div>
+            <div>
+              <div class="chips-group-label agency">Agency</div>
               <div class="chips-row">
                 <a href="#loer" class="chip">LOER</a>
-                <a href="#connect" class="chip">Hyper Connect</a>
               </div>
             </div>
             <div>
@@ -540,30 +501,37 @@
       </div>
     </section>
 
-    <!-- ── SERVICES ── -->
     <div class="services-wrap">
 
-      <!-- Business row -->
-      <div class="cat-row" id="business">
+      <!-- Creative Studio -->
+      <div class="cat-row" id="creative">
         <div class="cat-label-col">
-          <span class="cat-eyebrow">Business</span>
-          <div class="cat-name">압도적인<br>전문성</div>
-          <p class="cat-desc">파트너의 비즈니스 퍼포먼스를 극대화하는 프로페셔널의 영역</p>
+          <span class="cat-eyebrow">Creative Studio</span>
+          <div class="cat-name">걸작을<br>창조한다</div>
+          <p class="cat-desc">loind의 철학이 담긴 자체 창작물. 음악, 영상, 굿즈로 경험의 마스터피스를 만든다.</p>
           <span class="cat-num">01</span>
         </div>
         <div class="cat-cards">
-          <article class="svc-card reveal" id="loer" onclick="openDetail('core')">
-            <span class="svc-tag">Agency</span>
-            <div class="svc-title">LOER</div>
-            <p class="svc-desc">'loind' + 'Doer(실행자)'. 로인드 안에서 실제로 발로 뛰는 사람들. 무형의 생각이 유형의 결과물이 되는 순간까지 함께합니다.</p>
+          <article class="svc-card reveal" id="music" onclick="openDetail('music')">
+            <span class="svc-tag">Music</span>
+            <div class="svc-title">Music</div>
+            <p class="svc-desc">소리의 마스터피스. 직접 창작하고 아티스트를 지원하며, 음악의 본질에 닿는 순간을 만든다.</p>
             <div class="svc-footer">
               <span class="svc-cta">자세히 보기 <span class="svc-arrow">→</span></span>
             </div>
           </article>
-          <article class="svc-card reveal rd1" id="connect" onclick="openDetail('connect')">
-            <span class="svc-tag">Infrastructure</span>
-            <div class="svc-title">Hyper Connect</div>
-            <p class="svc-desc">복잡한 유통 경로를 단순화하고 생산자와 소비자를 가장 효율적으로 잇는 지능형 네트워크를 구축합니다.</p>
+          <article class="svc-card reveal rd1" id="film" onclick="openDetail('film')">
+            <span class="svc-tag">Film</span>
+            <div class="svc-title">Film</div>
+            <p class="svc-desc">순간을 영원으로. 영상이 경험의 마스터피스가 되는 순간을 만든다.</p>
+            <div class="svc-footer">
+              <span class="svc-cta">자세히 보기 <span class="svc-arrow">→</span></span>
+            </div>
+          </article>
+          <article class="svc-card reveal rd2" id="goods" onclick="openDetail('goods')">
+            <span class="svc-tag">Goods</span>
+            <div class="svc-title">Goods</div>
+            <p class="svc-desc">손에 잡히는 걸작. loind의 철학이 물성으로 구현된 제품을 기획하고 만들며 판매한다.</p>
             <div class="svc-footer">
               <span class="svc-cta">자세히 보기 <span class="svc-arrow">→</span></span>
             </div>
@@ -571,13 +539,33 @@
         </div>
       </div>
 
-      <!-- Impact row -->
+      <!-- Agency -->
+      <div class="cat-row" id="agency">
+        <div class="cat-label-col">
+          <span class="cat-eyebrow agency">Agency</span>
+          <div class="cat-name">생각을<br>실체로</div>
+          <p class="cat-desc">loind의 기준으로 클라이언트의 생각을 타협 없이 현실에 구현한다.</p>
+          <span class="cat-num">02</span>
+        </div>
+        <div class="cat-cards">
+          <article class="svc-card reveal" id="loer" onclick="openDetail('core')">
+            <span class="svc-tag">Agency</span>
+            <div class="svc-title">LOER</div>
+            <p class="svc-desc">'loind' + 'Doer(실행자)'. 로인드 안에서 실제로 발로 뛰는 사람들. 무형의 생각이 유형의 결과물이 되는 순간까지 함께한다.</p>
+            <div class="svc-footer">
+              <span class="svc-cta">자세히 보기 <span class="svc-arrow">→</span></span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Impact -->
       <div class="cat-row" id="impact">
         <div class="cat-label-col">
           <span class="cat-eyebrow impact">Impact</span>
           <div class="cat-name">진정성<br>있는 변화</div>
-          <p class="cat-desc">사랑의 마음으로 이웃과 공동체에 실질적인 변화를 만드는 영역</p>
-          <span class="cat-num">02</span>
+          <p class="cat-desc">사랑의 마음으로 이웃과 공동체에 실질적인 변화를 만드는 영역.</p>
+          <span class="cat-num">03</span>
         </div>
         <div class="cat-cards">
           <article class="svc-card reveal" id="mission" onclick="openDetail('mission')">
@@ -599,7 +587,7 @@
         </div>
       </div>
 
-    </div><!-- /services-wrap -->
+    </div>
   </main>
 
   <!-- DETAIL OVERLAY -->
@@ -682,9 +670,11 @@
   </div>
 
   <script>
-    /* ── detail ── */
     const detailData = {
-      connect:{ tag:"Infrastructure", title:"Hyper Connect", text:"복잡하고 비효율적인 유통 과정을 혁신합니다. 데이터 기반의 지능형 네트워크를 통해 생산부터 최종 소비까지의 경로를 최단 거리로 연결합니다.", list:["스마트 유통망 프로세스 설계","실시간 공급망 트래킹 시스템","글로벌 파트너십 매칭 인프라"] },
+      music:  { tag:"Creative Studio", title:"Music",  text:"소리의 마스터피스. 직접 창작하고 아티스트를 지원하며, 음악의 본질에 닿는 순간을 만든다. 음원 제작부터 유통까지, loind의 기준으로 완성한다.", list:["음악 창작 및 프로듀싱","아티스트 지원 및 매니지먼트","음원 유통 및 퍼블리싱"] },
+      film:   { tag:"Creative Studio", title:"Film",   text:"순간을 영원으로. 영상이 경험의 마스터피스가 되는 순간을 만든다. 광고 영상부터 독립 콘텐츠까지, 본질에 닿는 장면을 구현한다.", list:["영상 기획 및 제작","광고 및 브랜드 필름","콘텐츠 크리에이션"] },
+      goods:  { tag:"Creative Studio", title:"Goods",  text:"손에 잡히는 걸작. loind의 철학이 물성으로 구현된 제품. 기획부터 제작, 판매까지 loind의 기준으로 완성한다.", list:["제품 기획 및 디자인","제작 및 품질 관리","판매 및 유통"] },
+      connect:{ tag:"Infrastructure", title:"Hyper Connect", text:"복잡하고 비효율적인 유통 과정을 혁신합니다.", list:["스마트 유통망 프로세스 설계","실시간 공급망 트래킹 시스템","글로벌 파트너십 매칭 인프라"] },
       mission:{ tag:"Church Support", title:"Mission Sync",  text:"기술의 격차가 사역의 격차가 되지 않도록 돕습니다. 미자립 공동체와 교회가 세상과 원활하게 소통할 수 있도록 필수적인 디지털 인프라를 무상 지원합니다.", list:["커뮤니티 전용 웹/앱 플랫폼 구축","라이브 스트리밍 및 미디어 장비 지원","디지털 소통 역량 강화 교육"] },
       care:   { tag:"Senior Care",    title:"Care Search",   text:"사각지대에 놓인 이웃을 기술로 보호합니다. 고독사를 예방하고 고립된 삶에 온기를 더하는 데이터 기반의 지역사회 돌봄 안전망을 실현합니다.", list:["생활 패턴 분석 AI 케어 시스템","지역 네트워크 긴급 대응 프로세스","맞춤형 복지 서비스 연계 솔루션"] },
     };
@@ -719,8 +709,7 @@
     }
     document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDetail(); });
 
-    /* ── 사이드바 스크롤 추적 ── */
-    const anchors = ["loer","connect","mission","care"];
+    const anchors = ["music","film","goods","loer","mission","care"];
     function updateSide() {
       const mid = window.scrollY + window.innerHeight * .4;
       let cur = anchors[0];
@@ -740,7 +729,6 @@
       window.scrollTo({top: el.getBoundingClientRect().top + window.pageYOffset - 110, behavior:"smooth"});
     }
 
-    /* ── reveal ── */
     const io = new IntersectionObserver(entries=>{
       entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("vis"); io.unobserve(e.target); } });
     },{threshold:.08});
