@@ -3,497 +3,240 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LOIND | The Greatest Experience</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+    <title>LOIND | SHADOW TO CLARITY</title>
+    <link rel="stylesheet" href="style.css" />
     <style>
-      :root {
-        --bg: #f2f2f5;
-        --panel: #ffffff;
-        --accent: #6c47ff;
-        --radius: 54px;
-        --header-h: 90px;
-        --gap: 150px;
-      }
-
-      /* [1. 리셋 & 커서] */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        cursor: none !important;
-      }
-      body {
-        background-color: var(--bg);
-        color: #111;
-        font-family: "Pretendard", sans-serif;
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      #cursor {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 10px;
-        height: 10px;
-        background: var(--accent);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 10000;
-        mix-blend-mode: difference;
-        will-change: transform;
-        transition: width 0.3s, height 0.3s, background 0.3s;
-      }
-      #cursor.hover {
-        width: 60px;
-        height: 60px;
-        background: #fff;
-        opacity: 0.5;
-      }
-
-      /* [2. 헤더] */
-      header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: var(--header-h);
+      /* 가로 슬라이드 가독성 개선 */
+      #visual .textWrap {
+        overflow: hidden;
+        position: relative;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 0 60px;
-        z-index: 1000;
-        background: rgba(242, 242, 245, 0.7);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      }
-      .logo {
-        font-size: 1.5rem;
-        font-weight: 900;
-      }
-      nav ul {
-        display: flex;
-        gap: 40px;
-        list-style: none;
-      }
-      nav a {
-        font-size: 0.85rem;
-        font-weight: 800;
-        color: #333;
+        height: 40vh; /* 문구가 여러 줄일 수 있으므로 높이 확보 */
       }
 
-      .wrapper {
-        padding-top: var(--header-h);
-      }
-      .reveal {
-        opacity: 0;
+      #visual h2 {
+        position: absolute;
+        width: 100%;
+        line-height: 1;
+        /* white-space: nowrap; 을 제거하여 필요한 경우 줄바꿈 허용 */
+        transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1),
+          opacity 0.8s ease;
         will-change: transform, opacity;
       }
 
-      /* [3. SECTION 1: HERO] */
-      #hero-lg {
-        position: relative;
-        width: calc(100% - 40px);
-        height: 85vh;
-        margin: 20px auto var(--gap);
-        border-radius: var(--radius);
-        overflow: hidden;
-        background: #b1a0f8;
-      }
-      .hero-bg {
-        position: absolute;
-        top: -5%;
-        left: -5%;
-        width: 110%;
-        height: 110%;
-        object-fit: cover;
-        opacity: 0.8;
-        will-change: transform;
-      }
-      .hero-content {
-        position: relative;
-        z-index: 10;
-        padding: 80px;
-        color: #fff;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      .hero-content h2 {
-        font-size: clamp(3rem, 6vw, 6rem);
-        font-weight: 800;
-        line-height: 1.1;
-        letter-spacing: -2px;
+      /* 대기: 오른쪽에서 대기 */
+      .text-slogan {
+        transform: translateX(120%);
+        opacity: 0;
       }
 
-      .hero-bottom-bar {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .bottom-item {
-        padding: 40px;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-      .bottom-item:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
-      .bottom-item h4 {
-        font-size: 1rem;
-        color: #fff;
-        line-height: 1.4;
-        margin-bottom: 8px;
-      }
-      .bottom-item span {
-        font-size: 0.75rem;
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: 800;
+      /* 활성: 제자리 */
+      .text-slogan.active {
+        transform: translateX(0%);
+        opacity: 1;
       }
 
-      /* [4. SECTION 2: TICKER] */
-      .section-ticker {
-        padding: 40px 0;
-        overflow: hidden;
-        white-space: nowrap;
-        margin-bottom: var(--gap);
-      }
-      .ticker-wrap {
-        display: flex;
-      }
-      .ticker-item {
-        font-size: 5vw;
-        font-weight: 900;
-        color: #e0e0e0;
-        text-transform: uppercase;
-        padding-right: 50px;
-      }
-
-      /* [5. SECTION 3: BENTO GRID] */
-      .section-bento {
-        padding: 0 40px;
-        margin-bottom: var(--gap);
-      }
-      .bento-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, 320px);
-        gap: 20px;
-      }
-      .bento-box {
-        background: var(--panel);
-        border-radius: var(--radius);
-        padding: 50px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border: 1px solid rgba(0, 0, 0, 0.02);
-      }
-      .bento-box.large {
-        grid-column: span 3;
-        background: #111;
-        color: #fff;
-      }
-      .bento-box.tall {
-        grid-row: span 2;
-        background: var(--accent);
-        color: #fff;
-      }
-
-      /* [6. SECTION 4: STACKING CARDS] */
-      .section-stack {
-        position: relative;
-        padding: 0 40px;
-        margin-bottom: var(--gap);
-      }
-      .stack-card {
-        position: sticky;
-        top: 150px;
-        height: 500px;
-        margin-bottom: 80px;
-        background: var(--panel);
-        border-radius: var(--radius);
-        padding: 60px;
-        display: flex;
-        gap: 40px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-      }
-      .stack-card:nth-child(2) {
-        top: 180px;
-        background: #f4f0ff;
-      }
-      .stack-img {
-        flex: 1.5;
-        border-radius: 30px;
-        overflow: hidden;
-      }
-      .stack-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      /* [7. SECTION 5: STORY - Firebase Data] */
-      .section-story {
-        padding: 120px 40px;
-        background: #fff;
-        border-radius: var(--radius);
-      }
-      .story-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: 60px;
-      }
-      .story-header h3 {
-        font-size: 3.5rem;
-        font-weight: 900;
-        letter-spacing: -3px;
-      }
-
-      .story-slider {
-        display: flex;
-        gap: 30px;
-        overflow-x: auto;
-        scrollbar-width: none;
-        cursor: grab;
-        padding-bottom: 40px;
-      }
-      .story-slider::-webkit-scrollbar {
-        display: none;
-      }
-      .story-card {
-        flex: 0 0 520px;
-        border-radius: 40px;
-        overflow: hidden;
-        background: var(--bg);
-        transition: 0.5s;
-      }
-      .img-box {
-        width: 100%;
-        aspect-ratio: 16/10;
-        overflow: hidden;
-        border-radius: 40px;
-      }
-      .img-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: 1s cubic-bezier(0.16, 1, 0.3, 1);
-        transform-origin: center center;
-      }
-      .story-card:hover img {
-        transform: scale(1.1);
-      }
-      .story-info {
-        padding: 40px;
-      }
-
-      footer {
-        padding: 150px 80px;
-        background: #111;
-        color: #fff;
-        border-radius: var(--radius) var(--radius) 0 0;
-      }
-      .f-logo {
-        font-size: 15vw;
-        font-weight: 900;
-        letter-spacing: -10px;
-        line-height: 0.7;
-        opacity: 0.05;
+      /* 퇴장: 왼쪽으로 사라짐 */
+      .text-slogan.exit {
+        transform: translateX(-120%);
+        opacity: 0;
       }
     </style>
   </head>
   <body>
-    <div id="cursor"></div>
-
     <header>
       <h1>
-        <a href="index.html" class="interactive"
-          ><span class="logo">LOIND®</span></a
-        >
+        <a href="index.html"><span class="main">LOIND</span></a>
       </h1>
       <nav>
         <ul>
-          <li><a href="about.html" class="interactive">ABOUT</a></li>
-          <li><a href="service.html" class="interactive">SERVICE</a></li>
-          <li><a href="story.html" class="interactive">STORY</a></li>
-          <li><a href="contact.html" class="interactive">CONTACT</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="service.html">SERVICE</a></li>
+          <li><a href="story.html">STORY</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
         </ul>
       </nav>
     </header>
 
-    <main class="wrapper">
-      <section id="hero-lg">
-        <img
-          src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2000"
-          class="hero-bg"
-          id="parallax-bg"
-        />
-        <div class="hero-content">
-          <h2 class="reveal">Masterpieces <br> for the excellent</h2>
-          <p
-            class="reveal"
-            style="font-size: 1.2rem; opacity: 0.8; margin-top: 20px"
-          >
-            탁월한 이들을 위한 걸작, LOIND.
-          </p>
+    <section id="visual">
+      <div class="innerBlack">
+        <div class="textWrap" id="slogan-container-black">
+          <h2 class="text-slogan active">SHADOW TO<br />CLARITY.</h2>
         </div>
-        <div class="hero-bottom-bar reveal">
-          <div class="bottom-item interactive">
-            <div>
-              <h4>LOER<h4>
-              <span>AGENCY</span>
-            </div>
-          </div>
-          <div class="bottom-item interactive">
-            <div>
-              <h4>Experience Strategy</h4>
-              <span>INSIGHT</span>
-            </div>
-          </div>
-          <div class="bottom-item interactive">
-            <div>
-              <h4>Cloud Governance</h4>
-              <span>TECH</span>
-            </div>
-          </div>
-          <div class="bottom-item interactive" style="border: none">
-            <div>
-              <h4>Process Innovation</h4>
-              <span>LAB</span>
-            </div>
-          </div>
-        </div>
-      </section>
+        <ul>
+          <li>
+            <a href="#"
+              ><h4>STRATEGY</h4>
+              <span>INSIGHT</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><h4>STRATEGY</h4>
+              <span>INSIGHT</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><h4>STRATEGY</h4>
+              <span>INSIGHT</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><h4>STRATEGY</h4>
+              <span>INSIGHT</span></a
+            >
+          </li>
+        </ul>
+        <svg
+          class="light-path-svg"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="fadeGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="white" stop-opacity="0" />
+              <stop offset="15%" stop-color="white" stop-opacity="1" />
+              <stop offset="85%" stop-color="white" stop-opacity="1" />
+              <stop offset="100%" stop-color="white" stop-opacity="0" />
+            </linearGradient>
+            <mask id="fadeMask">
+              <rect width="100" height="100" fill="url(#fadeGradient)" />
+            </mask>
+          </defs>
+          <g mask="url(#fadeMask)">
+            <path
+              class="moving-path organic-1"
+              d="M80,-10 C95,20 60,40 85,70 S70,90 80,110"
+            />
+            <path
+              class="moving-path organic-2"
+              d="M88,-10 C70,30 95,50 75,80 S90,100 85,110"
+            />
+          </g>
+        </svg>
+      </div>
 
-      <div class="section-ticker">
-        <div class="ticker-wrap">
-          <div class="ticker-item">
-            DIGITAL EXPERIENCE • CREATIVE TECHNOLOGY • LOIND STUDIO • &nbsp;
-          </div>
-          <div class="ticker-item">
-            DIGITAL EXPERIENCE • CREATIVE TECHNOLOGY • LOIND STUDIO • &nbsp;
-          </div>
+      <div class="innerWhite">
+        <div class="textWrap" id="slogan-container-white">
+          <h2 class="text-slogan active">SHADOW TO<br />CLARITY.</h2>
+        </div>
+        <ul>
+          <li>
+            <a href="#"
+              ><h4>STRATEGY</h4>
+              <span>INSIGHT</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><h4>STRATEGY</h4>
+              <span>INSIGHT</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><h4>STRATEGY</h4>
+              <span>INSIGHT</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><h4>STRATEGY</h4>
+              <span>INSIGHT</span></a
+            >
+          </li>
+        </ul>
+        <svg
+          class="light-path-svg"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <g mask="url(#fadeMask)">
+            <path
+              class="moving-path organic-1"
+              d="M80,-10 C95,20 60,40 85,70 S70,90 80,110"
+            />
+            <path
+              class="moving-path organic-2"
+              d="M88,-10 C70,30 95,50 75,80 S90,100 85,110"
+            />
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <main class="content-stack">
+      <article class="section-vision">
+        <div class="vision-text">
+          <span>01 / PHILOSOPHY</span>
+          <h3>Deep Inside,<br />Beyond Surface.</h3>
+        </div>
+        <div class="vision-media">
+          <img
+            src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070"
+            alt="Philosophy"
+          />
+        </div>
+      </article>
+
+      <article class="section-vision" style="flex-direction: row-reverse">
+        <div class="vision-text">
+          <span>02 / PERSPECTIVE</span>
+          <h3>Truth through<br />Visualization.</h3>
+        </div>
+        <div class="vision-media">
+          <img
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072"
+            alt="Perspective"
+          />
+        </div>
+      </article>
+
+      <div class="ticker-wrap">
+        <div class="ticker-text">
+          SELECTED ARCHIVE — LOIND JOURNAL — SELECTED ARCHIVE — LOIND JOURNAL —
         </div>
       </div>
 
-      <section class="section-bento">
-        <h3
-          class="reveal"
-          style="
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 50px;
-            letter-spacing: -2px;
-          "
-        >
-          CAPABILITIES
-        </h3>
-        <div class="bento-grid">
-          <div class="bento-box large reveal interactive">
-            <h3>Strategy First</h3>
-            <p>비즈니스의 본질을 정의하고 최적의 디지털 솔루션을 제안합니다.</p>
-          </div>
-          <div class="bento-box tall reveal interactive">
-            <h3>Visual Insight</h3>
-            <p>감각을 자극하는 압도적인 비주얼 경험.</p>
-          </div>
-          <div class="bento-box reveal interactive">
-            <h3>Technology</h3>
-            <p>안정적이고 빠른 웹 환경 구축.</p>
-          </div>
-          <div class="bento-box reveal interactive">
-            <h3>Data Lab</h3>
-            <p>데이터 기반의 정밀한 전략 수립.</p>
-          </div>
-          <div class="bento-box reveal interactive">
-            <h3>Data Lab</h3>
-            <p>데이터 기반의 정밀한 전략 수립.</p>
-          </div>
-          <div class="bento-box reveal interactive">
-            <h3>Data Lab</h3>
-            <p>데이터 기반의 정밀한 전략 수립.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-stack">
-        <div class="stack-card reveal interactive">
-          <div
-            style="
-              flex: 1;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-            "
-          >
-            <h2>Featured Work</h2>
-            <p>신뢰할 수 있는 프로젝트 수행 실적.</p>
-          </div>
-          <div class="stack-img">
-            <img
-              src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=800"
-            />
-          </div>
-        </div>
-        <div class="stack-card reveal interactive">
-          <div
-            style="
-              flex: 1;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-            "
-          >
-            <h2>Design System</h2>
-            <p>일관된 브랜드 경험을 위한 가이드 수립.</p>
-          </div>
-          <div class="stack-img">
-            <img
-              src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=800"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section class="section-story">
-        <div class="story-header reveal">
-          <h3>INSIGHTS</h3>
-          <span style="font-weight: 900; color: var(--accent)"
-            >DRAG TO VIEW +</span
-          >
-        </div>
-        <div class="story-slider reveal" id="storyBoard">데이터 로드 중...</div>
+      <section class="section-journal">
+        <div class="journal-title"><h3>JOURNAL.</h3></div>
+        <div id="storyBoard" class="horizontal-scroll"></div>
       </section>
     </main>
 
     <footer>
-      <div class="f-logo reveal">LOIND</div>
-      <div
-        style="display: flex; justify-content: space-between; margin-top: 50px"
-      >
-        <p class="reveal interactive">HELLO@LOIND.COM</p>
-        <p class="reveal">© 2026 LOIND STUDIO.</p>
+      <div class="footer-inner">
+        <div class="footer-top">
+          <h2 class="footer-logo">LOIND.</h2>
+          <p class="footer-slogan">
+            From Shadow to Clarity,<br />We visualize your truth.
+          </p>
+        </div>
+        <div>
+          <div class="footer-middle">
+            <div class="footer-contact">
+              <span>GET IN TOUCH</span>
+              <a href="mailto:hello@loind.com" class="footer-email"
+                >hello@loind.com</a
+              >
+              <p>+82 02 1234 5678</p>
+            </div>
+            <div class="footer-nav">
+              <ul>
+                <li><a href="#">INSTAGRAM</a></li>
+                <li><a href="#">BEHANCE</a></li>
+                <li><a href="#">LINKEDIN</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2026 LOIND. ALL RIGHTS RESERVED.</p>
+            <p>SEOUL, KOREA</p>
+          </div>
+        </div>
       </div>
     </footer>
 
@@ -502,10 +245,9 @@
       import {
         getFirestore,
         collection,
-        getDocs,
         query,
         orderBy,
-        limit,
+        onSnapshot,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -515,114 +257,110 @@
         storageBucket: "loind-472cd.firebasestorage.app",
         messagingSenderId: "405998534289",
         appId: "1:405998534289:web:0f861bc822e1ea5391c930",
-        measurementId: "G-5B5MM51YH2",
       };
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
+      const storyBoard = document.getElementById("storyBoard");
 
-      // [커서 & 애니메이션]
-      const cursor = document.querySelector("#cursor");
-      const xTo = gsap.quickTo(cursor, "x", { duration: 0.1, ease: "power3" }),
-        yTo = gsap.quickTo(cursor, "y", { duration: 0.1, ease: "power3" });
+      // 마우스 마스크 이벤트
       window.addEventListener("mousemove", (e) => {
-        xTo(e.clientX - 5);
-        yTo(e.clientY - 5);
-      });
-
-      // 호버 효과 부활
-      document.addEventListener("mouseover", (e) => {
-        if (e.target.closest(".interactive")) cursor.classList.add("hover");
-      });
-      document.addEventListener("mouseout", (e) => {
-        if (e.target.closest(".interactive")) cursor.classList.remove("hover");
-      });
-
-      // 패럴랙스 (덜컹거림 방지)
-      const bg = document.querySelector("#parallax-bg");
-      window.addEventListener("mousemove", (e) => {
-        gsap.to(bg, {
-          x: (e.clientX / window.innerWidth - 0.5) * 40,
-          y: (e.clientY / window.innerHeight - 0.5) * 40,
-          duration: 1.5,
-          ease: "power2.out",
-        });
-      });
-
-      // [스크롤 리빌]
-      gsap.registerPlugin(ScrollTrigger);
-      gsap.utils.toArray(".reveal").forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 80 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1.2,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 90%",
-              toggleActions: "play none none reverse",
-            },
-          }
+        document.documentElement.style.setProperty(
+          "--mouse-x",
+          e.clientX + "px"
+        );
+        document.documentElement.style.setProperty(
+          "--mouse-y",
+          e.clientY + "px"
         );
       });
 
-      // Ticker
-      gsap.to(".ticker-item", {
-        xPercent: -100,
-        repeat: -1,
-        duration: 25,
-        ease: "none",
-      });
+      // 가로 슬라이드 텍스트 업데이트 로직
+      const slogansData = [
+        "SHADOW TO<br />CLARITY.",
+        "DEEP INSIDE,<br />BEYOND SURFACE.",
+        "TRUTH THROUGH<br />VISUALIZATION.",
+        "WE DEFINE<br />NEW RULES.",
+      ];
+      let sloganIndex = 0;
+      const containerBlack = document.getElementById("slogan-container-black");
+      const containerWhite = document.getElementById("slogan-container-white");
 
-      // [Firebase 데이터 로드]
-      async function fetchStories() {
-        const storyBoard = document.querySelector("#storyBoard");
-        try {
-          const q = query(
-            collection(db, "stories"),
-            orderBy("createdAt", "desc"),
-            limit(8)
-          );
-          const querySnapshot = await getDocs(q);
-          let html = "";
-          querySnapshot.forEach((doc) => {
-            const item = doc.data();
-            html += `
-                        <div class="story-card interactive" onclick="location.href='story.html'">
-                            <div class="img-box"><img src="${item.img}" alt="${item.title}"></div>
-                            <div class="story-info">
-                                <span style="font-weight:900; color:#6c47ff; font-size:0.75rem;">${item.category}</span>
-                                <h4>${item.title}</h4>
-                            </div>
-                        </div>`;
-          });
-          storyBoard.innerHTML = html || "<p>등록된 스토리가 없습니다.</p>";
-        } catch (e) {
-          storyBoard.innerHTML = "<p>서버 오류 발생</p>";
+      function changeSlogan() {
+        const currentActiveBlack = containerBlack.querySelector(
+          ".text-slogan.active"
+        );
+        const currentActiveWhite = containerWhite.querySelector(
+          ".text-slogan.active"
+        );
+
+        if (currentActiveBlack) {
+          currentActiveBlack.classList.remove("active");
+          currentActiveBlack.classList.add("exit");
         }
-      }
-      fetchStories();
+        if (currentActiveWhite) {
+          currentActiveWhite.classList.remove("active");
+          currentActiveWhite.classList.add("exit");
+        }
 
-      // [슬라이더]
-      const slider = document.querySelector(".story-slider");
-      let isDown = false,
-        startX,
-        scrollLeft;
-      slider.addEventListener("mousedown", (e) => {
-        isDown = true;
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
+        sloganIndex = (sloganIndex + 1) % slogansData.length;
+        const newText = slogansData[sloganIndex];
+
+        const newSloganBlack = document.createElement("h2");
+        newSloganBlack.className = "text-slogan";
+        newSloganBlack.innerHTML = newText;
+        containerBlack.appendChild(newSloganBlack);
+
+        const newSloganWhite = document.createElement("h2");
+        newSloganWhite.className = "text-slogan";
+        newSloganWhite.innerHTML = newText;
+        containerWhite.appendChild(newSloganWhite);
+
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            newSloganBlack.classList.add("active");
+            newSloganWhite.classList.add("active");
+          }, 50);
+        });
+
+        setTimeout(() => {
+          if (currentActiveBlack) currentActiveBlack.remove();
+          if (currentActiveWhite) currentActiveWhite.remove();
+        }, 1000);
+      }
+
+      setInterval(changeSlogan, 4000);
+
+      // Firebase & Scroll 이벤트 생략 (위와 동일)
+      const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
+      onSnapshot(q, (snapshot) => {
+        storyBoard.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const card = document.createElement("div");
+          card.className = "journal-card";
+          card.innerHTML = `<div class="card-img"><img src="${
+            data.img || ""
+          }"></div><div class="card-info"><span>${
+            data.category || "PROJECT"
+          }</span><h4>${data.title}</h4><p>${data.desc}</p></div>`;
+          storyBoard.appendChild(card);
+        });
       });
-      window.addEventListener("mouseup", () => (isDown = false));
-      slider.addEventListener("mousemove", (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        slider.scrollLeft =
-          scrollLeft - (e.pageX - slider.offsetLeft - startX) * 2;
-      });
+
+      storyBoard.addEventListener(
+        "wheel",
+        (e) => {
+          if (e.deltaY !== 0) {
+            e.preventDefault();
+            storyBoard.scrollTo({
+              left: storyBoard.scrollLeft + e.deltaY * 1.5,
+              behavior: "smooth",
+            });
+          }
+        },
+        { passive: false }
+      );
     </script>
   </body>
 </html>
