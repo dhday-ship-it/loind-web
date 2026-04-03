@@ -4,51 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LOIND | SHADOW TO CLARITY</title>
+
+    <!-- 1. 외부 라이브러리 (jQuery & Slick) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+
+    <!-- 2. 스타일 시트 (기존 style.css 연결 + 슬라이더 보정) -->
     <link rel="stylesheet" href="style.css" />
-    <style>
-      /* 가로 슬라이드 가독성 개선 */
-      #visual .textWrap {
-        overflow: hidden;
-        position: relative;
-        display: flex;
-        align-items: center;
-        height: 40vh; /* 문구가 여러 줄일 수 있으므로 높이 확보 */
-      }
-
-      #visual h2 {
-        position: absolute;
-        width: 100%;
-        line-height: 1;
-        /* white-space: nowrap; 을 제거하여 필요한 경우 줄바꿈 허용 */
-        transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1),
-          opacity 0.8s ease;
-        will-change: transform, opacity;
-      }
-
-      /* 대기: 오른쪽에서 대기 */
-      .text-slogan {
-        transform: translateX(120%);
-        opacity: 0;
-      }
-
-      /* 활성: 제자리 */
-      .text-slogan.active {
-        transform: translateX(0%);
-        opacity: 1;
-      }
-
-      /* 퇴장: 왼쪽으로 사라짐 */
-      .text-slogan.exit {
-        transform: translateX(-120%);
-        opacity: 0;
-      }
-    </style>
+    <style></style>
   </head>
   <body>
     <header>
-      <h1>
-        <a href="index.html"><span class="main">LOIND</span></a>
-      </h1>
+      <h1><a href="index.html">LOIND</a></h1>
       <nav>
         <ul>
           <li><a href="about.html">ABOUT</a></li>
@@ -60,11 +35,15 @@
     </header>
 
     <section id="visual">
+      <!-- 검정 배경 레이어 -->
       <div class="innerBlack">
-        <div class="textWrap" id="slogan-container-black">
-          <h2 class="text-slogan active">SHADOW TO<br />CLARITY.</h2>
-        </div>
-        <ul>
+        <ul class="textWrap slogan-slider">
+          <li><h2>SHADOW TO CLARITY.</h2></li>
+          <li><h2>DEEP INSIDE, BEYOND SURFACE.</h2></li>
+          <li><h2>TRUTH THROUGH VISUALIZATION.</h2></li>
+          <li><h2>WE DEFINE NEW RULES.</h2></li>
+        </ul>
+        <ul class="btnWrap">
           <li>
             <a href="#"
               ><h4>STRATEGY</h4>
@@ -119,11 +98,15 @@
         </svg>
       </div>
 
+      <!-- 흰색 마스크 레이어 -->
       <div class="innerWhite">
-        <div class="textWrap" id="slogan-container-white">
-          <h2 class="text-slogan active">SHADOW TO<br />CLARITY.</h2>
-        </div>
-        <ul>
+        <ul class="textWrap slogan-slider">
+          <li><h2>SHADOW TO CLARITY.</h2></li>
+          <li><h2>DEEP INSIDE, BEYOND SURFACE.</h2></li>
+          <li><h2>TRUTH THROUGH VISUALIZATION.</h2></li>
+          <li><h2>WE DEFINE NEW RULES.</h2></li>
+        </ul>
+        <ul class="btnWrap">
           <li>
             <a href="#"
               ><h4>STRATEGY</h4>
@@ -169,6 +152,7 @@
     </section>
 
     <main class="content-stack">
+      <!-- 본문 섹션 -->
       <article class="section-vision">
         <div class="vision-text">
           <span>01 / PHILOSOPHY</span>
@@ -181,25 +165,18 @@
           />
         </div>
       </article>
-
-      <article class="section-vision" style="flex-direction: row-reverse">
+      <article class="section-vision vision02">
         <div class="vision-text">
-          <span>02 / PERSPECTIVE</span>
-          <h3>Truth through<br />Visualization.</h3>
+          <span>01 / PHILOSOPHY</span>
+          <h3>Deep Inside,<br />Beyond Surface.</h3>
         </div>
         <div class="vision-media">
           <img
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072"
-            alt="Perspective"
+            src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070"
+            alt="Philosophy"
           />
         </div>
       </article>
-
-      <div class="ticker-wrap">
-        <div class="ticker-text">
-          SELECTED ARCHIVE — LOIND JOURNAL — SELECTED ARCHIVE — LOIND JOURNAL —
-        </div>
-      </div>
 
       <section class="section-journal">
         <div class="journal-title"><h3>JOURNAL.</h3></div>
@@ -208,33 +185,43 @@
     </main>
 
     <footer>
+      <!-- [푸터 영역] -->
       <div class="footer-inner">
+        <!-- 상단: 로고 및 슬로건 -->
         <div class="footer-top">
-          <h2 class="footer-logo">LOIND.</h2>
+          <div class="footer-logo">LOIND</div>
           <p class="footer-slogan">
-            From Shadow to Clarity,<br />We visualize your truth.
+            Deep Inside,<br />
+            Beyond Surface.
           </p>
         </div>
         <div>
+          <!-- 중단: 연락처 및 내비게이션 -->
           <div class="footer-middle">
             <div class="footer-contact">
               <span>GET IN TOUCH</span>
               <a href="mailto:hello@loind.com" class="footer-email"
                 >hello@loind.com</a
               >
-              <p>+82 02 1234 5678</p>
             </div>
-            <div class="footer-nav">
+
+            <nav class="footer-nav">
               <ul>
-                <li><a href="#">INSTAGRAM</a></li>
-                <li><a href="#">BEHANCE</a></li>
-                <li><a href="#">LINKEDIN</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="service.html">SERVICE</a></li>
+                <li><a href="story.html">STORY</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
               </ul>
-            </div>
+            </nav>
           </div>
+
+          <!-- 하단: 카피라이트 및 정보 -->
           <div class="footer-bottom">
-            <p>© 2026 LOIND. ALL RIGHTS RESERVED.</p>
-            <p>SEOUL, KOREA</p>
+            <div class="copyright">© 2026 LOIND. ALL RIGHTS RESERVED.</div>
+            <div class="footer-info">
+              <span>PRIVACY POLICY</span>
+              <span>TERMS OF USE</span>
+            </div>
           </div>
         </div>
       </div>
@@ -258,109 +245,112 @@
         messagingSenderId: "405998534289",
         appId: "1:405998534289:web:0f861bc822e1ea5391c930",
       };
-
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-      const storyBoard = document.getElementById("storyBoard");
 
-      // 마우스 마스크 이벤트
-      window.addEventListener("mousemove", (e) => {
-        document.documentElement.style.setProperty(
-          "--mouse-x",
-          e.clientX + "px"
-        );
-        document.documentElement.style.setProperty(
-          "--mouse-y",
-          e.clientY + "px"
-        );
-      });
+      $(document).ready(function () {
+        // 1. Slick Slider 실행 (두 레이어 동시 제어)
+        $(document).ready(function () {
+          const $sliders = $(".textWrap");
 
-      // 가로 슬라이드 텍스트 업데이트 로직
-      const slogansData = [
-        "SHADOW TO<br />CLARITY.",
-        "DEEP INSIDE,<br />BEYOND SURFACE.",
-        "TRUTH THROUGH<br />VISUALIZATION.",
-        "WE DEFINE<br />NEW RULES.",
-      ];
-      let sloganIndex = 0;
-      const containerBlack = document.getElementById("slogan-container-black");
-      const containerWhite = document.getElementById("slogan-container-white");
+          // 클론 생성
+          $sliders.each(function () {
+            const firstChild = $(this).find("li:first-child").clone();
+            $(this).append(firstChild);
+          });
 
-      function changeSlogan() {
-        const currentActiveBlack = containerBlack.querySelector(
-          ".text-slogan.active"
-        );
-        const currentActiveWhite = containerWhite.querySelector(
-          ".text-slogan.active"
-        );
+          let currentIndex = 0;
+          const slideCount = $sliders.first().find("li").length;
+          let timer = null;
 
-        if (currentActiveBlack) {
-          currentActiveBlack.classList.remove("active");
-          currentActiveBlack.classList.add("exit");
-        }
-        if (currentActiveWhite) {
-          currentActiveWhite.classList.remove("active");
-          currentActiveWhite.classList.add("exit");
-        }
+          function moveNext() {
+            if (document.hidden) return;
 
-        sloganIndex = (sloganIndex + 1) % slogansData.length;
-        const newText = slogansData[sloganIndex];
+            currentIndex++;
+            const xOffset = currentIndex * -100;
 
-        const newSloganBlack = document.createElement("h2");
-        newSloganBlack.className = "text-slogan";
-        newSloganBlack.innerHTML = newText;
-        containerBlack.appendChild(newSloganBlack);
-
-        const newSloganWhite = document.createElement("h2");
-        newSloganWhite.className = "text-slogan";
-        newSloganWhite.innerHTML = newText;
-        containerWhite.appendChild(newSloganWhite);
-
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            newSloganBlack.classList.add("active");
-            newSloganWhite.classList.add("active");
-          }, 50);
-        });
-
-        setTimeout(() => {
-          if (currentActiveBlack) currentActiveBlack.remove();
-          if (currentActiveWhite) currentActiveWhite.remove();
-        }, 1000);
-      }
-
-      setInterval(changeSlogan, 4000);
-
-      // Firebase & Scroll 이벤트 생략 (위와 동일)
-      const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
-      onSnapshot(q, (snapshot) => {
-        storyBoard.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          const card = document.createElement("div");
-          card.className = "journal-card";
-          card.innerHTML = `<div class="card-img"><img src="${
-            data.img || ""
-          }"></div><div class="card-info"><span>${
-            data.category || "PROJECT"
-          }</span><h4>${data.title}</h4><p>${data.desc}</p></div>`;
-          storyBoard.appendChild(card);
-        });
-      });
-
-      storyBoard.addEventListener(
-        "wheel",
-        (e) => {
-          if (e.deltaY !== 0) {
-            e.preventDefault();
-            storyBoard.scrollTo({
-              left: storyBoard.scrollLeft + e.deltaY * 1.5,
-              behavior: "smooth",
+            // 이동 시 반드시 translateY(-50%)를 함께 명시해야 중앙이 유지됨
+            $sliders.css({
+              transition: "transform 0.8s cubic-bezier(0.7, 0, 0.3, 1)",
+              transform: `translateY(-50%) translateX(${xOffset}%)`,
             });
+
+            if (currentIndex === slideCount - 1) {
+              setTimeout(() => {
+                currentIndex = 0;
+                $sliders.css({
+                  transition: "none",
+                  transform: `translateY(-50%) translateX(0%)`, // 리셋 시에도 중앙 유지
+                });
+              }, 800);
+            }
           }
-        },
-        { passive: false }
-      );
+
+          function startTimer() {
+            stopTimer();
+            timer = setInterval(moveNext, 2000);
+          }
+
+          function stopTimer() {
+            clearInterval(timer);
+          }
+
+          startTimer();
+
+          $(document).on("visibilitychange", function () {
+            document.hidden ? stopTimer() : startTimer();
+          });
+        });
+        // 2. 마우스 마스크 이동
+        $(window).on("mousemove", function (e) {
+          document.documentElement.style.setProperty(
+            "--mouse-x",
+            e.clientX + "px"
+          );
+          document.documentElement.style.setProperty(
+            "--mouse-y",
+            e.clientY + "px"
+          );
+        });
+
+        // 3. Firebase 데이터 바인딩
+        const storyBoard = document.getElementById("storyBoard");
+        const q = query(
+          collection(db, "stories"),
+          orderBy("createdAt", "desc")
+        );
+        onSnapshot(q, (snapshot) => {
+          storyBoard.innerHTML = "";
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            const card = document.createElement("div");
+            card.className = "journal-card";
+            card.innerHTML = `
+              <div class="card-img"><img src="${data.img || ""}"></div>
+              <div class="card-info">
+                <span>${data.category || "PROJECT"}</span>
+                <h4>${data.title}</h4>
+                <p>${data.desc || ""}</p>
+              </div>`;
+            storyBoard.appendChild(card);
+          });
+        });
+
+        // 4. 가로 스크롤 휠 이벤트
+        storyBoard.addEventListener(
+          "wheel",
+          (e) => {
+            if (e.deltaY !== 0) {
+              e.preventDefault();
+              storyBoard.scrollTo({
+                left: storyBoard.scrollLeft + e.deltaY * 1.5,
+                behavior: "smooth",
+              });
+            }
+          },
+          { passive: false }
+        );
+      });
     </script>
   </body>
 </html>
