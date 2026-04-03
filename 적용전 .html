@@ -4,276 +4,219 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LOIND | SHADOW TO CLARITY</title>
-    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      /* [기초 설정] */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      ul {
+        list-style: none;
+      }
+      a {
+        color: inherit;
+        text-decoration: inherit;
+      }
+      :root {
+        --bg-dark: #070707;
+        --bg-light: #ffffff;
+        --mouse-x: -500px;
+        --mouse-y: -500px;
+      }
+      body {
+        background-color: var(--bg-light);
+        font-family: "Pretendard", sans-serif;
+        overflow-x: hidden;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 50px;
+        mix-blend-mode: difference;
+        color: #fff;
+        z-index: 2000;
+      }
+
+      #visual {
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: var(--bg-dark);
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      /* 슬라이더 핵심 스타일 */
+      .textWrap {
+        position: absolute;
+        top: 50%; /* 부모의 50% 위치 */
+        left: 0;
+        display: flex;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 5;
+        /* 초기 상태에서도 중앙 정렬(translateY)이 먹혀있어야 함 */
+        transform: translateY(-50%) translateX(0%);
+        transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        will-change: transform;
+      }
+
+      .textWrap li {
+        flex: 0 0 100%;
+        width: 100%;
+        padding: 0 8%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center; /* 내부 텍스트 수직 중앙 */
+      }
+
+      .textWrap h2 {
+        font-size: clamp(3.5rem, 10vw, 9rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.06em;
+        white-space: normal;
+        word-break: keep-all;
+        width: 100%;
+      }
+
+      /* 레이어 설정 */
+      .innerBlack {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        background: var(--bg-dark);
+        color: #fff;
+      }
+      .innerWhite {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        background: var(--bg-light);
+        color: #000;
+        clip-path: circle(250px at var(--mouse-x) var(--mouse-y));
+        pointer-events: none;
+      }
+
+      .content-stack {
+        position: relative;
+        z-index: 100;
+        margin-top: 100vh;
+        background: #fff;
+        min-height: 100vh;
+      }
+    </style>
   </head>
   <body>
     <header>
-      <h1>
-        <a href="index.html"><span class="main">LOIND</span></a>
-      </h1>
-      <nav>
-        <ul>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="service.html">SERVICE</a></li>
-          <li><a href="story.html">STORY</a></li>
-          <li><a href="contact.html">CONTACT</a></li>
-        </ul>
-      </nav>
+      <h1><a href="index.html">LOIND</a></h1>
     </header>
 
     <section id="visual">
       <div class="innerBlack">
-        <div class="textWrap">
-          <h2>SHADOW TO<br />CLARITY.</h2>
-        </div>
-        <ul>
-          <li>
-            <a href="#"
-              ><h4>STRATEGY</h4>
-              <span>INSIGHT</span></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><h4>STRATEGY</h4>
-              <span>INSIGHT</span></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><h4>STRATEGY</h4>
-              <span>INSIGHT</span></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><h4>STRATEGY</h4>
-              <span>INSIGHT</span></a
-            >
-          </li>
+        <ul class="textWrap">
+          <li><h2>FROM SHADOW TO CLARITY, BEYOND SURFACE.</h2></li>
+          <li><h2>DEEP INSIDE, WE UNCOVER THE TRUTH.</h2></li>
+          <li><h2>VISUALIZATION OF COMPLEX STRATEGIES.</h2></li>
+          <li><h2>WE DEFINE NEW RULES FOR THE FUTURE.</h2></li>
         </ul>
-        <svg
-          class="light-path-svg"
-          viewBox="0 0 500 500"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <path class="moving-path" d="M380,-50 C520,150 220,350 420,550" />
-        </svg>
       </div>
 
       <div class="innerWhite">
-        <div class="textWrap">
-          <h2>SHADOW TO<br />CLARITY.</h2>
-        </div>
-        <ul>
-          <li>
-            <a href="#"
-              ><h4>STRATEGY</h4>
-              <span>INSIGHT</span></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><h4>STRATEGY</h4>
-              <span>INSIGHT</span></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><h4>STRATEGY</h4>
-              <span>INSIGHT</span></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><h4>STRATEGY</h4>
-              <span>INSIGHT</span></a
-            >
-          </li>
+        <ul class="textWrap">
+          <li><h2>FROM SHADOW TO CLARITY, BEYOND SURFACE.</h2></li>
+          <li><h2>DEEP INSIDE, WE UNCOVER THE TRUTH.</h2></li>
+          <li><h2>VISUALIZATION OF COMPLEX STRATEGIES.</h2></li>
+          <li><h2>WE DEFINE NEW RULES FOR THE FUTURE.</h2></li>
         </ul>
-        <svg
-          class="light-path-svg"
-          viewBox="0 0 500 500"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <path class="moving-path" d="M380,-50 C520,150 220,350 420,550" />
-        </svg>
       </div>
     </section>
 
-    <main class="content-stack">
-      <article class="section-vision">
-        <div class="vision-text">
-          <span>01 / PHILOSOPHY</span>
-          <h3>Deep Inside,<br />Beyond Surface.</h3>
-        </div>
-        <div class="vision-media">
-          <img
-            src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070"
-            alt="Philosophy"
-          />
-        </div>
-      </article>
+    <main class="content-stack"></main>
 
-      <article class="section-vision" style="flex-direction: row-reverse">
-        <div class="vision-text">
-          <span>02 / PERSPECTIVE</span>
-          <h3>Truth through<br />Visualization.</h3>
-        </div>
-        <div class="vision-media">
-          <img
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072"
-            alt="Perspective"
-          />
-        </div>
-      </article>
+    <script>
+      $(document).ready(function () {
+        const $sliders = $(".textWrap");
 
-      <div class="ticker-wrap">
-        <div class="ticker-text">
-          SELECTED ARCHIVE — LOIND JOURNAL — SELECTED ARCHIVE — LOIND JOURNAL —
-        </div>
-      </div>
+        // 클론 생성
+        $sliders.each(function () {
+          const firstChild = $(this).find("li:first-child").clone();
+          $(this).append(firstChild);
+        });
 
-      <section class="section-journal">
-        <div class="journal-title"><h3>JOURNAL.</h3></div>
-        <div id="storyBoard" class="horizontal-scroll"></div>
-      </section>
-    </main>
+        let currentIndex = 0;
+        const slideCount = $sliders.first().find("li").length;
+        let timer = null;
 
-    <footer>
-      <div class="footer-inner">
-        <div class="footer-top">
-          <h2 class="footer-logo">LOIND.</h2>
-          <p class="footer-slogan">
-            From Shadow to Clarity,<br />We visualize your truth.
-          </p>
-        </div>
+        function moveNext() {
+          if (document.hidden) return;
 
-        <div class="footer-middle">
-          <div class="footer-contact">
-            <span>GET IN TOUCH</span>
-            <a href="mailto:hello@loind.com" class="footer-email"
-              >hello@loind.com</a
-            >
-            <p>+82 02 1234 5678</p>
-          </div>
+          currentIndex++;
+          const xOffset = currentIndex * -100;
 
-          <div class="footer-nav">
-            <ul>
-              <li><a href="#">INSTAGRAM</a></li>
-              <li><a href="#">BEHANCE</a></li>
-              <li><a href="#">LINKEDIN</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="footer-bottom">
-          <p>© 2026 LOIND. ALL RIGHTS RESERVED.</p>
-          <p>SEOUL, KOREA</p>
-        </div>
-      </div>
-    </footer>
-    <script type="module">
-      // 1. 필요한 함수들을 확실하게 모두 임포트합니다.
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import {
-        getFirestore,
-        collection,
-        query,
-        orderBy,
-        onSnapshot, // <-- 이게 반드시 있어야 실시간으로 그려집니다.
-      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
-        authDomain: "loind-472cd.firebaseapp.com",
-        projectId: "loind-472cd",
-        storageBucket: "loind-472cd.firebasestorage.app",
-        messagingSenderId: "405998534289",
-        appId: "1:405998534289:web:0f861bc822e1ea5391c930",
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-      const storyBoard = document.getElementById("storyBoard");
-
-      // 2. 마우스 마스크 이벤트 (하나로 통합 관리)
-      window.addEventListener("mousemove", (e) => {
-        document.documentElement.style.setProperty(
-          "--mouse-x",
-          e.clientX + "px"
-        );
-        document.documentElement.style.setProperty(
-          "--mouse-y",
-          e.clientY + "px"
-        );
-      });
-
-      // 3. Firebase 데이터 로드 및 카드 동적 생성
-      // 'journal' 컬렉션이 Firestore에 있는지, 'date' 필드가 있는지 꼭 확인하세요!
-      const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
-
-      onSnapshot(
-        q,
-        (snapshot) => {
-          storyBoard.innerHTML = ""; // 기존 내용 비우기
-
-          if (snapshot.empty) {
-            storyBoard.innerHTML =
-              "<p style='padding: 20px; color: #999;'>등록된 저널이 없습니다.</p>";
-            return;
-          }
-
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            const card = document.createElement("div");
-            card.className = "journal-card";
-
-            // 데이터가 없을 경우를 대비한 기본값 설정
-            const imgUrl = data.img || "https://via.placeholder.com/400x500";
-            const title = data.title || "Untitled Project";
-            const category = data.category || "PROJECT";
-            const desc = data.desc || "";
-            const date = data.date || "";
-
-            card.innerHTML = `
-            <div class="card-img">
-              <img src="${imgUrl}" alt="${title}">
-            </div>
-            <div class="card-info">
-              <span class="category">${category}</span>
-              <h4>${title}</h4>
-              <p>${desc}</p>
-              <span class="date">${date}</span>
-            </div>
-          `;
-            storyBoard.appendChild(card);
+          // 이동 시 반드시 translateY(-50%)를 함께 명시해야 중앙이 유지됨
+          $sliders.css({
+            transition: "transform 0.8s cubic-bezier(0.7, 0, 0.3, 1)",
+            transform: `translateY(-50%) translateX(${xOffset}%)`,
           });
-        },
-        (error) => {
-          console.error("Firebase 로드 에러:", error);
-          storyBoard.innerHTML =
-            "<p style='padding: 20px; color: red;'>데이터를 불러오지 못했습니다. 콘솔을 확인하세요.</p>";
-        }
-      );
-      // 4. 가로 스크롤 마우스 휠 연동 (개선된 버전)
 
-      storyBoard.addEventListener(
-        "wheel",
-        (e) => {
-          // 세로 스크롤 방지하고 가로로 전환
-          if (e.deltaY !== 0) {
-            e.preventDefault();
-
-            // 현재 스크롤 위치에서 휠 양만큼 더함
-            storyBoard.scrollTo({
-              left: storyBoard.scrollLeft + e.deltaY * 1.5, // 1.5는 속도 조절용
-              behavior: "smooth", // 부드러운 이동
-            });
+          if (currentIndex === slideCount - 1) {
+            setTimeout(() => {
+              currentIndex = 0;
+              $sliders.css({
+                transition: "none",
+                transform: `translateY(-50%) translateX(0%)`, // 리셋 시에도 중앙 유지
+              });
+            }, 800);
           }
-        },
-        { passive: false }
-      );
+        }
+
+        function startTimer() {
+          stopTimer();
+          timer = setInterval(moveNext, 2000);
+        }
+
+        function stopTimer() {
+          clearInterval(timer);
+        }
+
+        startTimer();
+
+        $(document).on("visibilitychange", function () {
+          document.hidden ? stopTimer() : startTimer();
+        });
+
+        $(window).on("mousemove", function (e) {
+          document.documentElement.style.setProperty(
+            "--mouse-x",
+            e.clientX + "px"
+          );
+          document.documentElement.style.setProperty(
+            "--mouse-y",
+            e.clientY + "px"
+          );
+        });
+      });
     </script>
   </body>
 </html>
