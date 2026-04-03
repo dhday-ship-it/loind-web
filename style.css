@@ -259,7 +259,6 @@ nav li {
   padding: 40px 8%;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  scroll-snap-type: x mandatory;
 }
 .horizontal-scroll::-webkit-scrollbar {
   display: none;
