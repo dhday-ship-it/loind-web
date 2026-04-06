@@ -49,7 +49,7 @@
       .slogan {
         font-size: 0.7rem;
         font-weight: 700;
-        color: #8e55ff;
+        color: #E0001A;
         margin-left: 5px;
         border-left: 1px solid #eee;
         opacity: 0;
@@ -75,7 +75,6 @@
       nav li:hover {
         opacity: 0.5;
       }
-      /*header end*/
 
       .side-nav {
         position: fixed;
@@ -107,14 +106,12 @@
         color: #000;
       }
 
-      /* --- [2] 메인 컨텐츠 영역 --- */
       .content {
         margin-left: 250px;
         padding-top: 80px;
         width: 100%;
       }
 
-      /* --- [3] 비디오 섹션 (요청사항 반영: 둥근 모서리 및 크기 조절) --- */
       .video-section {
         padding: 60px 10% 20px;
         max-width: 1400px;
@@ -123,7 +120,7 @@
         position: relative;
         width: 100%;
         height: 520px;
-        border-radius: 40px; /* 모서리 둥글게 */
+        border-radius: 40px;
         overflow: hidden;
         background-color: #000;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
@@ -133,28 +130,7 @@
         height: 100%;
         object-fit: cover;
       }
-      .video-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.15); /* 영상미를 위해 옅은 틴트 처리 */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #fff;
-      }
-      .video-overlay h1 {
-        font-size: 3rem;
-        font-weight: 800;
-        line-height: 1.3;
-        letter-spacing: -1.5px;
-        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      }
 
-      /* --- [4] 아티클 섹션 공통 스타일 --- */
       section {
         padding: 100px 10%;
         max-width: 1400px;
@@ -163,7 +139,7 @@
       .num {
         font-size: 0.75rem;
         font-weight: 800;
-        color: #8e55ff;
+        color: #E0001A;
         letter-spacing: 2px;
         margin-bottom: 20px;
         display: block;
@@ -175,7 +151,6 @@
         letter-spacing: -1.5px;
       }
 
-      /* 01. Mission */
       .mission-box {
         background-color: #f9f9fb;
         border-radius: 30px;
@@ -188,52 +163,93 @@
         word-break: keep-all;
       }
       .mission-text span {
-        color: #8e55ff;
+        color: #E0001A;
       }
 
-      /* 02. Identity */
+      /* --- [수정] IDENTITY 섹션 디자인 유지 + 설명 추가 --- */
       .identity-grid {
         display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 30px;
-        margin-top: 20px;
+        grid-template-columns: 1fr 1.2fr; /* 왼쪽 로고, 오른쪽 컬러설명 */
+        gap: 40px;
+        align-items: start;
       }
+      
+      /* 기존 로고 카드 디자인 유지 */
       .id-card {
-        background: #111;
+        background: #0D0D0D;
         border-radius: 24px;
-        padding: 80px;
+        padding: 120px 20px; /* 로고 강조를 위해 패딩 유지 */
         color: #fff;
         text-align: center;
+        position: sticky;
+        top: 120px;
       }
       .id-card h3 {
         font-size: 4rem;
         font-weight: 900;
         letter-spacing: 12px;
       }
-      .id-info-card {
-        background: #f4f4f4;
-        border-radius: 24px;
-        padding: 40px;
+
+      /* 우측 컬러 가이드 리스트 */
+      .color-guide-list {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-      }
-      .color-palette {
-        display: flex;
         gap: 15px;
-        margin-top: 20px;
       }
-      .color-dot {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        border: 1px solid #ddd;
+
+      .color-item {
+        display: flex;
+        background-color: #f9f9fb;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.3s;
+      }
+      .color-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      }
+
+      .color-bar {
+        width: 12px;
+        flex-shrink: 0;
+      }
+
+      .color-info {
+        padding: 25px 30px;
+      }
+
+      .color-name {
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .color-hex {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #999;
+      }
+
+      .color-tags {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #666;
+        margin-bottom: 12px;
+      }
+
+      .color-desc {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: #444;
+        word-break: keep-all;
       }
 
       /* 03. Core Value */
       .value-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 40px;
       }
       .value-item h4 {
@@ -250,7 +266,7 @@
         line-height: 1.7;
       }
 
-      /* 04. History (카카오뱅크 스타일 타임라인) */
+      /* 04. History */
       .history-wrap {
         position: relative;
         padding-left: 40px;
@@ -285,7 +301,7 @@
       .history-month {
         width: 60px;
         font-weight: 800;
-        color: #8e55ff;
+        color: #E0001A;
         flex-shrink: 0;
       }
       .history-detail {
@@ -295,48 +311,11 @@
       }
 
       @media (max-width: 1024px) {
-        .side-nav {
-          display: none;
-        }
-        .content {
-          margin-left: 0;
-        }
-        .identity-grid,
-        .value-grid {
-          grid-template-columns: 1fr;
-        }
-        .video-container {
-          height: 350px;
-        }
-        .video-overlay h1 {
-          font-size: 1.8rem;
-        }
-      }
-
-      @media (max-width: 900px) {
-        header {
-          padding: 0 30px;
-        }
-        nav ul {
-          gap: 20px;
-        }
-        .slogan {
-          display: none;
-        }
-      }
-
-      @media (max-width: 600px) {
-        header {
-          height: auto;
-          padding: 15px 20px;
-          flex-direction: column;
-          gap: 15px;
-        }
-        nav ul {
-          gap: 15px;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
+        .side-nav { display: none; }
+        .content { margin-left: 0; }
+        .identity-grid { grid-template-columns: 1fr; }
+        .id-card { position: static; padding: 80px 20px; }
+        .value-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -345,7 +324,7 @@
       <h1>
         <a href="index.html">
           <span class="main">LOIND</span>
-          <span class="slogan">THE GREATEST EXPERIENCE</span>
+          <span class="slogan">Beyond what exists</span>
         </a>
       </h1>
       <nav>
@@ -370,44 +349,58 @@
     <main class="content">
       <div class="video-section">
         <div class="video-container">
-          <video autoplay muted loop playsinline poster="">
-            <source
-              src="https://www.kakaobank.com/view/video/KO/main-intro-visual-video_pc.mp4"
-              type="video/mp4"
-            />
-            사용자의 브라우저가 비디오를 지원하지 않습니다.
+          <video autoplay muted loop playsinline>
+            <source src="https://www.kakaobank.com/view/video/KO/main-intro-visual-video_pc.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
 
       <section id="mission">
-        <span class="num">01 / MISSION</span>
+        <span class="num">01 / VISION & MISSION</span>
         <h2 class="section-title">우리의 지향점</h2>
         <div class="mission-box">
           <p class="mission-text">
-            LOIND는 기술이 사람의 감각에 닿는 순간을 설계합니다.<br />
-            단순한 연결을 넘어, <span>최고의 경험</span>을 전달하는 것이 우리의
-            소명입니다.
+            LOIND는 단순히 기능하는 기술을 넘어, 비즈니스의 정점에서 발휘되는 감각을 설계합니다.<br />
+            평범한 만족에 안주하지 않고, <span>존재하는 것 너머의 위대함</span>을 시각화하는 것이 우리의 본질입니다.
           </p>
         </div>
       </section>
 
       <section id="identity">
         <span class="num">02 / IDENTITY</span>
-        <h2 class="section-title">브랜드 시스템</h2>
+        <h2 class="section-title">BRAND Skill
+        </h2>
         <div class="identity-grid">
           <div class="id-card">
             <h3>LOIND</h3>
           </div>
-          <div class="id-info-card">
-            <p style="font-weight: 800; margin-bottom: 10px">Visual Language</p>
-            <p style="color: #666; font-size: 0.95rem">
-              단단한 직선과 여백의 조화를 통해 신뢰와 확장성을 표현합니다.
-            </p>
-            <div class="color-palette">
-              <div class="color-dot" style="background: #111"></div>
-              <div class="color-dot" style="background: #007bff"></div>
-              <div class="color-dot" style="background: #fff"></div>
+
+          <div class="color-guide-list">
+            <div class="color-item">
+              <div class="color-bar" style="background: #0D0D0D;"></div>
+              <div class="color-info">
+                <div class="color-name">Obsidian Black <span class="color-hex">#0D0D0D</span></div>
+                <div class="color-tags">권위 · 신비 · 냉철함</div>
+                <p class="color-desc">배경 및 메인 텍스트. 무게감의 기준점. Blood Red와 병치 시 긴장감 극대화.</p>
+              </div>
+            </div>
+
+            <div class="color-item">
+              <div class="color-bar" style="background: #FFFFFF; border-right: 1px solid #eee;"></div>
+              <div class="color-info">
+                <div class="color-name">Pure White <span class="color-hex">#FFFFFF</span></div>
+                <div class="color-tags">극명한 대비 · 완벽주의 · 새로운 시작</div>
+                <p class="color-desc">Obsidian Black과의 충돌로 시각적 긴장 생성. 독립 사용 금지 — 반드시 Black 또는 Red와 함께.</p>
+              </div>
+            </div>
+
+            <div class="color-item">
+              <div class="color-bar" style="background: #E0001A;"></div>
+              <div class="color-info">
+                <div class="color-name">Blood Red <span class="color-hex">#E0001A</span></div>
+                <div class="color-tags">열정 · 반항 · LOIND의 빛</div>
+                <p class="color-desc">무채색 속 유일한 포인트. 전체 면적의 10% 이하. 로고 마크, 핵심 카피, 강조 요소에만 한정.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -416,23 +409,28 @@
       <section id="value">
         <span class="num">03 / CORE VALUE</span>
         <h2 class="section-title">핵심 가치</h2>
-        <div class="value-grid">
-          <div class="value-item">
-            <h4>Trust</h4>
-            <p>
-              정직한 과정을 통해 결과의 가치를 증명하고 고객과의 약속을
-              지킵니다.
-            </p>
-          </div>
-          <div class="value-item">
-            <h4>Innovation</h4>
-            <p>당연한 것에 의문을 던지며 끊임없이 더 나은 방식을 탐구합니다.</p>
-          </div>
-          <div class="value-item">
-            <h4>Intuition</h4>
-            <p>복잡함을 덜어내고 본질에 집중하여 직관적인 경험을 설계합니다.</p>
-          </div>
-        </div>
+        <ul class="value-grid">
+          <li class="value-item">
+            <h4>Look Beyond (MOTIVATION)</h4>
+            <p><strong>현상 너머의 가치를 발견하는 근원적인 동력</strong><br>눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p>
+          </li>
+          <li class="value-item">
+            <h4>Own your vision (CONVICTION)</h4>
+            <p><strong>우리가 그리는 시야에 대한 흔들림 없는 확신</strong><br>LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p>
+          </li>
+          <li class="value-item">
+            <h4>Iterate without end (ACTION)</h4>
+            <p><strong>정점에 닿을 때까지 멈추지 않는 폭발적인 실행</strong><br>단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p>
+          </li>
+          <li class="value-item">
+            <h4>Never compromise (PERSISTENCE)</h4>
+            <p><strong>평범함과 타협하지 않고 본질을 지켜내는 고집</strong><br>'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p>
+          </li>
+          <li class="value-item">
+            <h4>Define the era (GOAL)</h4>
+            <p><strong>새로운 기준이 되어 시대를 정의하는 궁극의 목적</strong><br>우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다</p>
+          </li>
+        </ul>
       </section>
 
       <section id="history" style="border-bottom: none">
@@ -442,11 +440,7 @@
           <div class="history-line"></div>
           <div class="history-year-group">
             <div class="history-dot"></div>
-            <h3
-              style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px"
-            >
-              2026
-            </h3>
+            <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px">2026</h3>
             <div class="history-row">
               <span class="history-month">02월</span>
               <p class="history-detail">글로벌 통합 사이트 loind.com 오픈</p>
@@ -458,11 +452,7 @@
           </div>
           <div class="history-year-group">
             <div class="history-dot"></div>
-            <h3
-              style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px"
-            >
-              2025
-            </h3>
+            <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px">2025</h3>
             <div class="history-row">
               <span class="history-month">10월</span>
               <p class="history-detail">브랜드 이노베이션 어워드 대상 수상</p>

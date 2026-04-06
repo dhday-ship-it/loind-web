@@ -3,36 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LOIND | SHADOW TO CLARITY</title>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <title>About | LOIND</title>
     <style>
-      /* [기초 설정] */
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
       ul {
         list-style: none;
       }
-      a {
-        color: inherit;
-        text-decoration: inherit;
-      }
-      :root {
-        --bg-dark: #070707;
-        --bg-light: #ffffff;
-        --mouse-x: -500px;
-        --mouse-y: -500px;
-      }
       body {
-        background-color: var(--bg-light);
+        background-color: #fff;
+        color: #000;
         font-family: "Pretendard", sans-serif;
-        overflow-x: hidden;
       }
 
+      /*header*/
       header {
         position: fixed;
         top: 0;
@@ -43,180 +35,464 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 50px;
-        mix-blend-mode: difference;
-        color: #fff;
-        z-index: 2000;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid #f2f2f2;
+        transition: 0.3s;
       }
-
-      #visual {
-        width: 100%;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: var(--bg-dark);
-        overflow: hidden;
-        z-index: 1;
-      }
-
-      /* 슬라이더 핵심 스타일 */
-      .textWrap {
-        position: absolute;
-        top: 50%; /* 부모의 50% 위치 */
-        left: 0;
-        display: flex;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        z-index: 5;
-        /* 초기 상태에서도 중앙 정렬(translateY)이 먹혀있어야 함 */
-        transform: translateY(-50%) translateX(0%);
-        transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
-        will-change: transform;
-      }
-
-      .textWrap li {
-        flex: 0 0 100%;
-        width: 100%;
-        padding: 0 8%;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center; /* 내부 텍스트 수직 중앙 */
-      }
-
-      .textWrap h2 {
-        font-size: clamp(3.5rem, 10vw, 9rem);
+      h1 .main {
+        font-size: 1.5rem;
         font-weight: 900;
-        line-height: 1;
-        letter-spacing: -0.06em;
-        white-space: normal;
-        word-break: keep-all;
-        width: 100%;
+        letter-spacing: 2px;
+      }
+      .slogan {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #E0001A;
+        margin-left: 5px;
+        border-left: 1px solid #eee;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: 0.4s;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      h1:hover .slogan {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      nav ul {
+        display: flex;
+        gap: 35px;
+      }
+      nav li {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: 0.3s;
+      }
+      nav li:hover {
+        opacity: 0.5;
       }
 
-      /* 레이어 설정 */
-      .innerBlack {
-        position: absolute;
-        top: 0;
+      .side-nav {
+        position: fixed;
+        top: 80px;
         left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10;
-        background: var(--bg-dark);
-        color: #fff;
-      }
-      .innerWhite {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 20;
-        background: var(--bg-light);
-        color: #000;
-        clip-path: circle(250px at var(--mouse-x) var(--mouse-y));
-        pointer-events: none;
-      }
-
-      .content-stack {
-        position: relative;
-        z-index: 100;
-        margin-top: 100vh;
+        width: 250px;
+        height: calc(100vh - 80px);
+        padding: 60px 50px;
+        border-right: 1px solid #f2f2f2;
         background: #fff;
-        min-height: 100vh;
+        z-index: 100;
+      }
+      .side-nav ul {
+        list-style: none;
+      }
+      .side-nav li {
+        margin-bottom: 25px;
+      }
+      .side-nav a {
+        color: #bbb;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        transition: 0.3s;
+      }
+      .side-nav a.active,
+      .side-nav a:hover {
+        color: #000;
+      }
+
+      .content {
+        margin-left: 250px;
+        padding-top: 80px;
+        width: 100%;
+      }
+
+      .video-section {
+        padding: 60px 10% 20px;
+        max-width: 1400px;
+      }
+      .video-container {
+        position: relative;
+        width: 100%;
+        height: 520px;
+        border-radius: 40px;
+        overflow: hidden;
+        background-color: #000;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      section {
+        padding: 100px 10%;
+        max-width: 1400px;
+        border-bottom: 1px solid #f2f2f2;
+      }
+      .num {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #E0001A;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .section-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 50px;
+        letter-spacing: -1.5px;
+      }
+
+      .mission-box {
+        background-color: #f9f9fb;
+        border-radius: 30px;
+        padding: 60px;
+      }
+      .mission-text {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #333;
+        word-break: keep-all;
+      }
+      .mission-text span {
+        color: #E0001A;
+      }
+
+      .identity-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 40px;
+        align-items: start;
+      }
+      
+      .id-card {
+        background: #0D0D0D;
+        border-radius: 24px;
+        padding: 120px 20px;
+        color: #fff;
+        text-align: center;
+        position: sticky;
+        top: 120px;
+      }
+      .id-card h3 {
+        font-size: 4rem;
+        font-weight: 900;
+        letter-spacing: 12px;
+      }
+
+      .color-guide-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .color-item {
+        display: flex;
+        background-color: #f9f9fb;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.3s;
+      }
+      .color-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      }
+
+      .color-bar {
+        width: 12px;
+        flex-shrink: 0;
+      }
+
+      .color-info {
+        padding: 25px 30px;
+      }
+
+      .color-name {
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .color-hex {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #999;
+      }
+
+      .color-tags {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #666;
+        margin-bottom: 12px;
+      }
+
+      .color-desc {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: #444;
+        word-break: keep-all;
+      }
+
+      .value-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+      .value-item h4 {
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #111;
+        display: inline-block;
+        padding-bottom: 5px;
+      }
+      .value-item p {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      /* 04. History Custom */
+      .history-wrap {
+        position: relative;
+        padding-left: 40px;
+      }
+      .history-line {
+        position: absolute;
+        left: 0;
+        top: 10px;
+        bottom: 100px; /* 시그니처 시작 전까지만 라인 연장 */
+        width: 2px;
+        background: #eee;
+      }
+      .history-year-group {
+        position: relative;
+        margin-bottom: 80px;
+      }
+      .history-dot {
+        position: absolute;
+        left: -46px;
+        top: 12px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #000;
+        border: 4px solid #fff;
+        z-index: 2;
+      }
+      .history-row {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      .history-month {
+        width: 60px;
+        font-weight: 800;
+        color: #E0001A;
+        flex-shrink: 0;
+      }
+      .history-detail {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #333;
+      }
+
+      /* Signature Section */
+      .history-signature {
+        margin-top: 100px;
+        position: relative;
+      }
+      .sig-line {
+        width: 80px;
+        height: 3px;
+        background: #E0001A;
+        margin-bottom: 30px;
+      }
+      .sig-text-en {
+        font-family: 'Georgia', serif;
+        font-style: italic;
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        color: #111;
+        font-weight: 300;
+        line-height: 1.1;
+        letter-spacing: -2px;
+        margin-bottom: 15px;
+      }
+      .sig-text-ko {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #999;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+      }
+      .sig-text-ko span {
+        color: #E0001A;
+      }
+
+      @media (max-width: 1024px) {
+        .side-nav { display: none; }
+        .content { margin-left: 0; }
+        .identity-grid { grid-template-columns: 1fr; }
+        .id-card { position: static; padding: 80px 20px; }
+        .value-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
   <body>
     <header>
-      <h1><a href="index.html">LOIND</a></h1>
+      <h1>
+        <a href="index.html">
+          <span class="main">LOIND</span>
+          <span class="slogan">Beyond what exists</span>
+        </a>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="service.html">SERVICE</a></li>
+          <li><a href="story.html">STORY</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
     </header>
 
-    <section id="visual">
-      <div class="innerBlack">
-        <ul class="textWrap">
-          <li><h2>FROM SHADOW TO CLARITY, BEYOND SURFACE.</h2></li>
-          <li><h2>DEEP INSIDE, WE UNCOVER THE TRUTH.</h2></li>
-          <li><h2>VISUALIZATION OF COMPLEX STRATEGIES.</h2></li>
-          <li><h2>WE DEFINE NEW RULES FOR THE FUTURE.</h2></li>
-        </ul>
+    <aside class="side-nav">
+      <ul>
+        <li><a href="#mission" class="active">01 MISSION</a></li>
+        <li><a href="#identity">02 IDENTITY</a></li>
+        <li><a href="#value">03 VALUE</a></li>
+        <li><a href="#history">04 HISTORY</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <div class="video-section">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="https://www.kakaobank.com/view/video/KO/main-intro-visual-video_pc.mp4" type="video/mp4" />
+          </video>
+        </div>
       </div>
 
-      <div class="innerWhite">
-        <ul class="textWrap">
-          <li><h2>FROM SHADOW TO CLARITY, BEYOND SURFACE.</h2></li>
-          <li><h2>DEEP INSIDE, WE UNCOVER THE TRUTH.</h2></li>
-          <li><h2>VISUALIZATION OF COMPLEX STRATEGIES.</h2></li>
-          <li><h2>WE DEFINE NEW RULES FOR THE FUTURE.</h2></li>
+      <section id="mission">
+        <span class="num">01 / VISION & MISSION</span>
+        <h2 class="section-title">우리의 지향점</h2>
+        <div class="mission-box">
+          <p class="mission-text">
+            LOIND는 단순히 기능하는 기술을 넘어, 비즈니스의 정점에서 발휘되는 감각을 설계합니다.<br />
+            평범한 만족에 안주하지 않고, <span>존재하는 것 너머의 위대함</span>을 시각화하는 것이 우리의 본질입니다.
+          </p>
+        </div>
+      </section>
+
+      <section id="identity">
+        <span class="num">02 / IDENTITY</span>
+        <h2 class="section-title">BRAND Skill</h2>
+        <div class="identity-grid">
+          <div class="id-card">
+            <h3>LOIND</h3>
+          </div>
+
+          <div class="color-guide-list">
+            <div class="color-item">
+              <div class="color-bar" style="background: #0D0D0D;"></div>
+              <div class="color-info">
+                <div class="color-name">Obsidian Black <span class="color-hex">#0D0D0D</span></div>
+                <div class="color-tags">권위 · 신비 · 냉철함</div>
+                <p class="color-desc">배경 및 메인 텍스트. 무게감의 기준점. Blood Red와 병치 시 긴장감 극대화.</p>
+              </div>
+            </div>
+
+            <div class="color-item">
+              <div class="color-bar" style="background: #FFFFFF; border-right: 1px solid #eee;"></div>
+              <div class="color-info">
+                <div class="color-name">Pure White <span class="color-hex">#FFFFFF</span></div>
+                <div class="color-tags">극명한 대비 · 완벽주의 · 새로운 시작</div>
+                <p class="color-desc">Obsidian Black과의 충돌로 시각적 긴장 생성. 독립 사용 금지 — 반드시 Black 또는 Red와 함께.</p>
+              </div>
+            </div>
+
+            <div class="color-item">
+              <div class="color-bar" style="background: #E0001A;"></div>
+              <div class="color-info">
+                <div class="color-name">Blood Red <span class="color-hex">#E0001A</span></div>
+                <div class="color-tags">열정 · 반항 · LOIND의 빛</div>
+                <p class="color-desc">무채색 속 유일한 포인트. 전체 면적의 10% 이하. 로고 마크, 핵심 카피, 강조 요소에만 한정.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="value">
+        <span class="num">03 / CORE VALUE</span>
+        <h2 class="section-title">핵심 가치</h2>
+        <ul class="value-grid">
+          <li class="value-item">
+            <h4>Look Beyond (MOTIVATION)</h4>
+            <p><strong>현상 너머의 가치를 발견하는 근원적인 동력</strong><br>눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p>
+          </li>
+          <li class="value-item">
+            <h4>Own your vision (CONVICTION)</h4>
+            <p><strong>우리가 그리는 시야에 대한 흔들림 없는 확신</strong><br>LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p>
+          </li>
+          <li class="value-item">
+            <h4>Iterate without end (ACTION)</h4>
+            <p><strong>정점에 닿을 때까지 멈추지 않는 폭발적인 실행</strong><br>단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p>
+          </li>
+          <li class="value-item">
+            <h4>Never compromise (PERSISTENCE)</h4>
+            <p><strong>평범함과 타협하지 않고 본질을 지켜내는 고집</strong><br>'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p>
+          </li>
+          <li class="value-item">
+            <h4>Define the era (GOAL)</h4>
+            <p><strong>새로운 기준이 되어 시대를 정의하는 궁극의 목적</strong><br>우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다</p>
+          </li>
         </ul>
-      </div>
-    </section>
+      </section>
 
-    <main class="content-stack"></main>
+      <section id="history" style="border-bottom: none; padding-bottom: 200px;">
+        <span class="num">04 / HISTORY</span>
+        <h2 class="section-title">우리의 여정</h2>
+        <div class="history-wrap">
+          <div class="history-line"></div>
+          <div class="history-year-group">
+            <div class="history-dot"></div>
+            <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px">2026</h3>
+            <div class="history-row">
+              <span class="history-month">02월</span>
+              <p class="history-detail">글로벌 통합 사이트 loind.com 오픈</p>
+            </div>
+            <div class="history-row">
+              <span class="history-month">01월</span>
+              <p class="history-detail">북미 디자인 파트너십 허브 구축</p>
+            </div>
+          </div>
+          <div class="history-year-group">
+            <div class="history-dot"></div>
+            <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px">2025</h3>
+            <div class="history-row">
+              <span class="history-month">10월</span>
+              <p class="history-detail">브랜드 이노베이션 어워드 대상 수상</p>
+            </div>
+          </div>
 
-    <script>
-      $(document).ready(function () {
-        const $sliders = $(".textWrap");
-
-        // 클론 생성
-        $sliders.each(function () {
-          const firstChild = $(this).find("li:first-child").clone();
-          $(this).append(firstChild);
-        });
-
-        let currentIndex = 0;
-        const slideCount = $sliders.first().find("li").length;
-        let timer = null;
-
-        function moveNext() {
-          if (document.hidden) return;
-
-          currentIndex++;
-          const xOffset = currentIndex * -100;
-
-          // 이동 시 반드시 translateY(-50%)를 함께 명시해야 중앙이 유지됨
-          $sliders.css({
-            transition: "transform 0.8s cubic-bezier(0.7, 0, 0.3, 1)",
-            transform: `translateY(-50%) translateX(${xOffset}%)`,
-          });
-
-          if (currentIndex === slideCount - 1) {
-            setTimeout(() => {
-              currentIndex = 0;
-              $sliders.css({
-                transition: "none",
-                transform: `translateY(-50%) translateX(0%)`, // 리셋 시에도 중앙 유지
-              });
-            }, 800);
-          }
-        }
-
-        function startTimer() {
-          stopTimer();
-          timer = setInterval(moveNext, 2000);
-        }
-
-        function stopTimer() {
-          clearInterval(timer);
-        }
-
-        startTimer();
-
-        $(document).on("visibilitychange", function () {
-          document.hidden ? stopTimer() : startTimer();
-        });
-
-        $(window).on("mousemove", function (e) {
-          document.documentElement.style.setProperty(
-            "--mouse-x",
-            e.clientX + "px"
-          );
-          document.documentElement.style.setProperty(
-            "--mouse-y",
-            e.clientY + "px"
-          );
-        });
-      });
-    </script>
+          <div class="history-signature">
+            <div class="sig-line"></div>
+            <div class="sig-text-en">Beyond what exists.</div>
+            <div class="sig-text-ko">존재하는 것 너머로<span>.</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
