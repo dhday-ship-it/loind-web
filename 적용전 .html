@@ -1,498 +1,355 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About | LOIND</title>
-    <style>
-      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      ul {
-        list-style: none;
-      }
-      body {
-        background-color: #fff;
-        color: #000;
-        font-family: "Pretendard", sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service | LOIND</title>
+  <style>
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+    /* 5번: 미적 감각을 위한 필기체 폰트 추가 */
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
-      /*header*/
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 50px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        z-index: 1000;
-        border-bottom: 1px solid #f2f2f2;
-        transition: 0.3s;
-      }
-      h1 .main {
-        font-size: 1.5rem;
-        font-weight: 900;
-        letter-spacing: 2px;
-      }
-      .slogan {
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #E0001A;
-        margin-left: 5px;
-        border-left: 1px solid #eee;
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: 0.4s;
-        white-space: nowrap;
-        display: inline-block;
-      }
-      h1:hover .slogan {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      nav ul {
-        display: flex;
-        gap: 35px;
-      }
-      nav li {
-        font-size: 0.85rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        transition: 0.3s;
-      }
-      nav li:hover {
-        opacity: 0.5;
-      }
+    :root {
+      --purple: #8e55ff;
+      --ink: #1a1a1a;
+      --sub: #666;
+      --bg-light: #f8f9fb;
+      --line: #e1e4e9;
+      --side-w: 260px;
+    }
 
-      .side-nav {
-        position: fixed;
-        top: 80px;
-        left: 0;
-        width: 250px;
-        height: calc(100vh - 80px);
-        padding: 60px 50px;
-        border-right: 1px solid #f2f2f2;
-        background: #fff;
-        z-index: 100;
-      }
-      .side-nav ul {
-        list-style: none;
-      }
-      .side-nav li {
-        margin-bottom: 25px;
-      }
-      .side-nav a {
-        color: #bbb;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-        transition: 0.3s;
-      }
-      .side-nav a.active,
-      .side-nav a:hover {
-        color: #000;
-      }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    a { color:inherit; text-decoration:none; }
+    ul { list-style:none; }
+    body { background:#fff; color:var(--ink); font-family:"Pretendard", sans-serif; }
 
-      .content {
-        margin-left: 250px;
-        padding-top: 80px;
-        width: 100%;
-      }
+    /* Header */
+    header {
+      position:fixed; top:0; left:0; width:100%; height:80px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 50px; background:rgba(255,255,255,0.96); backdrop-filter:blur(12px);
+      z-index:1000; border-bottom:1px solid var(--line);
+    }
+    .logo .main { font-size:1.5rem; font-weight:900; letter-spacing:2px; }
+    nav ul { display:flex; gap:35px; }
+    nav li { font-size:.85rem; font-weight:700; text-transform:uppercase; transition:.3s; }
+    nav li:hover { color: var(--purple); }
 
-      .video-section {
-        padding: 60px 10% 20px;
-        max-width: 1400px;
-      }
-      .video-container {
-        position: relative;
-        width: 100%;
-        height: 520px;
-        border-radius: 40px;
-        overflow: hidden;
-        background-color: #000;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      }
-      .video-container video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+    /* Page Header */
+    .page-header {
+      margin-top:80px; padding:80px 0; background:#fff; border-bottom:1px solid var(--line);
+      text-align:center;
+    }
+    .page-header .kicker { font-size: .7rem; font-weight: 800; color: var(--purple); letter-spacing: .2em; display: block; margin-bottom: 15px; }
+    .page-header h1 { font-size:2.5rem; font-weight:800; margin-bottom:15px; letter-spacing: -.03em; }
+    .page-header p { color:var(--sub); font-size:1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; word-break: keep-all; }
 
-      section {
-        padding: 100px 10%;
-        max-width: 1400px;
-        border-bottom: 1px solid #f2f2f2;
-      }
-      .num {
-        font-size: 0.75rem;
-        font-weight: 800;
-        color: #E0001A;
-        letter-spacing: 2px;
-        margin-bottom: 20px;
-        display: block;
-      }
-      .section-title {
-        font-size: 2.8rem;
-        font-weight: 800;
-        margin-bottom: 50px;
-        letter-spacing: -1.5px;
-      }
+    /* Layout Area */
+    .container { display:flex; max-width:1400px; margin:0 auto; min-height:100vh; }
 
-      .mission-box {
-        background-color: #f9f9fb;
-        border-radius: 30px;
-        padding: 60px;
-      }
-      .mission-text {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: #333;
-        word-break: keep-all;
-      }
-      .mission-text span {
-        color: #E0001A;
-      }
+    /* Sidebar */
+    .sidebar {
+      width:var(--side-w); padding:40px 20px; border-right:1px solid var(--line);
+      position:sticky; top:80px; height:calc(100vh - 80px);
+    }
+    .side-title { font-size:.9rem; font-weight:800; color:var(--ink); margin-bottom:20px; }
+    .side-menu li {
+      font-size:.85rem; color:#555; padding:12px 15px; border-radius:8px;
+      cursor:pointer; transition:.2s; margin-bottom:4px;
+    }
+    .side-menu li:hover { background:var(--bg-light); color:var(--purple); }
+    .side-menu li.active { background:var(--purple); color:#fff; font-weight:700; }
 
-      .identity-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 40px;
-        align-items: start;
-      }
-      
-      .id-card {
-        background: #0D0D0D;
-        border-radius: 24px;
-        padding: 120px 20px;
-        color: #fff;
-        text-align: center;
-        position: sticky;
-        top: 120px;
-      }
-      .id-card h3 {
-        font-size: 4rem;
-        font-weight: 900;
-        letter-spacing: 12px;
-      }
+    /* Main Content Area */
+    .main-content { flex:1; padding:40px 60px; background:var(--bg-light); }
 
-      .color-guide-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
+    /* Tab Switcher */
+    .tab-nav { display:flex; gap:30px; border-bottom:2px solid var(--line); margin-bottom:40px; }
+    .tab-item { padding:15px 5px; font-size:1.1rem; font-weight:700; color:#999; cursor:pointer; position:relative; }
+    .tab-item.active { color:var(--ink); }
+    .tab-item.active::after { content:''; position:absolute; bottom:-2px; left:0; width:100%; height:2px; background:var(--ink); }
 
-      .color-item {
-        display: flex;
-        background-color: #f9f9fb;
-        border-radius: 15px;
-        overflow: hidden;
-        transition: 0.3s;
-      }
-      .color-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-      }
+    /* Product Grid */
+    .product-section { display:none; }
+    .product-section.active { display:block; }
+    .sector-heading { font-size:1.4rem; font-weight:800; margin-bottom:24px; display:flex; align-items:center; gap:10px; }
+    .sector-heading::before { content:''; width:4px; height:20px; background:var(--purple); border-radius:2px; }
 
-      .color-bar {
-        width: 12px;
-        flex-shrink: 0;
-      }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:20px; }
+    .card {
+      background:#fff; border:1px solid var(--line); border-radius:12px;
+      padding:30px; transition:all .3s ease; cursor:pointer;
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+    .card:hover { border-color:var(--purple); transform:translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .card-top .tag { font-size:.7rem; font-weight:700; color:var(--purple); background:rgba(142,85,255,0.08); padding:4px 8px; border-radius:4px; }
+    .card-top h3 { font-size:1.25rem; font-weight:800; margin:15px 0 10px; }
+    .card-top p { font-size:.9rem; color:var(--sub); line-height:1.6; word-break:keep-all; }
+    .card-footer { margin-top:30px; font-size:.85rem; font-weight:700; color:#aaa; display:flex; align-items:center; gap:5px; }
 
-      .color-info {
-        padding: 25px 30px;
-      }
+    /* 인라인 상세 설명 영역 */
+    .inline-detail {
+      display: none; width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 20px;
+      padding: 50px; margin-top: 40px; animation: slideUp 0.4s ease forwards;
+    }
+    .inline-detail.active { display: block; }
+    .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--line); padding-bottom: 15px; }
+    .detail-title { font-size: 2.2rem; font-weight: 900; letter-spacing: -.02em; }
+    .detail-close { cursor: pointer; color: #ccc; font-weight: 800; font-size: 1.2rem; }
 
-      .color-name {
-        font-size: 1rem;
-        font-weight: 800;
-        margin-bottom: 5px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .color-hex {
-        font-size: 0.8rem;
-        font-weight: 400;
-        color: #999;
-      }
+    /* LODEN Bible 전용 스타일 디자인 */
+    .bible-content h4 { font-size: 1.15rem; font-weight: 800; margin: 30px 0 15px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+    .bible-content h4::before { content:''; width:4px; height:16px; background:var(--purple); border-radius:2px; }
+    
+    .bible-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+    .bible-box { padding: 20px; background: var(--bg-light); border-radius: 12px; border: 1px solid transparent; transition: 0.3s; }
+    .bible-box:hover { border-color: var(--purple); background: #fff; }
+    .bible-box strong { display: block; color: var(--purple); margin-bottom: 6px; font-size: 1rem; }
+    .bible-box p { font-size: 0.9rem; color: var(--sub); line-height: 1.6; }
 
-      .color-tags {
-        font-size: 0.8rem;
-        font-weight: 700;
-        color: #666;
-        margin-bottom: 12px;
-      }
+    /* 3번: 차별화된 프로세스 디자인 */
+    .process-wrap { display: flex; justify-content: space-between; margin-top: 25px; position: relative; padding-bottom: 20px; }
+    .process-wrap::before { content:''; position: absolute; top: 18px; left: 0; width: 100%; height: 1px; background: var(--line); z-index: 1; }
+    .process-item { flex: 1; text-align: center; position: relative; z-index: 2; }
+    .process-dot { width: 36px; height: 36px; background: #fff; border: 2px solid var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 0.9rem; font-weight: 800; color: var(--purple); transition: 0.3s; }
+    .process-item:hover .process-dot { background: var(--purple); color: #fff; }
+    .process-item b { display: block; font-size: 0.95rem; margin-bottom: 6px; }
+    .process-item span { font-size: 0.8rem; color: var(--sub); line-height: 1.4; display: block; padding: 0 10px; word-break: keep-all; }
 
-      .color-desc {
-        font-size: 0.85rem;
-        line-height: 1.6;
-        color: #444;
-        word-break: keep-all;
-      }
+    /* 4번, 5번: 버튼 및 시그니처 슬로건 */
+    .btn-link { display: inline-block; margin-top: 35px; padding: 14px 28px; background: var(--ink); color: #fff; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: 0.3s; }
+    .btn-link:hover { background: var(--purple); transform: translateX(5px); }
+    .signature { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--purple); text-align: right; margin-top: 50px; opacity: 0.7; transform: rotate(-3deg); user-select: none; }
 
-      .value-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-      }
-      .value-item h4 {
-        font-size: 1.4rem;
-        font-weight: 800;
-        margin-bottom: 15px;
-        border-bottom: 2px solid #111;
-        display: inline-block;
-        padding-bottom: 5px;
-      }
-      .value-item p {
-        color: #666;
-        font-size: 1rem;
-        line-height: 1.7;
-      }
+    @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
 
-      /* 04. History Custom */
-      .history-wrap {
-        position: relative;
-        padding-left: 40px;
-      }
-      .history-line {
-        position: absolute;
-        left: 0;
-        top: 10px;
-        bottom: 100px; /* 시그니처 시작 전까지만 라인 연장 */
-        width: 2px;
-        background: #eee;
-      }
-      .history-year-group {
-        position: relative;
-        margin-bottom: 80px;
-      }
-      .history-dot {
-        position: absolute;
-        left: -46px;
-        top: 12px;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: #000;
-        border: 4px solid #fff;
-        z-index: 2;
-      }
-      .history-row {
-        display: flex;
-        margin-bottom: 20px;
-      }
-      .history-month {
-        width: 60px;
-        font-weight: 800;
-        color: #E0001A;
-        flex-shrink: 0;
-      }
-      .history-detail {
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: #333;
-      }
+    @media (max-width: 1024px) {
+      .sidebar { display:none; }
+      .container { flex-direction:column; }
+      .bible-grid { grid-template-columns: 1fr; }
+      .process-wrap { flex-direction: column; gap: 25px; }
+      .process-wrap::before { display: none; }
+      .process-item { text-align: left; display: flex; gap: 15px; align-items: flex-start; }
+      .process-dot { margin: 0; flex-shrink: 0; }
+    }
+  </style>
+</head>
+<body>
 
-      /* Signature Section */
-      .history-signature {
-        margin-top: 100px;
-        position: relative;
-      }
-      .sig-line {
-        width: 80px;
-        height: 3px;
-        background: #E0001A;
-        margin-bottom: 30px;
-      }
-      .sig-text-en {
-        font-family: 'Georgia', serif;
-        font-style: italic;
-        font-size: clamp(2.5rem, 6vw, 4rem);
-        color: #111;
-        font-weight: 300;
-        line-height: 1.1;
-        letter-spacing: -2px;
-        margin-bottom: 15px;
-      }
-      .sig-text-ko {
-        font-size: 1.1rem;
-        font-weight: 800;
-        color: #999;
-        letter-spacing: 6px;
-        text-transform: uppercase;
-      }
-      .sig-text-ko span {
-        color: #E0001A;
-      }
-
-      @media (max-width: 1024px) {
-        .side-nav { display: none; }
-        .content { margin-left: 0; }
-        .identity-grid { grid-template-columns: 1fr; }
-        .id-card { position: static; padding: 80px 20px; }
-        .value-grid { grid-template-columns: 1fr; }
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>
-        <a href="index.html">
-          <span class="main">LOIND</span>
-          <span class="slogan">Beyond what exists</span>
-        </a>
-      </h1>
-      <nav>
-        <ul>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="service.html">SERVICE</a></li>
-          <li><a href="story.html">STORY</a></li>
-          <li><a href="contact.html">CONTACT</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <aside class="side-nav">
+  <header>
+    <div class="logo"><a href="index.html"><span class="main">LOIND</span></a></div>
+    <nav>
       <ul>
-        <li><a href="#mission" class="active">01 MISSION</a></li>
-        <li><a href="#identity">02 IDENTITY</a></li>
-        <li><a href="#value">03 VALUE</a></li>
-        <li><a href="#history">04 HISTORY</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="service.html" style="color:var(--purple)">SERVICE</a></li>
+        <li><a href="story.html">STORY</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-header">
+    <span class="kicker">WHAT WE OFFER</span>
+    <h1>LOIND Services</h1>
+    <p>걸작을 창조하고, 비즈니스를 실현하며, 세상에 온기를 더하는 LOIND의 브랜드들을 만나보세요.</p>
+  </section>
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="side-title">Category</div>
+      <ul class="side-menu" id="sideMenu">
+        <li class="active" id="btn-side-business" onclick="switchTab('business')">Business Overview</li>
+        <li id="btn-side-impact" onclick="switchTab('impact')">Impact Overview</li>
+        <li style="border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; color: #ccc; font-size: .75rem; font-weight: 800;">BRANDS</li>
+        <li id="menu-LODEN" onclick="openInlineDetail('business', 'LODEN')">LODEN (Creative Tech)</li>
+        <li id="menu-Music" onclick="openInlineDetail('business', 'Music')">Music Creative</li>
+        <li id="menu-Film" onclick="openInlineDetail('business', 'Film')">Film Production</li>
+        <li id="menu-LOER" onclick="openInlineDetail('business', 'LOER')">LOER Agency</li>
+        <li id="menu-MissionSync" onclick="openInlineDetail('impact', 'Mission Sync')">Mission Sync</li>
+        <li id="menu-CareSearch" onclick="openInlineDetail('impact', 'Care Search')">Care Search</li>
       </ul>
     </aside>
 
-    <main class="content">
-      <div class="video-section">
-        <div class="video-container">
-          <video autoplay muted loop playsinline>
-            <source src="https://www.kakaobank.com/view/video/KO/main-intro-visual-video_pc.mp4" type="video/mp4" />
-          </video>
+    <main class="main-content">
+      <div class="tab-nav">
+        <div class="tab-item active" id="tab-business" onclick="switchTab('business')">Business Portfolio</div>
+        <div class="tab-item" id="tab-impact" onclick="switchTab('impact')">Social Impact</div>
+      </div>
+
+      <div id="section-business" class="product-section active">
+        <h2 class="sector-heading">Business Service</h2>
+        <div class="grid">
+          <div class="card" onclick="openInlineDetail('business', 'LODEN')">
+            <div class="card-top">
+              <span class="tag">CREATIVE TECH STUDIO</span>
+              <h3>LODEN</h3>
+              <p>세계관 구축(World-building) 전문 스튜디오. 기술로 상상을 경험으로 구현합니다.</p>
+            </div>
+            <div class="card-footer">서비스 상세보기 <span>→</span></div>
+          </div>
+          <div class="card" onclick="openInlineDetail('business', 'Music')">
+            <div class="card-top">
+              <span class="tag">CREATIVE STUDIO</span>
+              <h3>Music</h3>
+              <p>소리의 마스터피스를 창조합니다. 직접 창작부터 아티스트 매니지먼트까지 본질에 닿는 사운드를 구현합니다.</p>
+            </div>
+            <div class="card-footer">서비스 상세보기 <span>→</span></div>
+          </div>
+          <div class="card" onclick="openInlineDetail('business', 'Film')">
+            <div class="card-top">
+              <span class="tag">CREATIVE STUDIO</span>
+              <h3>Film</h3>
+              <p>브랜드의 서사를 영상의 미학으로 담아냅니다. 기획부터 포스트 프로덕션까지 감각적인 시각 경험을 제공합니다.</p>
+            </div>
+            <div class="card-footer">서비스 상세보기 <span>→</span></div>
+          </div>
+          <div class="card" onclick="openInlineDetail('business', 'LOER')">
+            <div class="card-top">
+              <span class="tag">AGENCY</span>
+              <h3>LOER</h3>
+              <p>'loind' + 'Doer'. 무형의 아이디어를 타협 없는 완성도로 세상에 내놓는 실천적 비즈니스 파트너입니다.</p>
+            </div>
+            <div class="card-footer">서비스 상세보기 <span>→</span></div>
+          </div>
+        </div>
+        <div id="detail-business" class="inline-detail">
+          <div class="detail-header">
+            <h2 id="title-business" class="detail-title">Title</h2>
+            <span class="detail-close" onclick="closeInlineDetail('business')">✕</span>
+          </div>
+          <div id="desc-business" class="bible-content"></div>
         </div>
       </div>
 
-      <section id="mission">
-        <span class="num">01 / VISION & MISSION</span>
-        <h2 class="section-title">우리의 지향점</h2>
-        <div class="mission-box">
-          <p class="mission-text">
-            LOIND는 단순히 기능하는 기술을 넘어, 비즈니스의 정점에서 발휘되는 감각을 설계합니다.<br />
-            평범한 만족에 안주하지 않고, <span>존재하는 것 너머의 위대함</span>을 시각화하는 것이 우리의 본질입니다.
-          </p>
-        </div>
-      </section>
-
-      <section id="identity">
-        <span class="num">02 / IDENTITY</span>
-        <h2 class="section-title">BRAND Skill</h2>
-        <div class="identity-grid">
-          <div class="id-card">
-            <h3>LOIND</h3>
+      <div id="section-impact" class="product-section">
+        <h2 class="sector-heading">Social Value</h2>
+        <div class="grid">
+          <div class="card" onclick="openInlineDetail('impact', 'Mission Sync')">
+            <div class="card-top">
+              <span class="tag">CHURCH SUPPORT</span>
+              <h3>Mission Sync</h3>
+              <p>디지털 소외 지역과 미자립 교회를 위한 IT 인프라 지원 프로그램입니다. 기술로 사역을 돕습니다.</p>
+            </div>
+            <div class="card-footer">서비스 상세보기 <span>→</span></div>
           </div>
-
-          <div class="color-guide-list">
-            <div class="color-item">
-              <div class="color-bar" style="background: #0D0D0D;"></div>
-              <div class="color-info">
-                <div class="color-name">Obsidian Black <span class="color-hex">#0D0D0D</span></div>
-                <div class="color-tags">권위 · 신비 · 냉철함</div>
-                <p class="color-desc">배경 및 메인 텍스트. 무게감의 기준점. Blood Red와 병치 시 긴장감 극대화.</p>
-              </div>
+          <div class="card" onclick="openInlineDetail('impact', 'Care Search')">
+            <div class="card-top">
+              <span class="tag">SENIOR CARE</span>
+              <h3>Care Search</h3>
+              <p>AI 데이터 기반의 노인 돌봄 안전망입니다. 고립된 이웃의 생활 패턴을 분석해 적시에 도움을 연결합니다.</p>
             </div>
-
-            <div class="color-item">
-              <div class="color-bar" style="background: #FFFFFF; border-right: 1px solid #eee;"></div>
-              <div class="color-info">
-                <div class="color-name">Pure White <span class="color-hex">#FFFFFF</span></div>
-                <div class="color-tags">극명한 대비 · 완벽주의 · 새로운 시작</div>
-                <p class="color-desc">Obsidian Black과의 충돌로 시각적 긴장 생성. 독립 사용 금지 — 반드시 Black 또는 Red와 함께.</p>
-              </div>
-            </div>
-
-            <div class="color-item">
-              <div class="color-bar" style="background: #E0001A;"></div>
-              <div class="color-info">
-                <div class="color-name">Blood Red <span class="color-hex">#E0001A</span></div>
-                <div class="color-tags">열정 · 반항 · LOIND의 빛</div>
-                <p class="color-desc">무채색 속 유일한 포인트. 전체 면적의 10% 이하. 로고 마크, 핵심 카피, 강조 요소에만 한정.</p>
-              </div>
-            </div>
+            <div class="card-footer">서비스 상세보기 <span>→</span></div>
           </div>
         </div>
-      </section>
-
-      <section id="value">
-        <span class="num">03 / CORE VALUE</span>
-        <h2 class="section-title">핵심 가치</h2>
-        <ul class="value-grid">
-          <li class="value-item">
-            <h4>Look Beyond (MOTIVATION)</h4>
-            <p><strong>현상 너머의 가치를 발견하는 근원적인 동력</strong><br>눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p>
-          </li>
-          <li class="value-item">
-            <h4>Own your vision (CONVICTION)</h4>
-            <p><strong>우리가 그리는 시야에 대한 흔들림 없는 확신</strong><br>LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p>
-          </li>
-          <li class="value-item">
-            <h4>Iterate without end (ACTION)</h4>
-            <p><strong>정점에 닿을 때까지 멈추지 않는 폭발적인 실행</strong><br>단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p>
-          </li>
-          <li class="value-item">
-            <h4>Never compromise (PERSISTENCE)</h4>
-            <p><strong>평범함과 타협하지 않고 본질을 지켜내는 고집</strong><br>'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p>
-          </li>
-          <li class="value-item">
-            <h4>Define the era (GOAL)</h4>
-            <p><strong>새로운 기준이 되어 시대를 정의하는 궁극의 목적</strong><br>우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다</p>
-          </li>
-        </ul>
-      </section>
-
-      <section id="history" style="border-bottom: none; padding-bottom: 200px;">
-        <span class="num">04 / HISTORY</span>
-        <h2 class="section-title">우리의 여정</h2>
-        <div class="history-wrap">
-          <div class="history-line"></div>
-          <div class="history-year-group">
-            <div class="history-dot"></div>
-            <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px">2026</h3>
-            <div class="history-row">
-              <span class="history-month">02월</span>
-              <p class="history-detail">글로벌 통합 사이트 loind.com 오픈</p>
-            </div>
-            <div class="history-row">
-              <span class="history-month">01월</span>
-              <p class="history-detail">북미 디자인 파트너십 허브 구축</p>
-            </div>
+        <div id="detail-impact" class="inline-detail">
+          <div class="detail-header">
+            <h2 id="title-impact" class="detail-title">Title</h2>
+            <span class="detail-close" onclick="closeInlineDetail('impact')">✕</span>
           </div>
-          <div class="history-year-group">
-            <div class="history-dot"></div>
-            <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px">2025</h3>
-            <div class="history-row">
-              <span class="history-month">10월</span>
-              <p class="history-detail">브랜드 이노베이션 어워드 대상 수상</p>
-            </div>
-          </div>
-
-          <div class="history-signature">
-            <div class="sig-line"></div>
-            <div class="sig-text-en">Beyond what exists.</div>
-            <div class="sig-text-ko">존재하는 것 너머로<span>.</span></div>
-          </div>
+          <div id="desc-impact" class="bible-content"></div>
         </div>
-      </section>
+      </div>
     </main>
-  </body>
+  </div>
+
+  <script>
+    // 상세 정보 데이터 (LODEN Bible 내용 반영) [cite: 3, 4, 18, 37, 60]
+    const contentMap = {
+      'LODEN': `
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--sub); margin-bottom: 25px;">
+          LODEN은 **세계관 구축(World-building)**을 전문으로 하는 **Creative Tech Studio**입니다. [cite: 3, 4]
+        </p>
+        <h4>주요 비즈니스 및 서비스</h4>
+        <div class="bible-grid">
+          <div class="bible-box">
+            <strong>Experience Design</strong>
+            <p>• Lore Analysis: 심도 있는 세계관 분석을 통해 서비스의 본질을 정의합니다. [cite: 22]<br>
+               • Interaction: 사용자와 콘텐츠가 상호작용할 수 있는 기술적 접점을 만듭니다. [cite: 29]</p>
+          </div>
+          <div class="bible-box">
+            <strong>IP Build & Manage</strong>
+            <p>독창적인 지식재산권(IP)을 기획, 구축하고 이를 지속적으로 관리 및 성장시킵니다. [cite: 39, 41, 48]</p>
+          </div>
+          <div class="bible-box" style="grid-column: span 2;">
+            <strong>Creative Technology</strong>
+            <p>세계관을 가장 잘 표현할 수 있는 기술들을 활용하여 상상 속의 세상이 아닌 경험의 세상을 구현합니다. [cite: 18, 24]</p>
+          </div>
+        </div>
+        <h4>LODEN만의 차별화된 프로세스</h4>
+        <div class="process-wrap">
+          <div class="process-item">
+            <div class="process-dot">1</div>
+            <b>분석 (Analysis)</b>
+            <span>세계관 및 로어(Lore) 분석을 통해 프로젝트의 뿌리를 다집니다. [cite: 22]</span>
+          </div>
+          <div class="process-item">
+            <div class="process-dot">2</div>
+            <b>설계 (Architecture)</b>
+            <span>비즈니스 목표에 부합하는 서비스 구조와 기술 스택을 확정합니다. [cite: 25, 27]</span>
+          </div>
+          <div class="process-item">
+            <div class="process-dot">3</div>
+            <b>구현 (Interaction)</b>
+            <span>3D 엔진과 IT 기술을 결합하여 실제 인터랙티브 경험을 구축합니다. [cite: 20, 29]</span>
+          </div>
+          <div class="process-item">
+            <div class="process-dot">4</div>
+            <b>실행 (Launch)</b>
+            <span>온/오프라인의 경계를 허무는 최종 서비스를 런칭합니다. [cite: 32, 58, 59]</span>
+          </div>
+        </div>
+        <a href="#" class="btn-link">LODEN 바로가기 <span>→</span></a>
+        <div class="signature">Dream for Dreamer</div>
+      `,
+      'default': `
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--sub); margin-bottom: 25px;">서비스에 대한 구체적인 철학과 실행 방안을 로인드만의 기준으로 제안합니다.</p>
+        <div style="padding: 25px; background: var(--bg-light); border-radius: 12px; font-weight: 700; color: var(--purple);">※ 상세 포트폴리오는 현재 준비 중입니다.</div>
+      `
+    };
+
+    function clearSidebar() { document.querySelectorAll('.side-menu li').forEach(li => li.classList.remove('active')); }
+
+    function switchTab(type) {
+      document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + type).classList.add('active');
+      document.querySelectorAll('.product-section').forEach(el => el.classList.remove('active'));
+      document.getElementById('section-' + type).classList.add('active');
+      clearSidebar();
+      document.getElementById('btn-side-' + type).classList.add('active');
+      closeInlineDetail('business');
+      closeInlineDetail('impact');
+    }
+
+    function openInlineDetail(section, title) {
+      if (section === 'impact' && !document.getElementById('section-impact').classList.contains('active')) { switchTab('impact'); }
+      else if (section === 'business' && !document.getElementById('section-business').classList.contains('active')) { switchTab('business'); }
+
+      const titleEl = document.getElementById('title-' + section);
+      const descEl = document.getElementById('desc-' + section);
+      const detailBox = document.getElementById('detail-' + section);
+
+      titleEl.innerText = title;
+      descEl.innerHTML = contentMap[title] || contentMap['default'];
+      detailBox.classList.add('active');
+
+      clearSidebar();
+      const menuId = 'menu-' + title.replace(/\s/g, '');
+      const menuTarget = document.getElementById(menuId);
+      if (menuTarget) menuTarget.classList.add('active');
+
+      setTimeout(() => {
+        const offset = detailBox.offsetTop - 120;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }, 50);
+    }
+
+    function closeInlineDetail(section) {
+      const detailBox = document.getElementById('detail-' + section);
+      if (detailBox) detailBox.classList.remove('active');
+      const activeSection = document.getElementById('section-business').classList.contains('active') ? 'business' : 'impact';
+      clearSidebar();
+      document.getElementById('btn-side-' + activeSection).classList.add('active');
+    }
+  </script>
+</body>
 </html>
