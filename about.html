@@ -336,7 +336,6 @@
         <li><a href="#mission" class="active">01 MISSION</a></li>
         <li><a href="#identity">02 IDENTITY</a></li>
         <li><a href="#value">03 VALUE</a></li>
-        <li><a href="#history">04 HISTORY</a></li>
       </ul>
     </aside>
 
@@ -351,11 +350,13 @@
 
       <section id="mission">
         <span class="num">01 / VISION & MISSION</span>
-        <h2 class="section-title">Beyond what exists, LOIND</h2>
+        <h2 class="section-title">우리의 지향점</h2>
         <div class="mission-box">
           <p class="mission-text">
-            지금 세상에 있는 것, 이미 정해진 기준, 현재의 수준. 우리는 거기서 멈추지 않습니다.<br>
-            탁월함을 향해 끊임없이 나아가고, 결국 기준 자체를 새로 정의하는 것. 그것이 LOIND가 존재하는 이유입니다.
+            지금 세상에 있는 것, 이미 정해진 기준, 현재의 수준.<br />
+            거기서 멈추지 않는다. 탁월함을 향해 끊임없이 나아가고,<br />
+            결국 기준 자체를 새로 정의한다.<br />
+            <span>그것이 LOIND가 존재하는 이유다.</span>
           </p>
         </div>
       </section>
@@ -399,56 +400,331 @@
       <section id="value">
         <span class="num">03 / CORE VALUE</span>
         <h2 class="section-title">핵심 가치</h2>
-        <ul class="value-grid">
-          <li class="value-item">
-            <h4>Look Beyond (MOTIVATION)</h4>
-            <p><strong>현상 너머의 가치를 발견하는 근원적인 동력</strong><br>눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p>
-          </li>
-          <li class="value-item">
-            <h4>Own your vision (CONVICTION)</h4>
-            <p><strong>우리가 그리는 시야에 대한 흔들림 없는 확신</strong><br>LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p>
-          </li>
-          <li class="value-item">
-            <h4>Iterate without end (ACTION)</h4>
-            <p><strong>정점에 닿을 때까지 멈추지 않는 폭발적인 실행</strong><br>단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p>
-          </li>
-          <li class="value-item">
-            <h4>Never compromise (PERSISTENCE)</h4>
-            <p><strong>평범함과 타협하지 않고 본질을 지켜내는 고집</strong><br>'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p>
-          </li>
-          <li class="value-item">
-            <h4>Define the era (GOAL)</h4>
-            <p><strong>새로운 기준이 되어 시대를 정의하는 궁극의 목적</strong><br>우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다.</p>
-          </li>
-        </ul>
-      </section>
 
-      <section id="history" style="border-bottom: none">
-        <span class="num">04 / HISTORY</span>
-        <h2 class="section-title">우리의 여정</h2>
-        <div class="history-wrap">
-          <div class="history-line"></div>
-          <div class="history-year-group">
-            <div class="history-dot"></div>
-            <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px">2026</h3>
-            <div class="history-row">
-              <span class="history-month">02월</span>
-              <p class="history-detail">글로벌 통합 사이트 loind.com 오픈</p>
-            </div>
-            <div class="history-row">
-              <span class="history-month">01월</span>
-              <p class="history-detail">북미 디자인 파트너십 허브 구축</p>
-            </div>
+        <style>
+          /* 5열 한눈에 보기 */
+          .cv-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+          }
+          .cv-card {
+            background: #f9f9fb;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 36px 28px 32px;
+            transition: transform .4s ease, box-shadow .4s ease, border-color .4s;
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+          }
+          /* 카드 상단 레드 라인 */
+          .cv-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: #E0001A;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .4s ease;
+          }
+          .cv-card:hover::before { transform: scaleX(1); }
+          .cv-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 56px rgba(0,0,0,.08);
+            border-color: #e8e8e8;
+          }
+          /* 대형 이니셜 워터마크 */
+          .cv-initial {
+            font-size: 7rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #E0001A;
+            opacity: .05;
+            position: absolute;
+            right: -8px;
+            bottom: -12px;
+            letter-spacing: -4px;
+            transition: opacity .4s ease;
+            user-select: none;
+          }
+          .cv-card:hover .cv-initial { opacity: .10; }
+
+          .cv-num {
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #E0001A;
+            display: block;
+            margin-bottom: 24px;
+          }
+          .cv-title-en {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: #111;
+            margin-bottom: 6px;
+            line-height: 1.25;
+          }
+          .cv-title-kr {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-bottom: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+          }
+          .cv-body {
+            font-size: 0.82rem;
+            color: #777;
+            line-height: 1.8;
+            flex: 1;
+            word-break: keep-all;
+          }
+          .cv-keyword {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #E0001A;
+            border: 1px solid rgba(224,0,26,.2);
+            background: rgba(224,0,26,.04);
+            padding: 4px 12px;
+            border-radius: 20px;
+          }
+
+          /* 시그니처 마무리 섹션 */
+          .signature-section {
+            background: #0D0D0D;
+            padding: 140px 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: none;
+          }
+          .signature-section::before {
+            content: 'LOIND';
+            position: absolute;
+            right: -40px;
+            bottom: -60px;
+            font-size: 28vw;
+            font-weight: 900;
+            color: #fff;
+            opacity: .02;
+            letter-spacing: -8px;
+            user-select: none;
+            pointer-events: none;
+          }
+          .sig-label {
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #444;
+            margin-bottom: 48px;
+          }
+          .sig-tagline {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 300;
+            color: #555;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            font-style: italic;
+          }
+          .sig-name {
+            font-size: clamp(4rem, 10vw, 9rem);
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -4px;
+            line-height: 0.9;
+            margin-bottom: 40px;
+            position: relative;
+          }
+          /* 서명 밑줄 */
+          .sig-name::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #E0001A;
+            margin-top: 24px;
+            border-radius: 2px;
+          }
+          .sig-sub {
+            font-size: 0.8rem;
+            color: #333;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+          }
+
+          @media (max-width: 1024px) {
+            .cv-grid { grid-template-columns: repeat(2, 1fr); }
+          }
+          @media (max-width: 600px) {
+            .cv-grid { grid-template-columns: 1fr; }
+          }
+        </style>
+
+        <div class="cv-grid">
+          <div class="cv-card">
+            <span class="cv-num">01 / MOTIVATION</span>
+            <p class="cv-title-en">Look Beyond</p>
+            <p class="cv-title-kr">현상 너머의 가치를 발견하는 근원적인 동력</p>
+            <p class="cv-body">눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p>
+            <span class="cv-keyword">MOTIVATION</span>
+            <span class="cv-initial">L</span>
           </div>
-          <div class="history-year-group">
-            <div class="history-dot"></div>
-            <h3 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 30px">2025</h3>
-            <div class="history-row">
-              <span class="history-month">10월</span>
-              <p class="history-detail">브랜드 이노베이션 어워드 대상 수상</p>
-            </div>
+          <div class="cv-card">
+            <span class="cv-num">02 / CONVICTION</span>
+            <p class="cv-title-en">Own your vision</p>
+            <p class="cv-title-kr">우리가 그리는 시야에 대한 흔들림 없는 확신</p>
+            <p class="cv-body">LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p>
+            <span class="cv-keyword">CONVICTION</span>
+            <span class="cv-initial">O</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-num">03 / ACTION</span>
+            <p class="cv-title-en">Iterate without end</p>
+            <p class="cv-title-kr">정점에 닿을 때까지 멈추지 않는 폭발적인 실행</p>
+            <p class="cv-body">단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p>
+            <span class="cv-keyword">ACTION</span>
+            <span class="cv-initial">I</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-num">04 / PERSISTENCE</span>
+            <p class="cv-title-en">Never compromise</p>
+            <p class="cv-title-kr">평범함과 타협하지 않고 본질을 지켜내는 고집</p>
+            <p class="cv-body">'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p>
+            <span class="cv-keyword">PERSISTENCE</span>
+            <span class="cv-initial">N</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-num">05 / GOAL</span>
+            <p class="cv-title-en">Define the era</p>
+            <p class="cv-title-kr">새로운 기준이 되어 시대를 정의하는 궁극의 목적</p>
+            <p class="cv-body">우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다.</p>
+            <span class="cv-keyword">GOAL</span>
+            <span class="cv-initial">D</span>
           </div>
         </div>
+      </section>
+
+      <!-- 클로징 섹션 -->
+      <section class="closing-section">
+        <style>
+          .closing-section {
+            background: #fff;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: none;
+            padding: 100px 5%;
+          }
+
+          .closing-label {
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #ccc;
+            margin-bottom: 48px;
+            font-weight: 600;
+          }
+
+          /* 글자 묶음 */
+          .closing-brand {
+            display: flex;
+            align-items: flex-end;
+            gap: 0;
+            line-height: 1;
+          }
+
+          /* 개별 글자 */
+          .closing-brand .c {
+            display: inline-block;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            color: #111;
+            letter-spacing: -2px;
+            animation: bounce 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+            animation-play-state: paused;
+          }
+
+          /* 공백 */
+          .closing-brand .space {
+            display: inline-block;
+            width: clamp(1rem, 2.5vw, 2.5rem);
+          }
+
+          /* CORPORATION은 살짝 작게 */
+          .closing-brand .corp .c {
+            font-size: clamp(3rem, 8vw, 8rem);
+            color: #111;
+          }
+
+          /* 레드 포인트 — 마지막 N */
+          .closing-brand .red { color: #E0001A; }
+
+          @keyframes bounce {
+            0%   { transform: translateY(0); }
+            20%  { transform: translateY(-28px); }
+            40%  { transform: translateY(0); }
+            55%  { transform: translateY(-12px); }
+            70%  { transform: translateY(0); }
+            82%  { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+          }
+
+          /* 하단 카피 */
+          .closing-copy {
+            margin-top: 40px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #ddd;
+            text-transform: uppercase;
+          }
+        </style>
+
+        <p class="closing-label">We are</p>
+        <div class="closing-brand" id="closingBrand">
+          <span class="loind">
+            <span class="c" data-i="0">L</span><span class="c" data-i="1">O</span><span class="c" data-i="2">I</span><span class="c" data-i="3">N</span><span class="c red" data-i="4">D</span>
+          </span>
+          <span class="space"></span>
+          <span class="corp">
+            <span class="c" data-i="5">C</span><span class="c" data-i="6">O</span><span class="c" data-i="7">R</span><span class="c" data-i="8">P</span><span class="c" data-i="9">O</span><span class="c" data-i="10">R</span><span class="c" data-i="11">A</span><span class="c" data-i="12">T</span><span class="c" data-i="13">I</span><span class="c" data-i="14">O</span><span class="c" data-i="15">N</span>
+          </span>
+        </div>
+        <p class="closing-copy">Beyond what exists · Seoul · Est. 2025</p>
+
+        <script>
+          (function() {
+            const letters = document.querySelectorAll('#closingBrand .c');
+
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  letters.forEach((el, i) => {
+                    setTimeout(() => {
+                      el.style.animationPlayState = 'running';
+                    }, i * 80);
+                  });
+                  observer.disconnect();
+                }
+              });
+            }, { threshold: 0.5 });
+
+            observer.observe(document.getElementById('closingBrand'));
+          })();
+        </script>
       </section>
     </main>
   </body>
