@@ -1,336 +1,789 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Service | LOIND</title>
-  <style>
-    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-    /* 5번: 미적 감각을 위한 필기체 폰트 추가 */
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOIND | Agentic AI Index</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* 네비게이터 폰트 보정 */
+        header { font-family: 'Montserrat', sans-serif; }
+        header h1 a {
+            font-size: 22px; font-weight: 900;
+            letter-spacing: -0.5px; text-decoration: none; color: inherit;
+        }
+        header nav ul { list-style: none; display: flex; gap: 40px; }
+        header nav ul li a {
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 3px; text-decoration: none; color: inherit;
+            text-transform: uppercase;
+            transition: opacity .25s;
+        }
+        header nav ul li a:hover { opacity: .5; }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        :root { --ease: cubic-bezier(0.4,0,0.2,1); --spring: cubic-bezier(0.34,1.56,0.64,1); --card-radius: 20px; }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Noto Sans KR',sans-serif;color:#000;overflow-x:hidden;line-height:1.4;}
+        .container{max-width:1400px;margin:0 auto;padding:0 80px;}
 
-    :root {
-      --purple: #8e55ff;
-      --ink: #1a1a1a;
-      --sub: #666;
-      --bg-light: #f8f9fb;
-      --line: #e1e4e9;
-      --side-w: 260px;
-    }
+        /* HERO */
+        .hero{height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;
+              background:radial-gradient(ellipse 80% 70% at 50% 40%,#eef9f7 0%,#C8E8E2 48%,#a4cfc8 100%);}
+        #hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:.45;}
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    a { color:inherit; text-decoration:none; }
-    ul { list-style:none; }
-    body { background:#fff; color:var(--ink); font-family:"Pretendard", sans-serif; }
+        .hero-text{position:absolute;left:80px;bottom:80px;z-index:7;}
+        .hero-text .sub-title{font-size:11px;margin-bottom:14px;color:#555;letter-spacing:3px;text-transform:uppercase;opacity:0;transform:translateY(16px);animation:fadeUp .8s .3s forwards;}
+        .hero-text h1{font-size:40px;font-family:'Montserrat';line-height:1.05;letter-spacing:-2px;font-weight:800;opacity:0;transform:translateY(24px);animation:fadeUp .9s .5s forwards;}
 
-    /* Header */
-    header {
-      position:fixed; top:0; left:0; width:100%; height:80px;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 50px; background:rgba(255,255,255,0.96); backdrop-filter:blur(12px);
-      z-index:1000; border-bottom:1px solid var(--line);
-    }
-    .logo .main { font-size:1.5rem; font-weight:900; letter-spacing:2px; }
-    nav ul { display:flex; gap:35px; }
-    nav li { font-size:.85rem; font-weight:700; text-transform:uppercase; transition:.3s; }
-    nav li:hover { color: var(--purple); }
+        .hero-index{position:absolute;right:60px;top:120px;z-index:7;font-size:10px;letter-spacing:2.5px;color:#888;opacity:0;animation:fadeUp .8s 1.2s forwards;writing-mode:vertical-rl;}
 
-    /* Page Header */
-    .page-header {
-      margin-top:80px; padding:80px 0; background:#fff; border-bottom:1px solid var(--line);
-      text-align:center;
-    }
-    .page-header .kicker { font-size: .7rem; font-weight: 800; color: var(--purple); letter-spacing: .2em; display: block; margin-bottom: 15px; }
-    .page-header h1 { font-size:2.5rem; font-weight:800; margin-bottom:15px; letter-spacing: -.03em; }
-    .page-header p { color:var(--sub); font-size:1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; word-break: keep-all; }
+        /* 회전 뱃지 */
+        .badge-ring{position:absolute;right:52px;bottom:60px;z-index:7;width:96px;height:96px;opacity:0;animation:fadeUp .8s 1.4s forwards;}
+        .badge-ring svg{width:100%;height:100%;animation:rotateBadge 14s linear infinite;}
+        .badge-ring svg text{font-size:11px;fill:#444;font-family:'Montserrat',sans-serif;letter-spacing:2.5px;font-weight:700;}
+        .badge-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;color:#555;}
+        @keyframes rotateBadge{to{transform:rotate(360deg);}}
+        @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
 
-    /* Layout Area */
-    .container { display:flex; max-width:1400px; margin:0 auto; min-height:100vh; }
+        /* CNS */
+        .cns-wrapper{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;pointer-events:auto;}
+        .cns-letters{display:flex;font-family:'Montserrat';font-size:22vw;font-weight:900;letter-spacing:-0.04em;line-height:.85;user-select:none;white-space:nowrap;}
+        .cns-letter{
+            display:inline-block;
+            background:linear-gradient(135deg,#7b5ff4,#e863ff,#4ecfff,#7b5ff4);
+            background-size:300% 300%;
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            animation:meshFlow 10s ease infinite alternate,floatBase 6s ease-in-out infinite,cnsEntry 1.4s var(--spring) both;
+            filter:drop-shadow(0 0 50px rgba(123,95,244,.4)) drop-shadow(0 0 100px rgba(232,99,255,.2)) drop-shadow(0 20px 50px rgba(0,0,0,.10));
+            cursor:default;transition:transform .5s var(--spring);will-change:transform,filter;
+        }
+        .cns-letter:nth-child(1){animation-delay:0s,0s,0s;}
+        .cns-letter:nth-child(2){animation-delay:.3s,.8s,.10s;}
+        .cns-letter:nth-child(3){animation-delay:.6s,1.6s,.20s;}
+        .cns-letter:nth-child(4){animation-delay:.9s,2.4s,.30s;}
+        .cns-letter:nth-child(5){animation-delay:1.2s,3.2s,.40s;}
+        .cns-letter:hover{
+            filter:drop-shadow(0 0 70px rgba(123,95,244,.85)) drop-shadow(0 0 140px rgba(232,99,255,.55)) drop-shadow(0 30px 70px rgba(0,0,0,.18)) !important;
+            transform:translateY(-22px) scale(1.05) !important;
+        }
+        @keyframes meshFlow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+        @keyframes floatBase{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+        @keyframes cnsEntry{from{opacity:0;transform:translateY(80px) scale(.88);filter:blur(40px);}to{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 0 50px rgba(123,95,244,.4)) drop-shadow(0 0 100px rgba(232,99,255,.2));}}
 
-    /* Sidebar */
-    .sidebar {
-      width:var(--side-w); padding:40px 20px; border-right:1px solid var(--line);
-      position:sticky; top:80px; height:calc(100vh - 80px);
-    }
-    .side-title { font-size:.9rem; font-weight:800; color:var(--ink); margin-bottom:20px; }
-    .side-menu li {
-      font-size:.85rem; color:#555; padding:12px 15px; border-radius:8px;
-      cursor:pointer; transition:.2s; margin-bottom:4px;
-    }
-    .side-menu li:hover { background:var(--bg-light); color:var(--purple); }
-    .side-menu li.active { background:var(--purple); color:#fff; font-weight:700; }
+        /* SCROLL INDICATOR */
+        .scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp 1s 1.6s forwards;}
+        .scroll-indicator span{font-size:10px;letter-spacing:3px;color:#999;}
+        .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,#888,transparent);animation:scrollPulse 2s ease-in-out infinite;}
+        @keyframes scrollPulse{0%,100%{opacity:1;transform:scaleY(1);}50%{opacity:.3;transform:scaleY(.5);transform-origin:top;}}
 
-    /* Main Content Area */
-    .main-content { flex:1; padding:40px 60px; background:var(--bg-light); }
+        /* BRILLIANCE */
+        .brilliance{
+            padding: 160px 0 180px;
+            background: linear-gradient(to bottom, #b8e0d8 0%, #dff2ef 40%, #f5fbfa 100%);
+            position: relative; overflow: hidden;
+        }
+        /* 배경 글로우 블롭 */
+        .brilliance::before {
+            content: '';
+            position: absolute;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(123,95,244,.12) 0%, transparent 70%);
+            top: -100px; right: -200px;
+            pointer-events: none;
+        }
+        .brilliance::after {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(78,207,255,.10) 0%, transparent 70%);
+            bottom: 0; left: -100px;
+            pointer-events: none;
+        }
 
-    /* Tab Switcher */
-    .tab-nav { display:flex; gap:30px; border-bottom:2px solid var(--line); margin-bottom:40px; }
-    .tab-item { padding:15px 5px; font-size:1.1rem; font-weight:700; color:#999; cursor:pointer; position:relative; }
-    .tab-item.active { color:var(--ink); }
-    .tab-item.active::after { content:''; position:absolute; bottom:-2px; left:0; width:100%; height:2px; background:var(--ink); }
+        .brilliance-header{text-align:center;margin-bottom:80px;position:relative;z-index:2;}
+        .brilliance-header .b-label{
+            font-size:12px;letter-spacing:6px;text-transform:uppercase;
+            color:rgba(0,0,0,.25);margin-bottom:28px;display:block;
+            font-family:'Montserrat',sans-serif; font-weight:500;
+        }
+        .brilliance-header h2{
+            font-size:48px;font-weight:700;line-height:1.1;
+            margin-bottom:20px;letter-spacing:-1.5px;color:#111;
+        }
+        .brilliance-header h2 em{
+            font-style:normal;
+            background:linear-gradient(120deg,#7b5ff4,#e863ff,#4ecfff);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            font-weight:700;
+        }
+        .brilliance-header .sub-kr{
+            font-size:15px;font-weight:300;color:rgba(0,0,0,.3);
+            letter-spacing:3px;
+        }
 
-    /* Product Grid */
-    .product-section { display:none; }
-    .product-section.active { display:block; }
-    .sector-heading { font-size:1.4rem; font-weight:800; margin-bottom:24px; display:flex; align-items:center; gap:10px; }
-    .sector-heading::before { content:''; width:4px; height:20px; background:var(--purple); border-radius:2px; }
+        /* 카드 */
+        .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative;z-index:2;}
+        .card{
+            position:relative;border-radius:22px;overflow:hidden;cursor:pointer;
+            background:#fff;
+            box-shadow: 0 4px 24px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+            transition: box-shadow .4s var(--ease), transform .4s var(--ease);
+        }
+        .card.tall{height:460px;}
+        .card:hover{
+            transform:translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06);
+        }
 
-    .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:20px; }
-    .card {
-      background:#fff; border:1px solid var(--line); border-radius:12px;
-      padding:30px; transition:all .3s ease; cursor:pointer;
-      display:flex; flex-direction:column; justify-content:space-between;
-    }
-    .card:hover { border-color:var(--purple); transform:translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-    .card-top .tag { font-size:.7rem; font-weight:700; color:var(--purple); background:rgba(142,85,255,0.08); padding:4px 8px; border-radius:4px; }
-    .card-top h3 { font-size:1.25rem; font-weight:800; margin:15px 0 10px; }
-    .card-top p { font-size:.9rem; color:var(--sub); line-height:1.6; word-break:keep-all; }
-    .card-footer { margin-top:30px; font-size:.85rem; font-weight:700; color:#aaa; display:flex; align-items:center; gap:5px; }
+        .card-img{width:100%;height:100%;transition:transform .8s var(--ease);}
+        .card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+        .card:hover .card-img{transform:scale(1.04);}
 
-    /* 인라인 상세 설명 영역 */
-    .inline-detail {
-      display: none; width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 20px;
-      padding: 50px; margin-top: 40px; animation: slideUp 0.4s ease forwards;
-    }
-    .inline-detail.active { display: block; }
-    .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--line); padding-bottom: 15px; }
-    .detail-title { font-size: 2.2rem; font-weight: 900; letter-spacing: -.02em; }
-    .detail-close { cursor: pointer; color: #ccc; font-weight: 800; font-size: 1.2rem; }
+        /* 상단 컬러 글로우 테두리 */
+        .card::before{
+            content:'';position:absolute;inset:0;border-radius:22px;
+            opacity:0;transition:opacity .4s;z-index:1;pointer-events:none;
+        }
+        .card:nth-child(1)::before{box-shadow:inset 0 0 0 1.5px rgba(123,95,244,.5);}
+        .card:nth-child(2)::before{box-shadow:inset 0 0 0 1.5px rgba(232,99,255,.5);}
+        .card:nth-child(3)::before{box-shadow:inset 0 0 0 1.5px rgba(78,207,255,.5);}
+        .card:hover::before{opacity:1;}
 
-    /* LODEN Bible 전용 스타일 디자인 */
-    .bible-content h4 { font-size: 1.15rem; font-weight: 800; margin: 30px 0 15px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
-    .bible-content h4::before { content:''; width:4px; height:16px; background:var(--purple); border-radius:2px; }
-    
-    .bible-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-    .bible-box { padding: 20px; background: var(--bg-light); border-radius: 12px; border: 1px solid transparent; transition: 0.3s; }
-    .bible-box:hover { border-color: var(--purple); background: #fff; }
-    .bible-box strong { display: block; color: var(--purple); margin-bottom: 6px; font-size: 1rem; }
-    .bible-box p { font-size: 0.9rem; color: var(--sub); line-height: 1.6; }
+        /* 이미지 위 그라데이션 딤 */
+        .card-overlay{
+            position:absolute;inset:0;z-index:1;
+            background:linear-gradient(to top, rgba(0,0,0,.45) 0%, transparent 50%);
+            opacity:.6;transition:opacity .4s;
+        }
+        .card:hover .card-overlay{opacity:.8;}
 
-    /* 3번: 차별화된 프로세스 디자인 */
-    .process-wrap { display: flex; justify-content: space-between; margin-top: 25px; position: relative; padding-bottom: 20px; }
-    .process-wrap::before { content:''; position: absolute; top: 18px; left: 0; width: 100%; height: 1px; background: var(--line); z-index: 1; }
-    .process-item { flex: 1; text-align: center; position: relative; z-index: 2; }
-    .process-dot { width: 36px; height: 36px; background: #fff; border: 2px solid var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 0.9rem; font-weight: 800; color: var(--purple); transition: 0.3s; }
-    .process-item:hover .process-dot { background: var(--purple); color: #fff; }
-    .process-item b { display: block; font-size: 0.95rem; margin-bottom: 6px; }
-    .process-item span { font-size: 0.8rem; color: var(--sub); line-height: 1.4; display: block; padding: 0 10px; word-break: keep-all; }
+        /* 카드 하단 정보 */
+        .card-info{
+            position:absolute;bottom:0;left:0;right:0;z-index:2;
+            padding:20px;
+            display:flex;align-items:center;gap:12px;
+        }
+        .card-logo{
+            width:40px;height:40px;border-radius:10px;
+            background:rgba(255,255,255,.95);
+            display:flex;align-items:center;justify-content:center;
+            overflow:hidden;flex-shrink:0;
+            box-shadow:0 2px 8px rgba(0,0,0,.12);
+        }
+        .card-logo img{width:28px;height:28px;object-fit:contain;}
+        .card-company{display:flex;flex-direction:column;gap:2px;}
+        .card-company .co-name{font-size:15px;font-weight:700;line-height:1.2;color:#fff;}
+        .card-company .co-category{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.5px;}
 
-    /* 4번, 5번: 버튼 및 시그니처 슬로건 */
-    .btn-link { display: inline-block; margin-top: 35px; padding: 14px 28px; background: var(--ink); color: #fff; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: 0.3s; }
-    .btn-link:hover { background: var(--purple); transform: translateX(5px); }
-    .signature { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--purple); text-align: right; margin-top: 50px; opacity: 0.7; transform: rotate(-3deg); user-select: none; }
+        /* REVEAL */
+        .reveal{opacity:0;transform:translateY(44px);transition:opacity .85s var(--ease),transform .85s var(--ease);}
+        .reveal.visible{opacity:1;transform:translateY(0);}
+        .reveal-delay-1{transition-delay:.12s;}
+        .reveal-delay-2{transition-delay:.22s;}
+        .reveal-delay-3{transition-delay:.32s;}
 
-    @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+        /* VALUES (3단) - 지그재그 카드 */
+        .values {
+            padding: 160px 0;
+            background: #fff;
+        }
+        .values-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+        .values-header .v-label {
+            font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+            color: #bbb; display: block; margin-bottom: 24px;
+        }
+        .values-header h2 {
+            font-size: 48px; font-weight: 700; line-height: 1.1;
+            letter-spacing: -1.5px; color: #111;
+        }
 
-    @media (max-width: 1024px) {
-      .sidebar { display:none; }
-      .container { flex-direction:column; }
-      .bible-grid { grid-template-columns: 1fr; }
-      .process-wrap { flex-direction: column; gap: 25px; }
-      .process-wrap::before { display: none; }
-      .process-item { text-align: left; display: flex; gap: 15px; align-items: flex-start; }
-      .process-dot { margin: 0; flex-shrink: 0; }
-    }
-  </style>
+        /* 지그재그 래퍼 */
+        .value-list {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* 아이템 행 */
+        .value-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        /* 짝수 행: 카드 오른쪽, 글자 왼쪽 */
+        .value-item:nth-child(even) .v-content { order: 2; }
+        .value-item:nth-child(even) .v-letter-block { order: 1; }
+
+        /* 대형 글자 블록 */
+        .v-letter-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .v-letter-char {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22vw; font-weight: 900; line-height: 1;
+            background: linear-gradient(135deg, #7b5ff4, #e863ff, #4ecfff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: .08;
+            transition: opacity .5s var(--ease);
+            user-select: none;
+            letter-spacing: -0.04em;
+        }
+        .value-item:hover .v-letter-char { opacity: .18; }
+
+        /* 카드 */
+        .v-content {
+            background: #f9f9f9;
+            border: 1px solid #f0f0f0;
+            border-radius: 24px;
+            padding: 48px 52px;
+            transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .4s;
+            cursor: default;
+        }
+        .v-content:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 64px rgba(0,0,0,.07);
+            border-color: #e4e4e4;
+        }
+        .v-num {
+            font-size: 10px; letter-spacing: 3px; color: #d0d0d0;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
+            margin-bottom: 24px; display: block;
+        }
+        .v-title-en {
+            font-size: 24px; font-weight: 700; letter-spacing: -.3px;
+            color: #111; margin-bottom: 6px; line-height: 1.2;
+        }
+        .v-title-kr {
+            font-size: 13px; color: #bbb; margin-bottom: 20px;
+        }
+        .v-body {
+            font-size: 14px; color: #777; line-height: 1.85;
+            margin-bottom: 28px;
+        }
+        .v-badge {
+            display: inline-block;
+            font-size: 10px; letter-spacing: 2px; font-weight: 600;
+            padding: 6px 16px; border-radius: 20px;
+        }
+        .value-item:nth-child(1) .v-badge { background:rgba(123,95,244,.08); color:rgba(123,95,244,.85); }
+        .value-item:nth-child(2) .v-badge { background:rgba(232,99,255,.08); color:rgba(200,60,240,.85); }
+        .value-item:nth-child(3) .v-badge { background:rgba(78,207,255,.08);  color:rgba(30,170,230,.85); }
+        .value-item:nth-child(4) .v-badge { background:rgba(255,180,80,.08);  color:rgba(220,140,30,.85); }
+        .value-item:nth-child(5) .v-badge { background:rgba(80,220,140,.08);  color:rgba(40,180,100,.85); }
+
+        /* JOURNAL (4단) - 가로 스크롤 */
+        .journal { padding: 140px 0 0; background: #fff; overflow: hidden; }
+
+        .journal-header {
+            padding: 0 80px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 56px;
+        }
+        .journal-title {
+            font-size: 72px; font-family: 'Montserrat'; font-weight: 900;
+            letter-spacing: -3px; line-height: 1; color: #111;
+        }
+        .journal-header-right { text-align: right; }
+        .journal-header-right p {
+            font-size: 14px; color: #aaa; line-height: 1.7; margin-bottom: 20px;
+        }
+        .journal-cta {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+            color: #111; text-decoration: none; font-weight: 700;
+            transition: gap .3s var(--ease);
+        }
+        .journal-cta:hover { gap: 18px; }
+        .journal-cta::after { content: '→'; }
+
+        /* 가로 스크롤 트랙 */
+        .journal-scroll-wrap {
+            position: relative;
+        }
+        /* 우측 페이드 아웃 */
+        .journal-scroll-wrap::after {
+            content: '';
+            position: absolute; top: 0; right: 0; bottom: 0;
+            width: 120px;
+            background: linear-gradient(to right, transparent, #fff);
+            pointer-events: none; z-index: 2;
+        }
+
+        #storyBoard {
+            display: flex;
+            gap: 20px;
+            padding: 0 80px 100px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            cursor: grab;
+        }
+        #storyBoard:active { cursor: grabbing; }
+        #storyBoard::-webkit-scrollbar { display: none; }
+
+        /* 카드 */
+        .journal-card {
+            flex: 0 0 340px;
+            min-width: 340px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #f5f5f5;
+            transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+            cursor: pointer;
+        }
+        .journal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 56px rgba(0,0,0,.10);
+        }
+        .journal-card .card-img {
+            height: 260px; overflow: hidden;
+        }
+        .journal-card .card-img img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform .7s var(--ease);
+            filter: saturate(.9);
+        }
+        .journal-card:hover .card-img img { transform: scale(1.05); }
+        .journal-card .card-info {
+            padding: 28px 30px 32px;
+        }
+        .journal-card .card-info span {
+            font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+            color: #bbb; font-weight: 700; display: block; margin-bottom: 12px;
+        }
+        .journal-card .card-info h4 {
+            font-size: 18px; font-weight: 700; line-height: 1.4;
+            color: #111; margin-bottom: 10px; letter-spacing: -.2px;
+        }
+        .journal-card .card-info p {
+            font-size: 13px; color: #999; line-height: 1.7;
+        }
+
+        /* 플레이스홀더 카드 (Firebase 로딩 전) */
+        .journal-card.placeholder .card-img {
+            background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+        }
+        .journal-card.placeholder .card-info h4 {
+            background: #ebebeb; border-radius: 4px;
+            color: transparent; height: 20px; margin-bottom: 12px;
+        }
+        .journal-card.placeholder .card-info p {
+            background: #f0f0f0; border-radius: 4px;
+            color: transparent; height: 14px;
+        }
+
+        /* FOOTER */
+        footer{background:#0a0a0a;color:#fff;padding:120px 0 60px;}
+        .footer-logo{font-size:80px;font-weight:900;font-family:'Montserrat';margin-bottom:12px;display:flex;letter-spacing:-2px;}
+        .footer-logo span{display:inline-block;transition:transform .35s var(--spring),color .35s;cursor:default;}
+        .footer-logo span:hover{transform:translateY(-10px);color:#7b5ff4;}
+        .footer-desc{font-size:20px;color:#444;margin-bottom:90px;}
+        .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:120px;}
+        .footer-info h4,.footer-form h4{font-size:11px;color:#333;margin-bottom:24px;letter-spacing:2px;text-transform:uppercase;}
+        .footer-info p{color:#555;line-height:2.2;font-size:14px;}
+        .form-row{display:flex;gap:16px;}
+        input,textarea{flex:1;background:transparent;border:none;border-bottom:1px solid #1e1e1e;padding:14px 0;color:#fff;font-family:inherit;font-size:14px;outline:none;transition:border-color .3s;}
+        input:focus,textarea:focus{border-color:#555;}
+        textarea{width:100%;height:90px;margin-top:16px;margin-bottom:28px;resize:none;}
+        ::placeholder{color:#2a2a2a;}
+        .btn-submit{background:transparent;color:#fff;border:1px solid #2a2a2a;padding:14px 40px;border-radius:40px;font-weight:600;font-size:13px;cursor:pointer;letter-spacing:1px;transition:background .3s,border-color .3s,color .3s;}
+        .btn-submit:hover{background:#fff;color:#000;border-color:#fff;}
+        .footer-bottom{margin-top:80px;padding-top:32px;border-top:1px solid #111;display:flex;justify-content:space-between;align-items:center;}
+        .footer-copy{font-size:12px;color:#2a2a2a;}
+        .footer-links{display:flex;gap:28px;}
+        .footer-links a{font-size:12px;color:#2a2a2a;text-decoration:none;transition:color .3s;}
+        .footer-links a:hover{color:#777;}
+
+        @media(max-width:1100px){
+            .cns-letters{font-size:52vw;}
+            .card-grid,.work-list-inner,.journal-inner,.footer-grid{grid-template-columns:1fr;}
+            .hero-text h1{font-size:36px;}
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo"><a href="index.html"><span class="main">LOIND</span></a></div>
+<header>
+    <h1><a href="index.html">LOIND</a></h1>
     <nav>
-      <ul>
-        <li><a href="about.html">ABOUT</a></li>
-        <li><a href="service.html" style="color:var(--purple)">SERVICE</a></li>
-        <li><a href="story.html">STORY</a></li>
-        <li><a href="contact.html">CONTACT</a></li>
-      </ul>
+        <ul>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="service.html">SERVICE</a></li>
+            <li><a href="story.html">STORY</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul>
     </nav>
-  </header>
+</header>
 
-  <section class="page-header">
-    <span class="kicker">WHAT WE OFFER</span>
-    <h1>LOIND Services</h1>
-    <p>걸작을 창조하고, 비즈니스를 실현하며, 세상에 온기를 더하는 LOIND의 브랜드들을 만나보세요.</p>
-  </section>
+<section class="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-text">
+        <p class="sub-title">존재하는 것을 넘어</p>
+        <h1>Beyond<br>what exists</h1>
+    </div>
+    <div class="cns-wrapper" id="cnsWrapper">
+        <div class="cns-letters">
+            <span class="cns-letter">L</span>
+            <span class="cns-letter">O</span>
+            <span class="cns-letter">I</span>
+            <span class="cns-letter">N</span>
+            <span class="cns-letter">D</span>
+        </div>
+    </div>
+    <div class="badge-ring">
+        <svg viewBox="0 0 100 100">
+            <defs><path id="circlePath" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1-74,0"/></defs>
+            <text><textPath href="#circlePath">AGENTIC AI · LOIND · BEYOND ·&nbsp;</textPath></text>
+        </svg>
+        <div class="badge-center">✦</div>
+    </div>
+    <div class="scroll-indicator">
+        <span>SCROLL</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
 
-  <div class="container">
-    <aside class="sidebar">
-      <div class="side-title">Category</div>
-      <ul class="side-menu" id="sideMenu">
-        <li class="active" id="btn-side-business" onclick="switchTab('business')">Business Overview</li>
-        <li id="btn-side-impact" onclick="switchTab('impact')">Impact Overview</li>
-        <li style="border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; color: #ccc; font-size: .75rem; font-weight: 800;">BRANDS</li>
-        <li id="menu-LODEN" onclick="openInlineDetail('business', 'LODEN')">LODEN (Creative Tech)</li>
-        <li id="menu-LOER" onclick="openInlineDetail('business', 'LOER')">LOER Agency</li>
-        <li id="menu-MissionSync" onclick="openInlineDetail('impact', 'Mission Sync')">Mission Sync</li>
-        <li id="menu-CareSearch" onclick="openInlineDetail('impact', 'Care Search')">Care Search</li>
-      </ul>
-    </aside>
-
-    <main class="main-content">
-      <div class="tab-nav">
-        <div class="tab-item active" id="tab-business" onclick="switchTab('business')">Business Portfolio</div>
-        <div class="tab-item" id="tab-impact" onclick="switchTab('impact')">Social Impact</div>
-      </div>
-
-      <div id="section-business" class="product-section active">
-        <h2 class="sector-heading">Business Service</h2>
-        <div class="grid">
-          <div class="card" onclick="openInlineDetail('business', 'LODEN')">
-            <div class="card-top">
-              <span class="tag">CREATIVE TECH STUDIO</span>
-              <h3>LODEN</h3>
-              <p>세계관 구축(World-building) 전문 스튜디오. 기술로 상상을 경험으로 구현합니다.</p>
+<section class="brilliance">
+    <div class="container">
+        <div class="brilliance-header">
+            <p class="b-label reveal">Our Insights</p>
+            <h2 class="reveal reveal-delay-1">Lighting up LOIND's <em>unique brilliance</em><br>in a colorless business world.</h2>
+            <p class="sub-kr reveal reveal-delay-2">'존재하는 것 너머로'</p>
+        </div>
+        <div class="card-grid">
+            <div class="card tall reveal reveal-delay-1">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=800" alt=""></div>
+                <div class="card-overlay"></div>
+                <div class="card-info">
+                    <div class="card-logo" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;">
+                        <span style="color:#fff;font-family:'Montserrat';font-weight:900;font-size:9px;letter-spacing:1px;">LODEN</span>
+                    </div>
+                    <div class="card-company">
+                        <span class="co-name">LODEN</span>
+                        <span class="co-category">Creative Tech Studio</span>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">서비스 상세보기 <span>→</span></div>
-          </div>
-          <div class="card" onclick="openInlineDetail('business', 'LOER')">
-            <div class="card-top">
-              <span class="tag">AGENCY</span>
-              <h3>LOER</h3>
-              <p>아이디어에 모호함을 걷어내고 완성도로 세상에 내놓는 실천적 비즈니스 파트너입니다.</p>
+            <div class="card tall reveal reveal-delay-2">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800" alt=""></div>
+                <div class="card-overlay"></div>
+                <div class="card-info">
+                    <div class="card-logo" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;">
+                        <span style="color:#fff;font-family:'Montserrat';font-weight:900;font-size:11px;letter-spacing:1px;">LOER</span>
+                    </div>
+                    <div class="card-company">
+                        <span class="co-name">LOER</span>
+                        <span class="co-category">Agency</span>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">서비스 상세보기 <span>→</span></div>
-          </div>
-        </div>
-        <div id="detail-business" class="inline-detail">
-          <div class="detail-header">
-            <h2 id="title-business" class="detail-title">Title</h2>
-            <span class="detail-close" onclick="closeInlineDetail('business')">✕</span>
-          </div>
-          <div id="desc-business" class="bible-content"></div>
-        </div>
-      </div>
-
-      <div id="section-impact" class="product-section">
-        <h2 class="sector-heading">Social Value</h2>
-        <div class="grid">
-          <div class="card" onclick="openInlineDetail('impact', 'Mission Sync')">
-            <div class="card-top">
-              <span class="tag">CHURCH SUPPORT</span>
-              <h3>Mission Sync</h3>
-              <p>디지털 소외 지역과 미자립 교회를 위한 IT 인프라 지원 프로그램입니다. 기술로 사역을 돕습니다.</p>
+            <div class="card tall reveal reveal-delay-3">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800" alt=""></div>
+                <div class="card-overlay"></div>
+                <div class="card-info">
+                    <div class="card-logo" style="background:#333;display:flex;align-items:center;justify-content:center;">
+                        <span style="color:#888;font-family:'Montserrat';font-weight:900;font-size:11px;letter-spacing:1px;">TBD</span>
+                    </div>
+                    <div class="card-company">
+                        <span class="co-name">TBD</span>
+                        <span class="co-category">Coming Soon</span>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">서비스 상세보기 <span>→</span></div>
-          </div>
-          <div class="card" onclick="openInlineDetail('impact', 'Care Search')">
-            <div class="card-top">
-              <span class="tag">SENIOR CARE</span>
-              <h3>Care Search</h3>
-              <p>AI 데이터 기반의 노인 돌봄 안전망입니다. 고립된 이웃의 생활 패턴을 분석해 적시에 도움을 연결합니다.</p>
+        </div>
+    </div>
+</section>
+
+<section class="values">
+    <div class="container">
+        <div class="values-header reveal">
+            <span class="v-label">Our Values</span>
+            <h2>LOIND에서<br>일한다는 것</h2>
+        </div>
+
+        <div class="value-list">
+
+            <div class="value-item reveal">
+                <div class="v-content">
+                    <span class="v-num">01</span>
+                    <p class="v-title-en">Lead with excellence.</p>
+                    <p class="v-title-kr">탁월함으로 이끈다.</p>
+                    <p class="v-body">LOIND가 하는 모든 것의 출발점. 탁월함은 결과가 아니라 시작점이다. 우리가 기준을 먼저 정하고, 그 기준으로 움직인다.</p>
+                    <span class="v-badge">기 준</span>
+                </div>
+                <div class="v-letter-block">
+                    <span class="v-letter-char">L</span>
+                </div>
             </div>
-            <div class="card-footer">서비스 상세보기 <span>→</span></div>
-          </div>
-        </div>
-        <div id="detail-impact" class="inline-detail">
-          <div class="detail-header">
-            <h2 id="title-impact" class="detail-title">Title</h2>
-            <span class="detail-close" onclick="closeInlineDetail('impact')">✕</span>
-          </div>
-          <div id="desc-impact" class="bible-content"></div>
-        </div>
-      </div>
-    </main>
-  </div>
 
-  <script>
-    const contentMap = {
-      'LODEN': `
-        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--sub); margin-bottom: 25px;">
-          LODEN은 세계관 구축(World-building)을 전문으로 하는 Creative Tech Studio입니다.
-        </p>
-        <h4>주요 비즈니스 및 서비스</h4>
-        <div class="bible-grid">
-          <div class="bible-box">
-            <strong>Experience Design</strong>
-            <p>• 심도 있는 세계관 분석을 통해 서비스의 본질을 정의합니다. <br>
-               • 사용자와 콘텐츠가 상호작용할 수 있는 기술적 접점을 만듭니다. </p>
-          </div>
-          <div class="bible-box">
-            <strong>IP Build & Manage</strong>
-            <p>독창적인 지식재산권(IP)을 기획, 구축하고 이를 지속적으로 관리 및 성장시킵니다. </p>
-          </div>
-          <div class="bible-box" style="grid-column: span 2;">
-            <strong>Creative Technology</strong>
-            <p>세계관을 가장 잘 표현할 수 있는 기술들을 활용하여 상상 속의 세상이 아닌 경험의 세상을 구현합니다. </p>
-          </div>
-        </div>
-        <h4>LODEN만의 차별화된 프로세스</h4>
-        <div class="process-wrap">
-          <div class="process-item">
-            <div class="process-dot">1</div>
-            <b>분석 (Analysis)</b>
-            <span>세계관 및 로어(Lore) 분석을 통해 프로젝트의 뿌리를 다집니다. </span>
-          </div>
-          <div class="process-item">
-            <div class="process-dot">2</div>
-            <b>설계 (Architecture)</b>
-            <span>비즈니스 목표에 부합하는 서비스 구조와 기술 스택을 확정합니다. </span>
-          </div>
-          <div class="process-item">
-            <div class="process-dot">3</div>
-            <b>구현 (Interaction)</b>
-            <span>3D 엔진과 IT 기술을 결합하여 실제 인터랙티브 경험을 구축합니다. </span>
-          </div>
-          <div class="process-item">
-            <div class="process-dot">4</div>
-            <b>실행 (Launch)</b>
-            <span>온/오프라인의 경계를 허무는 최종 서비스를 런칭합니다. </span>
-          </div>
-        </div>
-        <a href="#" class="btn-link">LODEN 바로가기 <span>→</span></a>
-        <div class="signature">Dream for Dreamer</div>
-      `,
-      'default': `
-        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--sub); margin-bottom: 25px;">서비스에 대한 구체적인 철학과 실행 방안을 로인드만의 기준으로 제안합니다.</p>
-        <div style="padding: 25px; background: var(--bg-light); border-radius: 12px; font-weight: 700; color: var(--purple);">※ 상세 포트폴리오는 현재 준비 중입니다.</div>
-      `
-    };
+            <div class="value-item reveal reveal-delay-1">
+                <div class="v-letter-block">
+                    <span class="v-letter-char">O</span>
+                </div>
+                <div class="v-content">
+                    <span class="v-num">02</span>
+                    <p class="v-title-en">Obsess over quality.</p>
+                    <p class="v-title-kr">품질에 집착한다.</p>
+                    <p class="v-body">준비하는 과정부터 일하는 태도, 결과물까지 흔한 것은 없다. 그 집착이 결과물의 격을 만든다.</p>
+                    <span class="v-badge">완 성 도</span>
+                </div>
+            </div>
 
-    function clearSidebar() { document.querySelectorAll('.side-menu li').forEach(li => li.classList.remove('active')); }
+            <div class="value-item reveal reveal-delay-1">
+                <div class="v-content">
+                    <span class="v-num">03</span>
+                    <p class="v-title-en">Inspire at every touch.</p>
+                    <p class="v-title-kr">모든 접점에서 특별함을 남긴다.</p>
+                    <p class="v-body">LOIND라는 이름을 달고 만나는 모든 것은 특별해야 한다. 첫 대화부터 최종 납품까지.</p>
+                    <span class="v-badge">경 험</span>
+                </div>
+                <div class="v-letter-block">
+                    <span class="v-letter-char">I</span>
+                </div>
+            </div>
 
-    function switchTab(type) {
-      document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
-      document.getElementById('tab-' + type).classList.add('active');
-      document.querySelectorAll('.product-section').forEach(el => el.classList.remove('active'));
-      document.getElementById('section-' + type).classList.add('active');
-      clearSidebar();
-      document.getElementById('btn-side-' + type).classList.add('active');
-      closeInlineDetail('business');
-      closeInlineDetail('impact');
+            <div class="value-item reveal reveal-delay-2">
+                <div class="v-letter-block">
+                    <span class="v-letter-char">N</span>
+                </div>
+                <div class="v-content">
+                    <span class="v-num">04</span>
+                    <p class="v-title-en">Name that matters.</p>
+                    <p class="v-title-kr">이름이 곧 가치다.</p>
+                    <p class="v-body">똑같은 상품도, 똑같은 서비스도 LOIND가 만지면 달라 보여야 한다. 이름 자체가 신뢰이고 프리미엄이다.</p>
+                    <span class="v-badge">정 체 성</span>
+                </div>
+            </div>
+
+            <div class="value-item reveal reveal-delay-2">
+                <div class="v-content">
+                    <span class="v-num">05</span>
+                    <p class="v-title-en">Define the standard.</p>
+                    <p class="v-title-kr">기준 자체가 된다.</p>
+                    <p class="v-body">탁월함의 끝은 기준을 따르는 것이 아니라 기준이 되는 것이다. 세상이 우리를 보고 기준을 다시 정의하게 만드는 것.</p>
+                    <span class="v-badge">목 표</span>
+                </div>
+                <div class="v-letter-block">
+                    <span class="v-letter-char">D</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="journal">
+    <div class="journal-header reveal">
+        <div class="journal-title">JOURNAL.</div>
+        <div class="journal-header-right">
+            <p>우리는 단순히 기술을 만드는 것을 넘어,<br>사용자의 삶에 스며드는 디지털 가치를 탐구합니다.</p>
+            <a href="story.html" class="journal-cta">View All Stories</a>
+        </div>
+    </div>
+    <div class="journal-scroll-wrap">
+        <div id="storyBoard"></div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-logo">
+            <span>L</span><span>O</span><span>I</span><span>N</span><span>D</span>
+        </div>
+        <p class="footer-desc">Beyond what exists</p>
+        <div class="footer-grid" style="grid-template-columns:1fr 1fr 1fr;gap:60px;">
+            <div class="footer-info reveal">
+                <h4>Contact</h4>
+                <p>서울 강남구 테헤란로 DX 빌딩<br>dhday@loind.com</p>
+            </div>
+            <div class="footer-info reveal reveal-delay-1">
+                <h4>Navigate</h4>
+                <p><a href="about.html" style="color:#555;text-decoration:none;display:block;line-height:2.2;">About</a>
+                <a href="service.html" style="color:#555;text-decoration:none;display:block;line-height:2.2;">Service</a>
+                <a href="story.html" style="color:#555;text-decoration:none;display:block;line-height:2.2;">Story</a>
+                <a href="contact.html" style="color:#555;text-decoration:none;display:block;line-height:2.2;">Contact</a></p>
+            </div>
+            <div class="footer-info reveal reveal-delay-2">
+                <h4>Brand</h4>
+                <p><span style="display:block;line-height:2.2;color:#555;">LODEN</span>
+                <span style="display:block;line-height:2.2;color:#555;">LOER</span>
+                <span style="display:block;line-height:2.2;color:#333;">TBD</span></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2025 LOIND. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Seoul, KR</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script type="module">
+/* 1. 파티클 */
+(function(){
+    const canvas=document.getElementById('hero-canvas'),ctx=canvas.getContext('2d');
+    let W,H,particles,mouse={x:-9999,y:-9999};
+    const COLS=['rgba(123,95,244,','rgba(232,99,255,','rgba(78,207,255,'],N=50,CONN=140,REP=100;
+    function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;init();}
+    function init(){particles=Array.from({length:N},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.8+.6,col:COLS[Math.floor(Math.random()*3)],a:Math.random()*.3+.1}));}
+    function draw(){
+        ctx.clearRect(0,0,W,H);
+        for(const p of particles){
+            const dx=p.x-mouse.x,dy=p.y-mouse.y,d=Math.hypot(dx,dy);
+            if(d<REP&&d>0){const f=(REP-d)/REP;p.x+=(dx/d)*f*2.5;p.y+=(dy/d)*f*2.5;}
+            p.x+=p.vx;p.y+=p.vy;
+            if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+            ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.col+p.a+')';ctx.fill();
+        }
+        for(let i=0;i<particles.length;i++)for(let j=i+1;j<particles.length;j++){
+            const a=particles[i],b=particles[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+            if(d<CONN){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(123,95,244,${(1-d/CONN)*.11})`;ctx.lineWidth=.6;ctx.stroke();}
+        }
+        requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize',resize);
+    document.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+    resize();draw();
+})();
+
+/* 2. CNS Magnetic + 동적 광원 */
+(function(){
+    const wrapper=document.getElementById('cnsWrapper');
+    const letters=wrapper.querySelectorAll('.cns-letter');
+    let mx=0,my=0;
+    const offsets=Array.from(letters,()=>({x:0,y:0}));
+    const targets=Array.from(letters,()=>({x:0,y:0}));
+    const R=280,S=.55,D=.07;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+    function tick(){
+        letters.forEach((el,i)=>{
+            const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+            const dx=mx-cx,dy=my-cy,dist=Math.hypot(dx,dy);
+            if(dist<R){const f=(R-dist)/R;targets[i].x=-dx*f*S;targets[i].y=-dy*f*S*.45;}
+            else{targets[i].x=0;targets[i].y=0;}
+            offsets[i].x+=(targets[i].x-offsets[i].x)*D;
+            offsets[i].y+=(targets[i].y-offsets[i].y)*D;
+            el.style.transform=`translate(${offsets[i].x}px,${offsets[i].y}px)`;
+            const prox=Math.max(0,1-dist/600),nx=dx/(dist||1),ny=dy/(dist||1);
+            const glow=48+prox*38,sx=-nx*14*prox,sy=-ny*14*prox,op=.36+prox*.38;
+            el.style.filter=`drop-shadow(${sx}px ${sy}px ${glow}px rgba(123,95,244,${op})) drop-shadow(0 0 100px rgba(232,99,255,${prox*.28})) drop-shadow(0 20px 50px rgba(0,0,0,.10))`;
+        });
+        requestAnimationFrame(tick);
+    }
+    setTimeout(()=>{
+        letters.forEach(el=>{el.style.animation='meshFlow 10s ease infinite alternate,floatBase 6s ease-in-out infinite';});
+        tick();
+    },1500);
+})();
+
+/* 4. CNS 패럴랙스 */
+(function(){
+    const cns=document.getElementById('cnsWrapper');
+    window.addEventListener('scroll',()=>{
+        const sy=window.scrollY;
+        cns.style.transform=`translate(-50%,calc(-50% + ${sy*.22}px))`;
+        cns.style.opacity=Math.max(0,1-sy/550);
+    },{passive:true});
+})();
+
+/* 5. Reveal */
+(function(){
+    const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+
+/* 6. Journal - Firebase + 드래그/휠 스크롤 */
+(function(){
+    const board = document.getElementById('storyBoard');
+
+    const samples = [
+        { category: 'PROJECT',  title: 'AI Agent Platform',   desc: '에이전틱 AI 기반 업무 자동화 플랫폼 구축',   img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800' },
+        { category: 'BRANDING', title: 'Corporate Identity',  desc: '글로벌 DT 전략 파트너 브랜드 리뉴얼',         img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800' },
+        { category: 'INSIGHT',  title: 'Design System v3.0', desc: '확장 가능한 디자인 시스템 아키텍처 설계',     img: 'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800' },
+        { category: 'PROJECT',  title: 'DT Strategy',         desc: '비즈니스 디지털 전환 전략 수립 및 실행',     img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800' },
+    ];
+
+    function renderCards(list) {
+        board.innerHTML = '';
+        list.forEach(d => {
+            const card = document.createElement('div');
+            card.className = 'journal-card';
+            card.innerHTML = `
+                <div class="card-img"><img src="${d.img}" alt="${d.title}"></div>
+                <div class="card-info">
+                    <span>${d.category}</span>
+                    <h4>${d.title}</h4>
+                    <p>${d.desc}</p>
+                </div>`;
+            board.appendChild(card);
+        });
     }
 
-    function openInlineDetail(section, title) {
-      if (section === 'impact' && !document.getElementById('section-impact').classList.contains('active')) { switchTab('impact'); }
-      else if (section === 'business' && !document.getElementById('section-business').classList.contains('active')) { switchTab('business'); }
+    /* 샘플 먼저 즉시 렌더 */
+    renderCards(samples);
 
-      const titleEl = document.getElementById('title-' + section);
-      const descEl = document.getElementById('desc-' + section);
-      const detailBox = document.getElementById('detail-' + section);
+    /* Firebase 연결 시 실데이터로 교체 */
+    import('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js').then(({ initializeApp }) =>
+    import('https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js').then(({ getFirestore, collection, query, orderBy, onSnapshot }) => {
+        const app = initializeApp({
+            apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
+            authDomain: "loind-472cd.firebaseapp.com",
+            projectId: "loind-472cd",
+            storageBucket: "loind-472cd.firebasestorage.app",
+            messagingSenderId: "405998534289",
+            appId: "1:405998534289:web:0f861bc822e1ea5391c930"
+        });
+        const db = getFirestore(app);
+        onSnapshot(query(collection(db, 'stories'), orderBy('createdAt', 'desc')), (snapshot) => {
+            if (snapshot.empty) return;
+            board.innerHTML = '';
+            snapshot.forEach((doc) => {
+                const d = doc.data();
+                const card = document.createElement('div');
+                card.className = 'journal-card';
+                card.innerHTML = `
+                    <div class="card-img"><img src="${d.img || ''}" alt="${d.title || ''}"></div>
+                    <div class="card-info">
+                        <span>${d.category || 'PROJECT'}</span>
+                        <h4>${d.title || ''}</h4>
+                        <p>${d.desc || ''}</p>
+                    </div>`;
+                board.appendChild(card);
+            });
+        });
+    })).catch(() => { /* 샘플 유지 */ });
 
-      titleEl.innerText = title;
-      descEl.innerHTML = contentMap[title] || contentMap['default'];
-      detailBox.classList.add('active');
+    /* 휠 → 가로 스크롤 */
+    board.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+            e.preventDefault();
+            board.scrollTo({ left: board.scrollLeft + e.deltaY * 1.5, behavior: 'smooth' });
+        }
+    }, { passive: false });
 
-      clearSidebar();
-      const menuId = 'menu-' + title.replace(/\s/g, '');
-      const menuTarget = document.getElementById(menuId);
-      if (menuTarget) menuTarget.classList.add('active');
-
-      setTimeout(() => {
-        const offset = detailBox.offsetTop - 120;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
-      }, 50);
-    }
-
-    function closeInlineDetail(section) {
-      const detailBox = document.getElementById('detail-' + section);
-      if (detailBox) detailBox.classList.remove('active');
-      const activeSection = document.getElementById('section-business').classList.contains('active') ? 'business' : 'impact';
-      clearSidebar();
-      document.getElementById('btn-side-' + activeSection).classList.add('active');
-    }
-  </script>
+    /* 드래그 스크롤 */
+    let isDown = false, startX, scrollLeft;
+    board.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - board.offsetLeft; scrollLeft = board.scrollLeft; });
+    board.addEventListener('mouseleave', () => { isDown = false; });
+    board.addEventListener('mouseup',    () => { isDown = false; });
+    board.addEventListener('mousemove',  e => {
+        if (!isDown) return;
+        e.preventDefault();
+        board.scrollLeft = scrollLeft - (e.pageX - board.offsetLeft - startX) * 1.5;
+    });
+})();
+</script>
 </body>
 </html>
