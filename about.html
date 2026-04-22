@@ -109,32 +109,38 @@
       .content {
         margin-left: 250px;
         padding-top: 80px;
-        width: 100%;
+        width: calc(100% - 250px); /* ← 추가: 사이드 너비만큼 빼줌 */
+        overflow: hidden;          /* ← 추가: 자식 요소 넘침 방지 */
       }
 
+      /* 비디오 섹션 */
       .video-section {
-        padding: 60px 10% 20px;
-        max-width: 1400px;
+        padding: 60px 5% 20px;    /* ← 좌우 패딩 줄임 */
+        width: 100%;
+        overflow: hidden;          /* ← 추가 */
       }
       .video-container {
         position: relative;
         width: 100%;
         height: 520px;
         border-radius: 40px;
-        overflow: hidden;
+        overflow: hidden;          /* ← 핵심: 비디오가 라운드 밖으로 나가지 않게 */
         background-color: #000;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       }
       .video-container video {
+        position: absolute;        /* ← absolute로 변경해 컨테이너에 완전 귀속 */
+        top: 0; left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
 
       section {
-        padding: 100px 10%;
-        max-width: 1400px;
+        padding: 100px 5%;        /* ← 좌우 패딩 10% → 5%로 줄임 */
+        width: 100%;
         border-bottom: 1px solid #f2f2f2;
+        overflow: hidden;
       }
       .num {
         font-size: 0.75rem;
@@ -166,19 +172,17 @@
         color: #E0001A;
       }
 
-      /* --- [수정] IDENTITY 섹션 디자인 유지 + 설명 추가 --- */
       .identity-grid {
         display: grid;
-        grid-template-columns: 1fr 1.2fr; /* 왼쪽 로고, 오른쪽 컬러설명 */
+        grid-template-columns: 1fr 1.2fr;
         gap: 40px;
         align-items: start;
+        width: 100%;
       }
-      
-      /* 기존 로고 카드 디자인 유지 */
       .id-card {
         background: #0D0D0D;
         border-radius: 24px;
-        padding: 120px 20px; /* 로고 강조를 위해 패딩 유지 */
+        padding: 120px 20px;
         color: #fff;
         text-align: center;
         position: sticky;
@@ -189,14 +193,11 @@
         font-weight: 900;
         letter-spacing: 12px;
       }
-
-      /* 우측 컬러 가이드 리스트 */
       .color-guide-list {
         display: flex;
         flex-direction: column;
         gap: 15px;
       }
-
       .color-item {
         display: flex;
         background-color: #f9f9fb;
@@ -208,16 +209,13 @@
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0,0,0,0.05);
       }
-
       .color-bar {
         width: 12px;
         flex-shrink: 0;
       }
-
       .color-info {
         padding: 25px 30px;
       }
-
       .color-name {
         font-size: 1rem;
         font-weight: 800;
@@ -231,14 +229,12 @@
         font-weight: 400;
         color: #999;
       }
-
       .color-tags {
         font-size: 0.8rem;
         font-weight: 700;
         color: #666;
         margin-bottom: 12px;
       }
-
       .color-desc {
         font-size: 0.85rem;
         line-height: 1.6;
@@ -246,7 +242,6 @@
         word-break: keep-all;
       }
 
-      /* 03. Core Value */
       .value-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -266,7 +261,6 @@
         line-height: 1.7;
       }
 
-      /* 04. History */
       .history-wrap {
         position: relative;
         padding-left: 40px;
@@ -312,7 +306,7 @@
 
       @media (max-width: 1024px) {
         .side-nav { display: none; }
-        .content { margin-left: 0; }
+        .content { margin-left: 0; width: 100%; }
         .identity-grid { grid-template-columns: 1fr; }
         .id-card { position: static; padding: 80px 20px; }
         .value-grid { grid-template-columns: 1fr; }
@@ -357,24 +351,22 @@
 
       <section id="mission">
         <span class="num">01 / VISION & MISSION</span>
-        <h2 class="section-title">우리의 지향점</h2>
+        <h2 class="section-title">Beyond what exists, LOIND</h2>
         <div class="mission-box">
           <p class="mission-text">
-            LOIND는 단순히 기능하는 기술을 넘어, 비즈니스의 정점에서 발휘되는 감각을 설계합니다.<br />
-            평범한 만족에 안주하지 않고, <span>존재하는 것 너머의 위대함</span>을 시각화하는 것이 우리의 본질입니다.
+            지금 세상에 있는 것, 이미 정해진 기준, 현재의 수준. 우리는 거기서 멈추지 않습니다.<br>
+            탁월함을 향해 끊임없이 나아가고, 결국 기준 자체를 새로 정의하는 것. 그것이 LOIND가 존재하는 이유입니다.
           </p>
         </div>
       </section>
 
       <section id="identity">
         <span class="num">02 / IDENTITY</span>
-        <h2 class="section-title">BRAND Skill
-        </h2>
+        <h2 class="section-title">BRAND Skill</h2>
         <div class="identity-grid">
           <div class="id-card">
             <h3>LOIND</h3>
           </div>
-
           <div class="color-guide-list">
             <div class="color-item">
               <div class="color-bar" style="background: #0D0D0D;"></div>
@@ -384,7 +376,6 @@
                 <p class="color-desc">배경 및 메인 텍스트. 무게감의 기준점. Blood Red와 병치 시 긴장감 극대화.</p>
               </div>
             </div>
-
             <div class="color-item">
               <div class="color-bar" style="background: #FFFFFF; border-right: 1px solid #eee;"></div>
               <div class="color-info">
@@ -393,7 +384,6 @@
                 <p class="color-desc">Obsidian Black과의 충돌로 시각적 긴장 생성. 독립 사용 금지 — 반드시 Black 또는 Red와 함께.</p>
               </div>
             </div>
-
             <div class="color-item">
               <div class="color-bar" style="background: #E0001A;"></div>
               <div class="color-info">
@@ -428,7 +418,7 @@
           </li>
           <li class="value-item">
             <h4>Define the era (GOAL)</h4>
-            <p><strong>새로운 기준이 되어 시대를 정의하는 궁극의 목적</strong><br>우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다</p>
+            <p><strong>새로운 기준이 되어 시대를 정의하는 궁극의 목적</strong><br>우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다.</p>
           </li>
         </ul>
       </section>

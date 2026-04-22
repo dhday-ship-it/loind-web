@@ -1,789 +1,731 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOIND | Agentic AI Index</title>
-    <link rel="stylesheet" href="style.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About | LOIND</title>
     <style>
-        /* 네비게이터 폰트 보정 */
-        header { font-family: 'Montserrat', sans-serif; }
-        header h1 a {
-            font-size: 22px; font-weight: 900;
-            letter-spacing: -0.5px; text-decoration: none; color: inherit;
-        }
-        header nav ul { list-style: none; display: flex; gap: 40px; }
-        header nav ul li a {
-            font-size: 11px; font-weight: 600;
-            letter-spacing: 3px; text-decoration: none; color: inherit;
-            text-transform: uppercase;
-            transition: opacity .25s;
-        }
-        header nav ul li a:hover { opacity: .5; }
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-        :root { --ease: cubic-bezier(0.4,0,0.2,1); --spring: cubic-bezier(0.34,1.56,0.64,1); --card-radius: 20px; }
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Noto Sans KR',sans-serif;color:#000;overflow-x:hidden;line-height:1.4;}
-        .container{max-width:1400px;margin:0 auto;padding:0 80px;}
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+      }
+      body {
+        background-color: #fff;
+        color: #000;
+        font-family: "Pretendard", sans-serif;
+      }
 
-        /* HERO */
-        .hero{height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;
-              background:radial-gradient(ellipse 80% 70% at 50% 40%,#eef9f7 0%,#C8E8E2 48%,#a4cfc8 100%);}
-        #hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:.45;}
+      /*header*/
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 50px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid #f2f2f2;
+        transition: 0.3s;
+      }
+      h1 .main {
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+      }
+      .slogan {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #E0001A;
+        margin-left: 5px;
+        border-left: 1px solid #eee;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: 0.4s;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      h1:hover .slogan {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      nav ul {
+        display: flex;
+        gap: 35px;
+      }
+      nav li {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: 0.3s;
+      }
+      nav li:hover {
+        opacity: 0.5;
+      }
 
-        .hero-text{position:absolute;left:80px;bottom:80px;z-index:7;}
-        .hero-text .sub-title{font-size:11px;margin-bottom:14px;color:#555;letter-spacing:3px;text-transform:uppercase;opacity:0;transform:translateY(16px);animation:fadeUp .8s .3s forwards;}
-        .hero-text h1{font-size:40px;font-family:'Montserrat';line-height:1.05;letter-spacing:-2px;font-weight:800;opacity:0;transform:translateY(24px);animation:fadeUp .9s .5s forwards;}
+      .side-nav {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 250px;
+        height: calc(100vh - 80px);
+        padding: 60px 50px;
+        border-right: 1px solid #f2f2f2;
+        background: #fff;
+        z-index: 100;
+      }
+      .side-nav ul {
+        list-style: none;
+      }
+      .side-nav li {
+        margin-bottom: 25px;
+      }
+      .side-nav a {
+        color: #bbb;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        transition: 0.3s;
+      }
+      .side-nav a.active,
+      .side-nav a:hover {
+        color: #000;
+      }
 
-        .hero-index{position:absolute;right:60px;top:120px;z-index:7;font-size:10px;letter-spacing:2.5px;color:#888;opacity:0;animation:fadeUp .8s 1.2s forwards;writing-mode:vertical-rl;}
+      .content {
+        margin-left: 250px;
+        padding-top: 80px;
+        width: calc(100% - 250px); /* ← 추가: 사이드 너비만큼 빼줌 */
+        overflow: hidden;          /* ← 추가: 자식 요소 넘침 방지 */
+      }
 
-        /* 회전 뱃지 */
-        .badge-ring{position:absolute;right:52px;bottom:60px;z-index:7;width:96px;height:96px;opacity:0;animation:fadeUp .8s 1.4s forwards;}
-        .badge-ring svg{width:100%;height:100%;animation:rotateBadge 14s linear infinite;}
-        .badge-ring svg text{font-size:11px;fill:#444;font-family:'Montserrat',sans-serif;letter-spacing:2.5px;font-weight:700;}
-        .badge-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;color:#555;}
-        @keyframes rotateBadge{to{transform:rotate(360deg);}}
-        @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+      /* 비디오 섹션 */
+      .video-section {
+        padding: 60px 5% 20px;    /* ← 좌우 패딩 줄임 */
+        width: 100%;
+        overflow: hidden;          /* ← 추가 */
+      }
+      .video-container {
+        position: relative;
+        width: 100%;
+        height: 520px;
+        border-radius: 40px;
+        overflow: hidden;          /* ← 핵심: 비디오가 라운드 밖으로 나가지 않게 */
+        background-color: #000;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      .video-container video {
+        position: absolute;        /* ← absolute로 변경해 컨테이너에 완전 귀속 */
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-        /* CNS */
-        .cns-wrapper{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;pointer-events:auto;}
-        .cns-letters{display:flex;font-family:'Montserrat';font-size:22vw;font-weight:900;letter-spacing:-0.04em;line-height:.85;user-select:none;white-space:nowrap;}
-        .cns-letter{
-            display:inline-block;
-            background:linear-gradient(135deg,#7b5ff4,#e863ff,#4ecfff,#7b5ff4);
-            background-size:300% 300%;
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-            animation:meshFlow 10s ease infinite alternate,floatBase 6s ease-in-out infinite,cnsEntry 1.4s var(--spring) both;
-            filter:drop-shadow(0 0 50px rgba(123,95,244,.4)) drop-shadow(0 0 100px rgba(232,99,255,.2)) drop-shadow(0 20px 50px rgba(0,0,0,.10));
-            cursor:default;transition:transform .5s var(--spring);will-change:transform,filter;
-        }
-        .cns-letter:nth-child(1){animation-delay:0s,0s,0s;}
-        .cns-letter:nth-child(2){animation-delay:.3s,.8s,.10s;}
-        .cns-letter:nth-child(3){animation-delay:.6s,1.6s,.20s;}
-        .cns-letter:nth-child(4){animation-delay:.9s,2.4s,.30s;}
-        .cns-letter:nth-child(5){animation-delay:1.2s,3.2s,.40s;}
-        .cns-letter:hover{
-            filter:drop-shadow(0 0 70px rgba(123,95,244,.85)) drop-shadow(0 0 140px rgba(232,99,255,.55)) drop-shadow(0 30px 70px rgba(0,0,0,.18)) !important;
-            transform:translateY(-22px) scale(1.05) !important;
-        }
-        @keyframes meshFlow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-        @keyframes floatBase{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
-        @keyframes cnsEntry{from{opacity:0;transform:translateY(80px) scale(.88);filter:blur(40px);}to{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 0 50px rgba(123,95,244,.4)) drop-shadow(0 0 100px rgba(232,99,255,.2));}}
+      section {
+        padding: 100px 5%;        /* ← 좌우 패딩 10% → 5%로 줄임 */
+        width: 100%;
+        border-bottom: 1px solid #f2f2f2;
+        overflow: hidden;
+      }
+      .num {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #E0001A;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .section-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 50px;
+        letter-spacing: -1.5px;
+      }
 
-        /* SCROLL INDICATOR */
-        .scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp 1s 1.6s forwards;}
-        .scroll-indicator span{font-size:10px;letter-spacing:3px;color:#999;}
-        .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,#888,transparent);animation:scrollPulse 2s ease-in-out infinite;}
-        @keyframes scrollPulse{0%,100%{opacity:1;transform:scaleY(1);}50%{opacity:.3;transform:scaleY(.5);transform-origin:top;}}
+      .mission-box {
+        background-color: #f9f9fb;
+        border-radius: 30px;
+        padding: 60px;
+      }
+      .mission-text {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #333;
+        word-break: keep-all;
+      }
+      .mission-text span {
+        color: #E0001A;
+      }
 
-        /* BRILLIANCE */
-        .brilliance{
-            padding: 160px 0 180px;
-            background: linear-gradient(to bottom, #b8e0d8 0%, #dff2ef 40%, #f5fbfa 100%);
-            position: relative; overflow: hidden;
-        }
-        /* 배경 글로우 블롭 */
-        .brilliance::before {
-            content: '';
-            position: absolute;
-            width: 700px; height: 700px;
-            background: radial-gradient(circle, rgba(123,95,244,.12) 0%, transparent 70%);
-            top: -100px; right: -200px;
-            pointer-events: none;
-        }
-        .brilliance::after {
-            content: '';
-            position: absolute;
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(78,207,255,.10) 0%, transparent 70%);
-            bottom: 0; left: -100px;
-            pointer-events: none;
-        }
+      .identity-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 40px;
+        align-items: start;
+        width: 100%;
+      }
+      .id-card {
+        background: #0D0D0D;
+        border-radius: 24px;
+        padding: 120px 20px;
+        color: #fff;
+        text-align: center;
+        position: sticky;
+        top: 120px;
+      }
+      .id-card h3 {
+        font-size: 4rem;
+        font-weight: 900;
+        letter-spacing: 12px;
+      }
+      .color-guide-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .color-item {
+        display: flex;
+        background-color: #f9f9fb;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.3s;
+      }
+      .color-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      }
+      .color-bar {
+        width: 12px;
+        flex-shrink: 0;
+      }
+      .color-info {
+        padding: 25px 30px;
+      }
+      .color-name {
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .color-hex {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #999;
+      }
+      .color-tags {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #666;
+        margin-bottom: 12px;
+      }
+      .color-desc {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: #444;
+        word-break: keep-all;
+      }
 
-        .brilliance-header{text-align:center;margin-bottom:80px;position:relative;z-index:2;}
-        .brilliance-header .b-label{
-            font-size:12px;letter-spacing:6px;text-transform:uppercase;
-            color:rgba(0,0,0,.25);margin-bottom:28px;display:block;
-            font-family:'Montserrat',sans-serif; font-weight:500;
-        }
-        .brilliance-header h2{
-            font-size:48px;font-weight:700;line-height:1.1;
-            margin-bottom:20px;letter-spacing:-1.5px;color:#111;
-        }
-        .brilliance-header h2 em{
-            font-style:normal;
-            background:linear-gradient(120deg,#7b5ff4,#e863ff,#4ecfff);
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-            font-weight:700;
-        }
-        .brilliance-header .sub-kr{
-            font-size:15px;font-weight:300;color:rgba(0,0,0,.3);
-            letter-spacing:3px;
-        }
+      .value-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+      }
+      .value-item h4 {
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #111;
+        display: inline-block;
+        padding-bottom: 5px;
+      }
+      .value-item p {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.7;
+      }
 
-        /* 카드 */
-        .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative;z-index:2;}
-        .card{
-            position:relative;border-radius:22px;overflow:hidden;cursor:pointer;
-            background:#fff;
-            box-shadow: 0 4px 24px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-            transition: box-shadow .4s var(--ease), transform .4s var(--ease);
-        }
-        .card.tall{height:460px;}
-        .card:hover{
-            transform:translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06);
-        }
+      .history-wrap {
+        position: relative;
+        padding-left: 40px;
+      }
+      .history-line {
+        position: absolute;
+        left: 0;
+        top: 10px;
+        bottom: 0;
+        width: 2px;
+        background: #eee;
+      }
+      .history-year-group {
+        position: relative;
+        margin-bottom: 80px;
+      }
+      .history-dot {
+        position: absolute;
+        left: -46px;
+        top: 12px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #000;
+        border: 4px solid #fff;
+        z-index: 2;
+      }
+      .history-row {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      .history-month {
+        width: 60px;
+        font-weight: 800;
+        color: #E0001A;
+        flex-shrink: 0;
+      }
+      .history-detail {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #333;
+      }
 
-        .card-img{width:100%;height:100%;transition:transform .8s var(--ease);}
-        .card-img img{width:100%;height:100%;object-fit:cover;display:block;}
-        .card:hover .card-img{transform:scale(1.04);}
+      @media (max-width: 1024px) {
+        .side-nav { display: none; }
+        .content { margin-left: 0; width: 100%; }
+        .identity-grid { grid-template-columns: 1fr; }
+        .id-card { position: static; padding: 80px 20px; }
+        .value-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="index.html">
+          <span class="main">LOIND</span>
+          <span class="slogan">Beyond what exists</span>
+        </a>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="service.html">SERVICE</a></li>
+          <li><a href="story.html">STORY</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+    </header>
 
-        /* 상단 컬러 글로우 테두리 */
-        .card::before{
-            content:'';position:absolute;inset:0;border-radius:22px;
-            opacity:0;transition:opacity .4s;z-index:1;pointer-events:none;
-        }
-        .card:nth-child(1)::before{box-shadow:inset 0 0 0 1.5px rgba(123,95,244,.5);}
-        .card:nth-child(2)::before{box-shadow:inset 0 0 0 1.5px rgba(232,99,255,.5);}
-        .card:nth-child(3)::before{box-shadow:inset 0 0 0 1.5px rgba(78,207,255,.5);}
-        .card:hover::before{opacity:1;}
+    <aside class="side-nav">
+      <ul>
+        <li><a href="#mission" class="active">01 MISSION</a></li>
+        <li><a href="#identity">02 IDENTITY</a></li>
+        <li><a href="#value">03 VALUE</a></li>
+      </ul>
+    </aside>
 
-        /* 이미지 위 그라데이션 딤 */
-        .card-overlay{
-            position:absolute;inset:0;z-index:1;
-            background:linear-gradient(to top, rgba(0,0,0,.45) 0%, transparent 50%);
-            opacity:.6;transition:opacity .4s;
-        }
-        .card:hover .card-overlay{opacity:.8;}
+    <main class="content">
+      <div class="video-section">
+        <div class="video-container">
+          <video autoplay muted loop playsinline>
+            <source src="https://www.kakaobank.com/view/video/KO/main-intro-visual-video_pc.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
 
-        /* 카드 하단 정보 */
-        .card-info{
-            position:absolute;bottom:0;left:0;right:0;z-index:2;
-            padding:20px;
-            display:flex;align-items:center;gap:12px;
-        }
-        .card-logo{
-            width:40px;height:40px;border-radius:10px;
-            background:rgba(255,255,255,.95);
-            display:flex;align-items:center;justify-content:center;
-            overflow:hidden;flex-shrink:0;
-            box-shadow:0 2px 8px rgba(0,0,0,.12);
-        }
-        .card-logo img{width:28px;height:28px;object-fit:contain;}
-        .card-company{display:flex;flex-direction:column;gap:2px;}
-        .card-company .co-name{font-size:15px;font-weight:700;line-height:1.2;color:#fff;}
-        .card-company .co-category{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.5px;}
+      <section id="mission">
+        <span class="num">01 / VISION & MISSION</span>
+        <h2 class="section-title">우리의 지향점</h2>
+        <div class="mission-box">
+          <p class="mission-text">
+            지금 세상에 있는 것, 이미 정해진 기준, 현재의 수준.<br />
+            거기서 멈추지 않는다. 탁월함을 향해 끊임없이 나아가고,<br />
+            결국 기준 자체를 새로 정의한다.<br />
+            <span>그것이 LOIND가 존재하는 이유다.</span>
+          </p>
+        </div>
+      </section>
 
-        /* REVEAL */
-        .reveal{opacity:0;transform:translateY(44px);transition:opacity .85s var(--ease),transform .85s var(--ease);}
-        .reveal.visible{opacity:1;transform:translateY(0);}
-        .reveal-delay-1{transition-delay:.12s;}
-        .reveal-delay-2{transition-delay:.22s;}
-        .reveal-delay-3{transition-delay:.32s;}
+      <section id="identity">
+        <span class="num">02 / IDENTITY</span>
+        <h2 class="section-title">BRAND Skill</h2>
+        <div class="identity-grid">
+          <div class="id-card">
+            <h3>LOIND</h3>
+          </div>
+          <div class="color-guide-list">
+            <div class="color-item">
+              <div class="color-bar" style="background: #0D0D0D;"></div>
+              <div class="color-info">
+                <div class="color-name">Obsidian Black <span class="color-hex">#0D0D0D</span></div>
+                <div class="color-tags">권위 · 신비 · 냉철함</div>
+                <p class="color-desc">배경 및 메인 텍스트. 무게감의 기준점. Blood Red와 병치 시 긴장감 극대화.</p>
+              </div>
+            </div>
+            <div class="color-item">
+              <div class="color-bar" style="background: #FFFFFF; border-right: 1px solid #eee;"></div>
+              <div class="color-info">
+                <div class="color-name">Pure White <span class="color-hex">#FFFFFF</span></div>
+                <div class="color-tags">극명한 대비 · 완벽주의 · 새로운 시작</div>
+                <p class="color-desc">Obsidian Black과의 충돌로 시각적 긴장 생성. 독립 사용 금지 — 반드시 Black 또는 Red와 함께.</p>
+              </div>
+            </div>
+            <div class="color-item">
+              <div class="color-bar" style="background: #E0001A;"></div>
+              <div class="color-info">
+                <div class="color-name">Blood Red <span class="color-hex">#E0001A</span></div>
+                <div class="color-tags">열정 · 반항 · LOIND의 빛</div>
+                <p class="color-desc">무채색 속 유일한 포인트. 전체 면적의 10% 이하. 로고 마크, 핵심 카피, 강조 요소에만 한정.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        /* VALUES (3단) - 지그재그 카드 */
-        .values {
-            padding: 160px 0;
-            background: #fff;
-        }
-        .values-header {
-            text-align: center;
-            margin-bottom: 100px;
-        }
-        .values-header .v-label {
-            font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
-            color: #bbb; display: block; margin-bottom: 24px;
-        }
-        .values-header h2 {
-            font-size: 48px; font-weight: 700; line-height: 1.1;
-            letter-spacing: -1.5px; color: #111;
-        }
+      <section id="value">
+        <span class="num">03 / CORE VALUE</span>
+        <h2 class="section-title">핵심 가치</h2>
 
-        /* 지그재그 래퍼 */
-        .value-list {
+        <style>
+          /* 5열 한눈에 보기 */
+          .cv-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+          }
+          .cv-card {
+            background: #f9f9fb;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 36px 28px 32px;
+            transition: transform .4s ease, box-shadow .4s ease, border-color .4s;
+            cursor: default;
             display: flex;
             flex-direction: column;
-            gap: 32px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
+            position: relative;
+            overflow: hidden;
+          }
+          /* 카드 상단 레드 라인 */
+          .cv-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: #E0001A;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .4s ease;
+          }
+          .cv-card:hover::before { transform: scaleX(1); }
+          .cv-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 56px rgba(0,0,0,.08);
+            border-color: #e8e8e8;
+          }
+          /* 대형 이니셜 워터마크 */
+          .cv-initial {
+            font-size: 7rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #E0001A;
+            opacity: .05;
+            position: absolute;
+            right: -8px;
+            bottom: -12px;
+            letter-spacing: -4px;
+            transition: opacity .4s ease;
+            user-select: none;
+          }
+          .cv-card:hover .cv-initial { opacity: .10; }
 
-        /* 아이템 행 */
-        .value-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            align-items: center;
-        }
+          .cv-num {
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #E0001A;
+            display: block;
+            margin-bottom: 24px;
+          }
+          .cv-title-en {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: #111;
+            margin-bottom: 6px;
+            line-height: 1.25;
+          }
+          .cv-title-kr {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-bottom: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+          }
+          .cv-body {
+            font-size: 0.82rem;
+            color: #777;
+            line-height: 1.8;
+            flex: 1;
+            word-break: keep-all;
+          }
+          .cv-keyword {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #E0001A;
+            border: 1px solid rgba(224,0,26,.2);
+            background: rgba(224,0,26,.04);
+            padding: 4px 12px;
+            border-radius: 20px;
+          }
 
-        /* 짝수 행: 카드 오른쪽, 글자 왼쪽 */
-        .value-item:nth-child(even) .v-content { order: 2; }
-        .value-item:nth-child(even) .v-letter-block { order: 1; }
-
-        /* 대형 글자 블록 */
-        .v-letter-block {
+          /* 시그니처 마무리 섹션 */
+          .signature-section {
+            background: #0D0D0D;
+            padding: 140px 5%;
             display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: none;
+          }
+          .signature-section::before {
+            content: 'LOIND';
+            position: absolute;
+            right: -40px;
+            bottom: -60px;
+            font-size: 28vw;
+            font-weight: 900;
+            color: #fff;
+            opacity: .02;
+            letter-spacing: -8px;
+            user-select: none;
+            pointer-events: none;
+          }
+          .sig-label {
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #444;
+            margin-bottom: 48px;
+          }
+          .sig-tagline {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 300;
+            color: #555;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            font-style: italic;
+          }
+          .sig-name {
+            font-size: clamp(4rem, 10vw, 9rem);
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -4px;
+            line-height: 0.9;
+            margin-bottom: 40px;
+            position: relative;
+          }
+          /* 서명 밑줄 */
+          .sig-name::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #E0001A;
+            margin-top: 24px;
+            border-radius: 2px;
+          }
+          .sig-sub {
+            font-size: 0.8rem;
+            color: #333;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+          }
+
+          @media (max-width: 1024px) {
+            .cv-grid { grid-template-columns: repeat(2, 1fr); }
+          }
+          @media (max-width: 600px) {
+            .cv-grid { grid-template-columns: 1fr; }
+          }
+        </style>
+
+        <div class="cv-grid">
+          <div class="cv-card">
+            <span class="cv-num">01 / MOTIVATION</span>
+            <p class="cv-title-en">Look Beyond</p>
+            <p class="cv-title-kr">현상 너머의 가치를 발견하는 근원적인 동력</p>
+            <p class="cv-body">눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p>
+            <span class="cv-keyword">MOTIVATION</span>
+            <span class="cv-initial">L</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-num">02 / CONVICTION</span>
+            <p class="cv-title-en">Own your vision</p>
+            <p class="cv-title-kr">우리가 그리는 시야에 대한 흔들림 없는 확신</p>
+            <p class="cv-body">LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p>
+            <span class="cv-keyword">CONVICTION</span>
+            <span class="cv-initial">O</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-num">03 / ACTION</span>
+            <p class="cv-title-en">Iterate without end</p>
+            <p class="cv-title-kr">정점에 닿을 때까지 멈추지 않는 폭발적인 실행</p>
+            <p class="cv-body">단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p>
+            <span class="cv-keyword">ACTION</span>
+            <span class="cv-initial">I</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-num">04 / PERSISTENCE</span>
+            <p class="cv-title-en">Never compromise</p>
+            <p class="cv-title-kr">평범함과 타협하지 않고 본질을 지켜내는 고집</p>
+            <p class="cv-body">'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p>
+            <span class="cv-keyword">PERSISTENCE</span>
+            <span class="cv-initial">N</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-num">05 / GOAL</span>
+            <p class="cv-title-en">Define the era</p>
+            <p class="cv-title-kr">새로운 기준이 되어 시대를 정의하는 궁극의 목적</p>
+            <p class="cv-body">우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다.</p>
+            <span class="cv-keyword">GOAL</span>
+            <span class="cv-initial">D</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 클로징 섹션 -->
+      <section class="closing-section">
+        <style>
+          .closing-section {
+            background: #fff;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-        .v-letter-char {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22vw; font-weight: 900; line-height: 1;
-            background: linear-gradient(135deg, #7b5ff4, #e863ff, #4ecfff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: .08;
-            transition: opacity .5s var(--ease);
-            user-select: none;
-            letter-spacing: -0.04em;
-        }
-        .value-item:hover .v-letter-char { opacity: .18; }
-
-        /* 카드 */
-        .v-content {
-            background: #f9f9f9;
-            border: 1px solid #f0f0f0;
-            border-radius: 24px;
-            padding: 48px 52px;
-            transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .4s;
-            cursor: default;
-        }
-        .v-content:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 64px rgba(0,0,0,.07);
-            border-color: #e4e4e4;
-        }
-        .v-num {
-            font-size: 10px; letter-spacing: 3px; color: #d0d0d0;
-            font-family: 'Montserrat', sans-serif; font-weight: 700;
-            margin-bottom: 24px; display: block;
-        }
-        .v-title-en {
-            font-size: 24px; font-weight: 700; letter-spacing: -.3px;
-            color: #111; margin-bottom: 6px; line-height: 1.2;
-        }
-        .v-title-kr {
-            font-size: 13px; color: #bbb; margin-bottom: 20px;
-        }
-        .v-body {
-            font-size: 14px; color: #777; line-height: 1.85;
-            margin-bottom: 28px;
-        }
-        .v-badge {
-            display: inline-block;
-            font-size: 10px; letter-spacing: 2px; font-weight: 600;
-            padding: 6px 16px; border-radius: 20px;
-        }
-        .value-item:nth-child(1) .v-badge { background:rgba(123,95,244,.08); color:rgba(123,95,244,.85); }
-        .value-item:nth-child(2) .v-badge { background:rgba(232,99,255,.08); color:rgba(200,60,240,.85); }
-        .value-item:nth-child(3) .v-badge { background:rgba(78,207,255,.08);  color:rgba(30,170,230,.85); }
-        .value-item:nth-child(4) .v-badge { background:rgba(255,180,80,.08);  color:rgba(220,140,30,.85); }
-        .value-item:nth-child(5) .v-badge { background:rgba(80,220,140,.08);  color:rgba(40,180,100,.85); }
-
-        /* JOURNAL (4단) - 가로 스크롤 */
-        .journal { padding: 140px 0 0; background: #fff; overflow: hidden; }
-
-        .journal-header {
-            padding: 0 80px;
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-bottom: 56px;
-        }
-        .journal-title {
-            font-size: 72px; font-family: 'Montserrat'; font-weight: 900;
-            letter-spacing: -3px; line-height: 1; color: #111;
-        }
-        .journal-header-right { text-align: right; }
-        .journal-header-right p {
-            font-size: 14px; color: #aaa; line-height: 1.7; margin-bottom: 20px;
-        }
-        .journal-cta {
-            display: inline-flex; align-items: center; gap: 10px;
-            font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-            color: #111; text-decoration: none; font-weight: 700;
-            transition: gap .3s var(--ease);
-        }
-        .journal-cta:hover { gap: 18px; }
-        .journal-cta::after { content: '→'; }
-
-        /* 가로 스크롤 트랙 */
-        .journal-scroll-wrap {
             position: relative;
-        }
-        /* 우측 페이드 아웃 */
-        .journal-scroll-wrap::after {
-            content: '';
-            position: absolute; top: 0; right: 0; bottom: 0;
-            width: 120px;
-            background: linear-gradient(to right, transparent, #fff);
-            pointer-events: none; z-index: 2;
-        }
-
-        #storyBoard {
-            display: flex;
-            gap: 20px;
-            padding: 0 80px 100px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            cursor: grab;
-        }
-        #storyBoard:active { cursor: grabbing; }
-        #storyBoard::-webkit-scrollbar { display: none; }
-
-        /* 카드 */
-        .journal-card {
-            flex: 0 0 340px;
-            min-width: 340px;
-            border-radius: 20px;
             overflow: hidden;
-            background: #f5f5f5;
-            transition: transform .4s var(--ease), box-shadow .4s var(--ease);
-            cursor: pointer;
-        }
-        .journal-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 56px rgba(0,0,0,.10);
-        }
-        .journal-card .card-img {
-            height: 260px; overflow: hidden;
-        }
-        .journal-card .card-img img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform .7s var(--ease);
-            filter: saturate(.9);
-        }
-        .journal-card:hover .card-img img { transform: scale(1.05); }
-        .journal-card .card-info {
-            padding: 28px 30px 32px;
-        }
-        .journal-card .card-info span {
-            font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-            color: #bbb; font-weight: 700; display: block; margin-bottom: 12px;
-        }
-        .journal-card .card-info h4 {
-            font-size: 18px; font-weight: 700; line-height: 1.4;
-            color: #111; margin-bottom: 10px; letter-spacing: -.2px;
-        }
-        .journal-card .card-info p {
-            font-size: 13px; color: #999; line-height: 1.7;
-        }
+            border-bottom: none;
+            padding: 100px 5%;
+          }
 
-        /* 플레이스홀더 카드 (Firebase 로딩 전) */
-        .journal-card.placeholder .card-img {
-            background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
-        }
-        .journal-card.placeholder .card-info h4 {
-            background: #ebebeb; border-radius: 4px;
-            color: transparent; height: 20px; margin-bottom: 12px;
-        }
-        .journal-card.placeholder .card-info p {
-            background: #f0f0f0; border-radius: 4px;
-            color: transparent; height: 14px;
-        }
+          .closing-label {
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #ccc;
+            margin-bottom: 48px;
+            font-weight: 600;
+          }
 
-        /* FOOTER */
-        footer{background:#0a0a0a;color:#fff;padding:120px 0 60px;}
-        .footer-logo{font-size:80px;font-weight:900;font-family:'Montserrat';margin-bottom:12px;display:flex;letter-spacing:-2px;}
-        .footer-logo span{display:inline-block;transition:transform .35s var(--spring),color .35s;cursor:default;}
-        .footer-logo span:hover{transform:translateY(-10px);color:#7b5ff4;}
-        .footer-desc{font-size:20px;color:#444;margin-bottom:90px;}
-        .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:120px;}
-        .footer-info h4,.footer-form h4{font-size:11px;color:#333;margin-bottom:24px;letter-spacing:2px;text-transform:uppercase;}
-        .footer-info p{color:#555;line-height:2.2;font-size:14px;}
-        .form-row{display:flex;gap:16px;}
-        input,textarea{flex:1;background:transparent;border:none;border-bottom:1px solid #1e1e1e;padding:14px 0;color:#fff;font-family:inherit;font-size:14px;outline:none;transition:border-color .3s;}
-        input:focus,textarea:focus{border-color:#555;}
-        textarea{width:100%;height:90px;margin-top:16px;margin-bottom:28px;resize:none;}
-        ::placeholder{color:#2a2a2a;}
-        .btn-submit{background:transparent;color:#fff;border:1px solid #2a2a2a;padding:14px 40px;border-radius:40px;font-weight:600;font-size:13px;cursor:pointer;letter-spacing:1px;transition:background .3s,border-color .3s,color .3s;}
-        .btn-submit:hover{background:#fff;color:#000;border-color:#fff;}
-        .footer-bottom{margin-top:80px;padding-top:32px;border-top:1px solid #111;display:flex;justify-content:space-between;align-items:center;}
-        .footer-copy{font-size:12px;color:#2a2a2a;}
-        .footer-links{display:flex;gap:28px;}
-        .footer-links a{font-size:12px;color:#2a2a2a;text-decoration:none;transition:color .3s;}
-        .footer-links a:hover{color:#777;}
+          /* 글자 묶음 */
+          .closing-brand {
+            display: flex;
+            align-items: flex-end;
+            gap: 0;
+            line-height: 1;
+          }
 
-        @media(max-width:1100px){
-            .cns-letters{font-size:52vw;}
-            .card-grid,.work-list-inner,.journal-inner,.footer-grid{grid-template-columns:1fr;}
-            .hero-text h1{font-size:36px;}
-        }
-    </style>
-</head>
-<body>
+          /* 개별 글자 */
+          .closing-brand .c {
+            display: inline-block;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            color: #111;
+            letter-spacing: -2px;
+            animation: bounce 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+            animation-play-state: paused;
+          }
 
-<header>
-    <h1><a href="index.html">LOIND</a></h1>
-    <nav>
-        <ul>
-            <li><a href="about.html">ABOUT</a></li>
-            <li><a href="service.html">SERVICE</a></li>
-            <li><a href="story.html">STORY</a></li>
-            <li><a href="contact.html">CONTACT</a></li>
-        </ul>
-    </nav>
-</header>
+          /* 공백 */
+          .closing-brand .space {
+            display: inline-block;
+            width: clamp(1rem, 2.5vw, 2.5rem);
+          }
 
-<section class="hero">
-    <canvas id="hero-canvas"></canvas>
-    <div class="hero-text">
-        <p class="sub-title">존재하는 것을 넘어</p>
-        <h1>Beyond<br>what exists</h1>
-    </div>
-    <div class="cns-wrapper" id="cnsWrapper">
-        <div class="cns-letters">
-            <span class="cns-letter">L</span>
-            <span class="cns-letter">O</span>
-            <span class="cns-letter">I</span>
-            <span class="cns-letter">N</span>
-            <span class="cns-letter">D</span>
+          /* CORPORATION은 살짝 작게 */
+          .closing-brand .corp .c {
+            font-size: clamp(3rem, 8vw, 8rem);
+            color: #111;
+          }
+
+          /* 레드 포인트 — 마지막 N */
+          .closing-brand .red { color: #E0001A; }
+
+          @keyframes bounce {
+            0%   { transform: translateY(0); }
+            20%  { transform: translateY(-28px); }
+            40%  { transform: translateY(0); }
+            55%  { transform: translateY(-12px); }
+            70%  { transform: translateY(0); }
+            82%  { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+          }
+
+          /* 하단 카피 */
+          .closing-copy {
+            margin-top: 40px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #ddd;
+            text-transform: uppercase;
+          }
+        </style>
+
+        <p class="closing-label">We are</p>
+        <div class="closing-brand" id="closingBrand">
+          <span class="loind">
+            <span class="c" data-i="0">L</span><span class="c" data-i="1">O</span><span class="c" data-i="2">I</span><span class="c" data-i="3">N</span><span class="c red" data-i="4">D</span>
+          </span>
+          <span class="space"></span>
+          <span class="corp">
+            <span class="c" data-i="5">C</span><span class="c" data-i="6">O</span><span class="c" data-i="7">R</span><span class="c" data-i="8">P</span><span class="c" data-i="9">O</span><span class="c" data-i="10">R</span><span class="c" data-i="11">A</span><span class="c" data-i="12">T</span><span class="c" data-i="13">I</span><span class="c" data-i="14">O</span><span class="c" data-i="15">N</span>
+          </span>
         </div>
-    </div>
-    <div class="badge-ring">
-        <svg viewBox="0 0 100 100">
-            <defs><path id="circlePath" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1-74,0"/></defs>
-            <text><textPath href="#circlePath">AGENTIC AI · LOIND · BEYOND ·&nbsp;</textPath></text>
-        </svg>
-        <div class="badge-center">✦</div>
-    </div>
-    <div class="scroll-indicator">
-        <span>SCROLL</span>
-        <div class="scroll-line"></div>
-    </div>
-</section>
+        <p class="closing-copy">Beyond what exists · Seoul · Est. 2025</p>
 
-<section class="brilliance">
-    <div class="container">
-        <div class="brilliance-header">
-            <p class="b-label reveal">Our Insights</p>
-            <h2 class="reveal reveal-delay-1">Lighting up LOIND's <em>unique brilliance</em><br>in a colorless business world.</h2>
-            <p class="sub-kr reveal reveal-delay-2">'존재하는 것 너머로'</p>
-        </div>
-        <div class="card-grid">
-            <div class="card tall reveal reveal-delay-1">
-                <div class="card-img"><img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=800" alt=""></div>
-                <div class="card-overlay"></div>
-                <div class="card-info">
-                    <div class="card-logo" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;">
-                        <span style="color:#fff;font-family:'Montserrat';font-weight:900;font-size:9px;letter-spacing:1px;">LODEN</span>
-                    </div>
-                    <div class="card-company">
-                        <span class="co-name">LODEN</span>
-                        <span class="co-category">Creative Tech Studio</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card tall reveal reveal-delay-2">
-                <div class="card-img"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800" alt=""></div>
-                <div class="card-overlay"></div>
-                <div class="card-info">
-                    <div class="card-logo" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;">
-                        <span style="color:#fff;font-family:'Montserrat';font-weight:900;font-size:11px;letter-spacing:1px;">LOER</span>
-                    </div>
-                    <div class="card-company">
-                        <span class="co-name">LOER</span>
-                        <span class="co-category">Agency</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card tall reveal reveal-delay-3">
-                <div class="card-img"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800" alt=""></div>
-                <div class="card-overlay"></div>
-                <div class="card-info">
-                    <div class="card-logo" style="background:#333;display:flex;align-items:center;justify-content:center;">
-                        <span style="color:#888;font-family:'Montserrat';font-weight:900;font-size:11px;letter-spacing:1px;">TBD</span>
-                    </div>
-                    <div class="card-company">
-                        <span class="co-name">TBD</span>
-                        <span class="co-category">Coming Soon</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <script>
+          (function() {
+            const letters = document.querySelectorAll('#closingBrand .c');
 
-<section class="values">
-    <div class="container">
-        <div class="values-header reveal">
-            <span class="v-label">Our Values</span>
-            <h2>LOIND에서<br>일한다는 것</h2>
-        </div>
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  letters.forEach((el, i) => {
+                    setTimeout(() => {
+                      el.style.animationPlayState = 'running';
+                    }, i * 80);
+                  });
+                  observer.disconnect();
+                }
+              });
+            }, { threshold: 0.5 });
 
-        <div class="value-list">
-
-            <div class="value-item reveal">
-                <div class="v-content">
-                    <span class="v-num">01</span>
-                    <p class="v-title-en">Lead with excellence.</p>
-                    <p class="v-title-kr">탁월함으로 이끈다.</p>
-                    <p class="v-body">LOIND가 하는 모든 것의 출발점. 탁월함은 결과가 아니라 시작점이다. 우리가 기준을 먼저 정하고, 그 기준으로 움직인다.</p>
-                    <span class="v-badge">기 준</span>
-                </div>
-                <div class="v-letter-block">
-                    <span class="v-letter-char">L</span>
-                </div>
-            </div>
-
-            <div class="value-item reveal reveal-delay-1">
-                <div class="v-letter-block">
-                    <span class="v-letter-char">O</span>
-                </div>
-                <div class="v-content">
-                    <span class="v-num">02</span>
-                    <p class="v-title-en">Obsess over quality.</p>
-                    <p class="v-title-kr">품질에 집착한다.</p>
-                    <p class="v-body">준비하는 과정부터 일하는 태도, 결과물까지 흔한 것은 없다. 그 집착이 결과물의 격을 만든다.</p>
-                    <span class="v-badge">완 성 도</span>
-                </div>
-            </div>
-
-            <div class="value-item reveal reveal-delay-1">
-                <div class="v-content">
-                    <span class="v-num">03</span>
-                    <p class="v-title-en">Inspire at every touch.</p>
-                    <p class="v-title-kr">모든 접점에서 특별함을 남긴다.</p>
-                    <p class="v-body">LOIND라는 이름을 달고 만나는 모든 것은 특별해야 한다. 첫 대화부터 최종 납품까지.</p>
-                    <span class="v-badge">경 험</span>
-                </div>
-                <div class="v-letter-block">
-                    <span class="v-letter-char">I</span>
-                </div>
-            </div>
-
-            <div class="value-item reveal reveal-delay-2">
-                <div class="v-letter-block">
-                    <span class="v-letter-char">N</span>
-                </div>
-                <div class="v-content">
-                    <span class="v-num">04</span>
-                    <p class="v-title-en">Name that matters.</p>
-                    <p class="v-title-kr">이름이 곧 가치다.</p>
-                    <p class="v-body">똑같은 상품도, 똑같은 서비스도 LOIND가 만지면 달라 보여야 한다. 이름 자체가 신뢰이고 프리미엄이다.</p>
-                    <span class="v-badge">정 체 성</span>
-                </div>
-            </div>
-
-            <div class="value-item reveal reveal-delay-2">
-                <div class="v-content">
-                    <span class="v-num">05</span>
-                    <p class="v-title-en">Define the standard.</p>
-                    <p class="v-title-kr">기준 자체가 된다.</p>
-                    <p class="v-body">탁월함의 끝은 기준을 따르는 것이 아니라 기준이 되는 것이다. 세상이 우리를 보고 기준을 다시 정의하게 만드는 것.</p>
-                    <span class="v-badge">목 표</span>
-                </div>
-                <div class="v-letter-block">
-                    <span class="v-letter-char">D</span>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<section class="journal">
-    <div class="journal-header reveal">
-        <div class="journal-title">JOURNAL.</div>
-        <div class="journal-header-right">
-            <p>우리는 단순히 기술을 만드는 것을 넘어,<br>사용자의 삶에 스며드는 디지털 가치를 탐구합니다.</p>
-            <a href="story.html" class="journal-cta">View All Stories</a>
-        </div>
-    </div>
-    <div class="journal-scroll-wrap">
-        <div id="storyBoard"></div>
-    </div>
-</section>
-
-<footer>
-    <div class="container">
-        <div class="footer-logo">
-            <span>L</span><span>O</span><span>I</span><span>N</span><span>D</span>
-        </div>
-        <p class="footer-desc">Beyond what exists</p>
-        <div class="footer-grid" style="grid-template-columns:1fr 1fr 1fr;gap:60px;">
-            <div class="footer-info reveal">
-                <h4>Contact</h4>
-                <p>서울 강남구 테헤란로 DX 빌딩<br>dhday@loind.com</p>
-            </div>
-            <div class="footer-info reveal reveal-delay-1">
-                <h4>Navigate</h4>
-                <p><a href="about.html" style="color:#555;text-decoration:none;display:block;line-height:2.2;">About</a>
-                <a href="service.html" style="color:#555;text-decoration:none;display:block;line-height:2.2;">Service</a>
-                <a href="story.html" style="color:#555;text-decoration:none;display:block;line-height:2.2;">Story</a>
-                <a href="contact.html" style="color:#555;text-decoration:none;display:block;line-height:2.2;">Contact</a></p>
-            </div>
-            <div class="footer-info reveal reveal-delay-2">
-                <h4>Brand</h4>
-                <p><span style="display:block;line-height:2.2;color:#555;">LODEN</span>
-                <span style="display:block;line-height:2.2;color:#555;">LOER</span>
-                <span style="display:block;line-height:2.2;color:#333;">TBD</span></p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p class="footer-copy">© 2025 LOIND. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Seoul, KR</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script type="module">
-/* 1. 파티클 */
-(function(){
-    const canvas=document.getElementById('hero-canvas'),ctx=canvas.getContext('2d');
-    let W,H,particles,mouse={x:-9999,y:-9999};
-    const COLS=['rgba(123,95,244,','rgba(232,99,255,','rgba(78,207,255,'],N=50,CONN=140,REP=100;
-    function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;init();}
-    function init(){particles=Array.from({length:N},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.8+.6,col:COLS[Math.floor(Math.random()*3)],a:Math.random()*.3+.1}));}
-    function draw(){
-        ctx.clearRect(0,0,W,H);
-        for(const p of particles){
-            const dx=p.x-mouse.x,dy=p.y-mouse.y,d=Math.hypot(dx,dy);
-            if(d<REP&&d>0){const f=(REP-d)/REP;p.x+=(dx/d)*f*2.5;p.y+=(dy/d)*f*2.5;}
-            p.x+=p.vx;p.y+=p.vy;
-            if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
-            ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.col+p.a+')';ctx.fill();
-        }
-        for(let i=0;i<particles.length;i++)for(let j=i+1;j<particles.length;j++){
-            const a=particles[i],b=particles[j],d=Math.hypot(a.x-b.x,a.y-b.y);
-            if(d<CONN){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(123,95,244,${(1-d/CONN)*.11})`;ctx.lineWidth=.6;ctx.stroke();}
-        }
-        requestAnimationFrame(draw);
-    }
-    window.addEventListener('resize',resize);
-    document.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
-    resize();draw();
-})();
-
-/* 2. CNS Magnetic + 동적 광원 */
-(function(){
-    const wrapper=document.getElementById('cnsWrapper');
-    const letters=wrapper.querySelectorAll('.cns-letter');
-    let mx=0,my=0;
-    const offsets=Array.from(letters,()=>({x:0,y:0}));
-    const targets=Array.from(letters,()=>({x:0,y:0}));
-    const R=280,S=.55,D=.07;
-    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-    function tick(){
-        letters.forEach((el,i)=>{
-            const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-            const dx=mx-cx,dy=my-cy,dist=Math.hypot(dx,dy);
-            if(dist<R){const f=(R-dist)/R;targets[i].x=-dx*f*S;targets[i].y=-dy*f*S*.45;}
-            else{targets[i].x=0;targets[i].y=0;}
-            offsets[i].x+=(targets[i].x-offsets[i].x)*D;
-            offsets[i].y+=(targets[i].y-offsets[i].y)*D;
-            el.style.transform=`translate(${offsets[i].x}px,${offsets[i].y}px)`;
-            const prox=Math.max(0,1-dist/600),nx=dx/(dist||1),ny=dy/(dist||1);
-            const glow=48+prox*38,sx=-nx*14*prox,sy=-ny*14*prox,op=.36+prox*.38;
-            el.style.filter=`drop-shadow(${sx}px ${sy}px ${glow}px rgba(123,95,244,${op})) drop-shadow(0 0 100px rgba(232,99,255,${prox*.28})) drop-shadow(0 20px 50px rgba(0,0,0,.10))`;
-        });
-        requestAnimationFrame(tick);
-    }
-    setTimeout(()=>{
-        letters.forEach(el=>{el.style.animation='meshFlow 10s ease infinite alternate,floatBase 6s ease-in-out infinite';});
-        tick();
-    },1500);
-})();
-
-/* 4. CNS 패럴랙스 */
-(function(){
-    const cns=document.getElementById('cnsWrapper');
-    window.addEventListener('scroll',()=>{
-        const sy=window.scrollY;
-        cns.style.transform=`translate(-50%,calc(-50% + ${sy*.22}px))`;
-        cns.style.opacity=Math.max(0,1-sy/550);
-    },{passive:true});
-})();
-
-/* 5. Reveal */
-(function(){
-    const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.12});
-    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-})();
-
-/* 6. Journal - Firebase + 드래그/휠 스크롤 */
-(function(){
-    const board = document.getElementById('storyBoard');
-
-    const samples = [
-        { category: 'PROJECT',  title: 'AI Agent Platform',   desc: '에이전틱 AI 기반 업무 자동화 플랫폼 구축',   img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800' },
-        { category: 'BRANDING', title: 'Corporate Identity',  desc: '글로벌 DT 전략 파트너 브랜드 리뉴얼',         img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800' },
-        { category: 'INSIGHT',  title: 'Design System v3.0', desc: '확장 가능한 디자인 시스템 아키텍처 설계',     img: 'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800' },
-        { category: 'PROJECT',  title: 'DT Strategy',         desc: '비즈니스 디지털 전환 전략 수립 및 실행',     img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800' },
-    ];
-
-    function renderCards(list) {
-        board.innerHTML = '';
-        list.forEach(d => {
-            const card = document.createElement('div');
-            card.className = 'journal-card';
-            card.innerHTML = `
-                <div class="card-img"><img src="${d.img}" alt="${d.title}"></div>
-                <div class="card-info">
-                    <span>${d.category}</span>
-                    <h4>${d.title}</h4>
-                    <p>${d.desc}</p>
-                </div>`;
-            board.appendChild(card);
-        });
-    }
-
-    /* 샘플 먼저 즉시 렌더 */
-    renderCards(samples);
-
-    /* Firebase 연결 시 실데이터로 교체 */
-    import('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js').then(({ initializeApp }) =>
-    import('https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js').then(({ getFirestore, collection, query, orderBy, onSnapshot }) => {
-        const app = initializeApp({
-            apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
-            authDomain: "loind-472cd.firebaseapp.com",
-            projectId: "loind-472cd",
-            storageBucket: "loind-472cd.firebasestorage.app",
-            messagingSenderId: "405998534289",
-            appId: "1:405998534289:web:0f861bc822e1ea5391c930"
-        });
-        const db = getFirestore(app);
-        onSnapshot(query(collection(db, 'stories'), orderBy('createdAt', 'desc')), (snapshot) => {
-            if (snapshot.empty) return;
-            board.innerHTML = '';
-            snapshot.forEach((doc) => {
-                const d = doc.data();
-                const card = document.createElement('div');
-                card.className = 'journal-card';
-                card.innerHTML = `
-                    <div class="card-img"><img src="${d.img || ''}" alt="${d.title || ''}"></div>
-                    <div class="card-info">
-                        <span>${d.category || 'PROJECT'}</span>
-                        <h4>${d.title || ''}</h4>
-                        <p>${d.desc || ''}</p>
-                    </div>`;
-                board.appendChild(card);
-            });
-        });
-    })).catch(() => { /* 샘플 유지 */ });
-
-    /* 휠 → 가로 스크롤 */
-    board.addEventListener('wheel', (e) => {
-        if (e.deltaY !== 0) {
-            e.preventDefault();
-            board.scrollTo({ left: board.scrollLeft + e.deltaY * 1.5, behavior: 'smooth' });
-        }
-    }, { passive: false });
-
-    /* 드래그 스크롤 */
-    let isDown = false, startX, scrollLeft;
-    board.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - board.offsetLeft; scrollLeft = board.scrollLeft; });
-    board.addEventListener('mouseleave', () => { isDown = false; });
-    board.addEventListener('mouseup',    () => { isDown = false; });
-    board.addEventListener('mousemove',  e => {
-        if (!isDown) return;
-        e.preventDefault();
-        board.scrollLeft = scrollLeft - (e.pageX - board.offsetLeft - startX) * 1.5;
-    });
-})();
-</script>
-</body>
+            observer.observe(document.getElementById('closingBrand'));
+          })();
+        </script>
+      </section>
+    </main>
+  </body>
 </html>
