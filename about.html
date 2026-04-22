@@ -6,304 +6,54 @@
     <title>About | LOIND</title>
     <style>
       @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      ul {
-        list-style: none;
-      }
-      body {
-        background-color: #fff;
-        color: #000;
-        font-family: "Pretendard", sans-serif;
-      }
-
-      /*header*/
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 50px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        z-index: 1000;
-        border-bottom: 1px solid #f2f2f2;
-        transition: 0.3s;
-      }
-      h1 .main {
-        font-size: 1.5rem;
-        font-weight: 900;
-        letter-spacing: 2px;
-      }
-      .slogan {
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #E0001A;
-        margin-left: 5px;
-        border-left: 1px solid #eee;
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: 0.4s;
-        white-space: nowrap;
-        display: inline-block;
-      }
-      h1:hover .slogan {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      nav ul {
-        display: flex;
-        gap: 35px;
-      }
-      nav li {
-        font-size: 0.85rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        transition: 0.3s;
-      }
-      nav li:hover {
-        opacity: 0.5;
-      }
-
-      .side-nav {
-        position: fixed;
-        top: 80px;
-        left: 0;
-        width: 250px;
-        height: calc(100vh - 80px);
-        padding: 60px 50px;
-        border-right: 1px solid #f2f2f2;
-        background: #fff;
-        z-index: 100;
-      }
-      .side-nav ul {
-        list-style: none;
-      }
-      .side-nav li {
-        margin-bottom: 25px;
-      }
-      .side-nav a {
-        color: #bbb;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-        transition: 0.3s;
-      }
-      .side-nav a.active,
-      .side-nav a:hover {
-        color: #000;
-      }
-
-      .content {
-        margin-left: 250px;
-        padding-top: 80px;
-        width: calc(100% - 250px); /* ← 추가: 사이드 너비만큼 빼줌 */
-        overflow: hidden;          /* ← 추가: 자식 요소 넘침 방지 */
-      }
-
-      /* 비디오 섹션 */
-      .video-section {
-        padding: 60px 5% 20px;    /* ← 좌우 패딩 줄임 */
-        width: 100%;
-        overflow: hidden;          /* ← 추가 */
-      }
-      .video-container {
-        position: relative;
-        width: 100%;
-        height: 520px;
-        border-radius: 40px;
-        overflow: hidden;          /* ← 핵심: 비디오가 라운드 밖으로 나가지 않게 */
-        background-color: #000;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      }
-      .video-container video {
-        position: absolute;        /* ← absolute로 변경해 컨테이너에 완전 귀속 */
-        top: 0; left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      section {
-        padding: 100px 5%;        /* ← 좌우 패딩 10% → 5%로 줄임 */
-        width: 100%;
-        border-bottom: 1px solid #f2f2f2;
-        overflow: hidden;
-      }
-      .num {
-        font-size: 0.75rem;
-        font-weight: 800;
-        color: #E0001A;
-        letter-spacing: 2px;
-        margin-bottom: 20px;
-        display: block;
-      }
-      .section-title {
-        font-size: 2.8rem;
-        font-weight: 800;
-        margin-bottom: 50px;
-        letter-spacing: -1.5px;
-      }
-
-      .mission-box {
-        background-color: #f9f9fb;
-        border-radius: 30px;
-        padding: 60px;
-      }
-      .mission-text {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: #333;
-        word-break: keep-all;
-      }
-      .mission-text span {
-        color: #E0001A;
-      }
-
-      .identity-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 40px;
-        align-items: start;
-        width: 100%;
-      }
-      .id-card {
-        background: #0D0D0D;
-        border-radius: 24px;
-        padding: 120px 20px;
-        color: #fff;
-        text-align: center;
-        position: sticky;
-        top: 120px;
-      }
-      .id-card h3 {
-        font-size: 4rem;
-        font-weight: 900;
-        letter-spacing: 12px;
-      }
-      .color-guide-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-      .color-item {
-        display: flex;
-        background-color: #f9f9fb;
-        border-radius: 15px;
-        overflow: hidden;
-        transition: 0.3s;
-      }
-      .color-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-      }
-      .color-bar {
-        width: 12px;
-        flex-shrink: 0;
-      }
-      .color-info {
-        padding: 25px 30px;
-      }
-      .color-name {
-        font-size: 1rem;
-        font-weight: 800;
-        margin-bottom: 5px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .color-hex {
-        font-size: 0.8rem;
-        font-weight: 400;
-        color: #999;
-      }
-      .color-tags {
-        font-size: 0.8rem;
-        font-weight: 700;
-        color: #666;
-        margin-bottom: 12px;
-      }
-      .color-desc {
-        font-size: 0.85rem;
-        line-height: 1.6;
-        color: #444;
-        word-break: keep-all;
-      }
-
-      .value-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-      }
-      .value-item h4 {
-        font-size: 1.4rem;
-        font-weight: 800;
-        margin-bottom: 15px;
-        border-bottom: 2px solid #111;
-        display: inline-block;
-        padding-bottom: 5px;
-      }
-      .value-item p {
-        color: #666;
-        font-size: 1rem;
-        line-height: 1.7;
-      }
-
-      .history-wrap {
-        position: relative;
-        padding-left: 40px;
-      }
-      .history-line {
-        position: absolute;
-        left: 0;
-        top: 10px;
-        bottom: 0;
-        width: 2px;
-        background: #eee;
-      }
-      .history-year-group {
-        position: relative;
-        margin-bottom: 80px;
-      }
-      .history-dot {
-        position: absolute;
-        left: -46px;
-        top: 12px;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: #000;
-        border: 4px solid #fff;
-        z-index: 2;
-      }
-      .history-row {
-        display: flex;
-        margin-bottom: 20px;
-      }
-      .history-month {
-        width: 60px;
-        font-weight: 800;
-        color: #E0001A;
-        flex-shrink: 0;
-      }
-      .history-detail {
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: #333;
-      }
-
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      a { color: inherit; text-decoration: none; }
+      ul { list-style: none; }
+      body { background-color: #fff; color: #000; font-family: "Pretendard", sans-serif; }
+      header { position: fixed; top: 0; left: 0; width: 100%; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #f2f2f2; transition: 0.3s; }
+      h1 .main { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
+      .slogan { font-size: 0.7rem; font-weight: 700; color: #E0001A; margin-left: 5px; border-left: 1px solid #eee; opacity: 0; transform: translateX(-10px); transition: 0.4s; white-space: nowrap; display: inline-block; }
+      h1:hover .slogan { opacity: 1; transform: translateX(0); }
+      nav ul { display: flex; gap: 35px; }
+      nav li { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
+      nav li:hover { opacity: 0.5; }
+      .side-nav { position: fixed; top: 80px; left: 0; width: 250px; height: calc(100vh - 80px); padding: 60px 50px; border-right: 1px solid #f2f2f2; background: #fff; z-index: 100; }
+      .side-nav ul { list-style: none; }
+      .side-nav li { margin-bottom: 25px; }
+      .side-nav a { color: #bbb; text-decoration: none; font-weight: 600; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; }
+      .side-nav a.active, .side-nav a:hover { color: #000; }
+      .content { margin-left: 250px; padding-top: 80px; width: calc(100% - 250px); overflow: hidden; }
+      .video-section { padding: 60px 5% 20px; width: 100%; overflow: hidden; }
+      .video-container { position: relative; width: 100%; height: 520px; border-radius: 40px; overflow: hidden; background-color: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+      .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+      section { padding: 100px 5%; width: 100%; border-bottom: 1px solid #f2f2f2; overflow: hidden; }
+      .num { font-size: 0.75rem; font-weight: 800; color: #E0001A; letter-spacing: 2px; margin-bottom: 20px; display: block; }
+      .section-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 50px; letter-spacing: -1.5px; }
+      .mission-box { background-color: #f9f9fb; border-radius: 30px; padding: 60px; }
+      .mission-text { font-size: 1.6rem; font-weight: 700; color: #333; word-break: keep-all; }
+      .mission-text span { color: #E0001A; }
+      .identity-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: start; width: 100%; }
+      .id-card { background: #0D0D0D; border-radius: 24px; padding: 120px 20px; color: #fff; text-align: center; position: sticky; top: 120px; }
+      .id-card h3 { font-size: 4rem; font-weight: 900; letter-spacing: 12px; }
+      .color-guide-list { display: flex; flex-direction: column; gap: 15px; }
+      .color-item { display: flex; background-color: #f9f9fb; border-radius: 15px; overflow: hidden; transition: 0.3s; }
+      .color-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+      .color-bar { width: 12px; flex-shrink: 0; }
+      .color-info { padding: 25px 30px; }
+      .color-name { font-size: 1rem; font-weight: 800; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+      .color-hex { font-size: 0.8rem; font-weight: 400; color: #999; }
+      .color-tags { font-size: 0.8rem; font-weight: 700; color: #666; margin-bottom: 12px; }
+      .color-desc { font-size: 0.85rem; line-height: 1.6; color: #444; word-break: keep-all; }
+      .value-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+      .value-item h4 { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; border-bottom: 2px solid #111; display: inline-block; padding-bottom: 5px; }
+      .value-item p { color: #666; font-size: 1rem; line-height: 1.7; }
+      .history-wrap { position: relative; padding-left: 40px; }
+      .history-line { position: absolute; left: 0; top: 10px; bottom: 0; width: 2px; background: #eee; }
+      .history-year-group { position: relative; margin-bottom: 80px; }
+      .history-dot { position: absolute; left: -46px; top: 12px; width: 14px; height: 14px; border-radius: 50%; background: #000; border: 4px solid #fff; z-index: 2; }
+      .history-row { display: flex; margin-bottom: 20px; }
+      .history-month { width: 60px; font-weight: 800; color: #E0001A; flex-shrink: 0; }
+      .history-detail { font-size: 1.1rem; font-weight: 500; color: #333; }
       @media (max-width: 1024px) {
         .side-nav { display: none; }
         .content { margin-left: 0; width: 100%; }
@@ -336,6 +86,7 @@
         <li><a href="#mission" class="active">01 MISSION</a></li>
         <li><a href="#identity">02 IDENTITY</a></li>
         <li><a href="#value">03 VALUE</a></li>
+        <li><a href="#standard">04 STANDARD</a></li>
       </ul>
     </aside>
 
@@ -365,9 +116,7 @@
         <span class="num">02 / IDENTITY</span>
         <h2 class="section-title">BRAND Skill</h2>
         <div class="identity-grid">
-          <div class="id-card">
-            <h3>LOIND</h3>
-          </div>
+          <div class="id-card"><h3>LOIND</h3></div>
           <div class="color-guide-list">
             <div class="color-item">
               <div class="color-bar" style="background: #0D0D0D;"></div>
@@ -400,216 +149,187 @@
       <section id="value">
         <span class="num">03 / CORE VALUE</span>
         <h2 class="section-title">핵심 가치</h2>
-
         <style>
-          /* 5열 한눈에 보기 */
-          .cv-grid {
+          .cv-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+          .cv-card { background: #f9f9fb; border: 1px solid #f0f0f0; border-radius: 20px; padding: 36px 28px 32px; transition: transform .4s ease, box-shadow .4s ease, border-color .4s; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+          .cv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #E0001A; transform: scaleX(0); transform-origin: left; transition: transform .4s ease; }
+          .cv-card:hover::before { transform: scaleX(1); }
+          .cv-card:hover { transform: translateY(-8px); box-shadow: 0 24px 56px rgba(0,0,0,.08); border-color: #e8e8e8; }
+          .cv-initial { font-size: 7rem; font-weight: 900; line-height: 1; color: #E0001A; opacity: .05; position: absolute; right: -8px; bottom: -12px; letter-spacing: -4px; transition: opacity .4s ease; user-select: none; }
+          .cv-card:hover .cv-initial { opacity: .10; }
+          .cv-num { font-size: 0.62rem; font-weight: 800; letter-spacing: 3px; color: #E0001A; display: block; margin-bottom: 24px; }
+          .cv-title-en { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.3px; color: #111; margin-bottom: 6px; line-height: 1.25; }
+          .cv-title-kr { font-size: 0.75rem; color: #aaa; margin-bottom: 16px; font-weight: 500; line-height: 1.5; }
+          .cv-body { font-size: 0.82rem; color: #777; line-height: 1.8; flex: 1; word-break: keep-all; }
+          .cv-keyword { display: inline-block; margin-top: 20px; font-size: 0.6rem; font-weight: 700; letter-spacing: 2px; color: #E0001A; border: 1px solid rgba(224,0,26,.2); background: rgba(224,0,26,.04); padding: 4px 12px; border-radius: 20px; }
+          @media (max-width: 1024px) { .cv-grid { grid-template-columns: repeat(2, 1fr); } }
+          @media (max-width: 600px) { .cv-grid { grid-template-columns: 1fr; } }
+        </style>
+        <div class="cv-grid">
+          <div class="cv-card"><span class="cv-num">01 / MOTIVATION</span><p class="cv-title-en">Look Beyond</p><p class="cv-title-kr">현상 너머의 가치를 발견하는 근원적인 동력</p><p class="cv-body">눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p><span class="cv-keyword">MOTIVATION</span><span class="cv-initial">L</span></div>
+          <div class="cv-card"><span class="cv-num">02 / CONVICTION</span><p class="cv-title-en">Own your vision</p><p class="cv-title-kr">우리가 그리는 시야에 대한 흔들림 없는 확신</p><p class="cv-body">LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p><span class="cv-keyword">CONVICTION</span><span class="cv-initial">O</span></div>
+          <div class="cv-card"><span class="cv-num">03 / ACTION</span><p class="cv-title-en">Iterate without end</p><p class="cv-title-kr">정점에 닿을 때까지 멈추지 않는 폭발적인 실행</p><p class="cv-body">단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p><span class="cv-keyword">ACTION</span><span class="cv-initial">I</span></div>
+          <div class="cv-card"><span class="cv-num">04 / PERSISTENCE</span><p class="cv-title-en">Never compromise</p><p class="cv-title-kr">평범함과 타협하지 않고 본질을 지켜내는 고집</p><p class="cv-body">'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p><span class="cv-keyword">PERSISTENCE</span><span class="cv-initial">N</span></div>
+          <div class="cv-card"><span class="cv-num">05 / GOAL</span><p class="cv-title-en">Define the era</p><p class="cv-title-kr">새로운 기준이 되어 시대를 정의하는 궁극의 목적</p><p class="cv-body">우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다.</p><span class="cv-keyword">GOAL</span><span class="cv-initial">D</span></div>
+        </div>
+      </section>
+
+      <!-- LOIND STANDARD 섹션 -->
+      <section id="standard">
+        <style>
+          .standard-inner {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
           }
-          .cv-card {
-            background: #f9f9fb;
-            border: 1px solid #f0f0f0;
-            border-radius: 20px;
-            padding: 36px 28px 32px;
-            transition: transform .4s ease, box-shadow .4s ease, border-color .4s;
-            cursor: default;
-            display: flex;
-            flex-direction: column;
+          .standard-left {}
+          .standard-desc {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.9;
+            word-break: keep-all;
+            margin-bottom: 40px;
+          }
+          .standard-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #000;
+            border-bottom: 1.5px solid #000;
+            padding-bottom: 4px;
+            transition: color 0.2s, border-color 0.2s;
+          }
+          .standard-link:hover {
+            color: #E0001A;
+            border-color: #E0001A;
+          }
+          .standard-link svg {
+            transition: transform 0.2s;
+          }
+          .standard-link:hover svg {
+            transform: translateX(4px);
+          }
+          .standard-right {
+            background: #0D0D0D;
+            border-radius: 24px;
+            padding: 56px 52px;
             position: relative;
             overflow: hidden;
           }
-          /* 카드 상단 레드 라인 */
-          .cv-card::before {
+          .standard-right::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: #E0001A;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform .4s ease;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 1px solid rgba(224,0,26,0.15);
           }
-          .cv-card:hover::before { transform: scaleX(1); }
-          .cv-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 56px rgba(0,0,0,.08);
-            border-color: #e8e8e8;
-          }
-          /* 대형 이니셜 워터마크 */
-          .cv-initial {
-            font-size: 7rem;
-            font-weight: 900;
-            line-height: 1;
-            color: #E0001A;
-            opacity: .05;
+          .standard-right::after {
+            content: '';
             position: absolute;
-            right: -8px;
-            bottom: -12px;
-            letter-spacing: -4px;
-            transition: opacity .4s ease;
-            user-select: none;
+            top: -30px; right: -30px;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            border: 1px solid rgba(224,0,26,0.08);
           }
-          .cv-card:hover .cv-initial { opacity: .10; }
-
-          .cv-num {
-            font-size: 0.62rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            color: #E0001A;
-            display: block;
-            margin-bottom: 24px;
+          .standard-phases {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
           }
-          .cv-title-en {
-            font-size: 1.05rem;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            color: #111;
-            margin-bottom: 6px;
-            line-height: 1.25;
+          .standard-phase {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
           }
-          .cv-title-kr {
-            font-size: 0.75rem;
-            color: #aaa;
-            margin-bottom: 16px;
-            font-weight: 500;
-            line-height: 1.5;
-          }
-          .cv-body {
-            font-size: 0.82rem;
-            color: #777;
-            line-height: 1.8;
-            flex: 1;
-            word-break: keep-all;
-          }
-          .cv-keyword {
-            display: inline-block;
-            margin-top: 20px;
+          .standard-phase:last-child { border-bottom: none; }
+          .phase-num {
+            font-family: "Pretendard", sans-serif;
             font-size: 0.6rem;
             font-weight: 700;
             letter-spacing: 2px;
             color: #E0001A;
-            border: 1px solid rgba(224,0,26,.2);
-            background: rgba(224,0,26,.04);
-            padding: 4px 12px;
-            border-radius: 20px;
+            width: 28px;
+            flex-shrink: 0;
           }
-
-          /* 시그니처 마무리 섹션 */
-          .signature-section {
-            background: #0D0D0D;
-            padding: 140px 5%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: none;
+          .phase-bar {
+            width: 2px;
+            height: 28px;
+            background: rgba(255,255,255,0.08);
+            flex-shrink: 0;
           }
-          .signature-section::before {
-            content: 'LOIND';
-            position: absolute;
-            right: -40px;
-            bottom: -60px;
-            font-size: 28vw;
-            font-weight: 900;
-            color: #fff;
-            opacity: .02;
-            letter-spacing: -8px;
-            user-select: none;
-            pointer-events: none;
+          .phase-name-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 0.5px;
           }
-          .sig-label {
-            font-size: 0.65rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #444;
-            margin-bottom: 48px;
-          }
-          .sig-tagline {
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            font-weight: 300;
-            color: #555;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            font-style: italic;
-          }
-          .sig-name {
-            font-size: clamp(4rem, 10vw, 9rem);
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: -4px;
-            line-height: 0.9;
-            margin-bottom: 40px;
-            position: relative;
-          }
-          /* 서명 밑줄 */
-          .sig-name::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: #E0001A;
-            margin-top: 24px;
-            border-radius: 2px;
-          }
-          .sig-sub {
-            font-size: 0.8rem;
-            color: #333;
-            letter-spacing: 3px;
+          .phase-badge {
+            margin-left: auto;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.2);
             text-transform: uppercase;
           }
 
           @media (max-width: 1024px) {
-            .cv-grid { grid-template-columns: repeat(2, 1fr); }
-          }
-          @media (max-width: 600px) {
-            .cv-grid { grid-template-columns: 1fr; }
+            .standard-inner { grid-template-columns: 1fr; gap: 40px; }
           }
         </style>
 
-        <div class="cv-grid">
-          <div class="cv-card">
-            <span class="cv-num">01 / MOTIVATION</span>
-            <p class="cv-title-en">Look Beyond</p>
-            <p class="cv-title-kr">현상 너머의 가치를 발견하는 근원적인 동력</p>
-            <p class="cv-body">눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p>
-            <span class="cv-keyword">MOTIVATION</span>
-            <span class="cv-initial">L</span>
+        <span class="num">04 / LOIND STANDARD</span>
+        <h2 class="section-title">LOIND Standard</h2>
+
+        <div class="standard-inner">
+          <div class="standard-left">
+            <p class="standard-desc">
+              LOER가 어떤 프로젝트를 수행하더라도 반드시 준수해야 하는 프로세스와 품질 기준.<br />
+              담당자가 바뀌어도, 규모가 달라져도 결과의 일관성을 보장하는 시스템이다.
+            </p>
+            <a href="loind-standard.html" class="standard-link">
+              LOIND Standard 확인하기
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
-          <div class="cv-card">
-            <span class="cv-num">02 / CONVICTION</span>
-            <p class="cv-title-en">Own your vision</p>
-            <p class="cv-title-kr">우리가 그리는 시야에 대한 흔들림 없는 확신</p>
-            <p class="cv-body">LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p>
-            <span class="cv-keyword">CONVICTION</span>
-            <span class="cv-initial">O</span>
-          </div>
-          <div class="cv-card">
-            <span class="cv-num">03 / ACTION</span>
-            <p class="cv-title-en">Iterate without end</p>
-            <p class="cv-title-kr">정점에 닿을 때까지 멈추지 않는 폭발적인 실행</p>
-            <p class="cv-body">단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p>
-            <span class="cv-keyword">ACTION</span>
-            <span class="cv-initial">I</span>
-          </div>
-          <div class="cv-card">
-            <span class="cv-num">04 / PERSISTENCE</span>
-            <p class="cv-title-en">Never compromise</p>
-            <p class="cv-title-kr">평범함과 타협하지 않고 본질을 지켜내는 고집</p>
-            <p class="cv-body">'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p>
-            <span class="cv-keyword">PERSISTENCE</span>
-            <span class="cv-initial">N</span>
-          </div>
-          <div class="cv-card">
-            <span class="cv-num">05 / GOAL</span>
-            <p class="cv-title-en">Define the era</p>
-            <p class="cv-title-kr">새로운 기준이 되어 시대를 정의하는 궁극의 목적</p>
-            <p class="cv-body">우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다.</p>
-            <span class="cv-keyword">GOAL</span>
-            <span class="cv-initial">D</span>
+
+          <div class="standard-right">
+            <div class="standard-phases">
+              <div class="standard-phase">
+                <span class="phase-num">01</span>
+                <div class="phase-bar"></div>
+                <span class="phase-name-text">기획 단계</span>
+                <span class="phase-badge">Planning</span>
+              </div>
+              <div class="standard-phase">
+                <span class="phase-num">02</span>
+                <div class="phase-bar"></div>
+                <span class="phase-name-text">제작 단계</span>
+                <span class="phase-badge">Production</span>
+              </div>
+              <div class="standard-phase">
+                <span class="phase-num">03</span>
+                <div class="phase-bar"></div>
+                <span class="phase-name-text">납품 & 사후 관리</span>
+                <span class="phase-badge">Delivery</span>
+              </div>
+              <div class="standard-phase">
+                <span class="phase-num">04</span>
+                <div class="phase-bar"></div>
+                <span class="phase-name-text">피드백 설문</span>
+                <span class="phase-badge">Feedback</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -617,82 +337,16 @@
       <!-- 클로징 섹션 -->
       <section class="closing-section">
         <style>
-          .closing-section {
-            background: #fff;
-            min-height: 60vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: none;
-            padding: 100px 5%;
-          }
-
-          .closing-label {
-            font-size: 0.65rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #ccc;
-            margin-bottom: 48px;
-            font-weight: 600;
-          }
-
-          /* 글자 묶음 */
-          .closing-brand {
-            display: flex;
-            align-items: flex-end;
-            gap: 0;
-            line-height: 1;
-          }
-
-          /* 개별 글자 */
-          .closing-brand .c {
-            display: inline-block;
-            font-size: clamp(3rem, 8vw, 8rem);
-            font-weight: 900;
-            color: #111;
-            letter-spacing: -2px;
-            animation: bounce 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-            animation-play-state: paused;
-          }
-
-          /* 공백 */
-          .closing-brand .space {
-            display: inline-block;
-            width: clamp(1rem, 2.5vw, 2.5rem);
-          }
-
-          /* CORPORATION은 살짝 작게 */
-          .closing-brand .corp .c {
-            font-size: clamp(3rem, 8vw, 8rem);
-            color: #111;
-          }
-
-          /* 레드 포인트 — 마지막 N */
+          .closing-section { background: #fff; min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border-bottom: none; padding: 100px 5%; }
+          .closing-label { font-size: 0.65rem; letter-spacing: 5px; text-transform: uppercase; color: #ccc; margin-bottom: 48px; font-weight: 600; }
+          .closing-brand { display: flex; align-items: flex-end; gap: 0; line-height: 1; }
+          .closing-brand .c { display: inline-block; font-size: clamp(3rem, 8vw, 8rem); font-weight: 900; color: #111; letter-spacing: -2px; animation: bounce 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; animation-play-state: paused; }
+          .closing-brand .space { display: inline-block; width: clamp(1rem, 2.5vw, 2.5rem); }
+          .closing-brand .corp .c { font-size: clamp(3rem, 8vw, 8rem); color: #111; }
           .closing-brand .red { color: #E0001A; }
-
-          @keyframes bounce {
-            0%   { transform: translateY(0); }
-            20%  { transform: translateY(-28px); }
-            40%  { transform: translateY(0); }
-            55%  { transform: translateY(-12px); }
-            70%  { transform: translateY(0); }
-            82%  { transform: translateY(-5px); }
-            100% { transform: translateY(0); }
-          }
-
-          /* 하단 카피 */
-          .closing-copy {
-            margin-top: 40px;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            color: #ddd;
-            text-transform: uppercase;
-          }
+          @keyframes bounce { 0% { transform: translateY(0); } 20% { transform: translateY(-28px); } 40% { transform: translateY(0); } 55% { transform: translateY(-12px); } 70% { transform: translateY(0); } 82% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+          .closing-copy { margin-top: 40px; font-size: 0.75rem; letter-spacing: 3px; color: #ddd; text-transform: uppercase; }
         </style>
-
         <p class="closing-label">We are</p>
         <div class="closing-brand" id="closingBrand">
           <span class="loind">
@@ -704,24 +358,17 @@
           </span>
         </div>
         <p class="closing-copy">Beyond what exists · Seoul · Est. 2025</p>
-
         <script>
           (function() {
             const letters = document.querySelectorAll('#closingBrand .c');
-
             const observer = new IntersectionObserver((entries) => {
               entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                  letters.forEach((el, i) => {
-                    setTimeout(() => {
-                      el.style.animationPlayState = 'running';
-                    }, i * 80);
-                  });
+                  letters.forEach((el, i) => { setTimeout(() => { el.style.animationPlayState = 'running'; }, i * 80); });
                   observer.disconnect();
                 }
               });
             }, { threshold: 0.5 });
-
             observer.observe(document.getElementById('closingBrand'));
           })();
         </script>
