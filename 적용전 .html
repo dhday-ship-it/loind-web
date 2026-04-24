@@ -1,254 +1,321 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOIND | Agentic AI Index</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About | LOIND</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-        @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+      
+      :root {
+        --primary-red: #E0001A;
+        --bg-black: #0D0D0D;
+        --text-gray: #888;
+      }
 
-        :root { 
-            --ease: cubic-bezier(0.4, 0, 0.2, 1); 
-            --spring: cubic-bezier(0.34, 1.56, 0.64, 1); 
-            --loind-red: #E0001A;
-            --loind-black: #0D0D0D;
-        }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      a { color: inherit; text-decoration: none; }
+      ul { list-style: none; }
+      
+      body { 
+        background-color: #fff; 
+        color: #000; 
+        font-family: "Pretendard", sans-serif; 
+        line-height: 1.6;
+        word-break: keep-all;
+      }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', 'Noto Sans KR', sans-serif; color: #000; overflow-x: hidden; line-height: 1.4; background: #fff; }
-        a { text-decoration: none; color: inherit; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 80px; }
+      /* --- Header --- */
+      header { 
+        position: fixed; top: 0; left: 0; width: 100%; height: 90px; 
+        display: flex; align-items: center; justify-content: space-between; 
+        padding: 0 60px; background: rgba(255,255,255,0.8); 
+        backdrop-filter: blur(20px); z-index: 1000; 
+        transition: 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+      }
+      header:hover { background: #fff; }
+      
+      h1 .main { font-size: 1.6rem; font-weight: 900; letter-spacing: 3px; }
+      .slogan { 
+        font-size: 0.75rem; font-weight: 700; color: var(--primary-red); 
+        margin-left: 12px; padding-left: 12px; border-left: 1px solid #ddd;
+        opacity: 0; transform: translateX(-15px); transition: 0.5s; 
+      }
+      h1:hover .slogan { opacity: 1; transform: translateX(0); }
+      
+      nav ul { display: flex; gap: 40px; }
+      nav li { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; transition: 0.3s; color: #666; }
+      nav li:hover { color: #000; }
 
-        /* HEADER */
-        header { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 80px; 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 50px; background: rgba(255,255,255,0.8); 
-            backdrop-filter: blur(15px); z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05); 
-        }
-        header h1 a { font-family: 'Montserrat'; font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
-        header nav ul { list-style: none; display: flex; gap: 40px; }
-        header nav ul li a { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; transition: 0.3s; }
-        header nav ul li a:hover { color: var(--loind-red); }
+      /* --- Side Navigation --- */
+      .side-nav { 
+        position: fixed; top: 90px; left: 0; width: 280px; height: calc(100vh - 90px); 
+        padding: 80px 60px; z-index: 100; border-right: 1px solid #f2f2f2;
+      }
+      .side-nav li { margin-bottom: 30px; }
+      .side-nav a { 
+        color: #ccc; font-weight: 700; font-size: 0.85rem; 
+        letter-spacing: 1px; transition: 0.4s; position: relative;
+      }
+      .side-nav a::after {
+        content: ''; position: absolute; left: 0; bottom: -5px;
+        width: 0; height: 2px; background: var(--primary-red); transition: 0.4s;
+      }
+      .side-nav a.active { color: #000; font-size: 0.95rem; }
+      .side-nav a.active::after { width: 100%; }
 
-        /* HERO SECTION */
-        .hero { height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; background: radial-gradient(ellipse 80% 70% at 50% 40%, #eef9f7 0%, #C8E8E2 48%, #a4cfc8 100%); }
-        #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: .45; }
-        .hero-text { position: absolute; left: 80px; bottom: 80px; z-index: 7; }
-        .hero-text .sub-title { font-size: 11px; margin-bottom: 14px; color: #555; letter-spacing: 3px; text-transform: uppercase; opacity: 0; transform: translateY(16px); animation: fadeUp .8s .3s forwards; }
-        .hero-text h1 { font-size: 40px; font-family: 'Montserrat'; line-height: 1.05; letter-spacing: -2px; font-weight: 800; opacity: 0; transform: translateY(24px); animation: fadeUp .9s .5s forwards; }
+      /* --- Content Layout --- */
+      .content { margin-left: 280px; padding-top: 90px; width: calc(100% - 280px); }
+      
+      section { padding: 180px 10%; position: relative; border-bottom: 1px solid #f2f2f2; }
+      
+      .category-label { 
+        font-size: 0.8rem; font-weight: 900; color: var(--primary-red); 
+        letter-spacing: 5px; margin-bottom: 30px; display: block; 
+      }
+      .section-title { 
+        font-size: 4.5rem; font-weight: 900; margin-bottom: 100px; 
+        letter-spacing: -3px; line-height: 1.1; 
+      }
 
-        /* CNS Center Animation */
-        .cns-wrapper { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 6; pointer-events: auto; }
-        .cns-letters { display: flex; font-family: 'Montserrat'; font-size: 20vw; font-weight: 900; letter-spacing: -0.04em; line-height: .85; user-select: none; }
-        .cns-letter { 
-            display: inline-block; background: linear-gradient(135deg, #7b5ff4, #e863ff, #4ecfff, #7b5ff4); 
-            background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            animation: meshFlow 10s ease infinite alternate, floatBase 6s ease-in-out infinite, cnsEntry 1.4s var(--spring) both;
-            filter: drop-shadow(0 0 50px rgba(123,95,244,.4)); transition: transform .5s var(--spring);
-        }
-        @keyframes meshFlow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
-        @keyframes floatBase { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-        @keyframes cnsEntry { from { opacity: 0; transform: translateY(80px) scale(.88); filter: blur(40px); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+      /* --- 1. IDENTITY DESIGN --- */
+      .mission-box { margin-bottom: 200px; }
+      .mission-text { 
+        font-size: 3.2rem; font-weight: 800; color: #111; 
+        line-height: 1.3; max-width: 1000px;
+      }
+      .mission-text span { color: var(--primary-red); position: relative; }
 
-        /* BRILLIANCE */
-        .brilliance { padding: 160px 0; background: linear-gradient(to bottom, #b8e0d8 0%, #fff 100%); position: relative; }
-        .brilliance-header { text-align: center; margin-bottom: 80px; }
-        .brilliance-header h2 { font-size: 44px; font-weight: 700; letter-spacing: -1.5px; }
-        .brilliance-header h2 em { font-style: normal; color: var(--loind-red); }
+      .cv-grid { 
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+        gap: 30px; margin-bottom: 200px;
+      }
+      .cv-card { 
+        background: #fcfcfd; border: 1px solid #f0f0f0; border-radius: 40px; 
+        padding: 70px 50px; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+      }
+      .cv-card:hover { 
+        background: var(--bg-black); color: #fff; transform: translateY(-15px);
+        box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+      }
+      .cv-initial { font-size: 2rem; font-weight: 900; color: var(--primary-red); margin-bottom: 40px; display: block; }
+      .cv-title-en { font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
+      .cv-body { font-size: 1.1rem; line-height: 1.7; color: #666; font-weight: 500; }
+      .cv-card:hover .cv-body { color: #aaa; }
 
-        /* CORE VALUE (INTEGRATED FROM ABOUT) */
-        .values { padding: 160px 0; background: #fff; }
-        .values-header { text-align: left; margin-bottom: 60px; }
-        .v-num-label { font-size: 0.75rem; font-weight: 800; color: var(--loind-red); letter-spacing: 2px; display: block; margin-bottom: 15px; }
-        .v-main-title { font-size: 2.8rem; font-weight: 800; letter-spacing: -1.5px; }
+      .standard-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
+      .standard-desc { font-size: 1.6rem; font-weight: 600; color: #333; line-height: 1.6; }
+      .standard-right { 
+        background: var(--bg-black); padding: 80px; border-radius: 50px; color: #fff; 
+        box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+      }
+      .std-item { 
+        display: flex; align-items: center; justify-content: space-between; 
+        padding: 30px 0; border-bottom: 1px solid rgba(255,255,255,0.1); 
+      }
+      .std-item:last-child { border: none; }
+      .std-name { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
+      .std-tag { font-size: 0.9rem; font-weight: 800; color: var(--primary-red); text-transform: uppercase; letter-spacing: 2px; }
 
-        .cv-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 40px; }
-        .cv-card { 
-            background: #f9f9fb; border: 1px solid #f0f0f0; border-radius: 20px; padding: 40px 30px; 
-            transition: all .4s var(--ease); cursor: default; position: relative; overflow: hidden; display: flex; flex-direction: column; 
-        }
-        .cv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--loind-red); transform: scaleX(0); transform-origin: left; transition: transform .4s ease; }
-        .cv-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); background: #fff; border-color: #eee; }
-        .cv-card:hover::before { transform: scaleX(1); }
-        .cv-initial { font-family: 'Montserrat'; font-size: 8rem; font-weight: 900; color: var(--loind-red); opacity: .04; position: absolute; right: -10px; bottom: -20px; transition: .4s; pointer-events: none; }
-        .cv-card:hover .cv-initial { opacity: .1; transform: scale(1.1); }
-        
-        .cv-card .step { font-size: 0.6rem; font-weight: 800; color: var(--loind-red); letter-spacing: 2px; margin-bottom: 20px; }
-        .cv-card h4 { font-family: 'Montserrat'; font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; color: #111; }
-        .cv-card .sub-kr { font-size: 0.75rem; color: #999; font-weight: 500; margin-bottom: 18px; line-height: 1.4; }
-        .cv-card .desc { font-size: 0.85rem; color: #666; line-height: 1.8; word-break: keep-all; flex-grow: 1; }
-        .cv-tag { display: inline-block; margin-top: 25px; font-size: 0.6rem; font-weight: 700; color: var(--loind-red); border: 1px solid rgba(224,0,26,.2); padding: 4px 12px; border-radius: 20px; width: fit-content; }
+      /* --- 2. CI SYSTEM DESIGN --- */
+      .ci-visual-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+      .ci-card { 
+        background: #f9f9fb; border-radius: 50px; padding: 120px 60px; 
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        transition: 0.4s;
+      }
+      .ci-card.dark { background: var(--bg-black); color: #fff; }
+      .ci-card h3 { font-size: 1rem; letter-spacing: 4px; color: #999; margin-bottom: 60px; text-transform: uppercase; }
+      
+      .symbol-box { width: 140px; height: 140px; background: var(--primary-red); border-radius: 35px; box-shadow: 0 20px 40px rgba(224, 0, 26, 0.3); }
+      .wordmark-box { font-size: 6rem; font-weight: 900; letter-spacing: 12px; margin-left: 12px; }
 
-        /* REVEAL ANIMATION */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all .8s var(--ease); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: .1s; }
-        .reveal-delay-2 { transition-delay: .2s; }
-        .reveal-delay-3 { transition-delay: .3s; }
-        .reveal-delay-4 { transition-delay: .4s; }
+      .color-showcase { margin-top: 150px; }
+      .color-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+      .color-chip { 
+        height: 350px; border-radius: 40px; padding: 50px; 
+        display: flex; flex-direction: column; justify-content: flex-end;
+        transition: 0.4s; cursor: pointer;
+      }
+      .color-chip:hover { transform: scale(1.02); }
+      .color-chip.black { background: var(--bg-black); color: #fff; }
+      .color-chip.white { background: #fff; border: 1px solid #eee; }
+      .color-chip.red { background: var(--primary-red); color: #fff; }
+      .color-chip .name { font-size: 1.5rem; font-weight: 900; margin-bottom: 8px; }
+      .color-chip .hex { font-size: 1rem; opacity: 0.6; font-weight: 600; letter-spacing: 1px; }
 
-        /* FOOTER */
-        footer { background: var(--loind-black); color: #fff; padding: 120px 0 60px; }
-        .footer-logo { font-size: 60px; font-weight: 900; font-family: 'Montserrat'; margin-bottom: 20px; }
-        .footer-logo span.red { color: var(--loind-red); }
-        .footer-bottom { margin-top: 80px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; font-size: 12px; color: #444; }
+      /* --- Footer Section --- */
+      .final-section { 
+        text-align: center; padding: 250px 0; border: none; 
+        background: var(--bg-black); color: #fff; overflow: hidden;
+      }
+      .final-logo { font-size: 10vw; font-weight: 900; letter-spacing: -5px; }
+      .final-logo span { color: var(--primary-red); }
 
-        @media (max-width: 1200px) {
-            .cv-grid { grid-template-columns: repeat(2, 1fr); }
-            .container { padding: 0 40px; }
-        }
-        @media (max-width: 768px) {
-            .cv-grid { grid-template-columns: 1fr; }
-            .cns-letters { font-size: 25vw; }
-        }
+      @media (max-width: 1200px) {
+        .section-title { font-size: 3.5rem; }
+        .mission-text { font-size: 2.5rem; }
+        .standard-layout { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 1024px) {
+        .side-nav { display: none; }
+        .content { margin-left: 0; width: 100%; }
+        header { padding: 0 30px; }
+        .ci-visual-container, .color-grid { grid-template-columns: 1fr; }
+        .wordmark-box { font-size: 4rem; }
+      }
     </style>
-</head>
-<body>
-
-<header>
-    <h1><a href="index.html">LOIND</a></h1>
-    <nav>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="index.html">
+          <span class="main">LOIND</span>
+          <span class="slogan">Beyond what exists</span>
+        </a>
+      </h1>
+      <nav>
         <ul>
-            <li><a href="about.html">ABOUT</a></li>
-            <li><a href="service.html">SERVICE</a></li>
-            <li><a href="story.html">STORY</a></li>
-            <li><a href="contact.html">CONTACT</a></li>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="service.html">SERVICE</a></li>
+          <li><a href="story.html">STORY</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
         </ul>
-    </nav>
-</header>
+      </nav>
+    </header>
 
-<section class="hero">
-    <canvas id="hero-canvas"></canvas>
-    <div class="hero-text">
-        <p class="sub-title">존재하는 것을 넘어</p>
-        <h1>Beyond<br>what exists</h1>
-    </div>
-    <div class="cns-wrapper" id="cnsWrapper">
-        <div class="cns-letters">
-            <span class="cns-letter">L</span>
-            <span class="cns-letter">O</span>
-            <span class="cns-letter">I</span>
-            <span class="cns-letter">N</span>
-            <span class="cns-letter">D</span>
-        </div>
-    </div>
-</section>
+    <aside class="side-nav">
+      <ul>
+        <li><a href="#identity-section">IDENTITY</a></li>
+        <li><a href="#ci-section">CI SYSTEM</a></li>
+      </ul>
+    </aside>
 
-<section class="brilliance">
-    <div class="container">
-        <div class="brilliance-header reveal">
-            <h2 class="reveal-delay-1">Lighting up LOIND's <em>unique brilliance</em><br>in a colorless business world.</h2>
-        </div>
-    </div>
-</section>
+    <main class="content">
+      <section id="identity-section">
+        <span class="category-label">PART 01. IDENTITY</span>
+        <h2 class="section-title">우리는 타협하지 않는<br>절대적인 기준을 설계합니다</h2>
 
-<section class="values" id="value">
-    <div class="container">
-        <div class="values-header reveal">
-            <span class="v-num-label">03 / CORE VALUE</span>
-            <h2 class="v-main-title">핵심 가치</h2>
+        <div class="mission-box">
+          <span class="cv-initial" style="font-size: 0.9rem; letter-spacing: 2px;">VISION</span>
+          <p class="mission-text">
+            LOIND는 <span>탁월함</span>을 넘어 <span>유일함</span>을 지향합니다.<br>
+            우리의 행보는 곧 시장의 새로운 기준이 됩니다.
+          </p>
         </div>
 
-        <div class="cv-grid">
-            <div class="cv-card reveal">
-                <span class="step">01 / MOTIVATION</span>
-                <h4>Look Beyond</h4>
-                <p class="sub-kr">현상 너머의 가치를 발견하는<br>근원적인 동력</p>
-                <p class="desc">눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p>
-                <span class="cv-tag">MOTIVATION</span>
-                <span class="cv-initial">L</span>
+        <div style="margin-bottom: 200px;">
+          <span class="cv-initial" style="font-size: 0.9rem; letter-spacing: 2px;">CORE VALUES</span>
+          <div class="cv-grid">
+            <div class="cv-card">
+              <span class="cv-initial">L</span>
+              <p class="cv-title-en">Look Beyond</p>
+              <p class="cv-body">현상 너머에 숨겨진 본질적인 가치를 꿰뚫어 봅니다.</p>
             </div>
-            <div class="cv-card reveal reveal-delay-1">
-                <span class="step">02 / CONVICTION</span>
-                <h4>Own your vision</h4>
-                <p class="sub-kr">우리가 그리는 시야에 대한<br>흔들림 없는 확신</p>
-                <p class="desc">LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p>
-                <span class="cv-tag">CONVICTION</span>
-                <span class="cv-initial">O</span>
+            <div class="cv-card">
+              <span class="cv-initial">O</span>
+              <p class="cv-title-en">Own Vision</p>
+              <p class="cv-body">우리가 설계한 비전이 곧 정답이라는 확신으로 나아갑니다.</p>
             </div>
-            <div class="cv-card reveal reveal-delay-2">
-                <span class="step">03 / ACTION</span>
-                <h4>Iterate without end</h4>
-                <p class="sub-kr">정점에 닿을 때까지 멈추지 않는<br>폭발적인 실행</p>
-                <p class="desc">단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p>
-                <span class="cv-tag">ACTION</span>
-                <span class="cv-initial">I</span>
+            <div class="cv-card">
+              <span class="cv-initial">I</span>
+              <p class="cv-title-en">Iterate</p>
+              <p class="cv-body">완벽에 도달할 때까지 멈추지 않고 끝없이 반복합니다.</p>
             </div>
-            <div class="cv-card reveal reveal-delay-3">
-                <span class="step">04 / PERSISTENCE</span>
-                <h4>Never compromise</h4>
-                <p class="sub-kr">평범함과 타협하지 않고<br>본질을 지켜내는 고집</p>
-                <p class="desc">'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p>
-                <span class="cv-tag">PERSISTENCE</span>
-                <span class="cv-initial">N</span>
+            <div class="cv-card">
+              <span class="cv-initial">N</span>
+              <p class="cv-title-en">Never Compromise</p>
+              <p class="cv-body">마지막 1%의 디테일조차 평범함과 타협하지 않습니다.</p>
             </div>
-            <div class="cv-card reveal reveal-delay-4">
-                <span class="step">05 / GOAL</span>
-                <h4>Define the era</h4>
-                <p class="sub-kr">새로운 기준이 되어 시대를<br>정의하는 궁극의 목적</p>
-                <p class="desc">우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 최종 목표입니다.</p>
-                <span class="cv-tag">GOAL</span>
-                <span class="cv-initial">D</span>
+            <div class="cv-card">
+              <span class="cv-initial">D</span>
+              <p class="cv-title-en">Define Era</p>
+              <p class="cv-body">우리의 결과물이 이 시대를 새롭게 정의하게 합니다.</p>
             </div>
+          </div>
         </div>
-    </div>
-</section>
 
-<footer>
-    <div class="container">
-        <div class="footer-logo">LOIN<span class="red">D</span></div>
-        <p style="color:#555">Beyond what exists · Seoul · Est. 2025</p>
-        <div class="footer-bottom">
-            <p>© 2026 LOIND. All rights reserved.</p>
-            <div>Privacy / Terms / Contact</div>
+        <div>
+          <span class="cv-initial" style="font-size: 0.9rem; letter-spacing: 2px;">LOIND STANDARD</span>
+          <div class="standard-layout">
+            <div class="standard-left">
+              <p class="standard-desc">
+                전문가가 바뀌어도 품질은 변하지 않습니다.<br>
+                LOIND Standard는 일관된 탁월함을 유지하기 위한 우리의 엄격한 규율입니다.
+              </p>
+            </div>
+            <div class="standard-right">
+              <div class="std-item"><span class="std-name">Planning</span><span class="std-tag">기획</span></div>
+              <div class="std-item"><span class="std-name">Production</span><span class="std-tag">제작</span></div>
+              <div class="std-item"><span class="std-name">Delivery</span><span class="std-tag">납품</span></div>
+              <div class="std-item"><span class="std-name">Feedback</span><span class="std-tag">관리</span></div>
+            </div>
+          </div>
         </div>
-    </div>
-</footer>
+      </section>
 
-<script>
-    /* 파티클 엔진 */
-    (function(){
-        const canvas=document.getElementById('hero-canvas'),ctx=canvas.getContext('2d');
-        let W,H,particles;
-        function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;init();}
-        function init(){
-            particles=Array.from({length:50},()=>({
-                x:Math.random()*W,y:Math.random()*H,
-                vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,
-                r:Math.random()*2+1
-            }));
-        }
-        function draw(){
-            ctx.clearRect(0,0,W,H);
-            particles.forEach(p=>{
-                p.x+=p.vx; p.y+=p.vy;
-                if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
-                ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-                ctx.fillStyle='rgba(123,95,244,0.3)'; ctx.fill();
-            });
-            requestAnimationFrame(draw);
-        }
-        window.addEventListener('resize',resize);
-        resize(); draw();
-    })();
+      <section id="ci-section">
+        <span class="category-label">PART 02. CI SYSTEM</span>
+        <h2 class="section-title">Visual Language</h2>
 
-    /* Reveal Observer */
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        <div class="ci-visual-container">
+          <div class="ci-card dark">
+            <h3>Symbol</h3>
+            <div class="symbol-box"></div>
+          </div>
+          <div class="ci-card">
+            <h3>Wordmark</h3>
+            <div class="wordmark-box">LOIND</div>
+          </div>
+        </div>
 
-    /* CNS Parallax */
-    window.addEventListener('scroll', () => {
-        const sy = window.scrollY;
-        const cns = document.getElementById('cnsWrapper');
-        cns.style.transform = `translate(-50%, calc(-50% + ${sy * 0.3}px))`;
-        cns.style.opacity = Math.max(0, 1 - sy / 600);
-    });
-</script>
+        <div class="color-showcase">
+          <span class="cv-initial" style="font-size: 0.9rem; letter-spacing: 2px;">BRAND COLORS</span>
+          <div class="color-grid">
+            <div class="color-chip black">
+              <p class="name">Obsidian Black</p>
+              <p class="hex">#0D0D0D</p>
+            </div>
+            <div class="color-chip red">
+              <p class="name">Blood Red</p>
+              <p class="hex">#E0001A</p>
+            </div>
+            <div class="color-chip white">
+              <p class="name">Pure White</p>
+              <p class="hex">#FFFFFF</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-</body>
+      <section class="final-section">
+        <h2 class="final-logo">LOIND<span>.</span></h2>
+        <p style="font-size: 1rem; letter-spacing: 8px; opacity: 0.5; margin-top: 20px;">BEYOND WHAT EXISTS</p>
+      </section>
+    </main>
+
+    <script>
+      window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.side-nav a');
+        
+        let current = "";
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (pageYOffset >= (sectionTop - 250)) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').includes(current)) {
+            link.classList.add('active');
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
