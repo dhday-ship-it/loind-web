@@ -1,378 +1,328 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About | LOIND</title>
-    <style>
-      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      a { color: inherit; text-decoration: none; }
-      ul { list-style: none; }
-      body { background-color: #fff; color: #000; font-family: "Pretendard", sans-serif; }
-      header { position: fixed; top: 0; left: 0; width: 100%; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #f2f2f2; transition: 0.3s; }
-      h1 .main { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
-      .slogan { font-size: 0.7rem; font-weight: 700; color: #E0001A; margin-left: 5px; border-left: 1px solid #eee; opacity: 0; transform: translateX(-10px); transition: 0.4s; white-space: nowrap; display: inline-block; }
-      h1:hover .slogan { opacity: 1; transform: translateX(0); }
-      nav ul { display: flex; gap: 35px; }
-      nav li { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
-      nav li:hover { opacity: 0.5; }
-      .side-nav { position: fixed; top: 80px; left: 0; width: 250px; height: calc(100vh - 80px); padding: 60px 50px; border-right: 1px solid #f2f2f2; background: #fff; z-index: 100; }
-      .side-nav ul { list-style: none; }
-      .side-nav li { margin-bottom: 25px; }
-      .side-nav a { color: #bbb; text-decoration: none; font-weight: 600; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; }
-      .side-nav a.active, .side-nav a:hover { color: #000; }
-      .content { margin-left: 250px; padding-top: 80px; width: calc(100% - 250px); overflow: hidden; }
-      .video-section { padding: 60px 5% 20px; width: 100%; overflow: hidden; }
-      .video-container { position: relative; width: 100%; height: 520px; border-radius: 40px; overflow: hidden; background-color: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-      .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-      section { padding: 100px 5%; width: 100%; border-bottom: 1px solid #f2f2f2; overflow: hidden; }
-      .num { font-size: 0.75rem; font-weight: 800; color: #E0001A; letter-spacing: 2px; margin-bottom: 20px; display: block; }
-      .section-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 50px; letter-spacing: -1.5px; }
-      .mission-box { background-color: #f9f9fb; border-radius: 30px; padding: 60px; }
-      .mission-text { font-size: 1.6rem; font-weight: 700; color: #333; word-break: keep-all; }
-      .mission-text span { color: #E0001A; }
-      .identity-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: start; width: 100%; }
-      .id-card { background: #0D0D0D; border-radius: 24px; padding: 120px 20px; color: #fff; text-align: center; position: sticky; top: 120px; }
-      .id-card h3 { font-size: 4rem; font-weight: 900; letter-spacing: 12px; }
-      .color-guide-list { display: flex; flex-direction: column; gap: 15px; }
-      .color-item { display: flex; background-color: #f9f9fb; border-radius: 15px; overflow: hidden; transition: 0.3s; }
-      .color-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-      .color-bar { width: 12px; flex-shrink: 0; }
-      .color-info { padding: 25px 30px; }
-      .color-name { font-size: 1rem; font-weight: 800; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
-      .color-hex { font-size: 0.8rem; font-weight: 400; color: #999; }
-      .color-tags { font-size: 0.8rem; font-weight: 700; color: #666; margin-bottom: 12px; }
-      .color-desc { font-size: 0.85rem; line-height: 1.6; color: #444; word-break: keep-all; }
-      .value-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
-      .value-item h4 { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; border-bottom: 2px solid #111; display: inline-block; padding-bottom: 5px; }
-      .value-item p { color: #666; font-size: 1rem; line-height: 1.7; }
-      .history-wrap { position: relative; padding-left: 40px; }
-      .history-line { position: absolute; left: 0; top: 10px; bottom: 0; width: 2px; background: #eee; }
-      .history-year-group { position: relative; margin-bottom: 80px; }
-      .history-dot { position: absolute; left: -46px; top: 12px; width: 14px; height: 14px; border-radius: 50%; background: #000; border: 4px solid #fff; z-index: 2; }
-      .history-row { display: flex; margin-bottom: 20px; }
-      .history-month { width: 60px; font-weight: 800; color: #E0001A; flex-shrink: 0; }
-      .history-detail { font-size: 1.1rem; font-weight: 500; color: #333; }
-      @media (max-width: 1024px) {
-        .side-nav { display: none; }
-        .content { margin-left: 0; width: 100%; }
-        .identity-grid { grid-template-columns: 1fr; }
-        .id-card { position: static; padding: 80px 20px; }
-        .value-grid { grid-template-columns: 1fr; }
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>
-        <a href="index.html">
-          <span class="main">LOIND</span>
-          <span class="slogan">Beyond what exists</span>
-        </a>
-      </h1>
-      <nav>
-        <ul>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="service.html">SERVICE</a></li>
-          <li><a href="story.html">STORY</a></li>
-          <li><a href="contact.html">CONTACT</a></li>
-        </ul>
-      </nav>
-    </header>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOIND | Absolute Standard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <aside class="side-nav">
-      <ul>
-        <li><a href="#mission" class="active">01 MISSION</a></li>
-        <li><a href="#identity">02 IDENTITY</a></li>
-        <li><a href="#value">03 VALUE</a></li>
-        <li><a href="#standard">04 STANDARD</a></li>
-      </ul>
-    </aside>
+:root {
+  --black: #0D0D0D;
+  --white: #fff;
+  --yellow: #FFD600;
+  --gray-bg: #f9f9fb;
+  --accent: #FF3B30;
+  --soft-mint: #A8D8D0;
+}
 
-    <main class="content">
-      <div class="video-section">
-        <div class="video-container">
-          <video autoplay muted loop playsinline>
-            <source src="https://www.kakaobank.com/view/video/KO/main-intro-visual-video_pc.mp4" type="video/mp4" />
-          </video>
-        </div>
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: #fff;
+  color: #000;
+  overflow-x: hidden;
+  word-break: keep-all;
+}
+
+/* HEADER */
+header {
+  position: fixed; top: 0; left: 0; right: 0; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; background: rgba(255,255,255,0.8); backdrop-filter: blur(12px);
+  z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; }
+nav ul { display: flex; gap: 32px; }
+nav li { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #333; cursor: pointer; list-style: none; }
+
+/* HERO */
+.hero { height: 100vh; background: linear-gradient(180deg, #A8D8D0 0%, #B8E8E0 40%, #C8EEE8 70%, #D8F4F0 100%); display: flex; align-items: center; justify-content: center; }
+.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(100px, 16vw, 200px); letter-spacing: 0.08em; background: linear-gradient(135deg, #ff9de2 0%, #a78bfa 15%, #67e8f9 30%, #6ee7b7 45%, #ff9de2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% 200%; animation: holoShimmer 4s ease-in-out infinite; }
+@keyframes holoShimmer { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+/* SLOGAN */
+.mid-slogan-section { padding: 160px 60px; text-align: center; }
+.mid-slogan-text { font-size: clamp(20px, 3.2vw, 28px); font-weight: 700; color: var(--black); letter-spacing: -0.5px; line-height: 1.4; }
+
+/* CORE VALUE SECTION */
+.core-section { padding: 0 60px 100px; display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 24px; align-items: center; }
+.core-side { display: flex; flex-direction: column; gap: 20px; }
+.core-card { background: var(--gray-bg); border-radius: 20px; padding: 40px 24px; border: 1px solid rgba(0,0,0,0.03); }
+.core-card-title { font-size: 17px; font-weight: 800; color: #111; margin-bottom: 10px; }
+.core-card-desc { font-size: 13.5px; color: #666; line-height: 1.7; }
+
+/* CENTER BRAND BOX */
+.core-center { display: flex; justify-content: center; }
+.brand-box { width: 340px; height: 340px; background: var(--black); border-radius: 64px; display: flex; align-items: center; justify-content: center; box-shadow: 0 40px 80px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
+.brand-unit { position: absolute; text-align: center; width: 100%; opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+.brand-unit.active { opacity: 1; transform: translateY(0); }
+.brand-unit .main-name { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--white); letter-spacing: 6px; margin-bottom: 6px; }
+.brand-unit .sub-name { font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; }
+
+/* BRAND LIST SECTION */
+.brand-list-section { padding: 120px 60px; background: #fff; display: flex; justify-content: center; }
+.brand-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; width: 100%; }
+.brand-item { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 50px 20px; border-radius: 48px; transition: all 0.7s cubic-bezier(0.15, 0.83, 0.66, 1); opacity: 0.3; transform: scale(0.95); }
+.brand-item.highlight-box { opacity: 1; background: #fcfcfc; transform: scale(1); box-shadow: 0 30px 60px rgba(0,0,0,0.04); }
+.brand-icon-circle { width: 72px; height: 72px; background: var(--yellow); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 18px; font-weight: 700; }
+.brand-title { font-size: 20px; font-weight: 800; color: #111; }
+.brand-description { font-size: 13px; color: #777; text-align: center; line-height: 1.7; max-width: 220px; }
+
+/* JOURNAL SECTION */
+.journal-section { padding: 120px 0 160px 60px; background: #fff; }
+.journal-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  padding-right: 60px; 
+  margin-bottom: 60px; 
+}
+.journal-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 56px; letter-spacing: 1px; color: var(--black); }
+.journal-header .header-right { text-align: right; }
+.journal-header .sub-desc { font-size: 11px; color: #aaa; line-height: 1.6; margin-bottom: 10px; max-width: 240px; }
+.view-all-link { font-size: 11px; font-weight: 800; color: #333; text-decoration: none; letter-spacing: 1px; display: block; }
+
+.journal-slider-container { 
+  display: flex; 
+  gap: 20px; 
+  overflow-x: auto; 
+  padding-bottom: 20px;
+  -ms-overflow-style: none; scrollbar-width: none; 
+}
+.journal-slider-container::-webkit-scrollbar { display: none; }
+
+.journal-item-card { 
+  flex: 0 0 320px; 
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+.journal-item-card:hover { transform: translateY(-8px); }
+
+.journal-img-box { 
+  width: 100%; 
+  height: 240px; 
+  border-radius: 24px; 
+  overflow: hidden; 
+  background: #f4f4f4; 
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.journal-img-box .inner-text { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #ccc; }
+
+/* --- NEW FOOTER (Based on image) --- */
+footer {
+  background: var(--black);
+  color: var(--white);
+  padding: 100px 80px 40px;
+  text-align: left;
+}
+.footer-top {
+  margin-bottom: 100px;
+}
+.footer-top .footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 15px;
+}
+.footer-top .footer-slogan {
+  font-size: 16px;
+  color: #555;
+  font-weight: 400;
+}
+.footer-middle {
+  display: flex;
+  gap: 120px;
+  margin-bottom: 100px;
+}
+.footer-col h4 {
+  font-size: 11px;
+  font-weight: 700;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.footer-col ul li:hover { color: var(--white); }
+.footer-col .contact-info { font-size: 13px; color: #888; line-height: 1.8; }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 40px;
+  border-top: 1px solid #1a1a1a;
+  font-size: 11px;
+  color: #444;
+}
+.footer-links { display: flex; gap: 24px; }
+.footer-links span { cursor: pointer; transition: color 0.3s; }
+.footer-links span:hover { color: #888; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .footer-middle { flex-direction: column; gap: 60px; }
+  .footer-top .footer-logo { font-size: 60px; }
+  footer { padding: 80px 32px 40px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">LOIND</div>
+  <nav><ul><li>About</li><li>Service</li><li>Story</li><li>Contact</li></ul></nav>
+</header>
+
+<section class="hero"><div class="hero-title">LOiND</div></section>
+
+<section class="mid-slogan-section">
+  <h2 class="mid-slogan-text">LOIND의 절대적인 기준 아래 <br> 독보적인 비즈니스는 만드는 일을 합니다.</h2>
+</section>
+
+<section class="core-section">
+  <div class="core-side">
+    <div class="core-card">
+      <h3 class="core-card-title">Lead with excellence.</h3>
+      <p class="core-card-desc">탁월함으로 이끈다. LOIND가 하는 모든 것의 출발점.</p>
+    </div>
+    <div class="core-card">
+      <h3 class="core-card-title">Obsess over quality.</h3>
+      <p class="core-card-desc">품질에 집착한다. 그 집착이 결과물의 격을 만든다.</p>
+    </div>
+  </div>
+  <div class="core-center">
+    <div class="brand-box">
+      <div class="brand-unit active"><div class="main-name">LOER</div><div class="sub-name">Strategy Agency</div></div>
+      <div class="brand-unit"><div class="main-name">LODEN</div><div class="sub-name">Creative Studio</div></div>
+      <div class="brand-unit"><div class="main-name">ELROI</div><div class="sub-name">ESG Management</div></div>
+    </div>
+  </div>
+  <div class="core-side">
+    <div class="core-card">
+      <h3 class="core-card-title">Inspire at every touch.</h3>
+      <p class="core-card-desc">모든 접점에서 특별함을 남긴다.</p>
+    </div>
+    <div class="core-card">
+      <h3 class="core-card-title">Name that matters.</h3>
+      <p class="core-card-desc">이름이 곧 가치다. LOIND가 만지면 달라진다.</p>
+    </div>
+    <div class="core-card">
+      <h3 class="core-card-title">Define the standard.</h3>
+      <p class="core-card-desc">기준 자체가 된다. 세상이 우리를 보고 기준을 정의한다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="brand-list-section">
+  <div class="brand-grid">
+    <div class="brand-item highlight-box" id="svc-0">
+      <div class="brand-icon-circle">LOER</div>
+      <span class="brand-title">LOER</span>
+      <span class="brand-description">비즈니스 전략 수립 및 성장을 위한 매니지먼트 솔루션 에이전시</span>
+    </div>
+    <div class="brand-item" id="svc-1">
+      <div class="brand-icon-circle">LODEN</div>
+      <span class="brand-title">LODEN</span>
+      <span class="brand-description">브랜드의 본질을 정교하게 추출하여 시각화하는 크리에이티브 스튜디오</span>
+    </div>
+    <div class="brand-item" id="svc-2">
+      <div class="brand-icon-circle" style="background:#f4f4f4; color:#ccc;">ELROI</div>
+      <span class="brand-title">ELROI</span>
+      <span class="brand-description">지속 가능한 가치와 사회적 책임을 위한 전략적 ESG 경영 가이드</span>
+    </div>
+  </div>
+</section>
+
+<section class="journal-section">
+  <div class="journal-header">
+    <h2>JOURNAL.</h2>
+    <div class="header-right">
+      <p class="sub-desc">우리는 단순히 기술을 만드는 것을 넘어,<br>사용자의 삶에 스며드는 디지털 가치를 탐구합니다.</p>
+      <a href="#" class="view-all-link">VIEW ALL STORIES →</a>
+    </div>
+  </div>
+  <div class="journal-slider-container">
+    <div class="journal-item-card"><div class="journal-img-box"><div class="inner-text">ART DIRECTION</div></div></div>
+    <div class="journal-item-card"><div class="journal-img-box"><div class="inner-text">STRATEGY</div></div></div>
+    <div class="journal-item-card"><div class="journal-img-box"><div class="inner-text">CREATIVE</div></div></div>
+    <div class="journal-item-card"><div class="journal-img-box"><div class="inner-text">IDENTITY</div></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">LOIND</div>
+    <p class="footer-slogan">Beyond what exists</p>
+  </div>
+
+  <div class="footer-middle">
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="contact-info">
+        <p>서울 강남구 테헤란로 DX 빌딩</p>
+        <p>dhday@loind.com</p>
       </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li>About</li>
+        <li>Service</li>
+        <li>Story</li>
+        <li>Contact</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <ul>
+        <li>LODEN</li>
+        <li>LOER</li>
+        <li>TBD</li>
+      </ul>
+    </div>
+  </div>
 
-      <section id="mission">
-        <span class="num">01 / VISION & MISSION</span>
-        <h2 class="section-title">우리의 지향점</h2>
-        <div class="mission-box">
-          <p class="mission-text">
-            지금 세상에 있는 것, 이미 정해진 기준, 현재의 수준.<br />
-            거기서 멈추지 않는다. 탁월함을 향해 끊임없이 나아가고,<br />
-            결국 기준 자체를 새로 정의한다.<br />
-            <span>그것이 LOIND가 존재하는 이유다.</span>
-          </p>
-        </div>
-      </section>
+  <div class="footer-bottom">
+    <div class="copyright">© 2026 LOIND. All rights reserved.</div>
+    <div class="footer-links">
+      <span>Privacy</span>
+      <span>Terms</span>
+      <span>Seoul, KR</span>
+    </div>
+  </div>
+</footer>
 
-      <section id="identity">
-        <span class="num">02 / IDENTITY</span>
-        <h2 class="section-title">BRAND Skill</h2>
-        <div class="identity-grid">
-          <div class="id-card"><h3>LOIND</h3></div>
-          <div class="color-guide-list">
-            <div class="color-item">
-              <div class="color-bar" style="background: #0D0D0D;"></div>
-              <div class="color-info">
-                <div class="color-name">Obsidian Black <span class="color-hex">#0D0D0D</span></div>
-                <div class="color-tags">권위 · 신비 · 냉철함</div>
-                <p class="color-desc">배경 및 메인 텍스트. 무게감의 기준점. Blood Red와 병치 시 긴장감 극대화.</p>
-              </div>
-            </div>
-            <div class="color-item">
-              <div class="color-bar" style="background: #FFFFFF; border-right: 1px solid #eee;"></div>
-              <div class="color-info">
-                <div class="color-name">Pure White <span class="color-hex">#FFFFFF</span></div>
-                <div class="color-tags">극명한 대비 · 완벽주의 · 새로운 시작</div>
-                <p class="color-desc">Obsidian Black과의 충돌로 시각적 긴장 생성. 독립 사용 금지 — 반드시 Black 또는 Red와 함께.</p>
-              </div>
-            </div>
-            <div class="color-item">
-              <div class="color-bar" style="background: #E0001A;"></div>
-              <div class="color-info">
-                <div class="color-name">Blood Red <span class="color-hex">#E0001A</span></div>
-                <div class="color-tags">열정 · 반항 · LOIND의 빛</div>
-                <p class="color-desc">무채색 속 유일한 포인트. 전체 면적의 10% 이하. 로고 마크, 핵심 카피, 강조 요소에만 한정.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+<script>
+  const units = document.querySelectorAll('.brand-unit');
+  const svcs = [
+    document.getElementById('svc-0'),
+    document.getElementById('svc-1'),
+    document.getElementById('svc-2')
+  ];
+  
+  let current = 0;
+  setInterval(() => {
+    units[current].classList.remove('active');
+    svcs[current].classList.remove('highlight-box');
+    current = (current + 1) % units.length;
+    units[current].classList.add('active');
+    svcs[current].classList.add('highlight-box');
+  }, 3000); 
+</script>
 
-      <section id="value">
-        <span class="num">03 / CORE VALUE</span>
-        <h2 class="section-title">핵심 가치</h2>
-        <style>
-          .cv-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
-          .cv-card { background: #f9f9fb; border: 1px solid #f0f0f0; border-radius: 20px; padding: 36px 28px 32px; transition: transform .4s ease, box-shadow .4s ease, border-color .4s; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-          .cv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #E0001A; transform: scaleX(0); transform-origin: left; transition: transform .4s ease; }
-          .cv-card:hover::before { transform: scaleX(1); }
-          .cv-card:hover { transform: translateY(-8px); box-shadow: 0 24px 56px rgba(0,0,0,.08); border-color: #e8e8e8; }
-          .cv-initial { font-size: 7rem; font-weight: 900; line-height: 1; color: #E0001A; opacity: .05; position: absolute; right: -8px; bottom: -12px; letter-spacing: -4px; transition: opacity .4s ease; user-select: none; }
-          .cv-card:hover .cv-initial { opacity: .10; }
-          .cv-num { font-size: 0.62rem; font-weight: 800; letter-spacing: 3px; color: #E0001A; display: block; margin-bottom: 24px; }
-          .cv-title-en { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.3px; color: #111; margin-bottom: 6px; line-height: 1.25; }
-          .cv-title-kr { font-size: 0.75rem; color: #aaa; margin-bottom: 16px; font-weight: 500; line-height: 1.5; }
-          .cv-body { font-size: 0.82rem; color: #777; line-height: 1.8; flex: 1; word-break: keep-all; }
-          .cv-keyword { display: inline-block; margin-top: 20px; font-size: 0.6rem; font-weight: 700; letter-spacing: 2px; color: #E0001A; border: 1px solid rgba(224,0,26,.2); background: rgba(224,0,26,.04); padding: 4px 12px; border-radius: 20px; }
-          @media (max-width: 1024px) { .cv-grid { grid-template-columns: repeat(2, 1fr); } }
-          @media (max-width: 600px) { .cv-grid { grid-template-columns: 1fr; } }
-        </style>
-        <div class="cv-grid">
-          <div class="cv-card"><span class="cv-num">01 / MOTIVATION</span><p class="cv-title-en">Look Beyond</p><p class="cv-title-kr">현상 너머의 가치를 발견하는 근원적인 동력</p><p class="cv-body">눈앞에 보이는 것에 안주하지 않고, 아직 존재하지 않는 위대함을 찾아내려는 우리의 순수한 동기입니다.</p><span class="cv-keyword">MOTIVATION</span><span class="cv-initial">L</span></div>
-          <div class="cv-card"><span class="cv-num">02 / CONVICTION</span><p class="cv-title-en">Own your vision</p><p class="cv-title-kr">우리가 그리는 시야에 대한 흔들림 없는 확신</p><p class="cv-body">LOIND가 설계한 비전이 곧 정답임을 믿고 밀고 나가는 강력한 신념입니다.</p><span class="cv-keyword">CONVICTION</span><span class="cv-initial">O</span></div>
-          <div class="cv-card"><span class="cv-num">03 / ACTION</span><p class="cv-title-en">Iterate without end</p><p class="cv-title-kr">정점에 닿을 때까지 멈추지 않는 폭발적인 실행</p><p class="cv-body">단순한 시도를 넘어, 완벽에 가까워질 때까지 끝없이 반복하고 개선하며 실질적인 변화를 만들어냅니다.</p><span class="cv-keyword">ACTION</span><span class="cv-initial">I</span></div>
-          <div class="cv-card"><span class="cv-num">04 / PERSISTENCE</span><p class="cv-title-en">Never compromise</p><p class="cv-title-kr">평범함과 타협하지 않고 본질을 지켜내는 고집</p><p class="cv-body">'적당히 좋은 것'이라는 유혹에 빠지지 않고, 마지막 1%의 디테일까지 완수해내는 끈질긴 고집입니다.</p><span class="cv-keyword">PERSISTENCE</span><span class="cv-initial">N</span></div>
-          <div class="cv-card"><span class="cv-num">05 / GOAL</span><p class="cv-title-en">Define the era</p><p class="cv-title-kr">새로운 기준이 되어 시대를 정의하는 궁극의 목적</p><p class="cv-body">우리의 행보가 곧 업계의 이정표가 되고, 마침내 이 시대의 비즈니스를 새롭게 정의하는 것이 LOIND의 최종 목표입니다.</p><span class="cv-keyword">GOAL</span><span class="cv-initial">D</span></div>
-        </div>
-      </section>
-
-      <!-- LOIND STANDARD 섹션 -->
-      <section id="standard">
-        <style>
-          .standard-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-          }
-          .standard-left {}
-          .standard-desc {
-            font-size: 1rem;
-            color: #555;
-            line-height: 1.9;
-            word-break: keep-all;
-            margin-bottom: 40px;
-          }
-          .standard-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: #000;
-            border-bottom: 1.5px solid #000;
-            padding-bottom: 4px;
-            transition: color 0.2s, border-color 0.2s;
-          }
-          .standard-link:hover {
-            color: #E0001A;
-            border-color: #E0001A;
-          }
-          .standard-link svg {
-            transition: transform 0.2s;
-          }
-          .standard-link:hover svg {
-            transform: translateX(4px);
-          }
-          .standard-right {
-            background: #0D0D0D;
-            border-radius: 24px;
-            padding: 56px 52px;
-            position: relative;
-            overflow: hidden;
-          }
-          .standard-right::before {
-            content: '';
-            position: absolute;
-            top: -60px; right: -60px;
-            width: 200px; height: 200px;
-            border-radius: 50%;
-            border: 1px solid rgba(224,0,26,0.15);
-          }
-          .standard-right::after {
-            content: '';
-            position: absolute;
-            top: -30px; right: -30px;
-            width: 120px; height: 120px;
-            border-radius: 50%;
-            border: 1px solid rgba(224,0,26,0.08);
-          }
-          .standard-phases {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            position: relative;
-          }
-          .standard-phase {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 18px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-          }
-          .standard-phase:last-child { border-bottom: none; }
-          .phase-num {
-            font-family: "Pretendard", sans-serif;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #E0001A;
-            width: 28px;
-            flex-shrink: 0;
-          }
-          .phase-bar {
-            width: 2px;
-            height: 28px;
-            background: rgba(255,255,255,0.08);
-            flex-shrink: 0;
-          }
-          .phase-name-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: rgba(255,255,255,0.75);
-            letter-spacing: 0.5px;
-          }
-          .phase-badge {
-            margin-left: auto;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.2);
-            text-transform: uppercase;
-          }
-
-          @media (max-width: 1024px) {
-            .standard-inner { grid-template-columns: 1fr; gap: 40px; }
-          }
-        </style>
-
-        <span class="num">04 / LOIND STANDARD</span>
-        <h2 class="section-title">LOIND Standard</h2>
-
-        <div class="standard-inner">
-          <div class="standard-left">
-            <p class="standard-desc">
-              LOER가 어떤 프로젝트를 수행하더라도 반드시 준수해야 하는 프로세스와 품질 기준.<br />
-              담당자가 바뀌어도, 규모가 달라져도 결과의 일관성을 보장하는 시스템이다.
-            </p>
-            <a href="loind-standard.html" class="standard-link">
-              LOIND Standard 확인하기
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-
-          <div class="standard-right">
-            <div class="standard-phases">
-              <div class="standard-phase">
-                <span class="phase-num">01</span>
-                <div class="phase-bar"></div>
-                <span class="phase-name-text">기획 단계</span>
-                <span class="phase-badge">Planning</span>
-              </div>
-              <div class="standard-phase">
-                <span class="phase-num">02</span>
-                <div class="phase-bar"></div>
-                <span class="phase-name-text">제작 단계</span>
-                <span class="phase-badge">Production</span>
-              </div>
-              <div class="standard-phase">
-                <span class="phase-num">03</span>
-                <div class="phase-bar"></div>
-                <span class="phase-name-text">납품 & 사후 관리</span>
-                <span class="phase-badge">Delivery</span>
-              </div>
-              <div class="standard-phase">
-                <span class="phase-num">04</span>
-                <div class="phase-bar"></div>
-                <span class="phase-name-text">피드백 설문</span>
-                <span class="phase-badge">Feedback</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 클로징 섹션 -->
-      <section class="closing-section">
-        <style>
-          .closing-section { background: #fff; min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border-bottom: none; padding: 100px 5%; }
-          .closing-label { font-size: 0.65rem; letter-spacing: 5px; text-transform: uppercase; color: #ccc; margin-bottom: 48px; font-weight: 600; }
-          .closing-brand { display: flex; align-items: flex-end; gap: 0; line-height: 1; }
-          .closing-brand .c { display: inline-block; font-size: clamp(3rem, 8vw, 8rem); font-weight: 900; color: #111; letter-spacing: -2px; animation: bounce 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; animation-play-state: paused; }
-          .closing-brand .space { display: inline-block; width: clamp(1rem, 2.5vw, 2.5rem); }
-          .closing-brand .corp .c { font-size: clamp(3rem, 8vw, 8rem); color: #111; }
-          .closing-brand .red { color: #E0001A; }
-          @keyframes bounce { 0% { transform: translateY(0); } 20% { transform: translateY(-28px); } 40% { transform: translateY(0); } 55% { transform: translateY(-12px); } 70% { transform: translateY(0); } 82% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
-          .closing-copy { margin-top: 40px; font-size: 0.75rem; letter-spacing: 3px; color: #ddd; text-transform: uppercase; }
-        </style>
-        <p class="closing-label">We are</p>
-        <div class="closing-brand" id="closingBrand">
-          <span class="loind">
-            <span class="c" data-i="0">L</span><span class="c" data-i="1">O</span><span class="c" data-i="2">I</span><span class="c" data-i="3">N</span><span class="c red" data-i="4">D</span>
-          </span>
-          <span class="space"></span>
-          <span class="corp">
-            <span class="c" data-i="5">C</span><span class="c" data-i="6">O</span><span class="c" data-i="7">R</span><span class="c" data-i="8">P</span><span class="c" data-i="9">O</span><span class="c" data-i="10">R</span><span class="c" data-i="11">A</span><span class="c" data-i="12">T</span><span class="c" data-i="13">I</span><span class="c" data-i="14">O</span><span class="c" data-i="15">N</span>
-          </span>
-        </div>
-        <p class="closing-copy">Beyond what exists · Seoul · Est. 2025</p>
-        <script>
-          (function() {
-            const letters = document.querySelectorAll('#closingBrand .c');
-            const observer = new IntersectionObserver((entries) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  letters.forEach((el, i) => { setTimeout(() => { el.style.animationPlayState = 'running'; }, i * 80); });
-                  observer.disconnect();
-                }
-              });
-            }, { threshold: 0.5 });
-            observer.observe(document.getElementById('closingBrand'));
-          })();
-        </script>
-      </section>
-    </main>
-  </body>
+</body>
 </html>
