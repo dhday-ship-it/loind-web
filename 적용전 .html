@@ -1,321 +1,1046 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About | LOIND</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOIND - Home</title>
     <style>
-      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-      
-      :root {
-        --primary-red: #E0001A;
-        --bg-black: #0D0D0D;
-        --text-gray: #888;
-      }
+        /* --- Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
 
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      a { color: inherit; text-decoration: none; }
-      ul { list-style: none; }
-      
-      body { 
-        background-color: #fff; 
-        color: #000; 
-        font-family: "Pretendard", sans-serif; 
-        line-height: 1.6;
-        word-break: keep-all;
-      }
+        body {
+            background-color: #ffffff;
+            color: #111111;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-      /* --- Header --- */
-      header { 
-        position: fixed; top: 0; left: 0; width: 100%; height: 90px; 
-        display: flex; align-items: center; justify-content: space-between; 
-        padding: 0 60px; background: rgba(255,255,255,0.8); 
-        backdrop-filter: blur(20px); z-index: 1000; 
-        transition: 0.4s cubic-bezier(0.2, 1, 0.2, 1);
-      }
-      header:hover { background: #fff; }
-      
-      h1 .main { font-size: 1.6rem; font-weight: 900; letter-spacing: 3px; }
-      .slogan { 
-        font-size: 0.75rem; font-weight: 700; color: var(--primary-red); 
-        margin-left: 12px; padding-left: 12px; border-left: 1px solid #ddd;
-        opacity: 0; transform: translateX(-15px); transition: 0.5s; 
-      }
-      h1:hover .slogan { opacity: 1; transform: translateX(0); }
-      
-      nav ul { display: flex; gap: 40px; }
-      nav li { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; transition: 0.3s; color: #666; }
-      nav li:hover { color: #000; }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-      /* --- Side Navigation --- */
-      .side-nav { 
-        position: fixed; top: 90px; left: 0; width: 280px; height: calc(100vh - 90px); 
-        padding: 80px 60px; z-index: 100; border-right: 1px solid #f2f2f2;
-      }
-      .side-nav li { margin-bottom: 30px; }
-      .side-nav a { 
-        color: #ccc; font-weight: 700; font-size: 0.85rem; 
-        letter-spacing: 1px; transition: 0.4s; position: relative;
-      }
-      .side-nav a::after {
-        content: ''; position: absolute; left: 0; bottom: -5px;
-        width: 0; height: 2px; background: var(--primary-red); transition: 0.4s;
-      }
-      .side-nav a.active { color: #000; font-size: 0.95rem; }
-      .side-nav a.active::after { width: 100%; }
+        .container {
+            max-width: 1240px; 
+            margin: 0 auto;
+            padding: 0 20px; 
+        }
 
-      /* --- Content Layout --- */
-      .content { margin-left: 280px; padding-top: 90px; width: calc(100% - 280px); }
-      
-      section { padding: 180px 10%; position: relative; border-bottom: 1px solid #f2f2f2; }
-      
-      .category-label { 
-        font-size: 0.8rem; font-weight: 900; color: var(--primary-red); 
-        letter-spacing: 5px; margin-bottom: 30px; display: block; 
-      }
-      .section-title { 
-        font-size: 4.5rem; font-weight: 900; margin-bottom: 100px; 
-        letter-spacing: -3px; line-height: 1.1; 
-      }
+        /* --- Header --- */
+        .header {
+            background-color: #fff;
+            padding: 35px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
 
-      /* --- 1. IDENTITY DESIGN --- */
-      .mission-box { margin-bottom: 200px; }
-      .mission-text { 
-        font-size: 3.2rem; font-weight: 800; color: #111; 
-        line-height: 1.3; max-width: 1000px;
-      }
-      .mission-text span { color: var(--primary-red); position: relative; }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-      .cv-grid { 
-        display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-        gap: 30px; margin-bottom: 200px;
-      }
-      .cv-card { 
-        background: #fcfcfd; border: 1px solid #f0f0f0; border-radius: 40px; 
-        padding: 70px 50px; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
-      }
-      .cv-card:hover { 
-        background: var(--bg-black); color: #fff; transform: translateY(-15px);
-        box-shadow: 0 40px 80px rgba(0,0,0,0.15);
-      }
-      .cv-initial { font-size: 2rem; font-weight: 900; color: var(--primary-red); margin-bottom: 40px; display: block; }
-      .cv-title-en { font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
-      .cv-body { font-size: 1.1rem; line-height: 1.7; color: #666; font-weight: 500; }
-      .cv-card:hover .cv-body { color: #aaa; }
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
 
-      .standard-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
-      .standard-desc { font-size: 1.6rem; font-weight: 600; color: #333; line-height: 1.6; }
-      .standard-right { 
-        background: var(--bg-black); padding: 80px; border-radius: 50px; color: #fff; 
-        box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-      }
-      .std-item { 
-        display: flex; align-items: center; justify-content: space-between; 
-        padding: 30px 0; border-bottom: 1px solid rgba(255,255,255,0.1); 
-      }
-      .std-item:last-child { border: none; }
-      .std-name { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
-      .std-tag { font-size: 0.9rem; font-weight: 800; color: var(--primary-red); text-transform: uppercase; letter-spacing: 2px; }
+        .nav {
+            display: flex;
+            align-items: center;
+        }
 
-      /* --- 2. CI SYSTEM DESIGN --- */
-      .ci-visual-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-      .ci-card { 
-        background: #f9f9fb; border-radius: 50px; padding: 120px 60px; 
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        transition: 0.4s;
-      }
-      .ci-card.dark { background: var(--bg-black); color: #fff; }
-      .ci-card h3 { font-size: 1rem; letter-spacing: 4px; color: #999; margin-bottom: 60px; text-transform: uppercase; }
-      
-      .symbol-box { width: 140px; height: 140px; background: var(--primary-red); border-radius: 35px; box-shadow: 0 20px 40px rgba(224, 0, 26, 0.3); }
-      .wordmark-box { font-size: 6rem; font-weight: 900; letter-spacing: 12px; margin-left: 12px; }
+        .nav a {
+            margin-left: 45px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #555;
+            transition: color 0.3s;
+        }
 
-      .color-showcase { margin-top: 150px; }
-      .color-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-      .color-chip { 
-        height: 350px; border-radius: 40px; padding: 50px; 
-        display: flex; flex-direction: column; justify-content: flex-end;
-        transition: 0.4s; cursor: pointer;
-      }
-      .color-chip:hover { transform: scale(1.02); }
-      .color-chip.black { background: var(--bg-black); color: #fff; }
-      .color-chip.white { background: #fff; border: 1px solid #eee; }
-      .color-chip.red { background: var(--primary-red); color: #fff; }
-      .color-chip .name { font-size: 1.5rem; font-weight: 900; margin-bottom: 8px; }
-      .color-chip .hex { font-size: 1rem; opacity: 0.6; font-weight: 600; letter-spacing: 1px; }
+        .nav a:hover, .nav a.active {
+            color: #000;
+            font-weight: 700;
+        }
 
-      /* --- Footer Section --- */
-      .final-section { 
-        text-align: center; padding: 250px 0; border: none; 
-        background: var(--bg-black); color: #fff; overflow: hidden;
-      }
-      .final-logo { font-size: 10vw; font-weight: 900; letter-spacing: -5px; }
-      .final-logo span { color: var(--primary-red); }
+        .nav-separator {
+            width: 1px;
+            height: 14px;
+            background-color: #e0e0e0;
+            margin-left: 22px;
+            margin-right: -23px;
+        }
 
-      @media (max-width: 1200px) {
-        .section-title { font-size: 3.5rem; }
-        .mission-text { font-size: 2.5rem; }
-        .standard-layout { grid-template-columns: 1fr; }
-      }
+        /* --- HERO SECTION --- */
+        .hero-section {
+            padding: 20px 0 100px 0;
+        }
 
-      @media (max-width: 1024px) {
-        .side-nav { display: none; }
-        .content { margin-left: 0; width: 100%; }
-        header { padding: 0 30px; }
-        .ci-visual-container, .color-grid { grid-template-columns: 1fr; }
-        .wordmark-box { font-size: 4rem; }
-      }
+        .hero-carousel-container {
+            position: relative;
+            width: 100%;
+            height: 540px;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .hero-slider-track {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .hero-slide {
+            width: 33.3333%;
+            height: 100%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 80px;
+            position: relative;
+        }
+
+        /* --- SLIDE 1 --- */
+        .slide-agent {
+            background: linear-gradient(135deg, #e4eaf7 0%, #e3e3e9 100%);
+        }
+
+        .hero-content {
+            flex: 1.4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .service-tag {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .hero-title {
+            font-size: 44px;
+            font-weight: 700;
+            line-height: 1.45;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+            color: #111;
+        }
+
+        .search-bubble {
+            background: linear-gradient(90deg, #2b56ff 0%, #ff56f6 100%);
+            padding: 0 38px;
+            height: 64px;
+            border-radius: 50px;
+            color: white;
+            font-size: 19px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 12px 25px rgba(43, 86, 255, 0.25);
+            align-self: flex-start;
+            margin-bottom: 35px;
+            transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
+        }
+
+        .rolling-wrapper {
+            position: relative;
+            height: 64px;
+            display: inline-block;
+        }
+
+        .rolling-item {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 64px;
+            line-height: 64px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s; 
+        }
+
+        .rolling-item.active {
+            position: relative;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+        }
+
+        .hash-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 90%;
+        }
+
+        .hash-tags span {
+            font-size: 14px;
+            color: #666;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .hero-image {
+            flex: 0.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .double-tag-container {
+            position: relative;
+            width: 280px;
+            height: 460px;
+            transform: rotate(-18deg); 
+            filter: drop-shadow(-22px 28px 35px rgba(0, 0, 0, 0.13));
+        }
+
+        .unified-tag-hole {
+            position: absolute;
+            top: 120px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: #e4eaf7; 
+            border-radius: 50%;
+            z-index: 10; 
+            box-shadow: inset 2px 3px 6px rgba(0, 0, 0, 0.45), 0px 1px 1px rgba(255, 255, 255, 0.9);   
+            border: 2px solid #dcdcdc; 
+        }
+
+        .main-tag-base {
+            position: absolute;
+            width: 230px;
+            height: 410px;
+            background-color: #fafafa;
+            border: 1px solid #ededed;
+            border-radius: 6px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5; 
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            padding: 20px;
+        }
+
+        .main-tag-logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #111;
+            text-align: center; 
+            line-height: 1.2; 
+        }
+
+        .sub-tag-overlap {
+            position: absolute;
+            width: 48px;
+            height: 410px;
+            background-color: #ededed; 
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            top: 85px; 
+            left: 50%;
+            transform: translateX(-50%) rotate(-42deg); 
+            transform-origin: 24px 35px; 
+            z-index: 2; 
+            box-shadow: -5px 10px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 60px;
+        }
+
+        .sub-tag-text {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #444;
+            writing-mode: vertical-rl;
+            text-transform: uppercase;
+        }
+
+        /* --- SLIDE 2 & 3 --- */
+        .slide-image {
+            padding: 0;
+            align-items: stretch;
+        }
+
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- 슬라이더 컨트롤 --- */
+        .banner-controls {
+            position: absolute;
+            right: 40px;
+            bottom: 40px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .control-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .control-dots span {
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .control-dots span.active {
+            width: 32px;
+            height: 8px;
+            background: #ffffff;
+            border-radius: 10px;
+        }
+
+        .control-pause {
+            color: #ffffff;
+            font-size: 11px;
+            cursor: pointer;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 12px;
+            font-weight: bold;
+        }
+
+        /* --- Services Section (수정됨: 비즈니스/임팩트 완전 가로 분리 구조) --- */
+        .carousel-section {
+            background-color: #ffffff; 
+            padding: 70px 0; 
+        }
+
+        .carousel-container-boxed {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            margin-bottom: 35px;
+        }
+
+        .section-desc {
+            font-size: 20px;
+            color: #111111;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* 두 카테고리를 한 줄에 배치하되, 중간에 명확한 구분 벽을 세우는 컨테이너 */
+        .services-horizontal-container {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        /* 각각의 서비스 파트 (4칸씩 대칭점 분할) */
+        .service-category-block {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* 비즈니스와 임팩트를 가르는 얇고 투명도 높은 가이드 라인 */
+        .category-divider {
+            width: 1px;
+            height: 180px; /* 아이콘 세로 높이에 맞춘 바선 */
+            background-color: #eaeaea;
+            margin: 45px 35px 0 35px; /* 양옆 여백 설계 */
+        }
+
+        /* 상단 소제목 (카테고리 직관적 인지용) */
+        .category-block-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: #aaa;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 각 영역 내부 4칸 그리드 플로우 */
+        .inner-brand-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+        }
+
+        /* 원형 모듈 */
+        .circle-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .circle-bg {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background-color: #f6f6f6; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+        }
+
+        .circle-menu-item:hover .circle-bg {
+            transform: translateY(-4px);
+            background-color: #ededed;
+        }
+
+        .circle-bg .inner-icon {
+            font-size: 24px;
+            color: #222222;
+            font-weight: bold;
+        }
+        
+        .circle-bg .inner-icon.impact {
+            color: #00c7ae; 
+        }
+
+        .circle-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle-title {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #111111;
+            letter-spacing: -0.4px;
+            white-space: pre-line;
+        }
+
+        /* --- STORY SECTION --- */
+        .story-section {
+            padding: 120px 0;
+            background-color: #ffffff;
+        }
+
+        .story-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 45px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 18px;
+        }
+
+        .story-header h2 {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+        }
+
+        .view-all {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #444;
+            transition: color 0.2s, transform 0.3s ease;
+        }
+        
+        .view-all:hover {
+            color: #000;
+            transform: translateX(4px);
+        }
+
+        .card-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .story-card {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .story-thumb-wrapper {
+            width: 100%;
+            padding-top: 68%; 
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .story-thumb {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .story-card:nth-child(2) .story-thumb {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+        }
+        .story-card:nth-child(3) .story-thumb {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+        }
+
+        .story-card:hover .story-thumb {
+            transform: scale(1.04);
+        }
+
+        .story-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .story-cat {
+            font-size: 12px;
+            font-weight: 700;
+            color: #5533ff;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .story-date {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .story-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.42;
+            color: #111;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .story-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .story-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .story-tags {
+            display: flex;
+            gap: 6px;
+        }
+
+        .story-tag-item {
+            font-size: 11px;
+            font-weight: 600;
+            color: #555;
+            background: #f4f4f7;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .story-arrow-click {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #111;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            transition: background 0.2s, transform 0.3s;
+        }
+
+        .story-card:hover .story-arrow-click {
+            background: #5533ff;
+            transform: translateX(3px);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: #0b0b0b;
+            color: #fff;
+            padding: 100px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 140px;
+        }
+
+        .footer-logo {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .footer-copy {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer-right {
+            display: flex;
+        }
+
+        .footer-links {
+            margin-left: 100px;
+        }
+
+        .footer-links h4 {
+            font-size: 15px;
+            color: #aaa;
+            margin-bottom: 22px;
+            font-weight: 700;
+        }
+
+        .footer-links a {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        /* --- Responsive 반응형 최적화 --- */
+        @media (max-width: 1200px) {
+            .services-horizontal-container { flex-direction: column; gap: 40px; }
+            .category-divider { display: none; } /* 세로 화면에선 경계선 제외 */
+            .inner-brand-grid { grid-template-columns: repeat(4, 1fr); }
+            .card-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .hero-carousel-container { height: 500px; }
+            .hero-title { font-size: 36px; }
+            .double-tag-container { transform: rotate(-10deg) scale(0.85); }
+        }
+
+        @media (max-width: 950px) {
+            .hero-image { display: none; }
+            .hero-slide { padding: 40px; }
+            .inner-brand-grid { grid-template-columns: repeat(3, 1fr); } /* 태블릿부턴 가로 3열 */
+        }
+
+        @media (max-width: 768px) {
+            .header .container { flex-direction: column; gap: 20px; text-align: center; }
+            .nav a { margin: 0 10px; }
+            .nav-separator { display: none; } 
+            .story-header h2 { font-size: 26px; }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 0 24px; }
+            .header { padding: 25px 0; }
+            .hero-section { padding: 20px 0 60px 0; }
+            .hero-carousel-container { height: 420px; border-radius: 24px; }
+            .hero-title { font-size: 28px; }
+            .search-bubble { font-size: 14px; padding: 12px 24px; }
+            .banner-controls { right: 20px; bottom: 20px; }
+            
+            .inner-brand-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } /* 모바일 가로 2열 */
+            .circle-title { font-size: 12px; }
+            
+            .card-grid-3 { grid-template-columns: 1fr; gap: 40px; }
+            .story-section { padding: 80px 0; }
+            .story-header { margin-bottom: 30px; }
+            
+            .footer-container { flex-direction: column; gap: 40px; }
+            .footer-right { margin-left: 0; justify-content: space-between; }
+            .footer-links { margin-left: 0; }
+        }
     </style>
-  </head>
-  <body>
-    <header>
-      <h1>
-        <a href="index.html">
-          <span class="main">LOIND</span>
-          <span class="slogan">Beyond what exists</span>
-        </a>
-      </h1>
-      <nav>
-        <ul>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="service.html">SERVICE</a></li>
-          <li><a href="story.html">STORY</a></li>
-          <li><a href="contact.html">CONTACT</a></li>
-        </ul>
-      </nav>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo" onclick="location.href='index.html'">LOIND</div>
+            <nav class="nav">
+                <a href="index.html" class="active">About</a>
+                <a href="service.html">Service</a>
+                <a href="story.html">Story</a>
+                <a href="contact.html">Contact</a>
+                <div class="nav-separator"></div>
+                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+            </nav>
+        </div>
     </header>
 
-    <aside class="side-nav">
-      <ul>
-        <li><a href="#identity-section">IDENTITY</a></li>
-        <li><a href="#ci-section">CI SYSTEM</a></li>
-      </ul>
-    </aside>
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-carousel-container" id="heroCarousel">
+                
+                <div class="hero-slider-track" id="sliderTrack">
+                    
+                    <!-- SLIDE 1 -->
+                    <div class="hero-slide slide-agent">
+                        <div class="hero-content">
+                            <span class="service-tag">Service</span>
+                            <h1 class="hero-title">어떤 파트너십이 필요하세요? </h1>
+                            
+                            <div class="search-bubble">
+                                <span>✨</span>
+                                <div class="rolling-wrapper">
+                                    <div class="rolling-item active">브랜딩 에이전시가 필요하세요?</div>
+                                    <div class="rolling-item">전략 컨설팅이 필요하세요?</div>
+                                    <div class="rolling-item">이벤트 프로덕션이 필요하세요?</div>
+                                    <div class="rolling-item">마케팅 에이전시가 필요하세요?</div>
+                                    <div class="rolling-item">엔터테인먼트 에이전시가 필요하세요?</div>
+                                    <div class="rolling-item">크리에이티브 에이전시가 필요하세요?</div>
+                                    <div class="rolling-item">디지털 / 테크 에이전시가 필요하세요?</div>
+                                </div>
+                            </div>
+                            
+                            <div class="hash-tags">
+                                <span>#브랜딩 에이전시</span>
+                                <span>#전략 컨설팅</span>
+                                <span>#이벤트 프로덕션</span>
+                                <span>#마케팅 에이전시</span>
+                                <span>#엔터테인먼트 에이전시</span>
+                                <span>#크리에이티브 에이전시</span>
+                                <span>#디지털 / 테크 에이전시</span>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-image">
+                            <div class="double-tag-container">
+                                <div class="unified-tag-hole"></div>
+                                <div class="main-tag-base">
+                                    <div class="main-tag-logo">LOIND<br>AGENCY</div>
+                                </div>
+                                <div class="sub-tag-overlap">
+                                    <div class="sub-tag-text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    <main class="content">
-      <section id="identity-section">
-        <span class="category-label">PART 01. IDENTITY</span>
-        <h2 class="section-title">우리는 타협하지 않는<br>절대적인 기준을 설계합니다</h2>
+                    <!-- SLIDE 2 -->
+                    <div class="hero-slide slide-image">
+                        <img src="1.png" alt="Dream for Dreamer">
+                    </div>
 
-        <div class="mission-box">
-          <span class="cv-initial" style="font-size: 0.9rem; letter-spacing: 2px;">VISION</span>
-          <p class="mission-text">
-            LOIND는 <span>탁월함</span>을 넘어 <span>유일함</span>을 지향합니다.<br>
-            우리의 행보는 곧 시장의 새로운 기준이 됩니다.
-          </p>
+                    <!-- SLIDE 3 -->
+                    <div class="hero-slide slide-image">
+                        <img src="2.png" alt="Coram Deo New Album">
+                    </div>
+
+                </div>
+
+                <div class="banner-controls">
+                    <div class="control-dots" id="controlDots">
+                        <span class="active" data-index="0"></span>
+                        <span data-index="1"></span>
+                        <span data-index="2"></span>
+                    </div>
+                    <div class="control-pause" id="pauseBtn">||</div>
+                </div>
+
+            </div>
         </div>
+    </section>
 
-        <div style="margin-bottom: 200px;">
-          <span class="cv-initial" style="font-size: 0.9rem; letter-spacing: 2px;">CORE VALUES</span>
-          <div class="cv-grid">
-            <div class="cv-card">
-              <span class="cv-initial">L</span>
-              <p class="cv-title-en">Look Beyond</p>
-              <p class="cv-body">현상 너머에 숨겨진 본질적인 가치를 꿰뚫어 봅니다.</p>
+    <!-- SERVICES SECTION (수정 완료: 한 줄 구조 내부 카테고리 완전 격리 분리) -->
+    <section class="carousel-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-desc">로인드와 함께 뭐시기 뭐시기</p>
             </div>
-            <div class="cv-card">
-              <span class="cv-initial">O</span>
-              <p class="cv-title-en">Own Vision</p>
-              <p class="cv-body">우리가 설계한 비전이 곧 정답이라는 확신으로 나아갑니다.</p>
+            
+            <div class="services-horizontal-container">
+                
+                <!-- [LEFT BLOCK]: BUSINESS SERVICE -->
+                <div class="service-category-block">
+                    <h3 class="category-block-title">Business Service</h3>
+                    <div class="inner-brand-grid">
+                        <!-- 1. LOER -->
+                        <div class="circle-menu-item">
+                            <div class="circle-bg">
+                                <div class="inner-icon">✦</div>
+                            </div>
+                            <div class="circle-label">
+                                <p class="circle-title">Creative Agency<br>LOER</p>
+                            </div>
+                        </div>
+                        <!-- 2. LODEN -->
+                        <div class="circle-menu-item">
+                            <div class="circle-bg">
+                                <div class="inner-icon">✦</div>
+                            </div>
+                            <div class="circle-label">
+                                <p class="circle-title">Creative Studio<br>LODEN</p>
+                            </div>
+                        </div>
+                        <!-- 3. ELROI -->
+                        <div class="circle-menu-item">
+                            <div class="circle-bg">
+                                <div class="inner-icon">✦</div>
+                            </div>
+                            <div class="circle-label">
+                                <p class="circle-title">Christian Biz<br>ELROI</p>
+                            </div>
+                        </div>
+                        <!-- 4. 공백 홀더 -->
+                        <div class="circle-menu-item" style="visibility: hidden; pointer-events: none;">
+                            <div class="circle-bg"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 분리막 장벽 선 -->
+                <div class="category-divider"></div>
+
+                <!-- [RIGHT BLOCK]: IMPACT SERVICE -->
+                <div class="service-category-block">
+                    <h3 class="category-block-title">Impact Service</h3>
+                    <div class="inner-brand-grid">
+                        <!-- 5. 미래자립교회 -->
+                        <div class="circle-menu-item">
+                            <div class="circle-bg">
+                                <div class="inner-icon impact">🌱</div>
+                            </div>
+                            <div class="circle-label">
+                                <p class="circle-title">CSR / ESG<br>미래자립교회</p>
+                            </div>
+                        </div>
+                        <!-- 6. 공백 홀더 -->
+                        <div class="circle-menu-item" style="visibility: hidden; pointer-events: none;"><div class="circle-bg"></div></div>
+                        <!-- 7. 공백 홀더 -->
+                        <div class="circle-menu-item" style="visibility: hidden; pointer-events: none;"><div class="circle-bg"></div></div>
+                        <!-- 8. 공백 홀더 -->
+                        <div class="circle-menu-item" style="visibility: hidden; pointer-events: none;"><div class="circle-bg"></div></div>
+                    </div>
+                </div>
+
             </div>
-            <div class="cv-card">
-              <span class="cv-initial">I</span>
-              <p class="cv-title-en">Iterate</p>
-              <p class="cv-body">완벽에 도달할 때까지 멈추지 않고 끝없이 반복합니다.</p>
-            </div>
-            <div class="cv-card">
-              <span class="cv-initial">N</span>
-              <p class="cv-title-en">Never Compromise</p>
-              <p class="cv-body">마지막 1%의 디테일조차 평범함과 타협하지 않습니다.</p>
-            </div>
-            <div class="cv-card">
-              <span class="cv-initial">D</span>
-              <p class="cv-title-en">Define Era</p>
-              <p class="cv-body">우리의 결과물이 이 시대를 새롭게 정의하게 합니다.</p>
-            </div>
-          </div>
         </div>
+    </section>
 
-        <div>
-          <span class="cv-initial" style="font-size: 0.9rem; letter-spacing: 2px;">LOIND STANDARD</span>
-          <div class="standard-layout">
-            <div class="standard-left">
-              <p class="standard-desc">
-                전문가가 바뀌어도 품질은 변하지 않습니다.<br>
-                LOIND Standard는 일관된 탁월함을 유지하기 위한 우리의 엄격한 규율입니다.
-              </p>
+    <section class="story-section">
+        <div class="container">
+            <div class="story-header">
+                <h2>Stories</h2>
+                <a href="story.html" class="view-all">VIEW ALL STORIES ➔</a>
             </div>
-            <div class="standard-right">
-              <div class="std-item"><span class="std-name">Planning</span><span class="std-tag">기획</span></div>
-              <div class="std-item"><span class="std-name">Production</span><span class="std-tag">제작</span></div>
-              <div class="std-item"><span class="std-name">Delivery</span><span class="std-tag">납품</span></div>
-              <div class="std-item"><span class="std-name">Feedback</span><span class="std-tag">관리</span></div>
+            <div class="card-grid-3">
+                <a href="story.html" class="story-card">
+                    <div class="story-thumb-wrapper">
+                        <div class="story-thumb"></div>
+                    </div>
+                    <div class="story-meta">
+                        <span class="story-cat">Insights</span>
+                        <p class="story-date">2026.04.27</p>
+                    </div>
+                    <h3 class="story-title">차세대 가상 쇼핑 에이전트와 이커머스의 미래</h3>
+                    <p class="story-desc">AI 에이전트가 사용자의 맥락을 이해하고 최적의 상품을 제안하는 개인화 쇼핑 혁명이 시작됩니다.</p>
+                    <div class="story-footer">
+                        <div class="story-tags">
+                            <span class="story-tag-item">AI</span>
+                            <span class="story-tag-item">Tech</span>
+                        </div>
+                        <div class="story-arrow-click">➔</div>
+                    </div>
+                </a>
+
+                <a href="story.html" class="story-card">
+                    <div class="story-thumb-wrapper">
+                        <div class="story-thumb"></div>
+                    </div>
+                    <div class="story-meta">
+                        <span class="story-cat">Report</span>
+                        <p class="story-date">2026.04.20</p>
+                    </div>
+                    <h3 class="story-title">데이터 이동 제어가 브랜드 신뢰도에 미치는 영향</h3>
+                    <p class="story-desc">개인정보 보호와 데이터의 투명한 관리 시스템 구축이 미래 브랜드 가치를 결정짓는 핵심 지표가 될 것입니다.</p>
+                    <div class="story-footer">
+                        <div class="story-tags">
+                            <span class="story-tag-item">Data</span>
+                            <span class="story-tag-item">Security</span>
+                        </div>
+                        <div class="story-arrow-click">➔</div>
+                    </div>
+                </a>
+
+                <a href="story.html" class="story-card">
+                    <div class="story-thumb-wrapper">
+                        <div class="story-thumb"></div>
+                    </div>
+                    <div class="story-meta">
+                        <span class="story-cat">Trend</span>
+                        <p class="story-date">2026.04.11</p>
+                    </div>
+                    <h3 class="story-title">LOIND이 제안하는 2026년 디지털 이커머스 패러다임</h3>
+                    <p class="story-desc">글로벌 네트워크 속에서 독창적인 브랜드 아이덴티티를 유지하고 가치 리포트를 구축하는 최신 솔루션 리포트.</p>
+                    <div class="story-footer">
+                        <div class="story-tags">
+                            <span class="story-tag-item">Trend</span>
+                            <span class="story-tag-item">Global</span>
+                        </div>
+                        <div class="story-arrow-click">➔</div>
+                    </div>
+                </a>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 
-      <section id="ci-section">
-        <span class="category-label">PART 02. CI SYSTEM</span>
-        <h2 class="section-title">Visual Language</h2>
-
-        <div class="ci-visual-container">
-          <div class="ci-card dark">
-            <h3>Symbol</h3>
-            <div class="symbol-box"></div>
-          </div>
-          <div class="ci-card">
-            <h3>Wordmark</h3>
-            <div class="wordmark-box">LOIND</div>
-          </div>
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <h2 class="footer-logo">LOIND</h2>
+                <p class="footer-copy">© 2026 LOIND. All rights reserved.</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <a href="index.html">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <a href="story.html">Blog</a>
+                    <a href="#">Help Center</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
         </div>
-
-        <div class="color-showcase">
-          <span class="cv-initial" style="font-size: 0.9rem; letter-spacing: 2px;">BRAND COLORS</span>
-          <div class="color-grid">
-            <div class="color-chip black">
-              <p class="name">Obsidian Black</p>
-              <p class="hex">#0D0D0D</p>
-            </div>
-            <div class="color-chip red">
-              <p class="name">Blood Red</p>
-              <p class="hex">#E0001A</p>
-            </div>
-            <div class="color-chip white">
-              <p class="name">Pure White</p>
-              <p class="hex">#FFFFFF</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="final-section">
-        <h2 class="final-logo">LOIND<span>.</span></h2>
-        <p style="font-size: 1rem; letter-spacing: 8px; opacity: 0.5; margin-top: 20px;">BEYOND WHAT EXISTS</p>
-      </section>
-    </main>
+    </footer>
 
     <script>
-      window.addEventListener('scroll', () => {
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.side-nav a');
+        const track = document.getElementById('sliderTrack');
+        const dots = document.querySelectorAll('#controlDots span');
+        const container = document.getElementById('heroCarousel');
+        const pauseBtn = document.getElementById('pauseBtn');
         
-        let current = "";
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (pageYOffset >= (sectionTop - 250)) {
-            current = section.getAttribute('id');
-          }
+        let currentIndex = 0;
+        let isPlaying = true;
+        let slideInterval;
+        const totalSlides = 3;
+
+        function updateSlider(index) {
+            currentIndex = index;
+            track.style.transform = `translateX(-${currentIndex * (100 / totalSlides)}%)`;
+            
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[currentIndex].classList.add('active');
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(() => {
+                let nextIndex = (currentIndex + 1) % totalSlides;
+                updateSlider(nextIndex);
+            }, 6000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                const targetIndex = parseInt(e.target.getAttribute('data-index'));
+                updateSlider(targetIndex);
+                if (isPlaying) {
+                    stopAutoSlide();
+                    startAutoSlide();
+                }
+            });
         });
 
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href').includes(current)) {
-            link.classList.add('active');
-          }
+        pauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                stopAutoSlide();
+                pauseBtn.textContent = '▶';
+                isPlaying = false;
+            } else {
+                startAutoSlide();
+                pauseBtn.textContent = '||';
+                isPlaying = true;
+            }
         });
-      });
+
+        startAutoSlide();
+
+        const rollingItems = document.querySelectorAll('.rolling-item');
+        let rollingIndex = 0;
+        
+        setInterval(() => {
+            rollingItems[rollingIndex].classList.remove('active');
+            rollingIndex = (rollingIndex + 1) % rollingItems.length;
+            rollingItems[rollingIndex].classList.add('active');
+        }, 3000);
     </script>
-  </body>
+</body>
 </html>
