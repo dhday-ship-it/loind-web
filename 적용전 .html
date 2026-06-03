@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -112,7 +113,6 @@
             position: relative;
         }
 
-        /* --- SLIDE 1 --- */
         .slide-agent {
             background: linear-gradient(135deg, #e4eaf7 0%, #e3e3e9 100%);
         }
@@ -282,7 +282,6 @@
             text-transform: uppercase;
         }
 
-        /* --- SLIDE 2 & 3 --- */
         .slide-image {
             padding: 0;
             align-items: stretch;
@@ -342,119 +341,94 @@
             font-weight: bold;
         }
 
-        /* --- Services Section (수정됨: 비즈니스/임팩트 완전 가로 분리 구조) --- */
+        /* --- Brand Circle Menu Section (스크린샷 2026-06-03 반영) --- */
         .carousel-section {
-            background-color: #ffffff; 
-            padding: 70px 0; 
+            background-color: #ffffff;
+            padding: 90px 0 110px 0;
         }
 
-        .carousel-container-boxed {
-            max-width: 1240px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .section-header-circle {
+            margin-bottom: 60px;
         }
 
-        .section-header {
-            margin-bottom: 35px;
-        }
-
-        .section-desc {
-            font-size: 20px;
+        .section-desc-circle {
+            font-size: 26px;
             color: #111111;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
-        /* 두 카테고리를 한 줄에 배치하되, 중간에 명확한 구분 벽을 세우는 컨테이너 */
-        .services-horizontal-container {
+        /* 이미지 내부의 특유의 비대칭 넓은 간격을 구현하기 위한 가로 컨테이너 */
+        .brand-circle-flex-container {
             display: flex;
             align-items: flex-start;
+            gap: 32px;
             width: 100%;
         }
 
-        /* 각각의 서비스 파트 (4칸씩 대칭점 분할) */
-        .service-category-block {
-            flex: 1;
+        /* 세 번째 아이콘 뒤에 큰 마진 공간 확보 */
+        .brand-circle-group-left {
             display: flex;
-            flex-direction: column;
-            gap: 24px;
+            gap: 32px;
+            margin-right: 160px; /* ELROI와 미래자립교회 사이의 명확한 간격 격리 조절 */
         }
 
-        /* 비즈니스와 임팩트를 가르는 얇고 투명도 높은 가이드 라인 */
-        .category-divider {
-            width: 1px;
-            height: 180px; /* 아이콘 세로 높이에 맞춘 바선 */
-            background-color: #eaeaea;
-            margin: 45px 35px 0 35px; /* 양옆 여백 설계 */
-        }
-
-        /* 상단 소제목 (카테고리 직관적 인지용) */
-        .category-block-title {
-            font-size: 12px;
-            font-weight: 800;
-            color: #aaa;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* 각 영역 내부 4칸 그리드 플로우 */
-        .inner-brand-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            width: 100%;
-        }
-
-        /* 원형 모듈 */
-        .circle-menu-item {
+        .brand-circle-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            width: 170px;
             cursor: pointer;
         }
 
-        .circle-bg {
-            width: 100%;
-            aspect-ratio: 1 / 1;
+        .circle-avatar-bg {
+            width: 170px;
+            height: 170px;
+            background-color: #f4f4f4;
             border-radius: 50%;
-            background-color: #f6f6f6; 
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+            margin-bottom: 24px;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease;
         }
 
-        .circle-menu-item:hover .circle-bg {
-            transform: translateY(-4px);
-            background-color: #ededed;
+        .brand-circle-item:hover .circle-avatar-bg {
+            transform: scale(1.03);
+            background-color: #ebebeb;
         }
 
-        .circle-bg .inner-icon {
-            font-size: 24px;
-            color: #222222;
-            font-weight: bold;
-        }
-        
-        .circle-bg .inner-icon.impact {
-            color: #00c7ae; 
+        /* 스크린샷 내부의 미니멀 심볼 아이콘 폰트크기 조절 */
+        .circle-inner-symbol {
+            font-size: 36px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
         }
 
-        .circle-label {
+        .circle-text-block {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            gap: 4px;
         }
 
-        .circle-title {
-            font-size: 13px;
+        .circle-brand-sub {
+            font-size: 14px;
             font-weight: 700;
-            line-height: 1.4;
             color: #111111;
-            letter-spacing: -0.4px;
-            white-space: pre-line;
+            line-height: 1.3;
+        }
+
+        .circle-brand-main {
+            font-size: 14px;
+            font-weight: 800;
+            color: #111111;
+            line-height: 1.3;
+            text-transform: uppercase;
         }
 
         /* --- STORY SECTION --- */
@@ -523,14 +497,6 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s ease;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-
-        .story-card:nth-child(2) .story-thumb {
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-        }
-        .story-card:nth-child(3) .story-thumb {
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
         }
 
         .story-card:hover .story-thumb {
@@ -677,11 +643,10 @@
             color: #fff;
         }
 
-        /* --- Responsive 반응형 최적화 --- */
+        /* --- Responsive 반응형 밸런싱 --- */
         @media (max-width: 1200px) {
-            .services-horizontal-container { flex-direction: column; gap: 40px; }
-            .category-divider { display: none; } /* 세로 화면에선 경계선 제외 */
-            .inner-brand-grid { grid-template-columns: repeat(4, 1fr); }
+            .brand-circle-flex-container { justify-content: center; flex-wrap: wrap; gap: 40px; }
+            .brand-circle-group-left { margin-right: 0; gap: 40px; }
             .card-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
             .hero-carousel-container { height: 500px; }
             .hero-title { font-size: 36px; }
@@ -691,7 +656,6 @@
         @media (max-width: 950px) {
             .hero-image { display: none; }
             .hero-slide { padding: 40px; }
-            .inner-brand-grid { grid-template-columns: repeat(3, 1fr); } /* 태블릿부턴 가로 3열 */
         }
 
         @media (max-width: 768px) {
@@ -699,6 +663,8 @@
             .nav a { margin: 0 10px; }
             .nav-separator { display: none; } 
             .story-header h2 { font-size: 26px; }
+            .brand-circle-group-left { flex-direction: column; align-items: center; gap: 32px; }
+            .brand-circle-flex-container { flex-direction: column; align-items: center; gap: 32px; }
         }
 
         @media (max-width: 600px) {
@@ -710,8 +676,8 @@
             .search-bubble { font-size: 14px; padding: 12px 24px; }
             .banner-controls { right: 20px; bottom: 20px; }
             
-            .inner-brand-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } /* 모바일 가로 2열 */
-            .circle-title { font-size: 12px; }
+            .circle-avatar-bg { width: 140px; height: 140px; }
+            .brand-circle-item { width: 140px; }
             
             .card-grid-3 { grid-template-columns: 1fr; gap: 40px; }
             .story-section { padding: 80px 0; }
@@ -789,12 +755,12 @@
 
                     <!-- SLIDE 2 -->
                     <div class="hero-slide slide-image">
-                        <img src="1.png" alt="Dream for Dreamer">
+                        <img src="img/1.png" alt="Dream for Dreamer">
                     </div>
 
                     <!-- SLIDE 3 -->
                     <div class="hero-slide slide-image">
-                        <img src="2.png" alt="Coram Deo New Album">
+                        <img src="img/2.png" alt="Coram Deo New Album">
                     </div>
 
                 </div>
@@ -812,78 +778,60 @@
         </div>
     </section>
 
-    <!-- SERVICES SECTION (수정 완료: 한 줄 구조 내부 카테고리 완전 격리 분리) -->
+    <!-- NEW BRAND CIRCLE SECTION (스크린샷 2026-06-03 오후 7.32.10 반영 완료) -->
     <section class="carousel-section">
         <div class="container">
-            <div class="section-header">
-                <p class="section-desc">로인드와 함께 뭐시기 뭐시기</p>
+            <div class="section-header-circle">
+                <p class="section-desc-circle">로인드와 함께 뭐시기 뭐시기</p>
             </div>
             
-            <div class="services-horizontal-container">
+            <div class="brand-circle-flex-container">
+                <!-- Business 영역 3종 패키지 -->
+                <div class="brand-circle-group-left">
+                    <!-- 1. LOER -->
+                    <div class="brand-circle-item">
+                        <div class="circle-avatar-bg">
+                            <div class="circle-inner-symbol">✦</div>
+                        </div>
+                        <div class="circle-text-block">
+                            <span class="circle-brand-sub">Creative Agency</span>
+                            <span class="circle-brand-main">LOER</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 2. LODEN -->
+                    <div class="brand-circle-item">
+                        <div class="circle-avatar-bg">
+                            <div class="circle-inner-symbol">✦</div>
+                        </div>
+                        <div class="circle-text-block">
+                            <span class="circle-brand-sub">Creative Studio</span>
+                            <span class="circle-brand-main">LODEN</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 3. ELROI -->
+                    <div class="brand-circle-item">
+                        <div class="circle-avatar-bg">
+                            <div class="circle-inner-symbol">✦</div>
+                        </div>
+                        <div class="circle-text-block">
+                            <span class="circle-brand-sub">Christian Biz</span>
+                            <span class="circle-brand-main">ELROI</span>
+                        </div>
+                    </div>
+                </div>
                 
-                <!-- [LEFT BLOCK]: BUSINESS SERVICE -->
-                <div class="service-category-block">
-                    <h3 class="category-block-title">Business Service</h3>
-                    <div class="inner-brand-grid">
-                        <!-- 1. LOER -->
-                        <div class="circle-menu-item">
-                            <div class="circle-bg">
-                                <div class="inner-icon">✦</div>
-                            </div>
-                            <div class="circle-label">
-                                <p class="circle-title">Creative Agency<br>LOER</p>
-                            </div>
-                        </div>
-                        <!-- 2. LODEN -->
-                        <div class="circle-menu-item">
-                            <div class="circle-bg">
-                                <div class="inner-icon">✦</div>
-                            </div>
-                            <div class="circle-label">
-                                <p class="circle-title">Creative Studio<br>LODEN</p>
-                            </div>
-                        </div>
-                        <!-- 3. ELROI -->
-                        <div class="circle-menu-item">
-                            <div class="circle-bg">
-                                <div class="inner-icon">✦</div>
-                            </div>
-                            <div class="circle-label">
-                                <p class="circle-title">Christian Biz<br>ELROI</p>
-                            </div>
-                        </div>
-                        <!-- 4. 공백 홀더 -->
-                        <div class="circle-menu-item" style="visibility: hidden; pointer-events: none;">
-                            <div class="circle-bg"></div>
-                        </div>
+                <!-- Impact 영역 단독 배치 (왼쪽 그룹과의 의도적인 여백 레이아웃 구현) -->
+                <div class="brand-circle-item">
+                    <div class="circle-avatar-bg">
+                        <div class="circle-inner-symbol">🌱</div>
+                    </div>
+                    <div class="circle-text-block">
+                        <span class="circle-brand-sub">CSR / ESG</span>
+                        <span class="circle-brand-main">미래자립교회</span>
                     </div>
                 </div>
-
-                <!-- 분리막 장벽 선 -->
-                <div class="category-divider"></div>
-
-                <!-- [RIGHT BLOCK]: IMPACT SERVICE -->
-                <div class="service-category-block">
-                    <h3 class="category-block-title">Impact Service</h3>
-                    <div class="inner-brand-grid">
-                        <!-- 5. 미래자립교회 -->
-                        <div class="circle-menu-item">
-                            <div class="circle-bg">
-                                <div class="inner-icon impact">🌱</div>
-                            </div>
-                            <div class="circle-label">
-                                <p class="circle-title">CSR / ESG<br>미래자립교회</p>
-                            </div>
-                        </div>
-                        <!-- 6. 공백 홀더 -->
-                        <div class="circle-menu-item" style="visibility: hidden; pointer-events: none;"><div class="circle-bg"></div></div>
-                        <!-- 7. 공백 홀더 -->
-                        <div class="circle-menu-item" style="visibility: hidden; pointer-events: none;"><div class="circle-bg"></div></div>
-                        <!-- 8. 공백 홀더 -->
-                        <div class="circle-menu-item" style="visibility: hidden; pointer-events: none;"><div class="circle-bg"></div></div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -895,62 +843,7 @@
                 <a href="story.html" class="view-all">VIEW ALL STORIES ➔</a>
             </div>
             <div class="card-grid-3">
-                <a href="story.html" class="story-card">
-                    <div class="story-thumb-wrapper">
-                        <div class="story-thumb"></div>
-                    </div>
-                    <div class="story-meta">
-                        <span class="story-cat">Insights</span>
-                        <p class="story-date">2026.04.27</p>
-                    </div>
-                    <h3 class="story-title">차세대 가상 쇼핑 에이전트와 이커머스의 미래</h3>
-                    <p class="story-desc">AI 에이전트가 사용자의 맥락을 이해하고 최적의 상품을 제안하는 개인화 쇼핑 혁명이 시작됩니다.</p>
-                    <div class="story-footer">
-                        <div class="story-tags">
-                            <span class="story-tag-item">AI</span>
-                            <span class="story-tag-item">Tech</span>
-                        </div>
-                        <div class="story-arrow-click">➔</div>
-                    </div>
-                </a>
-
-                <a href="story.html" class="story-card">
-                    <div class="story-thumb-wrapper">
-                        <div class="story-thumb"></div>
-                    </div>
-                    <div class="story-meta">
-                        <span class="story-cat">Report</span>
-                        <p class="story-date">2026.04.20</p>
-                    </div>
-                    <h3 class="story-title">데이터 이동 제어가 브랜드 신뢰도에 미치는 영향</h3>
-                    <p class="story-desc">개인정보 보호와 데이터의 투명한 관리 시스템 구축이 미래 브랜드 가치를 결정짓는 핵심 지표가 될 것입니다.</p>
-                    <div class="story-footer">
-                        <div class="story-tags">
-                            <span class="story-tag-item">Data</span>
-                            <span class="story-tag-item">Security</span>
-                        </div>
-                        <div class="story-arrow-click">➔</div>
-                    </div>
-                </a>
-
-                <a href="story.html" class="story-card">
-                    <div class="story-thumb-wrapper">
-                        <div class="story-thumb"></div>
-                    </div>
-                    <div class="story-meta">
-                        <span class="story-cat">Trend</span>
-                        <p class="story-date">2026.04.11</p>
-                    </div>
-                    <h3 class="story-title">LOIND이 제안하는 2026년 디지털 이커머스 패러다임</h3>
-                    <p class="story-desc">글로벌 네트워크 속에서 독창적인 브랜드 아이덴티티를 유지하고 가치 리포트를 구축하는 최신 솔루션 리포트.</p>
-                    <div class="story-footer">
-                        <div class="story-tags">
-                            <span class="story-tag-item">Trend</span>
-                            <span class="story-tag-item">Global</span>
-                        </div>
-                        <div class="story-arrow-click">➔</div>
-                    </div>
-                </a>
+                <!-- 파이어베이스 바인딩 데이터 영역 -->
             </div>
         </div>
     </section>
@@ -978,69 +871,124 @@
         </div>
     </footer>
 
-    <script>
-        const track = document.getElementById('sliderTrack');
-        const dots = document.querySelectorAll('#controlDots span');
-        const container = document.getElementById('heroCarousel');
-        const pauseBtn = document.getElementById('pauseBtn');
-        
-        let currentIndex = 0;
-        let isPlaying = true;
-        let slideInterval;
-        const totalSlides = 3;
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import {
+        getFirestore,
+        collection,
+        getDocs,
+        query,
+        orderBy,
+        limit
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        function updateSlider(index) {
-            currentIndex = index;
-            track.style.transform = `translateX(-${currentIndex * (100 / totalSlides)}%)`;
-            
-            dots.forEach(dot => dot.classList.remove('active'));
-            dots[currentIndex].classList.add('active');
-        }
+    const firebaseConfig = {
+        apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
+        authDomain: "loind-472cd.firebaseapp.com",
+        projectId: "loind-472cd",
+        storageBucket: "loind-472cd.firebasestorage.app",
+        messagingSenderId: "405998534289",
+        appId: "1:405998534289:web:0f861bc822e1ea5391c930",
+        measurementId: "G-5B5MM51YH2",
+    };
 
-        function startAutoSlide() {
-            slideInterval = setInterval(() => {
-                let nextIndex = (currentIndex + 1) % totalSlides;
-                updateSlider(nextIndex);
-            }, 6000);
-        }
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        function stopAutoSlide() {
+    // --- [1] 기존 슬라이더 & 롤링 텍스트 기능 ---
+    const track = document.getElementById('sliderTrack');
+    const dots = document.querySelectorAll('#controlDots span');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const rollingItems = document.querySelectorAll('.rolling-item');
+    
+    let currentIndex = 0;
+    let isPlaying = true;
+    let slideInterval;
+    let rollingIndex = 0;
+    const totalSlides = 3;
+
+    function updateSlider(index) {
+        currentIndex = index;
+        track.style.transform = `translateX(-${currentIndex * (100 / totalSlides)}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[currentIndex].classList.add('active');
+    }
+
+    function startAutoSlide() {
+        slideInterval = setInterval(() => {
+            updateSlider((currentIndex + 1) % totalSlides);
+        }, 6000);
+    }
+
+    pauseBtn.addEventListener('click', () => {
+        if (isPlaying) {
             clearInterval(slideInterval);
+            pauseBtn.textContent = '▶';
+        } else {
+            startAutoSlide();
+            pauseBtn.textContent = '||';
         }
+        isPlaying = !isPlaying;
+    });
 
-        dots.forEach(dot => {
-            dot.addEventListener('click', (e) => {
-                const targetIndex = parseInt(e.target.getAttribute('data-index'));
-                updateSlider(targetIndex);
-                if (isPlaying) {
-                    stopAutoSlide();
-                    startAutoSlide();
-                }
+    setInterval(() => {
+        rollingItems[rollingIndex].classList.remove('active');
+        rollingIndex = (rollingIndex + 1) % rollingItems.length;
+        rollingItems[rollingIndex].classList.add('active');
+    }, 3000);
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            updateSlider(parseInt(e.target.getAttribute('data-index')));
+        });
+    });
+
+    startAutoSlide();
+
+    // --- [2] 파이어베이스 스토리 데이터 불러오기 ---
+    const storyContainer = document.querySelector(".card-grid-3");
+
+    async function loadStories() {
+        try {
+            const q = query(collection(db, "stories"), orderBy("createdAt", "desc"), limit(3));
+            const snapshot = await getDocs(q);
+            storyContainer.innerHTML = ""; 
+
+            snapshot.forEach((doc) => {
+                const item = doc.data();
+                const d = item.createdAt.toDate();
+                const dateText = `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+
+                const card = document.createElement("a");
+                card.href = "story.html";
+                card.className = "story-card";
+                card.innerHTML = `
+                    <div class="story-thumb-wrapper">
+                        <img src="${item.img}" class="story-thumb" alt="${item.title}">
+                    </div>
+                    <div style="padding: 0 20px 20px 20px; display: flex; flex-direction: column; flex: 1;">
+                        <div class="story-meta">
+                            <span class="story-cat">${item.category}</span>
+                            <p class="story-date">${dateText}</p>
+                        </div>
+                        <h3 class="story-title">${item.title}</h3>
+                        <p class="story-desc">${item.text}</p>
+                        <div class="story-footer">
+                            <div class="story-tags">
+                                <span class="story-tag-item">${item.category}</span>
+                            </div>
+                            <div class="story-arrow-click">➔</div>
+                        </div>
+                    </div>
+                `;
+                storyContainer.appendChild(card);
             });
-        });
+        } catch (e) {
+            console.error("스토리 로드 실패:", e);
+        }
+    }
 
-        pauseBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                stopAutoSlide();
-                pauseBtn.textContent = '▶';
-                isPlaying = false;
-            } else {
-                startAutoSlide();
-                pauseBtn.textContent = '||';
-                isPlaying = true;
-            }
-        });
-
-        startAutoSlide();
-
-        const rollingItems = document.querySelectorAll('.rolling-item');
-        let rollingIndex = 0;
-        
-        setInterval(() => {
-            rollingItems[rollingIndex].classList.remove('active');
-            rollingIndex = (rollingIndex + 1) % rollingItems.length;
-            rollingItems[rollingIndex].classList.add('active');
-        }, 3000);
-    </script>
+    loadStories();
+</script>
 </body>
 </html>
