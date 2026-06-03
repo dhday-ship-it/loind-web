@@ -83,6 +83,7 @@
         /* --- HERO SECTION --- */
         .hero-section {
             padding: 20px 0 100px 0;
+            border-bottom: 1px solid #f0f0f0; /* [변경] 다음 섹션과의 경계를 잡아주어 허전함 방지 */
         }
 
         .hero-carousel-container {
@@ -342,10 +343,12 @@
             font-weight: bold;
         }
 
-        /* --- Brand Circle Menu Section (스크린샷 2026-06-03 크기 축소 밸런싱) --- */
+        /* --- Brand Circle Menu Section [섹션 간 간격 허전함 보완] --- */
         .carousel-section {
-            background-color: #ffffff;
-            padding: 80px 0 100px 0;
+            /* [변경] 연하고 부드러운 그레이 시각적 배경 처리를 통해 위아래 흰색 섹션과의 허전한 단절감 해결 */
+            background-color: #f9fafb; 
+            padding: 90px 0 100px 0;
+            border-bottom: 1px solid #f0f0f0; /* 하단 스토리 섹션과의 경계선 분리 추가 */
         }
 
         .carousel-container-boxed {
@@ -355,12 +358,12 @@
         }
 
         .section-header {
-            margin-bottom: 45px;
+            margin-bottom: 50px;
             text-align: left;
         }
 
         .section-desc {
-            font-size: 24px;
+            font-size: 25px;
             color: #111111;
             font-weight: 700;
             letter-spacing: -0.6px;
@@ -371,11 +374,10 @@
             align-items: flex-start;
         }
 
-        /* 비대칭 가로 여백 구조 유지 */
         .brand-circle-group-left {
             display: flex;
             gap: 32px;
-            margin-right: 120px; /* 크기 축소에 맞춰 공백 비율 조정 */
+            margin-right: 120px; 
         }
 
         .brand-circle-item {
@@ -383,31 +385,30 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            width: 120px; /* 기존 176px에서 정갈하게 축소 */
+            width: 120px;
             cursor: pointer;
         }
 
-        /* 정돈된 소형 원형 회색 아바타 백그라운드 */
+        /* 스크린샷 본연의 오리지널 회색 원형 */
         .circle-avatar-bg {
             width: 120px;
             height: 120px;
-            background-color: #f5f5f5;
+            background-color: #ececec; /* [변경] 배경색이 살짝 들어가면서 대비감이 올라가 허전함이 줄어듦 */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 18px;
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s;
+            margin-bottom: 22px;
+            transition: transform 0.25s ease;
         }
 
         .brand-circle-item:hover .circle-avatar-bg {
-            transform: scale(1.05);
-            background-color: #ebebeb;
+            transform: scale(1.03);
         }
 
         .circle-inner-symbol {
-            font-size: 24px; /* 원형 크기에 맞춰 조절 */
-            color: #1c1c1c;
+            font-size: 24px;
+            color: #111111;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -418,7 +419,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
         }
 
         .circle-brand-sub {
@@ -442,7 +443,7 @@
         /* --- STORY SECTION --- */
         .story-section {
             padding: 120px 0;
-            background-color: #ffffff;
+            background-color: #ffffff; /* 순수 화이트로 가며 중간 회색조 섹션과 조화를 이룸 */
         }
 
         .story-header {
@@ -715,7 +716,6 @@
                 
                 <div class="hero-slider-track" id="sliderTrack">
                     
-                    <!-- SLIDE 1 -->
                     <div class="hero-slide slide-agent">
                         <div class="hero-content">
                             <span class="service-tag">Service</span>
@@ -758,12 +758,10 @@
                         </div>
                     </div>
 
-                    <!-- SLIDE 2 -->
                     <div class="hero-slide slide-image">
                         <img src="img/1.png" alt="Dream for Dreamer">
                     </div>
 
-                    <!-- SLIDE 3 -->
                     <div class="hero-slide slide-image">
                         <img src="img/2.png" alt="Coram Deo New Album">
                     </div>
@@ -783,7 +781,6 @@
         </div>
     </section>
 
-    <!-- BRAND CIRCLE MENU SECTION (밸런스 축소 최적화본) -->
     <section class="carousel-section">
         <div class="container carousel-container-boxed">
             <div class="section-header">
@@ -791,9 +788,7 @@
             </div>
             
             <div class="brand-circle-flex-container">
-                <!-- Business 3종 가로 그룹 -->
                 <div class="brand-circle-group-left">
-                    <!-- 1. LOER -->
                     <div class="brand-circle-item">
                         <div class="circle-avatar-bg">
                             <div class="circle-inner-symbol">✦</div>
@@ -804,7 +799,6 @@
                         </div>
                     </div>
                     
-                    <!-- 2. LODEN -->
                     <div class="brand-circle-item">
                         <div class="circle-avatar-bg">
                             <div class="circle-inner-symbol">✦</div>
@@ -815,7 +809,6 @@
                         </div>
                     </div>
                     
-                    <!-- 3. ELROI -->
                     <div class="brand-circle-item">
                         <div class="circle-avatar-bg">
                             <div class="circle-inner-symbol">✦</div>
@@ -827,7 +820,6 @@
                     </div>
                 </div>
                 
-                <!-- Impact 영역 우측 분리 독립 배치 -->
                 <div class="brand-circle-item">
                     <div class="circle-avatar-bg">
                         <div class="circle-inner-symbol">🌱</div>
@@ -848,8 +840,7 @@
                 <a href="story.html" class="view-all">VIEW ALL STORIES ➔</a>
             </div>
             <div class="card-grid-3">
-                <!-- 파이어베이스 데이터 바인딩 공간 -->
-            </div>
+                </div>
         </div>
     </section>
 
