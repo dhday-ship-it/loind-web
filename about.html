@@ -12,6 +12,10 @@
             box-sizing: border-box;
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
         }
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
         body {
             background-color: #ffffff;
             color: #111111;
@@ -22,16 +26,30 @@
             text-decoration: none;
             color: inherit;
         }
-        
+                
         /* 1240px 컨테이너 고정형 레이아웃 */
         .container {
             max-width: 1240px; 
             margin: 0 auto;
-            padding: 0 20px; 
+            padding: 0 24px; 
             width: 100%;
         }
 
-        /* --- Header (홈 페이지 원본 복사 스펙) --- */
+        /* 헤더 + 탭 내비게이션 고정 */
+        .sticky-chrome {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: #fff;
+            transition: transform 0.35s ease;
+        }
+        .sticky-chrome.chrome-hidden {
+            transform: translateY(-100%);
+        }
+
+        /* --- Header --- */
         .header {
             background-color: #fff;
             padding: 35px 0;
@@ -74,78 +92,144 @@
             margin-right: -23px; 
         }
 
-        /* --- About Hero Section --- */
-        .about-hero-section {
-            padding: 60px 0 10px 0;
+        /* 카테고리 내비 */
+        .dot-nav {
+            position: fixed;
+            right: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 90;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
+            gap: 18px;
         }
-        .brand-main-title {
-            font-size: 76px; 
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -3px;
-            color: #111111;
-            text-transform: uppercase;
-            margin-bottom: 35px; 
-            white-space: nowrap;
-        }
-
-        /* image_4eec04.png 완벽 착안: 언더라인 트랙형 프리미엄 탭바 레이아웃 */
-        .sub-nav-track {
-            width: 100%;
-            border-bottom: 1px solid #e5e5ec; 
-            display: flex;
-            gap: 35px; 
-            margin-bottom: 20px;
-            user-select: none;
-        }
-        .sub-nav-item {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8e8e93; 
-            cursor: pointer;
-            padding-bottom: 14px; 
+        .dot-nav-item {
             position: relative;
-            transition: color 0.2s ease;
-            letter-spacing: -0.4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #d8d8df;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.25s ease;
         }
-        .sub-nav-item:hover {
-            color: #111111;
+        .dot-nav-item:hover {
+            background-color: #8e8e93;
         }
-        .sub-nav-item.active {
-            color: #111111;
-            font-weight: 700;
+        .dot-nav-item.active {
+            background-color: #111111;
+            transform: scale(1.5);
         }
-        .sub-nav-item.active::after {
-            content: '';
+        .dot-nav-item::before {
+            content: attr(data-label);
             position: absolute;
-            bottom: -1px; 
-            left: 0;
-            width: 100%;
-            height: 2px; 
-            background-color: #111111; 
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            font-size: 12px;
+            font-weight: 600;
+            color: #111111;
+            background: #ffffff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        .dot-nav-item:hover::before {
+            opacity: 1;
         }
 
         /* --- 콘텐츠 본문 레이아웃 영역 --- */
-        .about-content-stream {
-            padding-top: 35px; 
-            padding-bottom: 60px;
-            min-height: 520px; 
-        }
-        
-        .tab-panel {
-            display: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        
-        .tab-panel.active {
+        .snap-main {
             display: block;
-            opacity: 1;
-            transform: translateY(0);
+            padding-top: var(--chrome-h, 96px);
+        }
+
+        /* 거대한 LOIND 탑 섹션 껍데기 (스냅 단위 아님, 안쪽 패널들이 각각 스냅됨) */
+        .loind-top-mega-section {
+            background-color: #ffffff;
+            width: 100%;
+        }
+
+        /* 개별 스냅 단위 컴포넌트 (커버 영역) */
+        .snap-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 0;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            scroll-margin-top: var(--chrome-h, 96px);
+        }
+
+        /* [신규] 콘텐츠 블록 내부 각 구간을 독립 스냅 패널로 분리 */
+        .content-snap-panel {
+            min-height: calc(100vh - var(--chrome-h, 96px));
+            min-height: calc(100dvh - var(--chrome-h, 96px));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            scroll-margin-top: var(--chrome-h, 96px);
+            padding: 60px 0;
+        }
+        .content-snap-panel.small-panel {
+            min-height: auto;
+            padding: 40px 0 120px;
+        }
+
+        /* 최상단 브랜드 비주얼 커버 */
+        .cover-sub-panel {
+            min-height: calc(100vh - var(--chrome-h, 96px));
+            min-height: calc(100dvh - var(--chrome-h, 96px));
+            align-items: center;
+            text-align: center;
+            padding: 0;
+        }
+        .cover-sub-panel .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 48px;
+            margin: auto 0;
+        }
+        .cover-logo-img {
+            display: block;
+            max-width: min(650px, 85%);
+            width: 100%;
+            height: auto;
+            animation: logoRiseIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .cover-statement {
+        text-align:center;
+            font-size: clamp(22px, 2.8vw, 32px);
+            font-weight: 800;
+            line-height: 1.5;
+            letter-spacing: -0.03em;
+            color: #111111;
+            word-break: keep-all;
+            opacity: 0;
+            animation: textFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+            margin-bottom:80px;
+        }
+
+        @keyframes logoRiseIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes textFadeUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loind-contents-block {
+            padding: 0;
         }
 
         .content-inner-box {
@@ -153,247 +237,310 @@
             word-break: keep-all;
         }
 
-        /* --- 1. 👑 로인드 (Formula & Brand 마감 고도화 스타일) --- */
-        .formula-card-wrapper {
-            max-width: 900px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        /* 수식 비주얼 블록 */
-        .brand-identity-formula-container {
-            background-color: #fafafc;
-            border: 1px solid #f0f0f4;
-            border-radius: 20px;
-            padding: 45px 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .formula-display-line {
-            font-size: 38px;
-            font-weight: 900;
-            letter-spacing: -1.5px;
-            color: #111111;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .formula-display-line .primary-accent {
-            color: #2b56ff;
-            position: relative;
-        }
-        .formula-display-line .operator-sign {
-            color: #b0b0b8;
-            font-weight: 400;
-            padding: 0 4px;
-        }
-        .formula-explain-text {
-            font-size: 17.5px;
-            font-weight: 600;
-            color: #333333;
-            line-height: 1.6;
-            letter-spacing: -0.5px;
-        }
-
-        /* 메인 슬로건 & 보조 스토리 블록 */
-        .brand-premium-slogan-card {
-            border-left: 3px solid #2b56ff;
-            padding: 10px 0 10px 30px;
-            margin: 10px 0;
-        }
-        .slogan-headline-text {
-            font-size: 26px;
-            font-weight: 800;
-            color: #111111;
-            letter-spacing: -0.8px;
-            line-height: 1.4;
-            margin-bottom: 16px;
-        }
-        .slogan-body-story-text {
-            font-size: 15px;
-            line-height: 1.85;
-            color: #555555;
-            font-weight: 400;
-            max-width: 780px;
-        }
-
-        /* 아코디언 컴포넌트 */
-        .identity-collapse-trigger {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            background: #ffffff;
-            border: 1px solid #e5e5ec;
-            padding: 22px 30px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        .identity-collapse-trigger:hover {
-            background: #fafafc;
-            border-color: #2b56ff;
-        }
-        .trigger-title-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .trigger-dot-indicator {
-            width: 7px;
-            height: 7px;
-            background-color: #2b56ff;
-            border-radius: 50%;
-        }
-        .trigger-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: #111111;
-            letter-spacing: -0.3px;
-        }
-        .trigger-arrow-icon {
-            font-size: 14px;
-            font-weight: 500;
-            color: #8e8e93;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .identity-collapse-trigger.is-open .trigger-arrow-icon {
-            transform: rotate(180deg);
-            color: #111111;
-        }
-
-        .identity-collapse-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-        }
-
-        .brand-identity-preview {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            padding: 25px 0 10px 0;
-        }
-        .identity-placeholder-box {
-            width: 100%;
-            aspect-ratio: 16/10;
-            background-color: #fafafc;
-            border: 1px solid #ededed;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #bbbbbb;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        
-        .color-system-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-top: 15px;
-            padding-bottom: 20px;
-        }
-        .color-dot {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background-color: #2b56ff;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        .color-meta {
-            font-size: 13px;
-            font-weight: 700;
-            color: #111111;
-        }
-        .color-meta span {
-            display: block;
-            font-size: 11px;
-            color: #888888;
-            font-weight: 500;
-            margin-top: 2px;
-        }
-
-        /* --- 2. 소개 (원상복구 + 우측 이미지 배치 스펙) --- */
-        .intro-split-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            width: 100%;
-        }
-
-        .text-stream-line {
-            font-weight: 500;
-            padding-left: 24px;
-            border-left: 3px solid #2b56ff; 
-            font-size: 16.5px;
-            line-height: 2.1;
-            color: #444444;
-        }
-        .text-stream-line strong {
-            color: #111111;
-        }
+        /* 하이라이트 밑줄 공통 클래스 */
         .txt-glow {
-            font-weight: 600;
+            font-weight: 700;
             color: #111111;
-            background: linear-gradient(to top, rgba(43, 86, 255, 0.12) 40%, transparent 40%);
+            background: linear-gradient(to top, rgba(43, 86, 255, 0.14) 40%, transparent 40%);
             padding: 1px 4px;
             border-radius: 4px;
         }
 
-        .intro-image-zone {
-            width: 100%;
-            aspect-ratio: 4/3;
-            background-color: #fafafc;
-            border: 1px solid #ededed;
-            border-radius: 24px;
+        /* --- 로인드 내부 컴포넌트 세부 마감 간격 조율 --- */
+        .world-draw-wrap {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #bbbbbb;
-            font-weight: 700;
-            text-transform: uppercase;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.02);
-            overflow: hidden;
+            flex-direction: column;
+            gap: 0; 
+            width: 100%;
         }
 
-        /* --- 3. LOIND STANDARD --- */
-        #standardSection {
-            max-width: 100%; 
+        /* 대형 마무리 비전 선언문 스타일 클래스 */
+        .world-bottom-statement {
+            max-width: 920px;
+            margin: 20px auto 0;
+            text-align: center;
+            font-size: clamp(24px, 3.2vw, 38px);
+            font-weight: 800;
+            line-height: 1.65;
+            letter-spacing: -0.025em;
+            color: #111111;
+            word-break: keep-all;
+        }
+
+        /* [추가] 두 영역을 구분 짓는 미니멀 라인 스타일링 */
+        .section-divider {
+            width: 100%;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .section-divider .line {
+            width: 100%;
+            height: 1px;
+            background-color: #eaeaea;
+        }
+
+        /* 단 구분 구조 스트림 영역 */
+        .loind-content-stream {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1060px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .stream-row {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 70px;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .stream-row.reverse-layout {
+            grid-template-columns: 0.88fr 1.12fr;
+            gap: 80px;
+        }
+        .stream-row.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
-        .scatter-stage-wrapper {
+        .stream-text h3 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 22px;
+            color: #111111;
+            letter-spacing: -0.02em;
+        }
+        .stream-text p {
+            font-size: 17px;
+            line-height: 2.0; 
+            color: #3a3a3a;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+        
+        .stream-img-box {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: radial-gradient(circle at center, #fbfaf7 0%, #ededed 100%);
+            border: 1px solid #ededed;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.03);
+            position: relative;
+            z-index: 2;
+        }
+        .stream-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stream-right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            width: 100%;
+        }
+        .stream-arrow-indicator {
+            font-size: 26px;
+            color: #2b56ff;
+            font-weight: 700;
+            animation: bounceArrow 2s infinite ease-in-out;
+            margin-top: 5px;
+        }
+        
+        .stream-extracted-label {
+            font-family: "Courier New", ui-monospace, monospace;
+            width: 170px;
+            aspect-ratio: 2.05 / 1;
+            padding: 13px 14px;
+            border: 0;
+            text-align: left;
+            background: #2b56ff;
+            color: #ffffff;
+            box-shadow: 0 16px 32px rgba(43, 86, 255, 0.16);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .stream-extracted-label::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.09) 0 1px, transparent 1px 3px);
+            mix-blend-mode: soft-light;
+            pointer-events: none;
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); opacity: 0.4; }
+            50% { transform: translateY(10px); opacity: 1; }
+        }
+
+        /* --- Labels in Heart 인터랙션 세팅 --- */
+        .heart-demo {
+            --ink: #141414;
+            --paper: #f6f5f1;
+            --line: rgba(20, 20, 20, 0.12);
+            --active: #ffffff;
+            color: var(--ink);
+            background: transparent;
+            border-radius: 0;
+            overflow: visible;
+            box-shadow: none;
+            width: 100%;
+        }
+        .heart-demo button { font: inherit; color: inherit; }
+        
+        .heart-demo .caption-index,
+        .label-card,
+        .stream-extracted-label {
+            font-family: "Courier New", ui-monospace, monospace;
+        }
+
+        .heart-demo .interaction-stage {
             position: relative;
             width: 100%;
+            height: 100%;
+            min-height: 550px; 
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: #fafafc; 
+            isolation: isolate;
+        }
+        .heart-demo .stage-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(to right, rgba(20,20,20,.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(20,20,20,.04) 1px, transparent 1px);
+            background-size: 54px 54px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,.65), transparent 84%);
+        }
+        .heart-demo .labels-layer { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+
+        .label-card {
+            position: absolute;
+            width: clamp(125px, 10vw, 155px);
+            aspect-ratio: 2.05 / 1;
+            padding: 11px 12px;
+            border: 0;
+            text-align: left;
+            background: var(--label-color);
+            cursor: pointer;
+            pointer-events: auto;
+            transform-origin: center;
+            transition: filter .2s ease, box-shadow .2s ease;
+        }
+        .label-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.09) 0 1px, transparent 1px 3px);
+            mix-blend-mode: soft-light;
+            pointer-events: none;
+        }
+        .label-card:hover, .label-card:focus-visible {
+            filter: saturate(1.08) contrast(1.03);
+            box-shadow: 0 22px 36px rgba(0,0,0,.18);
+            outline: 2px solid #141414;
+            outline-offset: 4px;
         }
 
-        .scatter-stage-title {
-            margin-bottom: 50px;
-        }
-        .scatter-stage-title h2 {
-            font-size: 32px;
-            font-weight: 800;
-            color: #111111;
-            letter-spacing: -0.5px;
-        }
+        .label-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-weight: 700; font-size: 11px; }
+        .label-name { display: block; margin-top: 3px; font-weight: 700; font-size: 11px; }
+        .label-meta { display: grid; grid-template-columns: 1fr 1.1fr; gap: 5px; margin-top: 5px; font-size: 7px; font-weight: 700; line-height: 1.2; }
+        .label-vertical { position: absolute; left: 6px; bottom: 5px; transform: rotate(-90deg); transform-origin: left bottom; font-size: 8px; font-weight: 700; }
 
-        .scatter-cards-arena {
+        .heart-demo .heart-stage {
+            position: absolute;
+            inset: 11% 8% 12%;
+            z-index: 2;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-            width: 100%;
-            align-items: stretch;
+            place-items: center;
+            pointer-events: none;
+        }
+        .heart-demo .heart-shell {
+            position: relative;
+            width: clamp(210px, 24vw, 290px);
+            transform: translateY(3%);
+            animation: heartFloat 6s ease-in-out infinite;
+        }
+        .heart-demo .heart { display: block; width: 100%; overflow: visible; filter: drop-shadow(0 18px 25px rgba(0,0,0,.08)); }
+        .heart-demo .heart-fill { opacity: .16; transition: opacity .5s ease; filter: url(#paperGrain); }
+        .heart-demo .heart.is-filled .heart-fill { opacity: 1; }
+        .heart-demo .heart-outline {
+            fill: rgba(255,255,255,.32);
+            stroke: var(--ink);
+            stroke-width: 4;
+            vector-effect: non-scaling-stroke;
+        }
+        .heart-demo .heart-inner-line {
+            fill: none;
+            stroke: var(--ink);
+            stroke-width: 1.3;
+            stroke-dasharray: 4 7;
+            opacity: .42;
+            vector-effect: non-scaling-stroke;
+        }
+        .heart-demo .heart-notes { fill: var(--ink); stroke: var(--ink); stroke-width: 1; font-size: 10px; letter-spacing: .08em; opacity: .58; }
+        .heart-demo .heart-notes line { opacity: .4; }
+        .heart-demo .heart-shadow {
+            position: absolute;
+            left: 17%; right: 17%; bottom: -2%;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(0,0,0,.06);
+            filter: blur(17px);
+            transform: scaleX(.88);
+            opacity: .45;
         }
 
+        .heart-demo .stage-caption {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 45px 1fr;
+            gap: 18px;
+            padding-top: 24px;
+            border-top: 1px solid var(--line);
+            text-align: left;
+        }
+        .heart-demo .caption-index { font-size: 15px; font-weight: 700; color: #2b56ff; }
+        .heart-demo .stage-caption strong { font-size: 17px; letter-spacing: .04em; font-weight: 800; color: #111111; }
+        .heart-demo .stage-caption p { margin: 10px 0 0; font-size: 14.5px; line-height: 1.65; color: #4a4a4a; font-family: 'Pretendard', sans-serif; }
+
+        .flying-label { position: fixed !important; z-index: 9999 !important; pointer-events: none !important; margin: 0 !important; }
+
+        @keyframes heartFloat {
+            0%, 100% { transform: translateY(3%) rotate(-1deg); }
+            50% { transform: translateY(0) rotate(1deg); }
+        }
+
+        /* --- LOIND STANDARD 독립 스냅 섹션 --- */
+        #standardSection {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            scroll-margin-top: var(--chrome-h, 180px);
+            min-height: calc(100vh - var(--chrome-h, 180px));
+            min-height: calc(100dvh - var(--chrome-h, 180px));
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 0;
+            background-color: #ffffff;
+        }
+        
+        .scatter-stage-wrapper { position: relative; width: 100%; }
+        .scatter-stage-title { margin-bottom: 55px; text-align: center; }
+        .scatter-stage-title h2 { font-size: 32px; font-weight: 800; color: #111111; letter-spacing: -0.5px; }
+        .scatter-cards-arena { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; width: 100%; }
         .scatter-card {
             background: #ffffff;
             border-radius: 28px;
@@ -402,16 +549,15 @@
             border: 1px solid rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
+            text-align: center;
             transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
         }
-
         .scatter-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 30px 60px rgba(43, 86, 255, 0.08);
             border-color: rgba(43, 86, 255, 0.15);
         }
-
         .card-graphic-icon {
             font-size: 44px;
             font-weight: 700;
@@ -420,115 +566,44 @@
             background: linear-gradient(135deg, #4da1ff 0%, #a276ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -1.5px;
             user-select: none;
         }
-
-        .card-title-group {
-            margin-bottom: 24px;
-            width: 100%;
-        }
-
-        .std-card-main-title {
-            font-size: 28px;
-            font-weight: 800;
-            color: #111111;
-            letter-spacing: -0.3px;
-            line-height: 1.2;
-        }
-
-        .std-card-sub-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #6c727f;
-            margin-top: 6px;
-            letter-spacing: -0.3px;
-        }
-
-        .std-card-main-desc {
-            font-size: 14px;
-            line-height: 1.8;
-            color: #4e5566;
-            font-weight: 400;
-            word-break: keep-all;
-            text-align: justify;
-        }
+        .card-title-group { margin-bottom: 24px; width: 100%; }
+        .std-card-main-title { font-size: 28px; font-weight: 800; color: #111111; line-height: 1.2; }
+        .std-card-sub-title { font-size: 15px; font-weight: 600; color: #6c727f; margin-top: 6px; }
+        .std-card-main-desc { font-size: 14px; line-height: 1.8; color: #4e5566; text-align: center; }
 
         /* --- Footer --- */
-        .footer {
-            background-color: #0b0b0b;
-            color: #fff;
-            padding: 100px 0;
-            margin-top: 60px;
-        }
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-        }
-        .footer-left {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 140px;
-        }
-        .footer-logo {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-        .footer-copy {
-            font-size: 14px;
-            color: #666;
-        }
-        .footer-right {
-            display: flex;
-        }
-        .footer-links {
-            margin-left: 100px;
-        }
-        .footer-links h4 {
-            font-size: 15px;
-            color: #aaa;
-            margin-bottom: 22px;
-            font-weight: 700;
-        }
-        .footer-links a {
-            display: block;
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 14px;
-            transition: color 0.2s;
-        }
-        .footer-links a:hover {
-            color: #fff;
-        }
+        .footer { background-color: #0b0b0b; color: #fff; padding: 100px 0; margin-top: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+        .footer-container { display: flex; justify-content: space-between; }
+        .footer-left { display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
+        .footer-logo { font-size: 32px; font-weight: 800; margin-bottom: 15px; }
+        .footer-copy { font-size: 14px; color: #666; }
+        .footer-right { display: flex; }
+        .footer-links { margin-left: 100px; }
+        .footer-links h4 { font-size: 15px; color: #aaa; margin-bottom: 22px; font-weight: 700; }
+        .footer-links a { display: block; font-size: 14px; color: #666; margin-bottom: 14px; transition: color 0.2s; }
+        .footer-links a:hover { color: #fff; }
 
         /* --- Responsive Media Queries --- */
         @media (max-width: 1200px) {
-            .brand-main-title { font-size: 58px; letter-spacing: -2px; }
-            .about-hero-section { padding: 40px 0 25px 0; }
             .scatter-cards-arena { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-            .intro-split-layout { gap: 30px; }
         }
         @media (max-width: 900px) {
-            .brand-main-title { font-size: 44px; letter-spacing: -1px; white-space: normal; line-height: 1.2; }
             .scatter-card { padding: 45px 25px; }
-            .intro-split-layout { grid-template-columns: 1fr; gap: 40px; }
-            .text-stream-line { padding-left: 18px; font-size: 15.5px; }
-            .sub-nav-track { gap: 20px; }
-            .sub-nav-item { font-size: 14px; padding-bottom: 10px; }
-            .formula-display-line { font-size: 30px; }
-            .brand-identity-formula-container { padding: 30px 25px; }
+            .stream-row, .stream-row.reverse-layout { grid-template-columns: 1fr !important; gap: 45px; }
+            .heart-demo .interaction-stage { min-height: 480px; }
         }
         @media (max-width: 650px) {
             .scatter-cards-arena { grid-template-columns: 1fr; gap: 20px; }
         }
         @media (max-width: 768px) {
-            .header .container { flex-direction: column; gap: 20px; text-align: center; }
+            .header { padding: 20px 0; }
+            .header .container { flex-direction: column; gap: 14px; text-align: center; }
             .nav a { margin: 0 10px; }
             .nav-separator { display: none; } 
-            .about-hero-section { padding: 40px 0 25px 0; align-items: center; }
-            .brand-main-title { text-align: center; margin-bottom: 30px; }
+            .dot-nav { right: 14px; gap: 14px; }
+            .dot-nav-item::before { display: none; }
             .footer-container { flex-direction: column; gap: 40px; }
             .footer-right { margin-left: 0; justify-content: space-between; }
             .footer-links { margin-left: 0; }
@@ -536,110 +611,180 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="logo" onclick="location.href='index.html'">LOIND</div>
-            <nav class="nav">
-                <a href="index.html" class="active">About</a>
-                <a href="service.html">Service</a>
-                <a href="story.html">Story</a>
-                <a href="contact.html">Contact</a>
-                <div class="nav-separator"></div> 
-                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a> 
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="about-hero-section">
-            <h1 class="brand-main-title">ABOUT US</h1>
-            
-            <!-- image_4eec04.png 방식 슬림 라인 트랙 내비게이션 -->
-            <div class="sub-nav-track" id="subTabsNav">
-                <div class="sub-nav-item active" data-target="loind">로인드 공동체</div>
-                <div class="sub-nav-item" data-target="intro">핵심 철학 소개</div>
-                <div class="sub-nav-item" data-target="standardSection">LOIND STANDARD</div>
+    <div class="sticky-chrome">
+        <header class="header">
+            <div class="container">
+                <div class="logo" onclick="location.href='index.html'">LOIND</div>
+                <nav class="nav">
+                    <a href="about.html" class="active">About</a>
+                    <a href="service.html">Service</a>
+                    <a href="story.html">Story</a>
+                    <a href="contact.html">Contact</a>
+                    <div class="nav-separator"></div> 
+                    <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a> 
+                </nav>
             </div>
-        </section>
+        </header>
+    </div>
 
-        <section class="about-content-stream">
+    <nav class="dot-nav" id="dotNav">
+        <button class="dot-nav-item" type="button" data-target="loindTopSection" data-label="LOIND" aria-label="LOIND 브랜드 스토리로 이동"></button>
+        <button class="dot-nav-item" type="button" data-target="standardSection" data-label="LOIND STANDARD" aria-label="LOIND STANDARD로 이동"></button>
+    </nav>
+
+    <main class="snap-main">
             
-            <!-- 01 / BRAND IDENTITY PANEL (고도화 마감 적용 완료) -->
-            <div class="tab-panel active" id="loind">
-                <div class="content-inner-box">
-                    <div class="formula-card-wrapper">
-                        
-                        <!-- 1단계: 수식 및 의미 카드형 레이아웃 -->
-                        <div class="brand-identity-formula-container">
-                            <div class="formula-display-line">
-                                LOIND <span class="operator-sign">=</span> 
-                                <span class="primary-accent">LOVE</span> 
-                                <span class="operator-sign">+</span> 
-                                <span class="primary-accent">BIND</span>
-                            </div>
-                            <p class="formula-explain-text">
-                                하나님 사랑과 이웃 사랑으로 단단히 묶인 하나의 위대한 공동체를 의미합니다.
+            <!-- [통합 레이어 1] LOIND 메인 콘텐츠 패널 -->
+            <div id="loindTopSection" class="loind-top-mega-section">
+                
+                <!-- 1-1. 최상단 브랜드 비주얼 커버 영역 (스냅 패널 1) -->
+                <div class="snap-panel cover-sub-panel">
+                  <div class="container">
+                    <img class="cover-logo-img" src="LOIND_LOGO.PNG" alt="LOIND Logo">
+                   
+                  </div>
+                </div>
+
+                <!-- 1-2. 가치와 인터랙션 상세 콘텐츠 블록 -->
+                <div class="container loind-contents-block">
+                    <div class="content-inner-box world-draw-wrap">
+
+                        <!-- 스냅 패널 2: 브랜드 선언문 + CORPORATION 스트림 -->
+                        <section class="content-snap-panel">
+                            <p class="cover-statement">
+                              우리는 말씀이 삶이 되는 시스템을 만듭니다.
                             </p>
-                        </div>
-                        
-                        <!-- 2단계: 핵심 슬로건 블록 및 백스토리 서술 블록 -->
-                        <div class="brand-premium-slogan-card">
-                            <h3 class="slogan-headline-text">세상에 선한 가치를 연결하여<br>사람이 살아내는 시스템을 만듭니다</h3>
-                            <p class="slogan-body-story-text">
-                                로인드(LOIND)는 단순히 비즈니스적 영역의 목표 성취에만 안주하지 않습니다. 성경적 말씀 가치를 온전히 이해하고, 이를 누구나 다가오기 편한 일상 속 실행 시스템으로 조율하고 확장하는 비전을 담은 보조 공간입니다. 기업이 지닌 진정성 있는 히스토리를 전달합니다.
+                            <div class="loind-content-stream">
+                                <div class="stream-row">  
+                                    <div class="stream-text">
+                                        <h3>LOIND CORPORATION</h3>
+                                        <p>
+                                            우리는 <span class="txt-glow">"성경에 기초한 기준과 실행"</span> 이라는<br>
+                                            정체성과 차별성으로 우리가 살아가는 세상의 모습을 그려가고 있습니다.<br><br>
+                                            말씀으로 영감을 얻어 정체성과 차별성을 만들고,<br>
+                                            그것을 그저 생각과 다짐에 그치는 것이 아닌 <span class="txt-glow">사람이 살아내는 시스템</span>을<br>
+                                            만들어내는 일은 우리의 <span class="txt-glow">자부심이자, 존재 이유</span>입니다.
+                                        </p>
+                                    </div>
+                                    <div class="stream-right-column">
+                                        <div class="stream-img-box id-target-card">
+                                            <img src="about_1.png" alt="Execution System Image">
+                                        </div>
+                                        <div class="stream-arrow-indicator">↓</div>
+                                                                        
+                                        <div class="stream-extracted-label">
+                                            <div class="label-top"><span>006 /</span><span>SYSTEM</span></div>
+                                            <span class="label-name">LOIND SYSTEM</span>
+                                            <div class="label-meta">
+                                                <span>ORIGIN:<br>PROCESS:<br>WEIGHT:</span>
+                                                <span>WORD / LIFE<br>FULLY LIVED<br>VARIABLE</span>
+                                            </div>
+                                            <span class="label-vertical">VALUE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- 스냅 패널 3: 통합 하트 가치 인터랙션 스트림 -->
+                        <section class="content-snap-panel">
+                            <div class="loind-content-stream heart-demo">
+                                <div class="stream-row reverse-layout">
+                                    
+                                    <!-- 좌측 단: 인터랙션 스테이지 무대 -->
+                                    <div class="interaction-stage" id="stage">
+                                        <div class="stage-grid" aria-hidden="true"></div>
+                                        <div class="labels-layer" id="labelsLayer" aria-label="선택 가능한 라벨"></div>
+                                        
+                                        <div class="heart-stage">
+                                          <div class="heart-shell" id="heartShell">
+                                            <svg class="heart" viewBox="0 0 520 470" role="img" aria-label="선택한 라벨로 채워지는 하트">
+                                              <defs>
+                                                <clipPath id="heartClip">
+                                                  <path d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
+                                                </clipPath>
+                                                <pattern id="heartPattern" width="205" height="96" patternUnits="userSpaceOnUse" patternTransform="rotate(-7)">
+                                                  <rect id="patternBg" width="205" height="96" fill="#ecebe7" />
+                                                  <text id="patternCode" x="15" y="31" font-family="Courier New, monospace" font-size="20" font-weight="700" fill="#141414">000 /</text>
+                                                  <text id="patternName" x="15" y="58" font-family="Courier New, monospace" font-size="15" font-weight="700" fill="#141414">SELECT A LABEL</text>
+                                                  <text x="15" y="79" font-family="Courier New, monospace" font-size="9" font-weight="700" fill="#141414">ORIGIN: HEART / PROCESS: LIVED</text>
+                                                  <line x1="15" y1="87" x2="188" y2="87" stroke="#141414" stroke-width="1" opacity=".55" />
+                                                </pattern>
+                                                <filter id="paperGrain" x="-10%" y="-10%" width="120%" height="120%">
+                                                  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise" />
+                                                  <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise" />
+                                                  <feComponentTransfer in="grayNoise" result="softNoise">
+                                                    <feFuncA type="table" tableValues="0 0.08" />
+                                                  </feComponentTransfer>
+                                                  <feBlend in="SourceGraphic" in2="softNoise" mode="multiply" />
+                                                </filter>
+                                              </defs>
+                                              <g clip-path="url(#heartClip)">
+                                                <rect class="heart-fill" width="520" height="470" fill="url(#heartPattern)" />
+                                                <rect class="heart-sheen" width="520" height="470" fill="url(#heartPattern)" opacity="0" />
+                                              </g>
+                                              <path class="heart-outline" d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
+                                              <path class="heart-outline" d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
+                                              <path class="heart-inner-line" d="M260 399C219 356 113 283 79 209C50 145 77 79 147 75C199 72 235 107 260 151C285 107 321 72 373 75C443 79 470 145 441 209C407 283 301 356 260 399Z" />
+                                              <g class="heart-notes">
+                                                <text x="24" y="29">SYSTEM / 001</text>
+                                                <text x="408" y="29">STATE / ACTIVE</text>
+                                                <line x1="105" y1="27" x2="164" y2="61" />
+                                                <line x1="405" y1="35" x2="364" y2="68" />
+                                              </g>
+                                            </svg>
+                                            <div class="heart-shadow" aria-hidden="true"></div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 우측 단: 철학 설명 메인 텍스트 + 피드백 가치 보드 -->
+                                    <div class="stream-text">
+                                        <p>
+                                            우리는 그 시스템을 경험한 사람들이<br> 
+                                            <span class="txt-glow">"말씀의 가치에 자연스럽게 다가가는 세상"</span>을 꿈꿉니다. <br><br>
+                                            이는 크리스천만이 아닌, <br> 
+                                            <span class="txt-glow">말씀의 가치를 경험하고 싶은 그 누구에게나</span> 열려 있습니다.
+                                        </p>
+                                        
+                                        <div class="stage-caption" aria-live="polite">
+                                          <span class="caption-index" id="captionIndex">00</span>
+                                          <div>
+                                            <strong id="captionTitle">SELECT A LABEL</strong>
+                                            <p id="captionText">왼쪽 무대의 라벨을 선택하면 가치가 마음에 심기며 가동을 시작합니다.</p>
+                                          </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- 스냅 패널 4: 패널 최하단 마무리 엔딩 선언 -->
+                        <section class="content-snap-panel small-panel">
+                            <p class="world-bottom-statement">
+                                누군가의 삶 안에서 <span class="txt-glow">말씀이 살아 움직이는 것</span>,<br>
+                                그것이 우리 <span class="txt-glow">LOIND가 소망하는 세상</span>입니다.
                             </p>
-                        </div>
+                        </section>
 
-                        <!-- 3단계: 아코디언 드롭다운 (컬러 시스템 및 그래픽 상세) -->
-                        <div class="identity-collapse-trigger" id="identityTrigger">
-                            <div class="trigger-title-group">
-                                <span class="trigger-dot-indicator"></span>
-                                <span class="trigger-text">LOIND 브랜드 그래픽 에셋 및 컬러 가이드라인 확인</span>
-                            </div>
-                            <span class="trigger-arrow-icon">▼</span>
-                        </div>
-
-                        <div class="identity-collapse-content" id="identityContent">
-                            <div class="brand-identity-preview">
-                                <div class="identity-placeholder-box">Symbol Graphic Place</div>
-                                <div class="identity-placeholder-box">Wordmark Graphic Place</div>
-                            </div>
-
-                            <div class="color-system-row">
-                                <div class="color-dot"></div>
-                                <div class="color-meta">LOIND Blue <span>#2B56FF / Main Identity Color</span></div>
-                            </div>
-                        </div>
                     </div>
+                </div>
+
+                <!-- [추가 반영] 두 구획을 나누는 미니멀 라인 구분 선 레이아웃 -->
+                <div class="section-divider">
+                    <div class="line"></div>
                 </div>
             </div>
 
-            <!-- 02 / CORE PHILOSOPHY PANEL -->
-            <div class="tab-panel" id="intro">
-                <div class="content-inner-box">
-                    <div class="intro-split-layout">
-                        <div class="text-stream-line">
-                            <strong>LOIND CORPORATION</strong>은 <span class="txt-glow">"성경에 기초한 기준과 실행"</span> 이라는 <br>정체성과 차별성으로 우리가 살아가는 세상의 모습을 그려가고 있습니다. <br><br>
-                            말씀으로 영감을 얻어 정체성과 차별성을 만들고,<br>그것을 그저 생각과 다짐에 그치는 것이 아닌 <span class="txt-glow">사람이 살아내는 시스템</span>을<br>만들어내는 일은 우리의 <span class="txt-glow">자부심이자, 존재 이유</span>입니다. <br><br>
-                            우리는 그 시스템을 경험한 사람들이<br> <span class="txt-glow">말씀의 가치에 자연스럽게 다가가는 세상</span>을 꿈꿉니다. <br><br>
-                            이는 크리스천만이 아닌, <br> <span class="txt-glow">말씀의 가치를 경험하고 싶은 그 누구에게나</span> 열려 있습니다. <br><br>
-                            누군가의 삶 안에서 <span class="txt-glow">말씀이 살아 움직이는 것</span>, <br>그것이 우리 LOIND가 소망하는 세상입니다.
-                        </div>
-                        <div class="intro-image-zone">
-                            LOIND Philosophy Image Space
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 03 / PERFORMANCE STANDARDS PANEL -->
-            <div class="tab-panel" id="standardSection">
+            <!-- [통합 레이어 2] LOIND STANDARD 섹션 (스냅 패널 5) -->
+            <section id="standardSection">
+              <div class="container">
                 <div class="content-inner-box">
                     <div class="scatter-stage-wrapper" id="scatterStage">
                         <div class="scatter-stage-title">
                             <h2>우리가 일하고 가치를 증명하는 4가지 기준</h2>
                         </div>
-
                         <div class="scatter-cards-arena" id="cardsArena">
                             <div class="scatter-card">
                                 <div class="card-graphic-icon">+×</div>
@@ -649,7 +794,6 @@
                                 </div>
                                 <p class="std-card-main-desc">말씀과 기도로 매일 하나님과 가까워지며 영적 민감성을 유지하는 크리스천 리더로 세워지기 위한 도전의 기회를 제공합니다.</p>
                             </div>
-
                             <div class="scatter-card">
                                 <div class="card-graphic-icon">&lt;&gt;</div>
                                 <div class="card-title-group">
@@ -658,7 +802,6 @@
                                 </div>
                                 <p class="std-card-main-desc">말씀을 근거로 비즈니스의 기회를 발견하고, 공동체와 세상을 연결하며 필요한 선한 형태를 입체적으로 기획하고 설계합니다.</p>
                             </div>
-
                             <div class="scatter-card">
                                 <div class="card-graphic-icon">{}</div>
                                 <div class="card-title-group">
@@ -667,7 +810,6 @@
                                 </div>
                                 <p class="std-card-main-desc">단순한 용역을 넘어 정체성과 신앙의 고백이 담긴 완벽한 서비스 결정체를 온전히 구현하여 커리어 가치로써 제공합니다.</p>
                             </div>
-
                             <div class="scatter-card">
                                 <div class="card-graphic-icon">;</div>
                                 <div class="card-title-group">
@@ -679,9 +821,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-        </section>
+              </div>
+            </section>
     </main>
 
     <footer class="footer">
@@ -709,57 +850,220 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const subNavItems = document.querySelectorAll('.sub-nav-item');
-            const sections = document.querySelectorAll('.tab-panel');
+            const subNavItems = document.querySelectorAll('.dot-nav-item');
+            const panels = document.querySelectorAll('#loindTopSection, #standardSection'); 
+            const chrome = document.querySelector('.sticky-chrome');
 
-            const tabOrder = ['loind', 'intro', 'standardSection'];
-            
-            // [정밀 탭 제어 함수]
-            function switchTab(targetId) {
-                subNavItems.forEach(item => {
-                    if (item.getAttribute('data-target') === targetId) item.classList.add('active');
-                    else item.classList.remove('active');
-                });
-
-                sections.forEach(panel => {
-                    if (panel.getAttribute('id') === targetId) {
-                        panel.classList.add('active');
-                        setTimeout(() => {
-                            panel.style.opacity = "1";
-                            panel.style.transform = "translateY(0)";
-                        }, 50);
-                    } else {
-                        panel.style.opacity = "0";
-                        panel.style.transform = "translateY(10px)";
-                        panel.classList.remove('active');
-                    }
-                });
+            let chromeObserver;
+            function syncChromeHeight() {
+                const h = chrome.offsetHeight;
+                document.documentElement.style.setProperty('--chrome-h', h + 'px');
+                initSectionObserver(h);
             }
+
+            function initSectionObserver(chromeH) {
+                if (chromeObserver) chromeObserver.disconnect();
+                chromeObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const id = entry.target.id;
+                            subNavItems.forEach(item => {
+                                item.classList.toggle('active', item.getAttribute('data-target') === id);
+                            });
+                        }
+                    });
+                }, {
+                    root: null,
+                    rootMargin: `-${chromeH}px 0px -45% 0px`,
+                    threshold: 0
+                });
+                panels.forEach(panel => chromeObserver.observe(panel));
+            }
+
+            syncChromeHeight();
+            window.addEventListener('resize', syncChromeHeight);
+            window.addEventListener('load', syncChromeHeight);
 
             subNavItems.forEach(item => {
                 item.addEventListener('click', () => {
                     const targetId = item.getAttribute('data-target');
-                    if(targetId) switchTab(targetId);
+                    const target = document.getElementById(targetId);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
             });
 
-            // 브랜드 에셋 아코디언 컴포넌트
-            const accordionTrigger = document.getElementById('identityTrigger');
-            const accordionContent = document.getElementById('identityContent');
+            const SHOW_THRESHOLD = 80;
+            let lastScrollY = window.scrollY;
+            let shouldBeHidden = false; 
+            let hoveringNav = false; 
+            let chromeHeight = chrome.offsetHeight;
 
-            accordionTrigger.addEventListener('click', () => {
-                const isOpen = accordionTrigger.classList.contains('is-open');
-                if (isOpen) {
-                    accordionTrigger.classList.remove('is-open');
-                    accordionContent.style.maxHeight = '0px';
-                } else {
-                    accordionTrigger.classList.add('is-open');
-                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+            function applyChromeVisibility() {
+                chrome.classList.toggle('chrome-hidden', shouldBeHidden && !hoveringNav);
+            }
+
+            function updateChromeVisibility() {
+                const currentY = window.scrollY;
+                if (currentY <= SHOW_THRESHOLD) {
+                    shouldBeHidden = false;
+                } else if (currentY > lastScrollY) {
+                    shouldBeHidden = true;
+                } else if (currentY < lastScrollY) {
+                    shouldBeHidden = false;
+                }
+                lastScrollY = currentY;
+                applyChromeVisibility();
+            }
+            window.addEventListener('scroll', updateChromeVisibility, { passive: true });
+
+            document.addEventListener('mousemove', (e) => {
+                const nowHovering = e.clientY < chromeHeight;
+                if (nowHovering !== hoveringNav) {
+                    hoveringNav = nowHovering;
+                    applyChromeVisibility();
                 }
             });
+        });
+    </script>
 
-            // 초기화 호출
-            switchTab(tabOrder[0]);
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll('.stream-row');
+                        
+            const rowObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            rows.forEach(row => rowObserver.observe(row));
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const labels = [
+                { id: '01', name: 'FOUNDATION', color: '#9f91f2', note: '말씀과 기도로 굳건히 세워지는 영적 민감성' },
+                { id: '02', name: 'DESIGN', color: '#75cff0', note: '말씀을 근거로 세상에 필요한 선한 형태를 설계하는 감각' },
+                { id: '03', name: 'DELIVERY', color: '#94e6d4', note: '정체성과 고백을 온전한 비즈니스로 구현하여 제공하는 힘' },
+                { id: '04', name: 'EXPERIENCE', color: '#ffe471', note: '사회가 사랑의 가치를 학습하고 품격 있게 경험하도록 돕는 태도' },
+                { id: '05', name: 'IDENTITY', color: '#f5bd88', note: '성경적 기준과 실행이라는 선명한 차별성' },
+                { id: '06', name: 'SYSTEM', color: '#f49a93', note: '다짐을 넘어 사람이 살아낼 수 있도록 돕는 구조' },
+                { id: '07', name: 'PRIDE', color: '#f08cc3', note: '말씀이 삶이 되도록 돕는 일에 대한 자부심' },
+                { id: '08', name: 'OPEN', color: '#bce97f', note: '가치를 경험하고 싶은 누구에게나 열린 자세' },
+                { id: '09', name: 'LIVE', color: '#f4ad48', note: '누군가의 삶 안에서 말씀이 살아 움직이게 만드는 열정' },
+                { id: '10', name: 'COMMUNITY', color: '#d7d7d7', note: '함께 기준을 구현해 나가는 공동체의 힘' },
+            ];
+
+            const positions = [
+                [7, 7, -12], [39, 3, 7], [72, 10, -7], [3, 33, 8], [38, 25, -8],
+                [74, 34, 9], [7, 63, -10], [39, 60, 7], [70, 61, -9], [79, 76, 8],
+            ];
+
+            const layer = document.getElementById('labelsLayer');
+            const heartShell = document.getElementById('heartShell');
+            if (!layer || !heartShell) return; 
+
+            const heart = heartShell.querySelector('.heart');
+            const patternBg = document.getElementById('patternBg');
+            const patternName = document.getElementById('patternName');
+            const patternCode = document.getElementById('patternCode');
+            const captionIndex = document.getElementById('captionIndex');
+            const captionTitle = document.getElementById('captionTitle');
+            const captionText = document.getElementById('captionText');
+
+            function makeLabel(label, index) {
+                const button = document.createElement('button');
+                button.className = 'label-card';
+                button.type = 'button';
+                button.setAttribute('aria-label', `${label.name} 라벨 선택`);
+                button.style.setProperty('--label-color', label.color);
+                button.style.left = `${positions[index][0]}%`;
+                button.style.top = '-160px';
+                button.style.transform = `rotate(${positions[index][2]}deg)`;
+                button.innerHTML = `
+                    <div class="label-top"><span>00${label.id} /</span><span>${label.name}</span></div>
+                    <span class="label-name">LOIND SYSTEM</span>
+                    <div class="label-meta">
+                        <span>ORIGIN:<br>PROCESS:<br>WEIGHT:</span>
+                        <span>WORD / LIFE<br>FULLY LIVED<br>VARIABLE</span>
+                    </div>
+                    <span class="label-vertical">VALUE</span>
+                `;
+                button.addEventListener('click', () => absorbLabel(button, label));
+                layer.appendChild(button);
+
+                const targetY = positions[index][1];
+                const delay = 180 + index * 95;
+                window.setTimeout(() => {
+                    button.animate([
+                        { top: '-160px', opacity: 0, transform: `rotate(${positions[index][2] - 18}deg) scale(.9)` },
+                        { top: `${targetY + 2}%`, opacity: 1, transform: `rotate(${positions[index][2] + 3}deg) scale(1.02)`, offset: .78 },
+                        { top: `${targetY}%`, opacity: 1, transform: `rotate(${positions[index][2]}deg) scale(1)` }
+                    ], { duration: 950, easing: 'cubic-bezier(.18,.76,.24,1)', fill: 'forwards' });
+                }, delay);
+
+                window.setTimeout(() => {
+                    const x = (Math.random() - .5) * 14;
+                    const y = (Math.random() - .5) * 12;
+                    const r = positions[index][2] + (Math.random() - .5) * 4;
+                    button.animate([
+                        { transform: `translate(0,0) rotate(${positions[index][2]}deg)` },
+                        { transform: `translate(${x}px,${y}px) rotate(${r}deg)` },
+                        { transform: `translate(0,0) rotate(${positions[index][2]}deg)` }
+                    ], { duration: 4700 + index * 130, iterations: Infinity, easing: 'ease-in-out' });
+                }, delay + 1000);
+            }
+
+            function absorbLabel(source, label) {
+                const sourceRect = source.getBoundingClientRect();
+                const targetRect = heartShell.getBoundingClientRect();
+                const clone = source.cloneNode(true);
+                clone.classList.add('flying-label');
+                Object.assign(clone.style, {
+                    left: `${sourceRect.left}px`,
+                    top: `${sourceRect.top}px`,
+                    width: `${sourceRect.width}px`,
+                    height: `${sourceRect.height}px`,
+                    transform: getComputedStyle(source).transform,
+                });
+                document.body.appendChild(clone);
+
+                const dx = targetRect.left + targetRect.width / 2 - (sourceRect.left + sourceRect.width / 2);
+                const dy = targetRect.top + targetRect.height / 2 - (sourceRect.top + sourceRect.height / 2);
+
+                clone.animate([
+                    { transform: `${getComputedStyle(source).transform} scale(1)`, opacity: 1, filter: 'blur(0)' },
+                    { transform: `translate(${dx * .62}px, ${dy * .55}px) rotate(10deg) scale(.76)`, opacity: 1, offset: .58 },
+                    { transform: `translate(${dx}px, ${dy}px) rotate(82deg) scale(.08)`, opacity: 0, filter: 'blur(2px)' }
+                ], { duration: 900, easing: 'cubic-bezier(.55,.02,.3,1)', fill: 'forwards' }).onfinish = () => clone.remove();
+
+                source.animate([
+                    { opacity: 1 },
+                    { opacity: .28, offset: .5 },
+                    { opacity: 1 }
+                ], { duration: 760, easing: 'ease' });
+
+                window.setTimeout(() => {
+                    patternBg.setAttribute('fill', label.color);
+                    patternName.textContent = label.name;
+                    patternCode.textContent = `00${label.id} /`;
+                    heart.classList.add('is-filled');
+                    heart.animate([
+                        { transform: 'scale(1)' },
+                        { transform: 'scale(1.035)' },
+                        { transform: 'scale(.992)' },
+                        { transform: 'scale(1)' }
+                    ], { duration: 640, easing: 'cubic-bezier(.2,.8,.2,1)' });
+                    captionIndex.textContent = label.id;
+                    captionTitle.textContent = label.name;
+                    captionText.textContent = label.note;
+                    document.documentElement.style.setProperty('--active', label.color);
+                }, 610);
+            }
+
+            labels.forEach(makeLabel);
         });
     </script>
 </body>

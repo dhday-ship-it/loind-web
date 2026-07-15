@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -83,7 +84,7 @@
         /* --- HERO SECTION --- */
         .hero-section {
             padding: 20px 0 100px 0;
-            border-bottom: 1px solid #f0f0f0; /* [변경] 다음 섹션과의 경계를 잡아주어 허전함 방지 */
+            border-bottom: 1px solid #f0f0f0;
         }
 
         .hero-carousel-container {
@@ -93,25 +94,30 @@
             border-radius: 40px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            contain: paint;
+            isolation: isolate;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
         }
 
-        /* 슬라이드 3개 → 300% */
         .hero-slider-track {
             display: flex;
             width: 300%;
             height: 100%;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .hero-slide {
-            width: 33.3333%;
+            width: calc(100% / 3);
             height: 100%;
             flex-shrink: 0;
+            flex-grow: 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 80px;
             position: relative;
+            overflow: hidden;
         }
 
         /* --- SLIDE 1: 에이전시 배너 --- */
@@ -207,12 +213,15 @@
             align-items: center;
         }
 
+        /* 첫 번째 배너 내부 입격 그래픽 태그 요소 그래픽 가속 */
         .double-tag-container {
             position: relative;
             width: 280px;
             height: 460px;
-            transform: rotate(-18deg); 
+            transform: rotate(-18deg) translateZ(0); 
+            -webkit-transform: rotate(-18deg) translateZ(0);
             filter: drop-shadow(-22px 28px 35px rgba(0, 0, 0, 0.13));
+            will-change: transform;
         }
 
         .unified-tag-hole {
@@ -289,11 +298,22 @@
             align-items: stretch;
         }
 
+        /* [수정] 2, 3번째 슬라이드 이미지 영역에 최고 해상도 복원 가속 주입 */
         .slide-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            
+            /* 그래픽 가속 필터링 스펙 추가 */
+            image-rendering: auto;
+            image-rendering: -webkit-optimize-contrast;
+            
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            will-change: transform;
         }
 
         /* --- 슬라이더 컨트롤 --- */
@@ -324,14 +344,37 @@
             background: rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
         }
 
         .control-dots span.active {
             width: 32px;
             height: 8px;
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.25); 
             border-radius: 10px;
+        }
+
+        .control-dots span.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            animation: fillGauge 6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .control-dots.paused span.active::after {
+            animation-play-state: paused;
+        }
+
+        @keyframes fillGauge {
+            0% { width: 0%; }
+            100% { width: 100%; }
         }
 
         .control-pause {
@@ -343,12 +386,11 @@
             font-weight: bold;
         }
 
-        /* --- Brand Circle Menu Section [섹션 간 간격 허전함 보완] --- */
+        /* --- Brand Circle Menu Section --- */
         .carousel-section {
-            /* [변경] 연하고 부드러운 그레이 시각적 배경 처리를 통해 위아래 흰색 섹션과의 허전한 단절감 해결 */
             background-color: #f9fafb; 
             padding: 90px 0 100px 0;
-            border-bottom: 1px solid #f0f0f0; /* 하단 스토리 섹션과의 경계선 분리 추가 */
+            border-bottom: 1px solid #f0f0f0;
         }
 
         .carousel-container-boxed {
@@ -358,7 +400,7 @@
         }
 
         .section-header {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             text-align: left;
         }
 
@@ -371,13 +413,19 @@
 
         .brand-circle-flex-container {
             display: flex;
-            align-items: flex-start;
+            width: 100%;
         }
 
         .brand-circle-group-left {
             display: flex;
             gap: 32px;
-            margin-right: 120px; 
+            flex: 1; 
+        }
+
+        .brand-circle-group-right {
+            display: flex;
+            gap: 32px;
+            flex: 1; 
         }
 
         .brand-circle-item {
@@ -389,30 +437,44 @@
             cursor: pointer;
         }
 
-        /* 스크린샷 본연의 오리지널 회색 원형 */
         .circle-avatar-bg {
             width: 120px;
             height: 120px;
-            background-color: #ececec; /* [변경] 배경색이 살짝 들어가면서 대비감이 올라가 허전함이 줄어듦 */
+            background-color: #ececec; 
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 22px;
-            transition: transform 0.25s ease;
+            
+            overflow: hidden; 
+            isolation: isolate; 
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            
+            image-rendering: auto;
+            image-rendering: -webkit-optimize-contrast;
+            
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .brand-circle-item:hover .circle-avatar-bg {
-            transform: scale(1.03);
+            transform: scale(1.04) translate3d(0, 0, 0);
+            -webkit-transform: scale(1.04) translate3d(0, 0, 0);
         }
 
-        .circle-inner-symbol {
-            font-size: 24px;
-            color: #111111;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
+        .circle-avatar-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            -webkit-user-drag: none;
+            image-rendering: auto;
+            transform: translateZ(0);
         }
 
         .circle-text-block {
@@ -424,8 +486,8 @@
 
         .circle-brand-sub {
             font-size: 13px;
-            font-weight: 700;
-            color: #111111;
+            font-weight: 500;
+            color: #666666;
             line-height: 1.3;
             letter-spacing: -0.2px;
             white-space: nowrap;
@@ -443,7 +505,7 @@
         /* --- STORY SECTION --- */
         .story-section {
             padding: 120px 0;
-            background-color: #ffffff; /* 순수 화이트로 가며 중간 회색조 섹션과 조화를 이룸 */
+            background-color: #ffffff;
         }
 
         .story-header {
@@ -498,6 +560,7 @@
             margin-bottom: 20px;
         }
 
+        /* [수정] 최하단 스토리 썸네일 이미지 영역도 화질 복원 코딩 연동 */
         .story-thumb {
             position: absolute;
             top: 0;
@@ -506,6 +569,10 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s ease;
+            
+            image-rendering: auto;
+            image-rendering: -webkit-optimize-contrast;
+            transform: translateZ(0);
         }
 
         .story-card:hover .story-thumb {
@@ -595,7 +662,6 @@
             transform: translateX(3px);
         }
 
-        /* --- Footer --- */
         .footer {
             background-color: #0b0b0b;
             color: #fff;
@@ -654,8 +720,9 @@
 
         /* --- Responsive 최적화 --- */
         @media (max-width: 1200px) {
-            .brand-circle-flex-container { justify-content: center; flex-wrap: wrap; gap: 30px; }
-            .brand-circle-group-left { margin-right: 0; gap: 30px; }
+            .brand-circle-flex-container { justify-content: center; flex-wrap: wrap; gap: 40px; }
+            .brand-circle-group-left { margin-right: 0; gap: 32px; flex: none; }
+            .brand-circle-group-right { gap: 32px; flex: none; }
             .card-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
             .hero-carousel-container { height: 500px; }
             .hero-title { font-size: 36px; }
@@ -672,8 +739,9 @@
             .nav a { margin: 0 10px; }
             .nav-separator { display: none; } 
             .story-header h2 { font-size: 26px; }
-            .brand-circle-flex-container { flex-direction: column; align-items: center; gap: 32px; }
-            .brand-circle-group-left { flex-direction: column; align-items: center; gap: 32px; }
+            .brand-circle-flex-container { flex-direction: column; align-items: center; gap: 40px; }
+            .brand-circle-group-left { flex-direction: column; align-items: center; gap: 40px; }
+            .brand-circle-group-right { flex-direction: column; align-items: center; gap: 40px; }
         }
 
         @media (max-width: 600px) {
@@ -769,10 +837,12 @@
                 </div>
 
                 <div class="banner-controls">
-                    <div class="control-dots" id="controlDots">
-                        <span class="active" data-index="0"></span>
-                        <span data-index="1"></span>
-                        <span data-index="2"></span>
+                    <div class="control-dots" id="controlDotsZone">
+                        <div class="control-dots" id="controlDots">
+                            <span class="active" data-index="0"></span>
+                            <span data-index="1"></span>
+                            <span data-index="2"></span>
+                        </div>
                     </div>
                     <div class="control-pause" id="pauseBtn">||</div>
                 </div>
@@ -784,14 +854,14 @@
     <section class="carousel-section">
         <div class="container carousel-container-boxed">
             <div class="section-header">
-                <p class="section-desc">로인드와 함께 뭐시기 뭐시기</p>
+                <p class="section-desc">LOIND BRAND</p>
             </div>
             
             <div class="brand-circle-flex-container">
                 <div class="brand-circle-group-left">
                     <div class="brand-circle-item">
                         <div class="circle-avatar-bg">
-                            <div class="circle-inner-symbol">✦</div>
+                            <img src="LOER.png" alt="LOER Icon">
                         </div>
                         <div class="circle-text-block">
                             <span class="circle-brand-sub">Creative Agency</span>
@@ -801,32 +871,24 @@
                     
                     <div class="brand-circle-item">
                         <div class="circle-avatar-bg">
-                            <div class="circle-inner-symbol">✦</div>
+                            <img src="LODEN.png" alt="LODEN Icon">
                         </div>
                         <div class="circle-text-block">
                             <span class="circle-brand-sub">Creative Studio</span>
                             <span class="circle-brand-main">LODEN</span>
                         </div>
                     </div>
-                    
-                    <div class="brand-circle-item">
-                        <div class="circle-avatar-bg">
-                            <div class="circle-inner-symbol">✦</div>
-                        </div>
-                        <div class="circle-text-block">
-                            <span class="circle-brand-sub">Christian Biz</span>
-                            <span class="circle-brand-main">ELROI</span>
-                        </div>
-                    </div>
                 </div>
                 
-                <div class="brand-circle-item">
-                    <div class="circle-avatar-bg">
-                        <div class="circle-inner-symbol">🌱</div>
-                    </div>
-                    <div class="circle-text-block">
-                        <span class="circle-brand-sub">CSR / ESG</span>
-                        <span class="circle-brand-main">미래자립교회</span>
+                <div class="brand-circle-group-right">
+                    <div class="brand-circle-item">
+                        <div class="circle-avatar-bg">
+                            <img src="ELROI.png" alt="미래자립교회 Icon">
+                        </div>
+                        <div class="circle-text-block">
+                            <span class="circle-brand-sub">CSR / ESG</span>
+                            <span class="circle-brand-main">미래자립교회</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -840,7 +902,7 @@
                 <a href="story.html" class="view-all">VIEW ALL STORIES ➔</a>
             </div>
             <div class="card-grid-3">
-                </div>
+            </div>
         </div>
     </section>
 
@@ -891,8 +953,9 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // --- [1] 기존 슬라이더 & 롤링 텍스트 기능 ---
+    // --- [1] 슬라이더 & 롤링 텍스트 기능 ---
     const track = document.getElementById('sliderTrack');
+    const dotsZone = document.getElementById('controlDotsZone');
     const dots = document.querySelectorAll('#controlDots span');
     const pauseBtn = document.getElementById('pauseBtn');
     const rollingItems = document.querySelectorAll('.rolling-item');
@@ -908,6 +971,14 @@
         track.style.transform = `translateX(-${currentIndex * (100 / totalSlides)}%)`;
         dots.forEach(dot => dot.classList.remove('active'));
         dots[currentIndex].classList.add('active');
+        
+        if (isPlaying) {
+            dotsZone.classList.remove('paused');
+            const activeDot = dots[currentIndex];
+            activeDot.style.animation = 'none';
+            activeDot.offsetHeight; 
+            activeDot.style.animation = null;
+        }
     }
 
     function startAutoSlide() {
@@ -919,9 +990,12 @@
     pauseBtn.addEventListener('click', () => {
         if (isPlaying) {
             clearInterval(slideInterval);
+            dotsZone.classList.add('paused'); 
             pauseBtn.textContent = '▶';
         } else {
             startAutoSlide();
+            dotsZone.classList.remove('paused'); 
+            updateSlider(currentIndex); 
             pauseBtn.textContent = '||';
         }
         isPlaying = !isPlaying;
@@ -935,7 +1009,13 @@
 
     dots.forEach(dot => {
         dot.addEventListener('click', (e) => {
-            updateSlider(parseInt(e.target.getAttribute('data-index')));
+            if (isPlaying) {
+                clearInterval(slideInterval);
+                updateSlider(parseInt(e.target.getAttribute('data-index')));
+                startAutoSlide();
+            } else {
+                updateSlider(parseInt(e.target.getAttribute('data-index')));
+            }
         });
     });
 
