@@ -83,8 +83,7 @@
 
         /* --- HERO SECTION --- */
         .hero-section {
-            padding: 20px 0 100px 0;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 80px 0 80px 0;
         }
 
         .hero-carousel-container {
@@ -386,21 +385,21 @@
             font-weight: bold;
         }
 
-        /* --- Brand Circle Menu Section --- */
+        /* --- LOIND Pillars Section (브랜드 3분할 리뉴얼) --- */
         .carousel-section {
-            background-color: #f9fafb; 
-            padding: 90px 0 100px 0;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 0;
         }
 
         .carousel-container-boxed {
             max-width: 1240px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 60px 60px;
+            background-color: #f9fafb;
+            border-radius: 32px;
         }
 
         .section-header {
-            margin-bottom: 40px;
+            margin-bottom: 60px;
             text-align: left;
         }
 
@@ -411,100 +410,113 @@
             letter-spacing: -0.6px;
         }
 
-        .brand-circle-flex-container {
-            display: flex;
-            width: 100%;
+        .brand-showcase {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 70px;
+            align-items: start;
         }
 
-        .brand-circle-group-left {
-            display: flex;
-            gap: 32px;
-            flex: 1; 
-        }
-
-        .brand-circle-group-right {
-            display: flex;
-            gap: 32px;
-            flex: 1; 
-        }
-
-        .brand-circle-item {
+        .brand-list {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 120px;
+            gap: 6px;
+        }
+
+        .brand-list-item {
+            padding: 20px 22px;
+            border-radius: 14px;
             cursor: pointer;
+            color: #b8b8c0;
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            transition: background-color 0.25s ease, color 0.25s ease;
         }
 
-        .circle-avatar-bg {
-            width: 120px;
-            height: 120px;
-            background-color: #ececec; 
-            border-radius: 50%;
+        .brand-list-item:hover {
+            color: #111111;
+        }
+
+        .brand-list-item.active {
+            background-color: #899DFF;
+            color: #0b0b0c;
+        }
+
+        .brand-detail-desc {
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 1.55;
+            color: #111111;
+            letter-spacing: -0.4px;
+            margin-bottom: 24px;
+            word-break: keep-all;
+        }
+
+        /* [추가] 본문 속 LOIND PRINCIPLE 텍스트 뒤에 붙는 작은 이동 화살표 */
+        .principle-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .principle-link .arrow {
+            display: inline-block;
+            font-size: 0.5em;
+            font-weight: 700;
+            color: #899DFF;
+            vertical-align: super;
+            margin-left: 2px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .principle-link:hover .arrow {
+            transform: translate(1px, -1px);
+            opacity: 0.7;
+        }
+
+        .brand-detail-image {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 7;
+            background: linear-gradient(135deg, #eef1ff 0%, #f7f0fb 100%);
+            border-radius: 24px;
+            overflow: hidden;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 22px;
-            
-            overflow: hidden; 
-            isolation: isolate; 
-            -webkit-mask-image: -webkit-radial-gradient(white, black);
-            
-            image-rendering: auto;
-            image-rendering: -webkit-optimize-contrast;
-            
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 22px 26px;
         }
 
-        .brand-circle-item:hover .circle-avatar-bg {
-            transform: scale(1.04) translate3d(0, 0, 0);
-            -webkit-transform: scale(1.04) translate3d(0, 0, 0);
-        }
-
-        .circle-avatar-bg img {
+        /* [추가] 브랜드별 실제 사진이 있을 경우 배경을 꽉 채우는 이미지 */
+        .brand-detail-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
-            -webkit-user-drag: none;
-            image-rendering: auto;
-            transform: translateZ(0);
+            z-index: 0;
+            display: none;
         }
 
-        .circle-text-block {
+        .brand-detail-caption {
+            position: relative;
+            z-index: 1;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 4px;
-        }
-
-        .circle-brand-sub {
+            gap: 6px;
             font-size: 13px;
-            font-weight: 500;
-            color: #666666;
-            line-height: 1.3;
-            letter-spacing: -0.2px;
-            white-space: nowrap;
-        }
-
-        .circle-brand-main {
-            font-size: 13px;
-            font-weight: 800;
+            font-weight: 700;
             color: #111111;
-            line-height: 1.3;
-            text-transform: uppercase;
-            white-space: nowrap;
+            background: rgba(255, 255, 255, 0.75);
+            padding: 8px 14px;
+            border-radius: 20px;
+            backdrop-filter: blur(6px);
         }
 
         /* --- STORY SECTION --- */
         .story-section {
-            padding: 120px 0;
+            padding: 80px 0 120px 0;
             background-color: #ffffff;
         }
 
@@ -718,15 +730,17 @@
             color: #fff;
         }
 
+        .footer-link-cols { display: flex; gap: 60px; }
+        .footer-link-col { display: flex; flex-direction: column; }
+
         /* --- Responsive 최적화 --- */
         @media (max-width: 1200px) {
-            .brand-circle-flex-container { justify-content: center; flex-wrap: wrap; gap: 40px; }
-            .brand-circle-group-left { margin-right: 0; gap: 32px; flex: none; }
-            .brand-circle-group-right { gap: 32px; flex: none; }
             .card-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
             .hero-carousel-container { height: 500px; }
             .hero-title { font-size: 36px; }
             .double-tag-container { transform: rotate(-10deg) scale(0.85); }
+            .brand-showcase { grid-template-columns: 280px 1fr; gap: 40px; }
+            .brand-list-item { font-size: 18px; padding: 16px 18px; }
         }
 
         @media (max-width: 950px) {
@@ -739,27 +753,30 @@
             .nav a { margin: 0 10px; }
             .nav-separator { display: none; } 
             .story-header h2 { font-size: 26px; }
-            .brand-circle-flex-container { flex-direction: column; align-items: center; gap: 40px; }
-            .brand-circle-group-left { flex-direction: column; align-items: center; gap: 40px; }
-            .brand-circle-group-right { flex-direction: column; align-items: center; gap: 40px; }
+            .brand-showcase { grid-template-columns: 1fr; gap: 24px; }
+            .brand-detail-desc { font-size: 21px; }
+            .carousel-container-boxed { padding: 45px 36px; }
         }
 
         @media (max-width: 600px) {
             .container { padding: 0 24px; }
             .header { padding: 25px 0; }
-            .hero-section { padding: 20px 0 60px 0; }
+            .hero-section { padding: 40px 0 40px 0; }
             .hero-carousel-container { height: 420px; border-radius: 24px; }
             .hero-title { font-size: 28px; }
             .search-bubble { font-size: 14px; padding: 12px 24px; }
             .banner-controls { right: 20px; bottom: 20px; }
             
+            .carousel-section { padding: 0; }
+            .carousel-container-boxed { padding: 36px 24px; border-radius: 20px; }
             .card-grid-3 { grid-template-columns: 1fr; gap: 40px; }
-            .story-section { padding: 80px 0; }
+            .story-section { padding: 40px 0 80px 0; }
             .story-header { margin-bottom: 30px; }
             
             .footer-container { flex-direction: column; gap: 40px; }
             .footer-right { margin-left: 0; justify-content: space-between; }
             .footer-links { margin-left: 0; }
+            .footer-link-cols { gap: 30px; }
         }
     </style>
 </head>
@@ -768,7 +785,7 @@
         <div class="container">
             <div class="logo" onclick="location.href='index.html'">LOIND</div>
             <nav class="nav">
-                <a href="index.html" class="active">About</a>
+                <a href="about.html">About</a>
                 <a href="service.html">Service</a>
                 <a href="story.html">Story</a>
                 <a href="contact.html">Contact</a>
@@ -856,44 +873,80 @@
             <div class="section-header">
                 <p class="section-desc">LOIND BRAND</p>
             </div>
-            
-            <div class="brand-circle-flex-container">
-                <div class="brand-circle-group-left">
-                    <div class="brand-circle-item">
-                        <div class="circle-avatar-bg">
-                            <img src="LOER.png" alt="LOER Icon">
-                        </div>
-                        <div class="circle-text-block">
-                            <span class="circle-brand-sub">Creative Agency</span>
-                            <span class="circle-brand-main">LOER</span>
-                        </div>
+
+            <div class="brand-showcase">
+                <div class="brand-list" id="brandList">
+                    <div class="brand-list-item active" data-brand="agency">
+                        <span>크리에이티브 에이전시</span>
                     </div>
-                    
-                    <div class="brand-circle-item">
-                        <div class="circle-avatar-bg">
-                            <img src="LODEN.png" alt="LODEN Icon">
-                        </div>
-                        <div class="circle-text-block">
-                            <span class="circle-brand-sub">Creative Studio</span>
-                            <span class="circle-brand-main">LODEN</span>
-                        </div>
+                    <div class="brand-list-item" data-brand="studio">
+                        <span>크리에이티브 스튜디오</span>
+                    </div>
+                    <div class="brand-list-item" data-brand="impact">
+                        <span>임팩트 - 대희</span>
                     </div>
                 </div>
-                
-                <div class="brand-circle-group-right">
-                    <div class="brand-circle-item">
-                        <div class="circle-avatar-bg">
-                            <img src="ELROI.png" alt="미래자립교회 Icon">
-                        </div>
-                        <div class="circle-text-block">
-                            <span class="circle-brand-sub">CSR / ESG</span>
-                            <span class="circle-brand-main">미래자립교회</span>
-                        </div>
+
+                <div class="brand-detail">
+                    <p class="brand-detail-desc" id="brandDetailDesc"></p>
+                    <div class="brand-detail-image">
+                        <img class="brand-detail-photo" id="brandDetailPhoto" src="" alt="">
+                        <span class="brand-detail-caption" id="brandDetailCaption"></span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        // ※ 아래 설명/태그 문구는 임시 카피입니다 — 확정 카피로 교체해주세요.
+        // "LOIND PRINCIPLE" 텍스트에 about.html의 PRINCIPLE 섹션으로 가는 링크가 걸려 있습니다.
+        const PRINCIPLE_LINK = '<a class="principle-link" href="about.html#principleSection">LOIND PRINCIPLE<span class="arrow">↗</span></a>';
+
+        const brandShowcaseData = {
+            agency: {
+                desc: PRINCIPLE_LINK + " 아래 함께하는 모든 파트너들과 최고의 파트너십, 최고의 결과물을 만들어갑니다",
+                caption: "LOER 프로젝트 보기",
+                image: "INDEX_CREATIVE AGENCY.png"
+            },
+            studio: {
+                desc: PRINCIPLE_LINK + "에 근거한 영감으로 웹, 영상, 음악 등 실행 가능한 결과물로 인류의 경험을 만들어갑니다.",
+                caption: "LODN 프로젝트 보기",
+                image: "INDEX_STUDIO.png"
+            },
+            impact: {
+                desc: "크리스천이라는 신념 아래 모두의 기쁨이 되기 위한 마땅한 일들을 해나갑니다.",
+                caption: "대희 프로젝트 보기",
+                image: "INDEX_DAEHEE.png"
+            }
+        };
+
+        function renderBrandDetail(key) {
+            const data = brandShowcaseData[key];
+            document.getElementById('brandDetailDesc').innerHTML = data.desc;
+            document.getElementById('brandDetailCaption').innerHTML = data.caption + ' <span>›</span>';
+
+            const photoEl = document.getElementById('brandDetailPhoto');
+            if (data.image) {
+                photoEl.src = data.image;
+                photoEl.alt = data.caption;
+                photoEl.style.display = 'block';
+            } else {
+                photoEl.removeAttribute('src');
+                photoEl.style.display = 'none';
+            }
+        }
+
+        document.querySelectorAll('.brand-list-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.brand-list-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                renderBrandDetail(item.getAttribute('data-brand'));
+            });
+        });
+
+        renderBrandDetail('agency');
+    </script>
 
     <section class="story-section">
         <div class="container">
@@ -915,15 +968,25 @@
             <div class="footer-right">
                 <div class="footer-links">
                     <h4>Company</h4>
-                    <a href="index.html">About Us</a>
-                    <a href="#">Careers</a>
-                    <a href="#">Press</a>
+                    <div class="footer-link-cols">
+                        <div class="footer-link-col">
+                            <a href="about.html">About</a>
+                            <a href="service.html">Service</a>
+                            <a href="story.html">Story</a>
+                            <a href="contact.html">Contact</a>
+                            <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="footer-links">
                     <h4>Resources</h4>
-                    <a href="story.html">Blog</a>
-                    <a href="#">Help Center</a>
-                    <a href="#">Terms</a>
+                    <div class="footer-link-cols">
+                        <div class="footer-link-col">
+                            <a href="story.html">Blog</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Youtube</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -364,6 +365,74 @@
         word-break: keep-all;
       }
 
+      /* --- Footer (다른 페이지와 동일 규격) --- */
+      .footer {
+        background-color: #0b0b0b;
+        color: #fff;
+        padding: 100px 0;
+      }
+
+      .footer-container {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .footer-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 140px;
+      }
+
+      .footer-logo {
+        font-size: 32px;
+        font-weight: 800;
+        margin-bottom: 15px;
+      }
+
+      .footer-copy {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .footer-right {
+        display: flex;
+      }
+
+      .footer-links {
+        margin-left: 100px;
+        text-align: left;
+      }
+
+      .footer-links h4 {
+        font-size: 15px;
+        color: #aaa;
+        margin-bottom: 22px;
+        font-weight: 700;
+      }
+
+      .footer-links a {
+        display: block;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 14px;
+        transition: color 0.2s;
+      }
+
+      .footer-links a:hover {
+        color: #fff;
+      }
+
+      .footer-link-cols {
+        display: flex;
+        gap: 60px;
+      }
+
+      .footer-link-col {
+        display: flex;
+        flex-direction: column;
+      }
+
       /* --- Responsive --- */
       @media (max-width: 960px) {
         .featured-grid { grid-template-columns: 1fr; gap: 20px; }
@@ -376,6 +445,10 @@
         .nav a { margin: 0 15px; }
         #storyBoard li { gap: 15px; }
         #storyBoard li .list-img { width: 110px; }
+        .footer-container { flex-direction: column; gap: 40px; }
+        .footer-right { margin-left: 0; justify-content: space-between; }
+        .footer-links { margin-left: 0; }
+        .footer-link-cols { gap: 30px; }
       }
     </style>
   </head>
@@ -385,10 +458,12 @@
         <div class="container">
             <div class="logo" onclick="location.href='index.html'">LOIND</div>
             <nav class="nav">
-                <a href="index.html">About</a>
+                <a href="about.html">About</a>
                 <a href="service.html">Service</a>
-                <a href="story.html" class="active">Story</a>
-                <a href="#">Contact</a>
+                <a href="story.html">Story</a>
+                <a href="contact.html">Contact</a>
+                <div class="nav-separator"></div>
+                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
             </nav>
         </div>
     </header>
@@ -436,6 +511,39 @@
         <div class="modal_body"></div>
       </div>
     </div>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <h2 class="footer-logo">LOIND</h2>
+                <p class="footer-copy">© 2026 LOIND. All rights reserved.</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <div class="footer-link-cols">
+                        <div class="footer-link-col">
+                            <a href="about.html">About</a>
+                            <a href="service.html">Service</a>
+                            <a href="story.html">Story</a>
+                            <a href="contact.html">Contact</a>
+                            <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <div class="footer-link-cols">
+                        <div class="footer-link-col">
+                            <a href="story.html">Blog</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Youtube</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";

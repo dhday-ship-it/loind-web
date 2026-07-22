@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -140,6 +141,28 @@
         font-weight: 800;
         letter-spacing: -1px;
         line-height: 1.4;
+        word-break: keep-all;
+      }
+
+      /* 주소(도로명/지번) 전용 — 긴 문장이라 본문보다 조금 작게 */
+      .address-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .address-item .addr-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #999;
+        margin-bottom: 6px;
+        letter-spacing: -0.2px;
+      }
+      .address-item .addr-value {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.8px;
+        line-height: 1.45;
         word-break: keep-all;
       }
 
@@ -286,6 +309,17 @@
         color: #fff;
       }
 
+      .footer-link-cols {
+        display: flex;
+        gap: 60px;
+      }
+
+      .footer-link-col {
+        display: flex;
+        flex-direction: column;
+      }
+
+
       /* --- Responsive --- */
       @media (max-width: 1024px) {
         .contact-content {
@@ -308,9 +342,11 @@
         .contact-header { flex-direction: column; align-items: flex-start; gap: 15px; }
         .contact-header p { text-align: left; }
         .info-box .value { font-size: 24px; }
+        .address-item .addr-value { font-size: 18px; }
         .footer-container { flex-direction: column; gap: 40px; }
         .footer-right { margin-left: 0; justify-content: space-between; }
         .footer-links { margin-left: 0; }
+        .footer-link-cols { gap: 30px; }
       }
     </style>
   </head>
@@ -320,11 +356,12 @@
         <div class="container">
             <div class="logo" onclick="location.href='index.html'">LOIND</div>
             <nav class="nav">
-                <a href="index.html">About</a>
+                <a href="about.html">About</a>
                 <a href="service.html">Service</a>
                 <a href="story.html">Story</a>
-                <a href="contact.html" class="active">Contact</a>
-                <div class="nav-separator"></div> <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+                <a href="contact.html">Contact</a>
+                <div class="nav-separator"></div>
+                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
             </nav>
         </div>
     </header>
@@ -340,21 +377,26 @@
           <div class="info-left">
             <div class="info-box">
               <span class="label">Project Inquiry</span>
-              <span class="value">hello@loind.com</span>
-            </div>
-            <div class="info-box">
-              <span class="label">Partnership</span>
-              <span class="value">partner@loind.com</span>
+              <span class="value">contact@loind.com</span>
             </div>
             <div class="info-box">
               <span class="label">Office</span>
-              <span class="value">115, Wangsimni-ro, Seongdong-gu,<br />Seoul, Korea</span>
+              <div class="address-list">
+                <div class="address-item">
+                  <span class="addr-label">도로명</span>
+                  <p class="addr-value">경기 부천시 원미구 소향로 131<br />7층 726호 (중동워크리움)</p>
+                </div>
+                <div class="address-item">
+                  <span class="addr-label">지번</span>
+                  <p class="addr-value">경기 부천시 원미구 중동 1161-3<br />7층 726호 (중동워크리움)</p>
+                </div>
+              </div>
             </div>
 
             <div class="sns-wrap">
-              <a href="#">INSTAGRAM</a>
-              <a href="#">LINKEDIN</a>
-              <a href="#">BEHANCE</a>
+              <a href="story.html">BLOG</a>
+              <a href="#" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+              <a href="#" target="_blank" rel="noopener noreferrer">YOUTUBE</a>
             </div>
           </div>
 
@@ -365,9 +407,9 @@
                 <p style="font-weight: 800; margin-bottom: 6px; font-size:14px;">
                   (주)로인드 (LOIND Co., Ltd.)
                 </p>
-                <p>e-mail : dhday@loind.com</p>
+                <p>e-mail : contact@loind.com</p>
                 <p>대표이사 : 정대희</p>
-                <div class="tag">Beyond the Technology.</div>
+                <div class="tag">© 2026 LOIND. All rights reserved.</div>
               </div>
             </div>
 
@@ -391,15 +433,25 @@
             <div class="footer-right">
                 <div class="footer-links">
                     <h4>Company</h4>
-                    <a href="index.html">About Us</a>
-                    <a href="#">Careers</a>
-                    <a href="#">Press</a>
+                    <div class="footer-link-cols">
+                        <div class="footer-link-col">
+                            <a href="about.html">About</a>
+                            <a href="service.html">Service</a>
+                            <a href="story.html">Story</a>
+                            <a href="contact.html">Contact</a>
+                            <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="footer-links">
                     <h4>Resources</h4>
-                    <a href="story.html">Blog</a>
-                    <a href="#">Help Center</a>
-                    <a href="#">Terms</a>
+                    <div class="footer-link-cols">
+                        <div class="footer-link-col">
+                            <a href="story.html">Blog</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Youtube</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,6 +22,10 @@
             color: #111111;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            /* body에 overflow가 선언되면 브라우저가 실제 스크롤 박스를 body로 바꿔버려
+               html에 걸어둔 scroll-snap-type이 무시될 수 있어 동일하게 한 번 더 선언 */
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
         }
         a {
             text-decoration: none;
@@ -129,11 +134,11 @@
             top: 50%;
             transform: translateY(-50%);
             white-space: nowrap;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: #111111;
             background: #ffffff;
-            padding: 5px 10px;
+            padding: 4px 9px;
             border-radius: 6px;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
             opacity: 0;
@@ -142,6 +147,18 @@
         }
         .dot-nav-item:hover::before {
             opacity: 1;
+        }
+        .dot-nav-item.active::before {
+            opacity: 1;
+        }
+        /* 점만 표시하고 텍스트 라벨은 아예 없는 항목 (예: 인트로) */
+        .dot-nav-item.dot-plain::before {
+            content: none;
+            display: none;
+        }
+        /* 버튼 클릭으로 스크롤 이동하는 동안에는 라벨이 화면에 떠 있지 않도록 숨김 */
+        .dot-nav.is-scrolling .dot-nav-item::before {
+            opacity: 0 !important;
         }
 
         /* --- 콘텐츠 본문 레이아웃 영역 --- */
@@ -178,10 +195,6 @@
             scroll-snap-stop: always;
             scroll-margin-top: var(--chrome-h, 96px);
             padding: 60px 0;
-        }
-        .content-snap-panel.small-panel {
-            min-height: auto;
-            padding: 40px 0 120px;
         }
 
         /* 최상단 브랜드 비주얼 커버 */
@@ -252,19 +265,6 @@
             flex-direction: column;
             gap: 0; 
             width: 100%;
-        }
-
-        /* 대형 마무리 비전 선언문 스타일 클래스 */
-        .world-bottom-statement {
-            max-width: 920px;
-            margin: 20px auto 0;
-            text-align: center;
-            font-size: clamp(24px, 3.2vw, 38px);
-            font-weight: 800;
-            line-height: 1.65;
-            letter-spacing: -0.025em;
-            color: #111111;
-            word-break: keep-all;
         }
 
         /* [추가] 두 영역을 구분 짓는 미니멀 라인 스타일링 */
@@ -504,16 +504,25 @@
 
         .heart-demo .stage-caption {
             margin-top: 40px;
-            display: grid;
-            grid-template-columns: 45px 1fr;
-            gap: 18px;
             padding-top: 24px;
             border-top: 1px solid var(--line);
             text-align: left;
         }
-        .heart-demo .caption-index { font-size: 15px; font-weight: 700; color: #2b56ff; }
-        .heart-demo .stage-caption strong { font-size: 17px; letter-spacing: .04em; font-weight: 800; color: #111111; }
-        .heart-demo .stage-caption p { margin: 10px 0 0; font-size: 14.5px; line-height: 1.65; color: #4a4a4a; font-family: 'Pretendard', sans-serif; }
+        .heart-demo .caption-index {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #2b56ff;
+            margin-bottom: 8px;
+        }
+        .heart-demo .stage-caption h3 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 22px;
+            color: #111111;
+            letter-spacing: -0.02em;
+        }
+        .heart-demo .stage-caption p { margin: 0; font-size: 17px; line-height: 2.0; font-weight: 400; letter-spacing: -0.01em; color: #3a3a3a; font-family: 'Pretendard', sans-serif; }
 
         .flying-label { position: fixed !important; z-index: 9999 !important; pointer-events: none !important; margin: 0 !important; }
 
@@ -522,8 +531,9 @@
             50% { transform: translateY(0) rotate(1deg); }
         }
 
-        /* --- LOIND STANDARD 독립 스냅 섹션 --- */
-        #standardSection {
+        /* --- LOIND IDENTITY / LOIND PRINCIPLE 공통 독립 스냅 섹션 --- */
+        #identitySection,
+        #principleSection {
             scroll-snap-align: start;
             scroll-snap-stop: always;
             scroll-margin-top: var(--chrome-h, 180px);
@@ -536,7 +546,50 @@
             padding: 100px 0;
             background-color: #ffffff;
         }
-        
+
+        /* --- LOIND IDENTITY 섹션 (이름의 의미 + CI 컬러) --- */
+        .identity-wrapper { width: 100%; }
+
+        /* [수정] 로고(좌) + 이름 의미 텍스트(우) 2단 레이아웃 */
+        .identity-header-row {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 70px;
+        }
+        .identity-logo-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .identity-logo-img {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+        }
+        .identity-text-col {
+            text-align: left;
+        }
+        .identity-text-col h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #111111;
+            letter-spacing: -0.5px;
+            margin-bottom: 24px;
+        }
+        .identity-text-col .identity-meaning-text {
+            font-size: 18px;
+            line-height: 1.9;
+            color: #3a3a3a;
+            word-break: keep-all;
+            margin-bottom: 16px;
+        }
+        .identity-text-col .identity-meaning-text:last-child {
+            margin-bottom: 0;
+        }
+
         .scatter-stage-wrapper { position: relative; width: 100%; }
         .scatter-stage-title { margin-bottom: 55px; text-align: center; }
         .scatter-stage-title h2 { font-size: 32px; font-weight: 800; color: #111111; letter-spacing: -0.5px; }
@@ -585,6 +638,9 @@
         .footer-links a { display: block; font-size: 14px; color: #666; margin-bottom: 14px; transition: color 0.2s; }
         .footer-links a:hover { color: #fff; }
 
+        .footer-link-cols { display: flex; gap: 60px; }
+        .footer-link-col { display: flex; flex-direction: column; }
+
         /* --- Responsive Media Queries --- */
         @media (max-width: 1200px) {
             .scatter-cards-arena { grid-template-columns: repeat(2, 1fr); gap: 24px; }
@@ -593,6 +649,9 @@
             .scatter-card { padding: 45px 25px; }
             .stream-row, .stream-row.reverse-layout { grid-template-columns: 1fr !important; gap: 45px; }
             .heart-demo .interaction-stage { min-height: 480px; }
+            .identity-header-row { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+            .identity-text-col { text-align: center; }
+            .identity-logo-img { max-width: 220px; }
         }
         @media (max-width: 650px) {
             .scatter-cards-arena { grid-template-columns: 1fr; gap: 20px; }
@@ -607,43 +666,76 @@
             .footer-container { flex-direction: column; gap: 40px; }
             .footer-right { margin-left: 0; justify-content: space-between; }
             .footer-links { margin-left: 0; }
+            .footer-link-cols { gap: 30px; }
         }
     </style>
 </head>
 <body>
     <div class="sticky-chrome">
-        <header class="header">
-            <div class="container">
-                <div class="logo" onclick="location.href='index.html'">LOIND</div>
-                <nav class="nav">
-                    <a href="about.html" class="active">About</a>
-                    <a href="service.html">Service</a>
-                    <a href="story.html">Story</a>
-                    <a href="contact.html">Contact</a>
-                    <div class="nav-separator"></div> 
-                    <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a> 
-                </nav>
-            </div>
-        </header>
+    <header class="header">
+        <div class="container">
+            <div class="logo" onclick="location.href='index.html'">LOIND</div>
+            <nav class="nav">
+                <a href="about.html">About</a>
+                <a href="service.html">Service</a>
+                <a href="story.html">Story</a>
+                <a href="contact.html">Contact</a>
+                <div class="nav-separator"></div>
+                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+            </nav>
+        </div>
+    </header>
     </div>
 
     <nav class="dot-nav" id="dotNav">
-        <button class="dot-nav-item" type="button" data-target="loindTopSection" data-label="LOIND" aria-label="LOIND 브랜드 스토리로 이동"></button>
-        <button class="dot-nav-item" type="button" data-target="standardSection" data-label="LOIND STANDARD" aria-label="LOIND STANDARD로 이동"></button>
+        <button class="dot-nav-item dot-plain" type="button" data-target="introSection" aria-label="LOIND 로고 인트로로 이동"></button>
+        <button class="dot-nav-item" type="button" data-target="identitySection" data-label="LOIND" aria-label="LOIND로 이동"></button>
+        <button class="dot-nav-item" type="button" data-target="loindTopSection" data-label="LOIND IDENTITY" aria-label="LOIND IDENTITY로 이동"></button>
+        <button class="dot-nav-item" type="button" data-target="principleSection" data-label="LOIND PRINCIPLE" aria-label="LOIND PRINCIPLE로 이동"></button>
     </nav>
 
     <main class="snap-main">
             
-            <!-- [통합 레이어 1] LOIND 메인 콘텐츠 패널 -->
-            <div id="loindTopSection" class="loind-top-mega-section">
-                
-                <!-- 1-1. 최상단 브랜드 비주얼 커버 영역 (스냅 패널 1) -->
-                <div class="snap-panel cover-sub-panel">
-                  <div class="container">
-                    <img class="cover-logo-img" src="LOIND_LOGO.PNG" alt="LOIND Logo">
-                   
-                  </div>
+<!-- [메인 인트로] 텍스트 라벨 없이 점만 표시되는 최상단 로고 커버 영역 -->
+            <div id="introSection" class="snap-panel cover-sub-panel">
+              <div class="container">
+                <img class="cover-logo-img" src="LOIND_LOGO.PNG" alt="LOIND Logo">
+              </div>
+            </div>
+
+            <!-- [통합 레이어 1] LOIND IDENTITY 섹션 (이름의 의미 + CI 컬러) -->
+            <section id="identitySection">
+              <div class="container">
+                <div class="content-inner-box">
+                    <div class="identity-wrapper">
+
+                        <!-- [수정] 로고(좌) + 이름 의미 텍스트(우) 2단 배치 -->
+                        <div class="identity-header-row">
+                            <div class="identity-logo-col">
+                                <img class="identity-logo-img" src="LOIND_LOGO.PNG" alt="LOIND Logo">
+                            </div>
+                            <!-- ※ 아래 이름 의미 설명은 임시 카피입니다 — 확정 카피로 교체해주세요. -->
+                            <div class="identity-text-col">
+                                <h2>LOVE + BIND, LOIND</h2>
+                                <p class="identity-meaning-text">
+                                    로인드는 하나님 사랑과 이웃 사랑의 묶음을 뜻합니다.
+      <br> 우리의 정체성은 이 사랑의 묶음에서 출발합니다.                              
+                                </p>
+                                <!-- 추가 설명 문구가 필요하면 아래에 문단을 더 채워주세요 -->
+                                <p class="identity-meaning-text">
+                                    종교와 일상이라는 이분법적 경계를 넘어,
+                                    <br> 두개의 사랑 위에 새로운 문화와 습관, 삶의 양식을 만들어갑니다.
+                                    <br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+              </div>
+            </section>
+
+            <!-- [통합 레이어 1.5] LOIND 메인 콘텐츠 패널 -->
+            <div id="loindTopSection" class="loind-top-mega-section">
 
                 <!-- 1-2. 가치와 인터랙션 상세 콘텐츠 블록 -->
                 <div class="container loind-contents-block">
@@ -651,24 +743,21 @@
 
                         <!-- 스냅 패널 2: 브랜드 선언문 + CORPORATION 스트림 -->
                         <section class="content-snap-panel">
-                            <p class="cover-statement">
-                              우리는 말씀이 삶이 되는 시스템을 만듭니다.
-                            </p>
                             <div class="loind-content-stream">
                                 <div class="stream-row">  
                                     <div class="stream-text">
-                                        <h3>LOIND CORPORATION</h3>
+                                        <h3>"우리는 말씀이 삶이 되는 시스템을 만드는 일을 합니다."</h3>
                                         <p>
-                                            우리는 <span class="txt-glow">"성경에 기초한 기준과 실행"</span> 이라는<br>
-                                            정체성과 차별성으로 우리가 살아가는 세상의 모습을 그려가고 있습니다.<br><br>
-                                            말씀으로 영감을 얻어 정체성과 차별성을 만들고,<br>
-                                            그것을 그저 생각과 다짐에 그치는 것이 아닌 <span class="txt-glow">사람이 살아내는 시스템</span>을<br>
-                                            만들어내는 일은 우리의 <span class="txt-glow">자부심이자, 존재 이유</span>입니다.
+                                            <span class="txt-glow">"성경에 기초한 기준과 실행"</span> 은 우리의 기준이며, 
+                                            <br> 우리가 만들어가는 모든 영향력이 지향하는 목표입니다.<br><br>
+                                            말씀으로 영감을 얻어 정체성과 차별성을 세우고,<br>
+                                            그것을 그저 생각과 다짐에 그치는 것이 아닌 <span class="txt-glow">사람이 살아내는 시스템</span>으로<br>
+                                            만들어내는 것이 우리의 <span class="txt-glow">자부심이자, 존재 이유</span>입니다.
                                         </p>
                                     </div>
                                     <div class="stream-right-column">
                                         <div class="stream-img-box id-target-card">
-                                            <img src="about_1.png" alt="Execution System Image">
+                                            <img src="about_1.png" alt= "Execution System Image">
                                         </div>
                                         <div class="stream-arrow-indicator">↓</div>
                                                                         
@@ -748,24 +837,15 @@
                                         </p>
                                         
                                         <div class="stage-caption" aria-live="polite">
-                                          <span class="caption-index" id="captionIndex">00</span>
+                                          <span class="caption-index" id="captionIndex"></span>
                                           <div>
-                                            <strong id="captionTitle">SELECT A LABEL</strong>
-                                            <p id="captionText">왼쪽 무대의 라벨을 선택하면 가치가 마음에 심기며 가동을 시작합니다.</p>
+                                            <h3 id="captionTitle">누군가의 삶 안에서 <span class="txt-glow">말씀이 살아 움직이는 것</span>,<br>그것이 우리 <span class="txt-glow">LOIND가 소망하는 세상</span>입니다.</h3>
                                           </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                        </section>
-
-                        <!-- 스냅 패널 4: 패널 최하단 마무리 엔딩 선언 -->
-                        <section class="content-snap-panel small-panel">
-                            <p class="world-bottom-statement">
-                                누군가의 삶 안에서 <span class="txt-glow">말씀이 살아 움직이는 것</span>,<br>
-                                그것이 우리 <span class="txt-glow">LOIND가 소망하는 세상</span>입니다.
-                            </p>
                         </section>
 
                     </div>
@@ -777,13 +857,13 @@
                 </div>
             </div>
 
-            <!-- [통합 레이어 2] LOIND STANDARD 섹션 (스냅 패널 5) -->
-            <section id="standardSection">
+            <!-- [통합 레이어 2] LOIND PRINCIPLE 섹션 -->
+            <section id="principleSection">
               <div class="container">
                 <div class="content-inner-box">
                     <div class="scatter-stage-wrapper" id="scatterStage">
                         <div class="scatter-stage-title">
-                            <h2>우리가 일하고 가치를 증명하는 4가지 기준</h2>
+                            <h2>LOIND PRINCIPLE</h2>
                         </div>
                         <div class="scatter-cards-arena" id="cardsArena">
                             <div class="scatter-card">
@@ -792,31 +872,31 @@
                                     <h3 class="std-card-main-title">Foundation</h3>
                                     <div class="std-card-sub-title">세워짐</div>
                                 </div>
-                                <p class="std-card-main-desc">말씀과 기도로 매일 하나님과 가까워지며 영적 민감성을 유지하는 크리스천 리더로 세워지기 위한 도전의 기회를 제공합니다.</p>
+                                <p class="std-card-main-desc"> 우리는 크리스천으로 세워졌습니다. 이 정체성은 흔들리지 않는 뿌리이며, 우리의 모든 생각과 행동은 여기에서 비롯됩니다. </p>
                             </div>
                             <div class="scatter-card">
                                 <div class="card-graphic-icon">&lt;&gt;</div>
                                 <div class="card-title-group">
                                     <h3 class="std-card-main-title">Design</h3>
-                                    <div class="std-card-sub-title">설계</div>
+                                    <div class="std-card-sub-title">빚음</div>
                                 </div>
-                                <p class="std-card-main-desc">말씀을 근거로 비즈니스의 기회를 발견하고, 공동체와 세상을 연결하며 필요한 선한 형태를 입체적으로 기획하고 설계합니다.</p>
+                                <p class="std-card-main-desc">그 뿌리에서 무엇을 흘려보낼지를 찾습니다. 말씀을 통해 전할 가치를 발견하고, 그것을 담아낼 그릇을 선한 형태로 빚어냅니다.</p>
                             </div>
                             <div class="scatter-card">
                                 <div class="card-graphic-icon">{}</div>
                                 <div class="card-title-group">
                                     <h3 class="std-card-main-title">Delivery</h3>
-                                    <div class="std-card-sub-title">제공</div>
+                                    <div class="std-card-sub-title">흘려보냄</div>
                                 </div>
-                                <p class="std-card-main-desc">단순한 용역을 넘어 정체성과 신앙의 고백이 담긴 완벽한 서비스 결정체를 온전히 구현하여 커리어 가치로써 제공합니다.</p>
+                                <p class="std-card-main-desc">빚어낸 것을 세상으로 흘려보냅니다. 우리 안에 머무는 가치가 아니라, 사람과 사람 사이로 삶의 자리마다 실제로 닿게 합니다.</p>
                             </div>
                             <div class="scatter-card">
                                 <div class="card-graphic-icon">;</div>
                                 <div class="card-title-group">
                                     <h3 class="std-card-main-title">Experience</h3>
-                                    <div class="std-card-sub-title">경험</div>
+                                    <div class="std-card-sub-title">채워짐+세워짐</div>
                                 </div>
-                                <p class="std-card-main-desc">우리의 비즈니스를 통해 고객과 사회가 하나님 사랑과 사람 사랑의 실질적인 가치를 학습하고 품격 있는 경험을 축적하게 만듭니다.</p>
+                                <p class="std-card-main-desc">우리는 그 가치를 경험한 사람이 또 하나의 뿌리로 세워지도록 이끕니다. 그렇게 세워진 이들과 함께 세상을 채워갑니다. </p>
                             </div>
                         </div>
                     </div>
@@ -834,15 +914,25 @@
             <div class="footer-right">
                 <div class="footer-links">
                     <h4>Company</h4>
-                    <a href="index.html">About Us</a>
-                    <a href="#">Careers</a>
-                    <a href="#">Press</a>
+                    <div class="footer-link-cols">
+                        <div class="footer-link-col">
+                            <a href="about.html">About</a>
+                            <a href="service.html">Service</a>
+                            <a href="story.html">Story</a>
+                            <a href="contact.html">Contact</a>
+                            <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="footer-links">
                     <h4>Resources</h4>
-                    <a href="story.html">Blog</a>
-                    <a href="#">Help Center</a>
-                    <a href="#">Terms</a>
+                    <div class="footer-link-cols">
+                        <div class="footer-link-col">
+                            <a href="story.html">Blog</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Youtube</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -851,47 +941,86 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const subNavItems = document.querySelectorAll('.dot-nav-item');
-            const panels = document.querySelectorAll('#loindTopSection, #standardSection'); 
+            const panels = Array.from(document.querySelectorAll('#introSection, #identitySection, #loindTopSection, #principleSection'));
             const chrome = document.querySelector('.sticky-chrome');
 
-            let chromeObserver;
+            /* --- [카테고리 내비게이션] ---
+               방식: 옵저버의 교차 비율 계산 대신,
+               "화면 상단(헤더 바로 아래) 기준선을 이미 지나간 섹션 중 가장 마지막 섹션"을
+               현재 위치로 판단하는 단순한 스크롤 기반 방식으로 재작성.
+               섹션들이 동시에 살짝 겹쳐 보이는 순간에도 항상 하나의 답만 나오도록 보장됨. */
+
+            function setActiveNav(targetId) {
+                subNavItems.forEach(item => {
+                    item.classList.toggle('active', item.getAttribute('data-target') === targetId);
+                });
+            }
+
+            function updateActiveSection() {
+                if (!panels.length) return;
+                const refY = chrome.offsetHeight + 2; // 헤더 바로 아래 기준선
+                let currentId = panels[0].id;
+                for (const panel of panels) {
+                    if (panel.getBoundingClientRect().top <= refY) {
+                        currentId = panel.id;
+                    } else {
+                        break;
+                    }
+                }
+                setActiveNav(currentId);
+            }
+
             function syncChromeHeight() {
                 const h = chrome.offsetHeight;
                 document.documentElement.style.setProperty('--chrome-h', h + 'px');
-                initSectionObserver(h);
+                updateActiveSection();
             }
 
-            function initSectionObserver(chromeH) {
-                if (chromeObserver) chromeObserver.disconnect();
-                chromeObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const id = entry.target.id;
-                            subNavItems.forEach(item => {
-                                item.classList.toggle('active', item.getAttribute('data-target') === id);
-                            });
-                        }
-                    });
-                }, {
-                    root: null,
-                    rootMargin: `-${chromeH}px 0px -45% 0px`,
-                    threshold: 0
+            let ticking = false;
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                window.requestAnimationFrame(() => {
+                    updateActiveSection();
+                    ticking = false;
                 });
-                panels.forEach(panel => chromeObserver.observe(panel));
             }
 
             syncChromeHeight();
             window.addEventListener('resize', syncChromeHeight);
             window.addEventListener('load', syncChromeHeight);
+            window.addEventListener('scroll', onScroll, { passive: true });
 
             subNavItems.forEach(item => {
                 item.addEventListener('click', () => {
                     const targetId = item.getAttribute('data-target');
                     const target = document.getElementById(targetId);
-                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (target) {
+                        // 스크롤 애니메이션이 끝나기 전에도 클릭한 점이 바로 활성 표시되도록 즉시 반영
+                        setActiveNav(targetId);
+
+                        // 이동 중에는 마우스가 그대로 있어 라벨이 화면에 계속 떠 있을 수 있으므로,
+                        // 스크롤이 끝날 때까지 라벨을 숨겼다가 도착 후 다시 정상 표시되게 함
+                        const dotNav = document.getElementById('dotNav');
+                        dotNav.classList.add('is-scrolling');
+                        let settled = false;
+                        const finishScroll = () => {
+                            if (settled) return;
+                            settled = true;
+                            dotNav.classList.remove('is-scrolling');
+                            window.removeEventListener('scrollend', finishScroll);
+                        };
+                        if ('onscrollend' in window) {
+                            window.addEventListener('scrollend', finishScroll, { once: true });
+                        }
+                        setTimeout(finishScroll, 900); // 브라우저 호환 안전장치
+
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 });
             });
 
+            /* --- [헤더 자동 숨김/노출] 기존 로직 유지 --- */
             const SHOW_THRESHOLD = 80;
             let lastScrollY = window.scrollY;
             let shouldBeHidden = false; 
@@ -971,7 +1100,6 @@
             const patternCode = document.getElementById('patternCode');
             const captionIndex = document.getElementById('captionIndex');
             const captionTitle = document.getElementById('captionTitle');
-            const captionText = document.getElementById('captionText');
 
             function makeLabel(label, index) {
                 const button = document.createElement('button');
@@ -1058,7 +1186,6 @@
                     ], { duration: 640, easing: 'cubic-bezier(.2,.8,.2,1)' });
                     captionIndex.textContent = label.id;
                     captionTitle.textContent = label.name;
-                    captionText.textContent = label.note;
                     document.documentElement.style.setProperty('--active', label.color);
                 }, 610);
             }

@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -142,25 +143,27 @@
         .footer-links h4 { font-size: 15px; color: #aaa; margin-bottom: 22px; font-weight: 700; }
         .footer-links a { display: block; font-size: 14px; color: #666; margin-bottom: 14px; transition: color 0.2s; }
         .footer-links a:hover { color: #fff; }
+        .footer-link-cols { display: flex; gap: 60px; }
+        .footer-link-col { display: flex; flex-direction: column; }
         @media (max-width: 1024px) { .display-mockup-frame { max-width: 90%; padding: 30px; } .clova-popup-card { position: static; margin: 20px auto 0 auto; width: 100%; max-width: 320px; } .brands-grid { gap: 40px; } }
-        @media (max-width: 768px) { .header .container { flex-direction: column; gap: 20px; text-align: center; } .nav a { margin: 0 10px; } .nav-separator { display: none; } .brands-grid { gap: 28px; } .brand-logo-wrap { width: 90px; height: 90px; } .footer-container { flex-direction: column; gap: 40px; } .footer-right { margin-left: 0; justify-content: space-between; } .footer-links { margin-left: 0; } .impact-hero-question { font-size: 24px; } }
+        @media (max-width: 768px) { .header .container { flex-direction: column; gap: 20px; text-align: center; } .nav a { margin: 0 10px; } .nav-separator { display: none; } .brands-grid { gap: 28px; } .brand-logo-wrap { width: 90px; height: 90px; } .footer-container { flex-direction: column; gap: 40px; } .footer-right { margin-left: 0; justify-content: space-between; } .footer-links { margin-left: 0; } .footer-link-cols { gap: 30px; } .impact-hero-question { font-size: 24px; } }
     </style>
 </head>
 <body>
 
-<header class="header">
-    <div class="container">
-        <div class="logo" onclick="location.href='index.html'">LOIND</div>
-        <nav class="nav">
-            <a href="index.html">About</a>
-            <a href="service.html" class="active">Service</a>
-            <a href="story.html">Story</a>
-            <a href="contact.html">Contact</a>
-            <div class="nav-separator"></div>
-            <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
-        </nav>
-    </div>
-</header>
+    <header class="header">
+        <div class="container">
+            <div class="logo" onclick="location.href='index.html'">LOIND</div>
+            <nav class="nav">
+                <a href="about.html">About</a>
+                <a href="service.html">Service</a>
+                <a href="story.html">Story</a>
+                <a href="contact.html">Contact</a>
+                <div class="nav-separator"></div>
+                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+            </nav>
+        </div>
+    </header>
 
 <section class="services-top-section">
     <div class="container">
@@ -200,15 +203,25 @@
         <div class="footer-right">
             <div class="footer-links">
                 <h4>Company</h4>
-                <a href="#">About Us</a>
-                <a href="#">Careers</a>
-                <a href="#">Press</a>
+                <div class="footer-link-cols">
+                    <div class="footer-link-col">
+                        <a href="about.html">About</a>
+                        <a href="service.html">Service</a>
+                        <a href="story.html">Story</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+                    </div>
+                </div>
             </div>
             <div class="footer-links">
                 <h4>Resources</h4>
-                <a href="#">Blog</a>
-                <a href="#">Help Center</a>
-                <a href="#">Terms</a>
+                <div class="footer-link-cols">
+                    <div class="footer-link-col">
+                        <a href="story.html">Blog</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Youtube</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -311,7 +324,7 @@
                 <div style="margin-bottom:35px;display:flex;align-items:flex-start;gap:8px;">
                     <span style="display:inline-block;width:4px;min-height:16px;background:#5533ff;border-radius:2px;flex-shrink:0;margin-top:2px;"></span>
                     <div>
-                        <p style="font-size:18px;font-weight:800;color:#111;letter-spacing:-0.3px;margin-bottom:8px;">LOIND STANDARD</p>
+                        <p style="font-size:18px;font-weight:800;color:#111;letter-spacing:-0.3px;margin-bottom:8px;">LOIND PRINCIPLE</p>
                         <p style="font-size:18px;font-weight:400;color:#aaa;line-height:1.75;word-break:keep-all;">${quote} <span style="font-size:13px;font-weight:600;">${verse}</span></p>
                     </div>
                 </div>
@@ -319,7 +332,7 @@
         } else if (level === 2) {
             return `
                 <div style="margin-bottom:35px;display:flex;align-items:center;gap:12px;">
-                    <span style="font-size:10px;font-weight:700;color:#fff;background:#111;padding:4px 10px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;">LOIND STANDARD</span>
+                    <span style="font-size:10px;font-weight:700;color:#fff;background:#111;padding:4px 10px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;">LOIND PRINCIPLE</span>
                     <span style="font-size:14px;font-weight:500;color:#555;">${text}</span>
                 </div>
             `;
@@ -327,7 +340,7 @@
         } else {
             return `
                 <div style="margin-bottom:35px;">
-                    <span style="font-size:11px;font-weight:500;color:#aaa;letter-spacing:0.5px;">LOIND STANDARD &nbsp;—&nbsp; ${text}</span>
+                    <span style="font-size:11px;font-weight:500;color:#aaa;letter-spacing:0.5px;">LOIND PRINCIPLE &nbsp;—&nbsp; ${text}</span>
                 </div>
             `;
         }
@@ -474,7 +487,7 @@
                     <div class="container">
                         <div style="margin-bottom:56px;">
                             <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-                                <span style="font-size:10px;font-weight:700;color:#fff;background:#111;padding:5px 10px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;min-width:112px;text-align:center;">LOIND STANDARD</span>
+                                <span style="font-size:10px;font-weight:700;color:#fff;background:#111;padding:5px 10px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;min-width:112px;text-align:center;">LOIND PRINCIPLE</span>
                                 <span style="font-size:15px;font-weight:400;color:#555;line-height:1.6;">${d.standard}</span>
                             </div>
                             <div style="display:flex;align-items:center;gap:12px;">
@@ -507,7 +520,7 @@
                 <section class="business-section">
                     <div class="container">
                         ${renderStandard(d)}
-                        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:10px;">
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:10px;">
                             <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;transition:transform 0.25s ease;">
                                 <div style="width:56px;height:56px;display:flex;align-items:center;justify-content:center;">
                                     <img src="LODN.S.M.png" alt="음악콘텐츠" style="width:100%;height:100%;object-fit:contain;">
@@ -528,13 +541,6 @@
                                 </div>
                                 <p style="font-size:14px;font-weight:700;color:#111;">IP 비즈니스</p>
                                 <p style="font-size:12.5px;color:#888;line-height:1.6;">자체 IP를 발굴하고 다양한 채널로 확장합니다.</p>
-                            </div>
-                            <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;">
-                                <div style="width:56px;height:56px;display:flex;align-items:center;justify-content:center;">
-                                    <img src="LODN.S.TM.png" alt="Talent Management" style="width:100%;height:100%;object-fit:contain;">
-                                </div>
-                                <p style="font-size:14px;font-weight:700;color:#111;">Talent Management</p>
-                                <p style="font-size:12.5px;color:#888;line-height:1.6;">아티스트와 크리에이터의 성장을 함께 만들어갑니다.</p>
                             </div>
                         </div>
                     </div>

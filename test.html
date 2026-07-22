@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,6 +22,10 @@
             color: #111111;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            /* body에 overflow가 선언되면 브라우저가 실제 스크롤 박스를 body로 바꿔버려
+               html에 걸어둔 scroll-snap-type이 무시될 수 있어 동일하게 한 번 더 선언 */
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
         }
         a {
             text-decoration: none;
@@ -129,11 +134,11 @@
             top: 50%;
             transform: translateY(-50%);
             white-space: nowrap;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: #111111;
             background: #ffffff;
-            padding: 5px 10px;
+            padding: 4px 9px;
             border-radius: 6px;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
             opacity: 0;
@@ -143,6 +148,18 @@
         .dot-nav-item:hover::before {
             opacity: 1;
         }
+        .dot-nav-item.active::before {
+            opacity: 1;
+        }
+        /* 점만 표시하고 텍스트 라벨은 아예 없는 항목 (예: 인트로) */
+        .dot-nav-item.dot-plain::before {
+            content: none;
+            display: none;
+        }
+        /* 버튼 클릭으로 스크롤 이동하는 동안에는 라벨이 화면에 떠 있지 않도록 숨김 */
+        .dot-nav.is-scrolling .dot-nav-item::before {
+            opacity: 0 !important;
+        }
 
         /* --- 콘텐츠 본문 레이아웃 영역 --- */
         .snap-main {
@@ -150,20 +167,34 @@
             padding-top: var(--chrome-h, 96px);
         }
 
-        /* 거대한 LOIND 탑 섹션 껍데기 */
+        /* 거대한 LOIND 탑 섹션 껍데기 (스냅 단위 아님, 안쪽 패널들이 각각 스냅됨) */
         .loind-top-mega-section {
-            scroll-snap-align: start;
-            scroll-margin-top: var(--chrome-h, 96px);
             background-color: #ffffff;
             width: 100%;
         }
 
-        /* 개별 스냅 단위 컴포넌트 */
+        /* 개별 스냅 단위 컴포넌트 (커버 영역) */
         .snap-panel {
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 100px 0;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            scroll-margin-top: var(--chrome-h, 96px);
+        }
+
+        /* [신규] 콘텐츠 블록 내부 각 구간을 독립 스냅 패널로 분리 */
+        .content-snap-panel {
+            min-height: calc(100vh - var(--chrome-h, 96px));
+            min-height: calc(100dvh - var(--chrome-h, 96px));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            scroll-margin-top: var(--chrome-h, 96px);
+            padding: 60px 0;
         }
 
         /* 최상단 브랜드 비주얼 커버 */
@@ -189,6 +220,7 @@
             animation: logoRiseIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         .cover-statement {
+        text-align:center;
             font-size: clamp(22px, 2.8vw, 32px);
             font-weight: 800;
             line-height: 1.5;
@@ -197,6 +229,7 @@
             word-break: keep-all;
             opacity: 0;
             animation: textFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+            margin-bottom:80px;
         }
 
         @keyframes logoRiseIn {
@@ -208,9 +241,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* [거리 확장 조정] 가치와 인터랙션이 함께 숨쉬는 묶음 컨테이너 하단 여백 대폭 확장 */
         .loind-contents-block {
-            padding: 8px 0 240px; /* 기존 160px에서 240px로 확장 */
+            padding: 0;
         }
 
         .content-inner-box {
@@ -231,21 +263,8 @@
         .world-draw-wrap {
             display: flex;
             flex-direction: column;
-            gap: 140px; 
+            gap: 0; 
             width: 100%;
-        }
-
-        /* 대형 마무리 비전 선언문 스타일 클래스 */
-        .world-bottom-statement {
-            max-width: 920px;
-            margin: 20px auto 0;
-            text-align: center;
-            font-size: clamp(24px, 3.2vw, 38px);
-            font-weight: 800;
-            line-height: 1.65;
-            letter-spacing: -0.025em;
-            color: #111111;
-            word-break: keep-all;
         }
 
         /* [추가] 두 영역을 구분 짓는 미니멀 라인 스타일링 */
@@ -485,16 +504,25 @@
 
         .heart-demo .stage-caption {
             margin-top: 40px;
-            display: grid;
-            grid-template-columns: 45px 1fr;
-            gap: 18px;
             padding-top: 24px;
             border-top: 1px solid var(--line);
             text-align: left;
         }
-        .heart-demo .caption-index { font-size: 15px; font-weight: 700; color: #2b56ff; }
-        .heart-demo .stage-caption strong { font-size: 17px; letter-spacing: .04em; font-weight: 800; color: #111111; }
-        .heart-demo .stage-caption p { margin: 10px 0 0; font-size: 14.5px; line-height: 1.65; color: #4a4a4a; font-family: 'Pretendard', sans-serif; }
+        .heart-demo .caption-index {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #2b56ff;
+            margin-bottom: 8px;
+        }
+        .heart-demo .stage-caption h3 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 22px;
+            color: #111111;
+            letter-spacing: -0.02em;
+        }
+        .heart-demo .stage-caption p { margin: 0; font-size: 17px; line-height: 2.0; font-weight: 400; letter-spacing: -0.01em; color: #3a3a3a; font-family: 'Pretendard', sans-serif; }
 
         .flying-label { position: fixed !important; z-index: 9999 !important; pointer-events: none !important; margin: 0 !important; }
 
@@ -503,9 +531,11 @@
             50% { transform: translateY(0) rotate(1deg); }
         }
 
-        /* --- LOIND STANDARD 독립 스냅 섹션 --- */
-        #standardSection {
+        /* --- LOIND IDENTITY / LOIND PRINCIPLE 공통 독립 스냅 섹션 --- */
+        #identitySection,
+        #principleSection {
             scroll-snap-align: start;
+            scroll-snap-stop: always;
             scroll-margin-top: var(--chrome-h, 180px);
             min-height: calc(100vh - var(--chrome-h, 180px));
             min-height: calc(100dvh - var(--chrome-h, 180px));
@@ -516,7 +546,50 @@
             padding: 100px 0;
             background-color: #ffffff;
         }
-        
+
+        /* --- LOIND IDENTITY 섹션 (이름의 의미 + CI 컬러) --- */
+        .identity-wrapper { width: 100%; }
+
+        /* [수정] 로고(좌) + 이름 의미 텍스트(우) 2단 레이아웃 */
+        .identity-header-row {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 70px;
+        }
+        .identity-logo-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .identity-logo-img {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+        }
+        .identity-text-col {
+            text-align: left;
+        }
+        .identity-text-col h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #111111;
+            letter-spacing: -0.5px;
+            margin-bottom: 24px;
+        }
+        .identity-text-col .identity-meaning-text {
+            font-size: 18px;
+            line-height: 1.9;
+            color: #3a3a3a;
+            word-break: keep-all;
+            margin-bottom: 16px;
+        }
+        .identity-text-col .identity-meaning-text:last-child {
+            margin-bottom: 0;
+        }
+
         .scatter-stage-wrapper { position: relative; width: 100%; }
         .scatter-stage-title { margin-bottom: 55px; text-align: center; }
         .scatter-stage-title h2 { font-size: 32px; font-weight: 800; color: #111111; letter-spacing: -0.5px; }
@@ -554,7 +627,7 @@
         .std-card-main-desc { font-size: 14px; line-height: 1.8; color: #4e5566; text-align: center; }
 
         /* --- Footer --- */
-        .footer { background-color: #0b0b0b; color: #fff; padding: 100px 0; margin-top: 60px; scroll-snap-align: start; }
+        .footer { background-color: #0b0b0b; color: #fff; padding: 100px 0; margin-top: 0; scroll-snap-align: start; scroll-snap-stop: always; }
         .footer-container { display: flex; justify-content: space-between; }
         .footer-left { display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
         .footer-logo { font-size: 32px; font-weight: 800; margin-bottom: 15px; }
@@ -573,6 +646,9 @@
             .scatter-card { padding: 45px 25px; }
             .stream-row, .stream-row.reverse-layout { grid-template-columns: 1fr !important; gap: 45px; }
             .heart-demo .interaction-stage { min-height: 480px; }
+            .identity-header-row { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+            .identity-text-col { text-align: center; }
+            .identity-logo-img { max-width: 220px; }
         }
         @media (max-width: 650px) {
             .scatter-cards-arena { grid-template-columns: 1fr; gap: 20px; }
@@ -592,154 +668,178 @@
 </head>
 <body>
     <div class="sticky-chrome">
-        <header class="header">
-            <div class="container">
-                <div class="logo" onclick="location.href='index.html'">LOIND</div>
-                <nav class="nav">
-                    <a href="about.html" class="active">About</a>
-                    <a href="service.html">Service</a>
-                    <a href="story.html">Story</a>
-                    <a href="contact.html">Contact</a>
-                    <div class="nav-separator"></div> 
-                    <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a> 
-                </nav>
-            </div>
-        </header>
+    <header class="header">
+        <div class="container">
+            <div class="logo" onclick="location.href='index.html'">LOIND</div>
+            <nav class="nav">
+                <a href="about.html">About</a>
+                <a href="service.html">Service</a>
+                <a href="story.html">Story</a>
+                <a href="contact.html">Contact</a>
+                <div class="nav-separator"></div>
+                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
+            </nav>
+        </div>
+    </header>
     </div>
 
     <nav class="dot-nav" id="dotNav">
-        <button class="dot-nav-item" type="button" data-target="loindTopSection" data-label="LOIND" aria-label="LOIND 브랜드 스토리로 이동"></button>
-        <button class="dot-nav-item" type="button" data-target="standardSection" data-label="LOIND STANDARD" aria-label="LOIND STANDARD로 이동"></button>
+        <button class="dot-nav-item dot-plain" type="button" data-target="introSection" aria-label="LOIND 로고 인트로로 이동"></button>
+        <button class="dot-nav-item" type="button" data-target="identitySection" data-label="LOIND" aria-label="LOIND로 이동"></button>
+        <button class="dot-nav-item" type="button" data-target="loindTopSection" data-label="LOIND IDENTITY" aria-label="LOIND IDENTITY로 이동"></button>
+        <button class="dot-nav-item" type="button" data-target="principleSection" data-label="LOIND PRINCIPLE" aria-label="LOIND PRINCIPLE로 이동"></button>
     </nav>
 
     <main class="snap-main">
             
-            <!-- [통합 레이어 1] LOIND 메인 콘텐츠 패널 -->
-            <div id="loindTopSection" class="loind-top-mega-section">
-                
-                <!-- 1-1. 최상단 브랜드 비주얼 커버 영역 -->
-                <div class="snap-panel cover-sub-panel">
-                  <div class="container">
-                    <img class="cover-logo-img" src="LOIND_LOGO.PNG" alt="LOIND Logo">
-                    <p class="cover-statement">
-                        우리는 말씀이 삶이 되는 시스템을 만듭니다.
-                    </p>
-                  </div>
+<!-- [메인 인트로] 텍스트 라벨 없이 점만 표시되는 최상단 로고 커버 영역 -->
+            <div id="introSection" class="snap-panel cover-sub-panel">
+              <div class="container">
+                <img class="cover-logo-img" src="LOIND_LOGO.PNG" alt="LOIND Logo">
+              </div>
+            </div>
+
+            <!-- [통합 레이어 1] LOIND IDENTITY 섹션 (이름의 의미 + CI 컬러) -->
+            <section id="identitySection">
+              <div class="container">
+                <div class="content-inner-box">
+                    <div class="identity-wrapper">
+
+                        <!-- [수정] 로고(좌) + 이름 의미 텍스트(우) 2단 배치 -->
+                        <div class="identity-header-row">
+                            <div class="identity-logo-col">
+                                <img class="identity-logo-img" src="LOIND_LOGO.PNG" alt="LOIND Logo">
+                            </div>
+                            <!-- ※ 아래 이름 의미 설명은 임시 카피입니다 — 확정 카피로 교체해주세요. -->
+                            <div class="identity-text-col">
+                                <h2>LOVE BIND, LOIND</h2>
+                                <p class="identity-meaning-text">
+                                    로인드의 이름 뜻은 하나님 사랑, 이웃 사랑의 묶음을 의미합니다.
+                                </p>
+                                <!-- 추가 설명 문구가 필요하면 아래에 문단을 더 채워주세요 -->
+                                <p class="identity-meaning-text">
+                                    여기에 추가 설명 문구를 채워주세요.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+              </div>
+            </section>
+
+            <!-- [통합 레이어 1.5] LOIND 메인 콘텐츠 패널 -->
+            <div id="loindTopSection" class="loind-top-mega-section">
 
                 <!-- 1-2. 가치와 인터랙션 상세 콘텐츠 블록 -->
                 <div class="container loind-contents-block">
                     <div class="content-inner-box world-draw-wrap">
-                        
-                        <!-- 가치 기준 및 실행 스트림 -->
-                        <div class="loind-content-stream">
-                            <div class="stream-row">
-                                <div class="stream-text">
-                                    <h3>LOIND CORPORATION</h3>
-                                    <p>
-                                        우리는 <span class="txt-glow">"성경에 기초한 기준과 실행"</span> 이라는<br>
-                                        정체성과 차별성으로 우리가 살아가는 세상의 모습을 그려가고 있습니다.<br><br>
-                                        말씀으로 영감을 얻어 정체성과 차별성을 만들고,<br>
-                                        그것을 그저 생각과 다짐에 그치는 것이 아닌 <span class="txt-glow">사람이 살아내는 시스템</span>을<br>
-                                        만들어내는 일은 우리의 <span class="txt-glow">자부심이자, 존재 이유</span>입니다.
-                                    </p>
-                                </div>
-                                <div class="stream-right-column">
-                                    <div class="stream-img-box id-target-card">
-                                        <img src="about_1.png" alt="Execution System Image">
+
+                        <!-- 스냅 패널 2: 브랜드 선언문 + CORPORATION 스트림 -->
+                        <section class="content-snap-panel">
+                            <div class="loind-content-stream">
+                                <div class="stream-row">  
+                                    <div class="stream-text">
+                                        <h3>"우리는 말씀이 삶이 되는 시스템을 만듭니다"</h3>
+                                        <p>
+                                            우리는 <span class="txt-glow">"성경에 기초한 기준과 실행"</span> 이라는<br>
+                                            정체성과 차별성으로 우리가 살아가는 세상의 모습을 그려가고 있습니다.<br><br>
+                                            말씀으로 영감을 얻어 정체성과 차별성을 만들고,<br>
+                                            그것을 그저 생각과 다짐에 그치는 것이 아닌 <span class="txt-glow">사람이 살아내는 시스템</span>을<br>
+                                            만들어내는 일은 우리의 <span class="txt-glow">자부심이자, 존재 이유</span>입니다.
+                                        </p>
                                     </div>
-                                    <div class="stream-arrow-indicator">↓</div>
-                                                                    
-                                    <div class="stream-extracted-label">
-                                        <div class="label-top"><span>006 /</span><span>SYSTEM</span></div>
-                                        <span class="label-name">LOIND SYSTEM</span>
-                                        <div class="label-meta">
-                                            <span>ORIGIN:<br>PROCESS:<br>WEIGHT:</span>
-                                            <span>WORD / LIFE<br>FULLY LIVED<br>VARIABLE</span>
+                                    <div class="stream-right-column">
+                                        <div class="stream-img-box id-target-card">
+                                            <img src="about_1.png" alt= "Execution System Image">
                                         </div>
-                                        <span class="label-vertical">VALUE</span>
+                                        <div class="stream-arrow-indicator">↓</div>
+                                                                        
+                                        <div class="stream-extracted-label">
+                                            <div class="label-top"><span>006 /</span><span>SYSTEM</span></div>
+                                            <span class="label-name">LOIND SYSTEM</span>
+                                            <div class="label-meta">
+                                                <span>ORIGIN:<br>PROCESS:<br>WEIGHT:</span>
+                                                <span>WORD / LIFE<br>FULLY LIVED<br>VARIABLE</span>
+                                            </div>
+                                            <span class="label-vertical">VALUE</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
 
-                        <!-- 통합 하트 가치 인터랙션 스트림 -->
-                        <div class="loind-content-stream heart-demo">
-                            <div class="stream-row reverse-layout">
-                                
-                                <!-- 좌측 단: 인터랙션 스테이지 무대 -->
-                                <div class="interaction-stage" id="stage">
-                                    <div class="stage-grid" aria-hidden="true"></div>
-                                    <div class="labels-layer" id="labelsLayer" aria-label="선택 가능한 라벨"></div>
+                        <!-- 스냅 패널 3: 통합 하트 가치 인터랙션 스트림 -->
+                        <section class="content-snap-panel">
+                            <div class="loind-content-stream heart-demo">
+                                <div class="stream-row reverse-layout">
                                     
-                                    <div class="heart-stage">
-                                      <div class="heart-shell" id="heartShell">
-                                        <svg class="heart" viewBox="0 0 520 470" role="img" aria-label="선택한 라벨로 채워지는 하트">
-                                          <defs>
-                                            <clipPath id="heartClip">
-                                              <path d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
-                                            </clipPath>
-                                            <pattern id="heartPattern" width="205" height="96" patternUnits="userSpaceOnUse" patternTransform="rotate(-7)">
-                                              <rect id="patternBg" width="205" height="96" fill="#ecebe7" />
-                                              <text id="patternCode" x="15" y="31" font-family="Courier New, monospace" font-size="20" font-weight="700" fill="#141414">000 /</text>
-                                              <text id="patternName" x="15" y="58" font-family="Courier New, monospace" font-size="15" font-weight="700" fill="#141414">SELECT A LABEL</text>
-                                              <text x="15" y="79" font-family="Courier New, monospace" font-size="9" font-weight="700" fill="#141414">ORIGIN: HEART / PROCESS: LIVED</text>
-                                              <line x1="15" y1="87" x2="188" y2="87" stroke="#141414" stroke-width="1" opacity=".55" />
-                                            </pattern>
-                                            <filter id="paperGrain" x="-10%" y="-10%" width="120%" height="120%">
-                                              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise" />
-                                              <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise" />
-                                              <feComponentTransfer in="grayNoise" result="softNoise">
-                                                <feFuncA type="table" tableValues="0 0.08" />
-                                              </feComponentTransfer>
-                                              <feBlend in="SourceGraphic" in2="softNoise" mode="multiply" />
-                                            </filter>
-                                          </defs>
-                                          <g clip-path="url(#heartClip)">
-                                            <rect class="heart-fill" width="520" height="470" fill="url(#heartPattern)" />
-                                            <rect class="heart-sheen" width="520" height="470" fill="url(#heartPattern)" opacity="0" />
-                                          </g>
-                                          <path class="heart-outline" d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
-                                          <path class="heart-outline" d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
-                                          <path class="heart-inner-line" d="M260 399C219 356 113 283 79 209C50 145 77 79 147 75C199 72 235 107 260 151C285 107 321 72 373 75C443 79 470 145 441 209C407 283 301 356 260 399Z" />
-                                          <g class="heart-notes">
-                                            <text x="24" y="29">SYSTEM / 001</text>
-                                            <text x="408" y="29">STATE / ACTIVE</text>
-                                            <line x1="105" y1="27" x2="164" y2="61" />
-                                            <line x1="405" y1="35" x2="364" y2="68" />
-                                          </g>
-                                        </svg>
-                                        <div class="heart-shadow" aria-hidden="true"></div>
-                                      </div>
+                                    <!-- 좌측 단: 인터랙션 스테이지 무대 -->
+                                    <div class="interaction-stage" id="stage">
+                                        <div class="stage-grid" aria-hidden="true"></div>
+                                        <div class="labels-layer" id="labelsLayer" aria-label="선택 가능한 라벨"></div>
+                                        
+                                        <div class="heart-stage">
+                                          <div class="heart-shell" id="heartShell">
+                                            <svg class="heart" viewBox="0 0 520 470" role="img" aria-label="선택한 라벨로 채워지는 하트">
+                                              <defs>
+                                                <clipPath id="heartClip">
+                                                  <path d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
+                                                </clipPath>
+                                                <pattern id="heartPattern" width="205" height="96" patternUnits="userSpaceOnUse" patternTransform="rotate(-7)">
+                                                  <rect id="patternBg" width="205" height="96" fill="#ecebe7" />
+                                                  <text id="patternCode" x="15" y="31" font-family="Courier New, monospace" font-size="20" font-weight="700" fill="#141414">000 /</text>
+                                                  <text id="patternName" x="15" y="58" font-family="Courier New, monospace" font-size="15" font-weight="700" fill="#141414">SELECT A LABEL</text>
+                                                  <text x="15" y="79" font-family="Courier New, monospace" font-size="9" font-weight="700" fill="#141414">ORIGIN: HEART / PROCESS: LIVED</text>
+                                                  <line x1="15" y1="87" x2="188" y2="87" stroke="#141414" stroke-width="1" opacity=".55" />
+                                                </pattern>
+                                                <filter id="paperGrain" x="-10%" y="-10%" width="120%" height="120%">
+                                                  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise" />
+                                                  <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise" />
+                                                  <feComponentTransfer in="grayNoise" result="softNoise">
+                                                    <feFuncA type="table" tableValues="0 0.08" />
+                                                  </feComponentTransfer>
+                                                  <feBlend in="SourceGraphic" in2="softNoise" mode="multiply" />
+                                                </filter>
+                                              </defs>
+                                              <g clip-path="url(#heartClip)">
+                                                <rect class="heart-fill" width="520" height="470" fill="url(#heartPattern)" />
+                                                <rect class="heart-sheen" width="520" height="470" fill="url(#heartPattern)" opacity="0" />
+                                              </g>
+                                              <path class="heart-outline" d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
+                                              <path class="heart-outline" d="M260 430C219 386 93 302 54 217C16 135 56 48 143 43C198 40 239 73 260 110C281 73 322 40 377 43C464 48 504 135 466 217C427 302 301 386 260 430Z" />
+                                              <path class="heart-inner-line" d="M260 399C219 356 113 283 79 209C50 145 77 79 147 75C199 72 235 107 260 151C285 107 321 72 373 75C443 79 470 145 441 209C407 283 301 356 260 399Z" />
+                                              <g class="heart-notes">
+                                                <text x="24" y="29">SYSTEM / 001</text>
+                                                <text x="408" y="29">STATE / ACTIVE</text>
+                                                <line x1="105" y1="27" x2="164" y2="61" />
+                                                <line x1="405" y1="35" x2="364" y2="68" />
+                                              </g>
+                                            </svg>
+                                            <div class="heart-shadow" aria-hidden="true"></div>
+                                          </div>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <!-- 우측 단: 철학 설명 메인 텍스트 + 피드백 가치 보드 -->
-                                <div class="stream-text">
-                                    <p>
-                                        우리는 그 시스템을 경험한 사람들이<br> 
-                                        <span class="txt-glow">"말씀의 가치에 자연스럽게 다가가는 세상"</span>을 꿈꿉니다. <br><br>
-                                        이는 크리스천만이 아닌, <br> 
-                                        <span class="txt-glow">말씀의 가치를 경험하고 싶은 그 누구에게나</span> 열려 있습니다.
-                                    </p>
                                     
-                                    <div class="stage-caption" aria-live="polite">
-                                      <span class="caption-index" id="captionIndex">00</span>
-                                      <div>
-                                        <strong id="captionTitle">SELECT A LABEL</strong>
-                                        <p id="captionText">왼쪽 무대의 라벨을 선택하면 가치가 마음에 심기며 가동을 시작합니다.</p>
-                                      </div>
+                                    <!-- 우측 단: 철학 설명 메인 텍스트 + 피드백 가치 보드 -->
+                                    <div class="stream-text">
+                                        <p>
+                                            우리는 그 시스템을 경험한 사람들이<br> 
+                                            <span class="txt-glow">"말씀의 가치에 자연스럽게 다가가는 세상"</span>을 꿈꿉니다. <br><br>
+                                            이는 크리스천만이 아닌, <br> 
+                                            <span class="txt-glow">말씀의 가치를 경험하고 싶은 그 누구에게나</span> 열려 있습니다.
+                                        </p>
+                                        
+                                        <div class="stage-caption" aria-live="polite">
+                                          <span class="caption-index" id="captionIndex"></span>
+                                          <div>
+                                            <h3 id="captionTitle">누군가의 삶 안에서 <span class="txt-glow">말씀이 살아 움직이는 것</span>,<br>그것이 우리 <span class="txt-glow">LOIND가 소망하는 세상</span>입니다.</h3>
+                                          </div>
+                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
-
-                        <!-- 패널 최하단 마무리 엔딩 선언 -->
-                        <p class="world-bottom-statement">
-                            누군가의 삶 안에서 <span class="txt-glow">말씀이 살아 움직이는 것</span>,<br>
-                            그것이 우리 <span class="txt-glow">LOIND가 소망하는 세상</span>입니다.
-                        </p>
+                        </section>
 
                     </div>
                 </div>
@@ -750,8 +850,8 @@
                 </div>
             </div>
 
-            <!-- [통합 레이어 2] LOIND STANDARD 섹션 -->
-            <section id="standardSection">
+            <!-- [통합 레이어 2] LOIND PRINCIPLE 섹션 -->
+            <section id="principleSection">
               <div class="container">
                 <div class="content-inner-box">
                     <div class="scatter-stage-wrapper" id="scatterStage">
@@ -824,47 +924,86 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const subNavItems = document.querySelectorAll('.dot-nav-item');
-            const panels = document.querySelectorAll('#loindTopSection, #standardSection'); 
+            const panels = Array.from(document.querySelectorAll('#introSection, #identitySection, #loindTopSection, #principleSection'));
             const chrome = document.querySelector('.sticky-chrome');
 
-            let chromeObserver;
+            /* --- [카테고리 내비게이션] ---
+               방식: 옵저버의 교차 비율 계산 대신,
+               "화면 상단(헤더 바로 아래) 기준선을 이미 지나간 섹션 중 가장 마지막 섹션"을
+               현재 위치로 판단하는 단순한 스크롤 기반 방식으로 재작성.
+               섹션들이 동시에 살짝 겹쳐 보이는 순간에도 항상 하나의 답만 나오도록 보장됨. */
+
+            function setActiveNav(targetId) {
+                subNavItems.forEach(item => {
+                    item.classList.toggle('active', item.getAttribute('data-target') === targetId);
+                });
+            }
+
+            function updateActiveSection() {
+                if (!panels.length) return;
+                const refY = chrome.offsetHeight + 2; // 헤더 바로 아래 기준선
+                let currentId = panels[0].id;
+                for (const panel of panels) {
+                    if (panel.getBoundingClientRect().top <= refY) {
+                        currentId = panel.id;
+                    } else {
+                        break;
+                    }
+                }
+                setActiveNav(currentId);
+            }
+
             function syncChromeHeight() {
                 const h = chrome.offsetHeight;
                 document.documentElement.style.setProperty('--chrome-h', h + 'px');
-                initSectionObserver(h);
+                updateActiveSection();
             }
 
-            function initSectionObserver(chromeH) {
-                if (chromeObserver) chromeObserver.disconnect();
-                chromeObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const id = entry.target.id;
-                            subNavItems.forEach(item => {
-                                item.classList.toggle('active', item.getAttribute('data-target') === id);
-                            });
-                        }
-                    });
-                }, {
-                    root: null,
-                    rootMargin: `-${chromeH}px 0px -45% 0px`,
-                    threshold: 0
+            let ticking = false;
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                window.requestAnimationFrame(() => {
+                    updateActiveSection();
+                    ticking = false;
                 });
-                panels.forEach(panel => chromeObserver.observe(panel));
             }
 
             syncChromeHeight();
             window.addEventListener('resize', syncChromeHeight);
             window.addEventListener('load', syncChromeHeight);
+            window.addEventListener('scroll', onScroll, { passive: true });
 
             subNavItems.forEach(item => {
                 item.addEventListener('click', () => {
                     const targetId = item.getAttribute('data-target');
                     const target = document.getElementById(targetId);
-                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (target) {
+                        // 스크롤 애니메이션이 끝나기 전에도 클릭한 점이 바로 활성 표시되도록 즉시 반영
+                        setActiveNav(targetId);
+
+                        // 이동 중에는 마우스가 그대로 있어 라벨이 화면에 계속 떠 있을 수 있으므로,
+                        // 스크롤이 끝날 때까지 라벨을 숨겼다가 도착 후 다시 정상 표시되게 함
+                        const dotNav = document.getElementById('dotNav');
+                        dotNav.classList.add('is-scrolling');
+                        let settled = false;
+                        const finishScroll = () => {
+                            if (settled) return;
+                            settled = true;
+                            dotNav.classList.remove('is-scrolling');
+                            window.removeEventListener('scrollend', finishScroll);
+                        };
+                        if ('onscrollend' in window) {
+                            window.addEventListener('scrollend', finishScroll, { once: true });
+                        }
+                        setTimeout(finishScroll, 900); // 브라우저 호환 안전장치
+
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 });
             });
 
+            /* --- [헤더 자동 숨김/노출] 기존 로직 유지 --- */
             const SHOW_THRESHOLD = 80;
             let lastScrollY = window.scrollY;
             let shouldBeHidden = false; 
@@ -944,7 +1083,6 @@
             const patternCode = document.getElementById('patternCode');
             const captionIndex = document.getElementById('captionIndex');
             const captionTitle = document.getElementById('captionTitle');
-            const captionText = document.getElementById('captionText');
 
             function makeLabel(label, index) {
                 const button = document.createElement('button');
@@ -1031,7 +1169,6 @@
                     ], { duration: 640, easing: 'cubic-bezier(.2,.8,.2,1)' });
                     captionIndex.textContent = label.id;
                     captionTitle.textContent = label.name;
-                    captionText.textContent = label.note;
                     document.documentElement.style.setProperty('--active', label.color);
                 }, 610);
             }
