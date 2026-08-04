@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -26,26 +25,22 @@
       ul {
         list-style: none;
       }
-
       .container {
         max-width: 1240px;
         margin: 0 auto;
         padding: 0 20px;
       }
-
       /* --- Header (서비스 페이지와 100% 동일하게 복원) --- */
       .header {
         background-color: #fff;
         padding: 35px 0;
         border-bottom: 1px solid #f0f0f0;
       }
-
       .header .container {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-
       .logo {
         font-size: 26px;
         font-weight: 800;
@@ -55,16 +50,13 @@
         gap: 8px;
         cursor: pointer;
       }
-
       .logo::before {
         content: '';
       }
-
       .nav {
         display: flex;
         align-items: center;
       }
-
       .nav a {
         margin-left: 45px;
         font-size: 15px;
@@ -72,12 +64,10 @@
         color: #555;
         transition: color 0.3s;
       }
-
       .nav a:hover, .nav a.active {
         color: #000;
         font-weight: 700;
       }
-
       /* --- 1. Top Featured Content (상단 메인 빅 배너) --- */
       .featured-section {
         padding: 60px 0 40px 0;
@@ -135,51 +125,27 @@
       .view-featured-detail:hover {
         opacity: 0.7;
       }
-
       /* --- 2. Filter Tab Area --- */
       .filter-section {
         border-top: 1px solid #f0f0f0;
         padding-top: 40px;
         margin-bottom: 30px;
       }
-      .mainCategory {
+      #sub {
         display: flex;
         gap: 28px;
-        margin-bottom: 24px;
       }
-      .mainCategory li {
+      #sub li {
         font-size: 18px;
         font-weight: 500;
         color: #aaa;
         cursor: pointer;
         transition: color 0.2s;
       }
-      .mainCategory li.active {
+      #sub li.on {
         color: #111;
         font-weight: 800;
       }
-      #sub {
-        display: flex;
-        gap: 10px;
-      }
-      #sub li {
-        font-size: 11px;
-        color: #555;
-        background: #ffffff;
-        border: 1px solid #eaeaea;
-        padding: 8px 16px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.2s;
-      }
-      #sub li.on {
-        background: rgba(85, 51, 255, 0.08);
-        color: #5533ff;
-        border-color: transparent;
-        font-weight: 700;
-      }
-
       /* --- 3. Main Layout Grid (2단 구조 피드) --- */
       .layout-grid {
         display: grid;
@@ -187,7 +153,6 @@
         gap: 60px;
         padding-bottom: 100px;
       }
-
       /* Left: News List */
       #storyBoard {
         display: flex;
@@ -251,7 +216,6 @@
         height: 100%;
         object-fit: cover;
       }
-
       /* Right: Sidebar */
       .sidebar {
         display: flex;
@@ -302,7 +266,6 @@
         color: #5533ff;
         border-color: transparent;
       }
-
       .empty {
         text-align: center;
         padding: 80px 0;
@@ -310,7 +273,6 @@
         font-size: 14px;
         width: 100%;
       }
-
       /* --- Modal System --- */
       .modal_overlay {
         position: fixed;
@@ -364,53 +326,44 @@
         font-size: 14px;
         word-break: keep-all;
       }
-
       /* --- Footer (다른 페이지와 동일 규격) --- */
       .footer {
         background-color: #0b0b0b;
         color: #fff;
         padding: 100px 0;
       }
-
       .footer-container {
         display: flex;
         justify-content: space-between;
       }
-
       .footer-left {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         min-height: 140px;
       }
-
       .footer-logo {
         font-size: 32px;
         font-weight: 800;
         margin-bottom: 15px;
       }
-
       .footer-copy {
         font-size: 14px;
         color: #666;
       }
-
       .footer-right {
         display: flex;
       }
-
       .footer-links {
         margin-left: 100px;
         text-align: left;
       }
-
       .footer-links h4 {
         font-size: 15px;
         color: #aaa;
         margin-bottom: 22px;
         font-weight: 700;
       }
-
       .footer-links a {
         display: block;
         font-size: 14px;
@@ -418,21 +371,17 @@
         margin-bottom: 14px;
         transition: color 0.2s;
       }
-
       .footer-links a:hover {
         color: #fff;
       }
-
       .footer-link-cols {
         display: flex;
         gap: 60px;
       }
-
       .footer-link-col {
         display: flex;
         flex-direction: column;
       }
-
       /* --- Responsive --- */
       @media (max-width: 960px) {
         .featured-grid { grid-template-columns: 1fr; gap: 20px; }
@@ -445,6 +394,7 @@
         .nav a { margin: 0 15px; }
         #storyBoard li { gap: 15px; }
         #storyBoard li .list-img { width: 110px; }
+        #sub { flex-wrap: wrap; }
         .footer-container { flex-direction: column; gap: 40px; }
         .footer-right { margin-left: 0; justify-content: space-between; }
         .footer-links { margin-left: 0; }
@@ -453,7 +403,6 @@
     </style>
   </head>
   <body>
-
     <header class="header">
         <div class="container">
             <div class="logo" onclick="location.href='index.html'">LOIND</div>
@@ -467,30 +416,22 @@
             </nav>
         </div>
     </header>
-
     <section class="featured-section">
       <div class="container">
         <div class="featured-grid" id="featuredSection">
           </div>
       </div>
     </section>
-
     <div class="container">
       <div class="filter-section">
-        <ul class="mainCategory">
-          <li id="business" class="active">비즈니스</li>
-          <li id="impact">임팩트</li>
-        </ul>
         <ul id="sub"></ul>
       </div>
     </div>
-
     <div class="container">
       <div class="layout-grid">
         <main>
           <ul id="storyBoard"></ul>
         </main>
-
         <aside class="sidebar">
           <div class="side-box">
             <p class="side-title">추천 소식</p>
@@ -505,13 +446,11 @@
         </aside>
       </div>
     </div>
-
     <div id="modal" class="modal_overlay">
       <div class="modal_content">
         <div class="modal_body"></div>
       </div>
     </div>
-
     <footer class="footer">
         <div class="container footer-container">
             <div class="footer-left">
@@ -544,7 +483,6 @@
             </div>
         </div>
     </footer>
-
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
@@ -554,7 +492,6 @@
         query,
         orderBy,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
       const firebaseConfig = {
         apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
         authDomain: "loind-472cd.firebaseapp.com",
@@ -564,41 +501,29 @@
         appId: "1:405998534289:web:0f861bc822e1ea5391c930",
         measurementId: "G-5B5MM51YH2",
       };
-
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-
       let storyData = {};
       let allFlatStories = [];
-
-      const subData = {
-        business: ["PLATFORM", "COMMERCE"],
-        impact: ["SOCIAL IMPACT", "CULTURE"],
-      };
-
+      const categories = ["Creative Agency", "Creative Studio: LODN", "Impact"];
       const sub = document.querySelector("#sub");
       const storyBoard = document.querySelector("#storyBoard");
-      const mainCategory = document.querySelectorAll(".mainCategory li");
       const modal = document.querySelector("#modal");
       const modalBody = document.querySelector(".modal_body");
       const featuredSection = document.querySelector("#featuredSection");
       const recommendList = document.querySelector("#recommendList");
       const tagCloud = document.querySelector("#tagCloud");
-
       async function loadStories() {
         storyBoard.innerHTML = "<li class='empty'>데이터를 불러오는 중...</li>";
         try {
           const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
           const querySnapshot = await getDocs(q);
-
           storyData = {};
           allFlatStories = [];
-
           querySnapshot.forEach((doc) => {
             const item = doc.data();
             const cate = item.category;
-
-            let formattedDate = "2026.05.27"; 
+            let formattedDate = "2026.05.27";
             if(item.createdAt) {
                const d = item.createdAt.toDate ? item.createdAt.toDate() : new Date(item.createdAt);
                const yyyy = d.getFullYear();
@@ -606,25 +531,21 @@
                const dd = String(d.getDate()).padStart(2, '0');
                formattedDate = `${yyyy}.${mm}.${dd}`;
             }
-            
-            const structuredItem = { ...item, id: doc.id, dateText: formattedDate };
 
+            const structuredItem = { ...item, id: doc.id, dateText: formattedDate };
             if (!storyData[cate]) storyData[cate] = [];
             storyData[cate].push(structuredItem);
             allFlatStories.push(structuredItem);
           });
-
           renderGlobalComponents();
-          renderSub("business");
+          renderSub();
         } catch (e) {
           console.error("데이터 로드 실패: ", e);
           storyBoard.innerHTML = "<li class='empty'>서버 연결 오류가 발생했습니다.</li>";
         }
       }
-
       function renderGlobalComponents() {
         if (allFlatStories.length === 0) return;
-
         const topStory = allFlatStories[0];
         featuredSection.innerHTML = `
           <div class="featured-img-box"><img src="${topStory.img}" alt="${topStory.title}"></div>
@@ -635,11 +556,9 @@
             <div class="view-featured-detail" data-id="${topStory.id}">스토리 보기 →</div>
           </div>
         `;
-
         featuredSection.querySelector('.view-featured-detail').addEventListener('click', () => {
           openModalHandler(topStory);
         });
-
         recommendList.innerHTML = "";
         allFlatStories.slice(0, 4).forEach(item => {
           const li = document.createElement("li");
@@ -647,8 +566,7 @@
           li.addEventListener('click', () => openModalHandler(item));
           recommendList.appendChild(li);
         });
-
-        const tags = ["#플랫폼테크", "#커머스", "#소셜임팩트", "#컬처", "#브랜딩", "#AI인프라", "#글로벌"];
+        const tags = ["#크리에이티브에이전시", "#크리에이티브스튜디오", "#임팩트", "#브랜딩", "#AI인프라", "#글로벌"];
         tagCloud.innerHTML = "";
         tags.forEach(t => {
           const span = document.createElement("span");
@@ -657,15 +575,13 @@
           tagCloud.appendChild(span);
         });
       }
-
-      function renderSub(type) {
+      function renderSub() {
         sub.innerHTML = "";
-        subData[type].forEach((item) => {
+        categories.forEach((item) => {
           const li = document.createElement("li");
           li.innerText = item;
           sub.appendChild(li);
         });
-
         const firstLi = sub.querySelector("li");
         if (firstLi) {
           sub.querySelectorAll("li").forEach((l) => l.classList.remove("on"));
@@ -673,11 +589,9 @@
           renderStoryBoard(firstLi.innerText);
         }
       }
-
       function renderStoryBoard(subName) {
         storyBoard.innerHTML = "";
         const currentList = storyData[subName] || [];
-
         if (currentList.length > 0) {
           currentList.forEach((item) => {
             const li = document.createElement("li");
@@ -699,7 +613,6 @@
           storyBoard.innerHTML = `<li class='empty'>'${subName}' 카테고리에 등록된 스토리가 없습니다.</li>`;
         }
       }
-
       function openModalHandler(targetData) {
         modalBody.innerHTML = `
           <img src="${targetData.img}" alt="${targetData.title}">
@@ -712,15 +625,6 @@
         modal.classList.add("active");
         document.body.style.overflow = "hidden";
       }
-
-      mainCategory.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          mainCategory.forEach((li) => li.classList.remove("active"));
-          btn.classList.add("active");
-          renderSub(btn.id);
-        });
-      });
-
       sub.addEventListener("click", (e) => {
         if (e.target.tagName === "LI") {
           sub.querySelectorAll("li").forEach((li) => li.classList.remove("on"));
@@ -728,22 +632,18 @@
           renderStoryBoard(e.target.innerText);
         }
       });
-
       const closeModal = () => {
         modal.classList.remove("active");
         document.body.style.overflow = "auto";
       };
-
       modal.addEventListener("click", (e) => {
         if (e.target === modal) closeModal();
       });
-
       window.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && modal.classList.contains("active")) {
           closeModal();
         }
       });
-
       loadStories();
     </script>
   </body>
