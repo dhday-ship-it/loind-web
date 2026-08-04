@@ -17,7 +17,6 @@
         --soft-gray: #f5f5f7;
         --ease: cubic-bezier(0.25, 1, 0.5, 1);
       }
-
       * {
         margin: 0;
         padding: 0;
@@ -31,7 +30,6 @@
         display: none; /* 인증 전 숨김 */
         line-height: 1.5;
       }
-
       /* [Header] Nav Links Added */
       header {
         position: fixed;
@@ -58,7 +56,6 @@
         letter-spacing: 3px;
         cursor: pointer;
       }
-
       nav {
         display: flex;
         gap: 25px;
@@ -77,7 +74,6 @@
       nav a.active {
         color: var(--accent);
       }
-
       .nav-meta {
         font-size: 10px;
         font-weight: 800;
@@ -87,7 +83,6 @@
         padding: 3px 8px;
         border-radius: 4px;
       }
-
       /* Hero Section */
       main {
         max-width: 800px;
@@ -110,7 +105,6 @@
         text-transform: uppercase;
         letter-spacing: 1px;
       }
-
       /* Editorial Form */
       .editor-container {
         display: grid;
@@ -118,7 +112,6 @@
         gap: 45px;
         margin-bottom: 120px;
       }
-
       .input-block {
         position: relative;
         border-bottom: 1px solid var(--border);
@@ -128,7 +121,6 @@
       .input-block:focus-within {
         border-bottom-color: var(--accent);
       }
-
       .input-block label {
         display: block;
         font-size: 11px;
@@ -138,7 +130,6 @@
         margin-bottom: 12px;
         letter-spacing: 1.5px;
       }
-
       input,
       select,
       textarea {
@@ -164,7 +155,6 @@
         font-size: 16px;
         line-height: 1.8;
       }
-
       /* Asset Upload with Underlined URL */
       .asset-group {
         display: flex;
@@ -192,7 +182,6 @@
       #new_img_file {
         display: none;
       }
-
       /* Action Buttons */
       .btn-primary {
         background: var(--accent);
@@ -217,7 +206,6 @@
         transform: none;
         cursor: not-allowed;
       }
-
       /* Archive (List) */
       .archive-header {
         display: flex;
@@ -232,7 +220,6 @@
         font-weight: 800;
         letter-spacing: -1px;
       }
-
       .archive-item {
         display: grid;
         grid-template-columns: 80px 1fr auto;
@@ -244,7 +231,6 @@
       .archive-item:hover {
         opacity: 0.6;
       }
-
       .archive-item img {
         width: 60px;
         height: 60px;
@@ -264,7 +250,6 @@
         font-weight: 700;
         text-transform: uppercase;
       }
-
       .archive-actions {
         display: flex;
         gap: 20px;
@@ -281,7 +266,6 @@
       .del-btn {
         color: #ff3b30 !important;
       }
-
       @media (max-width: 600px) {
         header {
           padding: 0 20px;
@@ -316,29 +300,24 @@
         <a href="contact.html">CONTACT</a>
       </nav>
     </header>
-
     <main>
       <section class="hero">
         <h1>Admin.</h1>
         <p>Manage and Curate Brand Content</p>
       </section>
-
       <section class="editor-container">
         <div class="input-block">
           <label>Classification</label>
           <select id="new_category">
-            <option value="PLATFORM">PLATFORM</option>
-            <option value="COMMERCE">COMMERCE</option>
-            <option value="SOCIAL IMPACT">SOCIAL IMPACT</option>
-            <option value="CULTURE">CULTURE</option>
+            <option value="Creative Agency">Creative Agency</option>
+            <option value="Creative Studio: LODN">Creative Studio: LODN</option>
+            <option value="Impact">Impact</option>
           </select>
         </div>
-
         <div class="input-block">
           <label>Story Title</label>
           <input type="text" id="new_title" placeholder="제목을 입력하세요" />
         </div>
-
         <div class="asset-group">
           <label
             style="
@@ -364,12 +343,10 @@
             />
           </div>
         </div>
-
         <div class="input-block">
           <label>Short Summary</label>
           <input type="text" id="new_text" placeholder="한 줄 요약 문구" />
         </div>
-
         <div class="input-block">
           <label>Detailed Narrative</label>
           <textarea
@@ -377,7 +354,6 @@
             placeholder="이야기를 상세히 들려주세요..."
           ></textarea>
         </div>
-
         <div>
           <button id="add_btn" class="btn-primary">PUBLISH STORY</button>
           <button
@@ -398,7 +374,6 @@
           </button>
         </div>
       </section>
-
       <section class="archive-section">
         <div class="archive-header">
           <h2>Archive.</h2>
@@ -406,7 +381,6 @@
         <div id="story_list"></div>
       </section>
     </main>
-
     <script type="module">
       const masterPassword = "1234";
       if (prompt("암호를 입력하세요.") === masterPassword) {
@@ -415,7 +389,6 @@
         alert("ACCESS DENIED");
         location.href = "story.html";
       }
-
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
         getFirestore,
@@ -434,7 +407,6 @@
         uploadBytes,
         getDownloadURL,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-
       const firebaseConfig = {
         apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
         authDomain: "loind-472cd.firebaseapp.com",
@@ -444,18 +416,15 @@
         appId: "1:405998534289:web:0f861bc822e1ea5391c930",
         measurementId: "G-5B5MM51YH2",
       };
-
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
       const storage = getStorage(app);
-
       const listContainer = document.querySelector("#story_list");
       const addBtn = document.querySelector("#add_btn");
       const cancelBtn = document.querySelector("#cancel_edit");
       const fileInput = document.querySelector("#new_img_file");
       const fileStatus = document.querySelector("#file_status");
       let editId = null;
-
       fileInput.onchange = () => {
         if (fileInput.files[0])
           fileStatus.innerText = `READY: ${fileInput.files[0].name.substring(
@@ -463,7 +432,6 @@
             15
           )}...`;
       };
-
       async function fetchStories() {
         listContainer.innerHTML =
           "<p style='color:#d2d2d7; font-size:14px;'>Loading archive...</p>";
@@ -492,7 +460,6 @@
           listContainer.appendChild(div);
         });
       }
-
       addBtn.onclick = async () => {
         const file = fileInput.files[0];
         let url = document.querySelector("#new_img_url").value;
@@ -525,7 +492,6 @@
           addBtn.disabled = false;
         }
       };
-
       listContainer.onclick = async (e) => {
         const id = e.target.dataset.id;
         if (!id) return;
@@ -550,7 +516,6 @@
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
       };
-
       cancelBtn.onclick = () => location.reload();
       fetchStories();
     </script>
