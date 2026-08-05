@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -24,11 +24,103 @@
         -webkit-font-smoothing: antialiased;
       }
       body {
-        font-family: "Pretendard", -apple-system, sans-serif;
+        font-family:
+          "Pretendard",
+          -apple-system,
+          sans-serif;
         background: var(--bg);
         color: var(--accent);
-        display: none; /* 인증 전 숨김 */
         line-height: 1.5;
+      }
+      .admin-content {
+        display: none; /* 로그인 전 숨김 */
+      }
+      /* Login Screen */
+      .login-screen {
+        position: fixed;
+        inset: 0;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      .login-box {
+        width: 100%;
+        max-width: 380px;
+        padding: 0 30px;
+      }
+      .login-box h1 {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 8px;
+      }
+      .login-box p {
+        font-size: 13px;
+        color: var(--sub-text);
+        margin-bottom: 48px;
+        font-weight: 500;
+      }
+      .login-field {
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 32px;
+        padding-bottom: 10px;
+        transition: border-color 0.2s;
+      }
+      .login-field:focus-within {
+        border-bottom-color: var(--accent);
+      }
+      .login-field label {
+        display: block;
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--sub-text);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+      }
+      .login-field input {
+        width: 100%;
+        border: none;
+        background: transparent;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--accent);
+        padding: 4px 0;
+        outline: none;
+      }
+      .login-field input::placeholder {
+        color: #d2d2d7;
+      }
+      .login-error {
+        font-size: 12px;
+        color: #ff3b30;
+        font-weight: 600;
+        margin-bottom: 20px;
+        min-height: 18px;
+      }
+      .login-btn {
+        width: 100%;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 18px;
+        border-radius: 40px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        letter-spacing: 1px;
+      }
+      .login-btn:hover {
+        filter: brightness(1.2);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+      .login-btn:disabled {
+        background: #d2d2d7;
+        cursor: not-allowed;
+        box-shadow: none;
       }
       /* [Header] Nav Links Added */
       header {
@@ -291,96 +383,129 @@
     </style>
   </head>
   <body>
-    <header>
-      <div class="brand" onclick="location.href='story.html'">LOIND</div>
-      <nav>
-        <a href="about.html">ABOUT</a>
-        <a href="service.html">SERVICE</a>
-        <a href="story.html" class="active">STORY</a>
-        <a href="contact.html">CONTACT</a>
-      </nav>
-    </header>
-    <main>
-      <section class="hero">
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+      <div class="login-box">
         <h1>Admin.</h1>
-        <p>Manage and Curate Brand Content</p>
-      </section>
-      <section class="editor-container">
-        <div class="input-block">
-          <label>Classification</label>
-          <select id="new_category">
-            <option value="Creative Agency">Creative Agency</option>
-            <option value="Creative Studio: LODN">Creative Studio: LODN</option>
-            <option value="Impact">Impact</option>
-          </select>
+        <p>LOIND Content Management</p>
+        <div class="login-field">
+          <label>Password</label>
+          <input
+            type="password"
+            id="login_pw"
+            placeholder="비밀번호를 입력하세요"
+          />
         </div>
-        <div class="input-block">
-          <label>Story Title</label>
-          <input type="text" id="new_title" placeholder="제목을 입력하세요" />
-        </div>
-        <div class="asset-group">
-          <label
-            style="
-              font-size: 11px;
-              font-weight: 800;
-              color: var(--sub-text);
-              letter-spacing: 1.5px;
-            "
-            >VISUAL ASSET</label
-          >
-          <div
-            class="asset-box"
-            onclick="document.getElementById('new_img_file').click()"
-          >
-            <p id="file_status">SELECT LOCAL IMAGE</p>
-            <input type="file" id="new_img_file" accept="image/*" />
+        <p class="login-error" id="login_error"></p>
+        <button class="login-btn" id="login_btn">LOGIN</button>
+      </div>
+    </div>
+    <div class="admin-content" id="adminContent">
+      <header>
+        <div class="brand" onclick="location.href = 'story.html'">LOIND</div>
+        <nav>
+          <a href="about.html">ABOUT</a>
+          <a href="service.html">SERVICE</a>
+          <a href="story.html" class="active">STORY</a>
+          <a href="contact.html">CONTACT</a>
+        </nav>
+      </header>
+      <main>
+        <section class="hero">
+          <h1>Admin.</h1>
+          <p>Manage and Curate Brand Content</p>
+        </section>
+        <section class="editor-container">
+          <div class="input-block">
+            <label>Classification</label>
+            <select id="new_category">
+              <option value="Creative Agency">Creative Agency</option>
+              <option value="Creative Studio: LODN">
+                Creative Studio: LODN
+              </option>
+              <option value="Impact">Impact</option>
+            </select>
           </div>
           <div class="input-block">
+            <label>Story Title</label>
+            <input type="text" id="new_title" placeholder="제목을 입력하세요" />
+          </div>
+          <div class="asset-group">
+            <label
+              style="
+                font-size: 11px;
+                font-weight: 800;
+                color: var(--sub-text);
+                letter-spacing: 1.5px;
+              "
+              >VISUAL ASSET</label
+            >
+            <div
+              class="asset-box"
+              onclick="document.getElementById('new_img_file').click()"
+            >
+              <p id="file_status">SELECT LOCAL IMAGE</p>
+              <input type="file" id="new_img_file" accept="image/*" />
+            </div>
+            <div class="input-block">
+              <input
+                type="text"
+                id="new_img_url"
+                placeholder="또는 이미지 URL 주소를 입력하세요"
+              />
+            </div>
+          </div>
+          <div class="input-block">
+            <label>Short Summary</label>
             <input
               type="text"
-              id="new_img_url"
-              placeholder="또는 이미지 URL 주소를 입력하세요"
+              id="new_text"
+              placeholder="한 줄 요약 문구 (상단 피처드 소개글)"
             />
           </div>
-        </div>
-        <div class="input-block">
-          <label>Short Summary</label>
-          <input type="text" id="new_text" placeholder="한 줄 요약 문구" />
-        </div>
-        <div class="input-block">
-          <label>Detailed Narrative</label>
-          <textarea
-            id="new_detail"
-            placeholder="이야기를 상세히 들려주세요..."
-          ></textarea>
-        </div>
-        <div>
-          <button id="add_btn" class="btn-primary">PUBLISH STORY</button>
-          <button
-            id="cancel_edit"
-            style="
-              display: none;
-              margin-left: 25px;
-              background: none;
-              border: none;
-              color: var(--sub-text);
-              cursor: pointer;
-              font-size: 14px;
-              font-weight: 700;
-              text-decoration: underline;
-            "
-          >
-            Cancel Edit
-          </button>
-        </div>
-      </section>
-      <section class="archive-section">
-        <div class="archive-header">
-          <h2>Archive.</h2>
-        </div>
-        <div id="story_list"></div>
-      </section>
-    </main>
+          <div class="input-block">
+            <label>Brief View — 간략보기 내용</label>
+            <textarea
+              id="new_summary"
+              placeholder="간략보기 탭에 표시될 내용을 입력하세요..."
+            ></textarea>
+          </div>
+          <div class="input-block">
+            <label>Detailed Narrative — 자세히보기 내용</label>
+            <textarea
+              id="new_detail"
+              placeholder="자세히보기 탭에 표시될 상세 내용을 입력하세요..."
+            ></textarea>
+          </div>
+          <div>
+            <button id="add_btn" class="btn-primary">PUBLISH STORY</button>
+            <button
+              id="cancel_edit"
+              style="
+                display: none;
+                margin-left: 25px;
+                background: none;
+                border: none;
+                color: var(--sub-text);
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 700;
+                text-decoration: underline;
+              "
+            >
+              Cancel Edit
+            </button>
+          </div>
+        </section>
+        <section class="archive-section">
+          <div class="archive-header">
+            <h2>Archive.</h2>
+          </div>
+          <div id="story_list"></div>
+        </section>
+      </main>
+    </div>
+    <!-- /admin-content -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
@@ -419,35 +544,41 @@
       const auth = getAuth(app);
 
       /*
-       * Firestore 규칙의 admin() 판정을 받기 위한
-       * Firebase Authentication 실제 로그인
+       * 로그인 화면 처리
        */
-      try {
-        const adminEmail = "dhday@loind.com";
-        const adminPassword = prompt(
-          `${adminEmail} 관리자 계정의 Firebase 비밀번호를 입력하세요.`
-        );
+      const loginScreen = document.getElementById("loginScreen");
+      const loginBtn = document.getElementById("login_btn");
+      const loginPw = document.getElementById("login_pw");
+      const loginError = document.getElementById("login_error");
+      const adminContent = document.getElementById("adminContent");
 
-        if (!adminPassword) {
-          throw new Error("비밀번호가 입력되지 않았습니다.");
+      async function tryLogin() {
+        const pw = loginPw.value;
+        if (!pw) {
+          loginError.textContent = "비밀번호를 입력하세요.";
+          return;
         }
-
-        await signInWithEmailAndPassword(
-          auth,
-          adminEmail,
-          adminPassword
-        );
-
-        document.body.style.display = "block";
-      } catch (error) {
-        console.error("Firebase 관리자 로그인 실패:", error);
-        alert(
-          "관리자 로그인에 실패했습니다.\n" +
-          (error.code || error.message)
-        );
-        location.href = "story.html";
-        throw error;
+        loginBtn.disabled = true;
+        loginBtn.textContent = "LOGGING IN...";
+        loginError.textContent = "";
+        try {
+          await signInWithEmailAndPassword(auth, "dhday@loind.com", pw);
+          loginScreen.style.display = "none";
+          adminContent.style.display = "block";
+          fetchStories();
+        } catch (error) {
+          loginError.textContent = "비밀번호가 올바르지 않습니다.";
+          loginBtn.disabled = false;
+          loginBtn.textContent = "LOGIN";
+          loginPw.value = "";
+          loginPw.focus();
+        }
       }
+
+      loginBtn.addEventListener("click", tryLogin);
+      loginPw.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") tryLogin();
+      });
       const listContainer = document.querySelector("#story_list");
       const addBtn = document.querySelector("#add_btn");
       const cancelBtn = document.querySelector("#cancel_edit");
@@ -458,7 +589,7 @@
         if (fileInput.files[0])
           fileStatus.innerText = `READY: ${fileInput.files[0].name.substring(
             0,
-            15
+            15,
           )}...`;
       };
       async function fetchStories() {
@@ -466,7 +597,7 @@
           "<p style='color:#d2d2d7; font-size:14px;'>Loading archive...</p>";
         const q = query(
           collection(db, "stories"),
-          orderBy("createdAt", "desc")
+          orderBy("createdAt", "desc"),
         );
         const snapshot = await getDocs(q);
         listContainer.innerHTML = "";
@@ -507,6 +638,7 @@
             title,
             img: url,
             text: document.querySelector("#new_text").value,
+            summary: document.querySelector("#new_summary").value,
             detail: document.querySelector("#new_detail").value,
             createdAt: new Date(),
           };
@@ -538,6 +670,7 @@
           document.querySelector("#new_title").value = item.title;
           document.querySelector("#new_img_url").value = item.img;
           document.querySelector("#new_text").value = item.text;
+          document.querySelector("#new_summary").value = item.summary || "";
           document.querySelector("#new_detail").value = item.detail;
           editId = id;
           addBtn.innerText = "UPDATE STORY";
@@ -546,7 +679,6 @@
         }
       };
       cancelBtn.onclick = () => location.reload();
-      fetchStories();
     </script>
   </body>
 </html>
