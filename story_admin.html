@@ -382,13 +382,6 @@
       </section>
     </main>
     <script type="module">
-      const masterPassword = "1234";
-      if (prompt("암호를 입력하세요.") === masterPassword) {
-        document.body.style.display = "block";
-      } else {
-        alert("ACCESS DENIED");
-        location.href = "story.html";
-      }
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
         getFirestore,
@@ -407,6 +400,10 @@
         uploadBytes,
         getDownloadURL,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
       const firebaseConfig = {
         apiKey: "AIzaSyBnJ_bgRb51sUUDlatipuREsfrDcoTQy1U",
         authDomain: "loind-472cd.firebaseapp.com",
@@ -419,6 +416,38 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
       const storage = getStorage(app);
+      const auth = getAuth(app);
+
+      /*
+       * Firestore 규칙의 admin() 판정을 받기 위한
+       * Firebase Authentication 실제 로그인
+       */
+      try {
+        const adminEmail = "dhday@loind.com";
+        const adminPassword = prompt(
+          `${adminEmail} 관리자 계정의 Firebase 비밀번호를 입력하세요.`
+        );
+
+        if (!adminPassword) {
+          throw new Error("비밀번호가 입력되지 않았습니다.");
+        }
+
+        await signInWithEmailAndPassword(
+          auth,
+          adminEmail,
+          adminPassword
+        );
+
+        document.body.style.display = "block";
+      } catch (error) {
+        console.error("Firebase 관리자 로그인 실패:", error);
+        alert(
+          "관리자 로그인에 실패했습니다.\n" +
+          (error.code || error.message)
+        );
+        location.href = "story.html";
+        throw error;
+      }
       const listContainer = document.querySelector("#story_list");
       const addBtn = document.querySelector("#add_btn");
       const cancelBtn = document.querySelector("#cancel_edit");
