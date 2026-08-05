@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -10,7 +10,13 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui,
+          Roboto,
+          sans-serif;
       }
       body {
         background-color: #ffffff;
@@ -51,7 +57,7 @@
         cursor: pointer;
       }
       .logo::before {
-        content: '';
+        content: "";
       }
       .nav {
         display: flex;
@@ -64,7 +70,8 @@
         color: #555;
         transition: color 0.3s;
       }
-      .nav a:hover, .nav a.active {
+      .nav a:hover,
+      .nav a.active {
         color: #000;
         font-weight: 700;
       }
@@ -189,21 +196,7 @@
       #storyBoard li:hover h4 {
         color: #5533ff;
       }
-      #storyBoard li .list-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 15px;
-      }
-      #storyBoard li .tag-node {
-        font-size: 11px;
-        font-weight: 500;
-        color: #555;
-        background: #ffffff;
-        border: 1px solid #eaeaea;
-        padding: 6px 12px;
-        border-radius: 6px;
-      }
+
       #storyBoard li .list-img {
         width: 160px;
         aspect-ratio: 16/10;
@@ -265,6 +258,42 @@
         background: rgba(85, 51, 255, 0.08);
         color: #5533ff;
         border-color: transparent;
+      }
+      /* --- Modal View Toggle Buttons --- */
+      .modal-view-btns {
+        display: flex;
+        gap: 10px;
+        margin: 24px 0 0 0;
+      }
+      .modal-view-btn {
+        flex: 1;
+        padding: 12px 0;
+        border: 1.5px solid #e0e0e0;
+        border-radius: 8px;
+        background: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .modal-view-btn.active {
+        background: #111;
+        border-color: #111;
+        color: #fff;
+      }
+      .modal-view-btn:not(.active):hover {
+        border-color: #5533ff;
+        color: #5533ff;
+      }
+      .modal-section {
+        display: none;
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #f0f0f0;
+      }
+      .modal-section.visible {
+        display: block;
       }
       .empty {
         text-align: center;
@@ -384,42 +413,79 @@
       }
       /* --- Responsive --- */
       @media (max-width: 960px) {
-        .featured-grid { grid-template-columns: 1fr; gap: 20px; }
-        .layout-grid { grid-template-columns: 1fr; gap: 50px; }
-        .sidebar { border-top: 1px solid #f0f0f0; padding-top: 40px; }
+        .featured-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .layout-grid {
+          grid-template-columns: 1fr;
+          gap: 50px;
+        }
+        .sidebar {
+          border-top: 1px solid #f0f0f0;
+          padding-top: 40px;
+        }
       }
       @media (max-width: 768px) {
-        .header { padding: 25px 0; }
-        .header .container { flex-direction: column; gap: 20px; text-align: center; }
-        .nav a { margin: 0 15px; }
-        #storyBoard li { gap: 15px; }
-        #storyBoard li .list-img { width: 110px; }
-        #sub { flex-wrap: wrap; }
-        .footer-container { flex-direction: column; gap: 40px; }
-        .footer-right { margin-left: 0; justify-content: space-between; }
-        .footer-links { margin-left: 0; }
-        .footer-link-cols { gap: 30px; }
+        .header {
+          padding: 25px 0;
+        }
+        .header .container {
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+        }
+        .nav a {
+          margin: 0 15px;
+        }
+        #storyBoard li {
+          gap: 15px;
+        }
+        #storyBoard li .list-img {
+          width: 110px;
+        }
+        #sub {
+          flex-wrap: wrap;
+        }
+        .footer-container {
+          flex-direction: column;
+          gap: 40px;
+        }
+        .footer-right {
+          margin-left: 0;
+          justify-content: space-between;
+        }
+        .footer-links {
+          margin-left: 0;
+        }
+        .footer-link-cols {
+          gap: 30px;
+        }
       }
     </style>
   </head>
   <body>
     <header class="header">
-        <div class="container">
-            <div class="logo" onclick="location.href='index.html'">LOIND</div>
-            <nav class="nav">
-                <a href="about.html">About</a>
-                <a href="service.html">Service</a>
-                <a href="story.html">Story</a>
-                <a href="contact.html">Contact</a>
-                <div class="nav-separator"></div>
-                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
-            </nav>
-        </div>
+      <div class="container">
+        <div class="logo" onclick="location.href = 'index.html'">LOIND</div>
+        <nav class="nav">
+          <a href="about.html">About</a>
+          <a href="service.html">Service</a>
+          <a href="story.html">Story</a>
+          <a href="contact.html">Contact</a>
+          <div class="nav-separator"></div>
+          <a
+            href="https://www.loindworks.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Works</a
+          >
+        </nav>
+      </div>
     </header>
     <section class="featured-section">
       <div class="container">
-        <div class="featured-grid" id="featuredSection">
-          </div>
+        <div class="featured-grid" id="featuredSection"></div>
       </div>
     </section>
     <div class="container">
@@ -435,13 +501,7 @@
         <aside class="sidebar">
           <div class="side-box">
             <p class="side-title">추천 소식</p>
-            <ul class="recommend-list" id="recommendList">
-              </ul>
-          </div>
-          <div class="side-box">
-            <p class="side-title">태그</p>
-            <div class="tag-cloud" id="tagCloud">
-              </div>
+            <ul class="recommend-list" id="recommendList"></ul>
           </div>
         </aside>
       </div>
@@ -452,36 +512,51 @@
       </div>
     </div>
     <footer class="footer">
-        <div class="container footer-container">
-            <div class="footer-left">
-                <h2 class="footer-logo">LOIND</h2>
-                <p class="footer-copy">© 2026 LOIND. All rights reserved.</p>
-            </div>
-            <div class="footer-right">
-                <div class="footer-links">
-                    <h4>Company</h4>
-                    <div class="footer-link-cols">
-                        <div class="footer-link-col">
-                            <a href="about.html">About</a>
-                            <a href="service.html">Service</a>
-                            <a href="story.html">Story</a>
-                            <a href="contact.html">Contact</a>
-                            <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Resources</h4>
-                    <div class="footer-link-cols">
-                        <div class="footer-link-col">
-                            <a href="story.html">Story</a>
-                            <a href="https://www.instagram.com/loind_official/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                            <a href="https://youtube.com/@dhday-c6p?si=9aGA101aiGr8QWFV" target="_blank" rel="noopener noreferrer">Youtube</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container footer-container">
+        <div class="footer-left">
+          <h2 class="footer-logo">LOIND</h2>
+          <p class="footer-copy">© 2026 LOIND. All rights reserved.</p>
         </div>
+        <div class="footer-right">
+          <div class="footer-links">
+            <h4>Company</h4>
+            <div class="footer-link-cols">
+              <div class="footer-link-col">
+                <a href="about.html">About</a>
+                <a href="service.html">Service</a>
+                <a href="story.html">Story</a>
+                <a href="contact.html">Contact</a>
+                <a
+                  href="https://www.loindworks.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Works</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Resources</h4>
+            <div class="footer-link-cols">
+              <div class="footer-link-col">
+                <a href="story.html">Story</a>
+                <a
+                  href="https://www.instagram.com/loind_official/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Instagram</a
+                >
+                <a
+                  href="https://youtube.com/@dhday-c6p?si=9aGA101aiGr8QWFV"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Youtube</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -512,11 +587,13 @@
       const modalBody = document.querySelector(".modal_body");
       const featuredSection = document.querySelector("#featuredSection");
       const recommendList = document.querySelector("#recommendList");
-      const tagCloud = document.querySelector("#tagCloud");
       async function loadStories() {
         storyBoard.innerHTML = "<li class='empty'>데이터를 불러오는 중...</li>";
         try {
-          const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
+          const q = query(
+            collection(db, "stories"),
+            orderBy("createdAt", "desc"),
+          );
           const querySnapshot = await getDocs(q);
           storyData = {};
           allFlatStories = [];
@@ -524,15 +601,21 @@
             const item = doc.data();
             const cate = item.category;
             let formattedDate = "2026.05.27";
-            if(item.createdAt) {
-               const d = item.createdAt.toDate ? item.createdAt.toDate() : new Date(item.createdAt);
-               const yyyy = d.getFullYear();
-               const mm = String(d.getMonth() + 1).padStart(2, '0');
-               const dd = String(d.getDate()).padStart(2, '0');
-               formattedDate = `${yyyy}.${mm}.${dd}`;
+            if (item.createdAt) {
+              const d = item.createdAt.toDate
+                ? item.createdAt.toDate()
+                : new Date(item.createdAt);
+              const yyyy = d.getFullYear();
+              const mm = String(d.getMonth() + 1).padStart(2, "0");
+              const dd = String(d.getDate()).padStart(2, "0");
+              formattedDate = `${yyyy}.${mm}.${dd}`;
             }
 
-            const structuredItem = { ...item, id: doc.id, dateText: formattedDate };
+            const structuredItem = {
+              ...item,
+              id: doc.id,
+              dateText: formattedDate,
+            };
             if (!storyData[cate]) storyData[cate] = [];
             storyData[cate].push(structuredItem);
             allFlatStories.push(structuredItem);
@@ -541,7 +624,8 @@
           renderSub();
         } catch (e) {
           console.error("데이터 로드 실패: ", e);
-          storyBoard.innerHTML = "<li class='empty'>서버 연결 오류가 발생했습니다.</li>";
+          storyBoard.innerHTML =
+            "<li class='empty'>서버 연결 오류가 발생했습니다.</li>";
         }
       }
       function renderGlobalComponents() {
@@ -556,23 +640,17 @@
             <div class="view-featured-detail" data-id="${topStory.id}">스토리 보기 →</div>
           </div>
         `;
-        featuredSection.querySelector('.view-featured-detail').addEventListener('click', () => {
-          openModalHandler(topStory);
-        });
+        featuredSection
+          .querySelector(".view-featured-detail")
+          .addEventListener("click", () => {
+            openModalHandler(topStory);
+          });
         recommendList.innerHTML = "";
-        allFlatStories.slice(0, 4).forEach(item => {
+        allFlatStories.slice(0, 4).forEach((item) => {
           const li = document.createElement("li");
           li.innerText = item.title;
-          li.addEventListener('click', () => openModalHandler(item));
+          li.addEventListener("click", () => openModalHandler(item));
           recommendList.appendChild(li);
-        });
-        const tags = ["#크리에이티브에이전시", "#크리에이티브스튜디오", "#임팩트", "#브랜딩", "#AI인프라", "#글로벌"];
-        tagCloud.innerHTML = "";
-        tags.forEach(t => {
-          const span = document.createElement("span");
-          span.className = "cloud-tag";
-          span.innerText = t;
-          tagCloud.appendChild(span);
         });
       }
       function renderSub() {
@@ -599,10 +677,6 @@
               <div class="list-txt">
                 <p class="list-date">${item.dateText}</p>
                 <h4>${item.title}</h4>
-                <div class="list-tags">
-                  <span class="tag-node">#${subName}</span>
-                  <span class="tag-node">#LOIND</span>
-                </div>
               </div>
               <div class="list-img"><img src="${item.img}" alt="${item.title}"></div>
             `;
@@ -617,11 +691,35 @@
         modalBody.innerHTML = `
           <img src="${targetData.img}" alt="${targetData.title}">
           <h2>${targetData.title}</h2>
-          <p style="font-weight:700; color:#5533ff; margin-bottom:14px; font-size:15px;">${targetData.text}</p>
-          <div style="margin-top:20px; padding-top:25px; border-top:1px solid #f0f0f0; color:#555; line-height:1.8; font-size:14px;">
-            ${targetData.detail ? targetData.detail.replace(/\n/g, "<br>") : "내용이 없습니다."}
+          ${targetData.text ? `<p style="font-size:14px; color:#555; line-height:1.7; margin-top:10px;">${targetData.text}</p>` : ""}
+          <div class="modal-view-btns">
+            <button class="modal-view-btn active" data-view="brief">프로젝트 요약</button>
+            <button class="modal-view-btn" data-view="detail">자세히 보기</button>
+          </div>
+          <div class="modal-section visible" id="modal-brief">
+            <p style="color:#555; line-height:1.8; font-size:14px;">${targetData.summary ? targetData.summary.replace(/\n/g, "<br>") : "내용이 없습니다."}</p>
+          </div>
+          <div class="modal-section" id="modal-detail">
+            <div style="color:#555; line-height:1.8; font-size:14px;">
+              ${targetData.detail ? targetData.detail.replace(/\n/g, "<br>") : "내용이 없습니다."}
+            </div>
           </div>
         `;
+        modalBody.querySelectorAll(".modal-view-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            modalBody
+              .querySelectorAll(".modal-view-btn")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            const view = btn.dataset.view;
+            document
+              .getElementById("modal-brief")
+              .classList.toggle("visible", view === "brief");
+            document
+              .getElementById("modal-detail")
+              .classList.toggle("visible", view === "detail");
+          });
+        });
         modal.classList.add("active");
         document.body.style.overflow = "hidden";
       }
