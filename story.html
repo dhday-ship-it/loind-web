@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="ko">
   <head>
@@ -7,6 +6,11 @@
     <title>Story | LOIND</title>
     <style>
       /* --- Reset & Base Styles (메인 인덱스 및 서비스 완벽 일치) --- */
+      :root {
+        --primary: #55689b;
+        --secondary-01: #8fa8c4;
+        --secondary-02: #f6fafd;
+      }
       * {
         margin: 0;
         padding: 0;
@@ -125,7 +129,7 @@
       .view-featured-detail {
         font-size: 13px;
         font-weight: 700;
-        color: #55689B;
+        color: var(--primary);
         cursor: pointer;
         display: inline-block;
         transition: opacity 0.2s;
@@ -151,7 +155,7 @@
         transition: color 0.2s;
       }
       #sub li.on {
-        color: #111;
+        color: var(--primary);
         font-weight: 800;
       }
       /* --- 3. Main Layout Grid (2단 구조 피드) --- */
@@ -195,7 +199,7 @@
         transition: color 0.2s;
       }
       #storyBoard li:hover h4 {
-        color: #55689B;
+        color: var(--primary);
       }
 
       #storyBoard li .list-img {
@@ -237,7 +241,7 @@
         transition: color 0.2s;
       }
       .recommend-list li:hover {
-        color: #55689B;
+        color: var(--primary);
       }
       .tag-cloud {
         display: flex;
@@ -257,7 +261,7 @@
       }
       .cloud-tag:hover {
         background: rgba(85, 104, 155, 0.08);
-        color: #55689B;
+        color: var(--primary);
         border-color: transparent;
       }
       /* --- Modal View Toggle Buttons --- */
@@ -279,13 +283,13 @@
         transition: all 0.2s;
       }
       .modal-view-btn.active {
-        background: #111;
-        border-color: #111;
+        background: var(--primary);
+        border-color: var(--primary);
         color: #fff;
       }
       .modal-view-btn:not(.active):hover {
-        border-color: #55689B;
-        color: #55689B;
+        border-color: var(--primary);
+        color: var(--primary);
       }
       .modal-section {
         display: none;
@@ -295,6 +299,40 @@
       }
       .modal-section.visible {
         display: block;
+      }
+      .modal-img-link {
+        display: block;
+        cursor: pointer;
+      }
+      .modal-img-link img {
+        width: 100%;
+        max-height: 380px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        display: block;
+        transition: opacity 0.2s;
+      }
+      .modal-img-link:hover img {
+        opacity: 0.85;
+      }
+      .modal-link-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 16px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--primary);
+        border: 1.5px solid var(--primary);
+        border-radius: 6px;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .modal-link-btn:hover {
+        background: var(--primary);
+        color: #fff;
       }
       .empty {
         text-align: center;
@@ -358,7 +396,7 @@
       }
       /* --- Footer (다른 페이지와 동일 규격) --- */
       .footer {
-        background-color: #000000;
+        background-color: #0b0b0b;
         color: #fff;
         padding: 100px 0;
       }
@@ -689,8 +727,20 @@
         }
       }
       function openModalHandler(targetData) {
+        const imgHtml = targetData.link
+          ? `<a href="${targetData.link}" target="_blank" rel="noopener noreferrer" class="modal-img-link">
+               <img src="${targetData.img}" alt="${targetData.title}">
+             </a>`
+          : `<img src="${targetData.img}" alt="${targetData.title}" style="width:100%; max-height:380px; object-fit:cover; border-radius:10px; margin-bottom:30px; display:block;">`;
+
+        const linkBtnHtml = targetData.link
+          ? `<a href="${targetData.link}" target="_blank" rel="noopener noreferrer" class="modal-link-btn">
+               프로젝트 바로가기 →
+             </a>`
+          : "";
+
         modalBody.innerHTML = `
-          <img src="${targetData.img}" alt="${targetData.title}">
+          ${imgHtml}
           <h2>${targetData.title}</h2>
           ${targetData.text ? `<p style="font-size:14px; color:#555; line-height:1.7; margin-top:10px;">${targetData.text}</p>` : ""}
           <div class="modal-view-btns">
@@ -698,7 +748,8 @@
             <button class="modal-view-btn" data-view="detail">자세히 보기</button>
           </div>
           <div class="modal-section visible" id="modal-brief">
-            <p style="color:#555; line-height:1.8; font-size:14px;">${targetData.summary ? targetData.summary.replace(/\n/g, "<br>") : "내용이 없습니다."}</p>
+            ${targetData.summary ? `<p style="color:#555; line-height:1.8; font-size:14px;">${targetData.summary.replace(/\n/g, "<br>")}</p>` : ""}
+            ${linkBtnHtml}
           </div>
           <div class="modal-section" id="modal-detail">
             <div style="color:#555; line-height:1.8; font-size:14px;">

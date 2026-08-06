@@ -12,6 +12,9 @@
       :root {
         --bg: #ffffff;
         --accent: #000000;
+        --primary: #55689b;
+        --secondary-01: #8fa8c4;
+        --secondary-02: #f6fafd;
         --sub-text: #86868b;
         --border: #e5e5e7;
         --soft-gray: #f5f5f7;
@@ -69,7 +72,7 @@
         transition: border-color 0.2s;
       }
       .login-field:focus-within {
-        border-bottom-color: var(--accent);
+        border-bottom-color: var(--primary);
       }
       .login-field label {
         display: block;
@@ -102,7 +105,7 @@
       }
       .login-btn {
         width: 100%;
-        background: var(--accent);
+        background: var(--primary);
         color: #fff;
         border: none;
         padding: 18px;
@@ -114,8 +117,8 @@
         letter-spacing: 1px;
       }
       .login-btn:hover {
-        filter: brightness(1.2);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        background: var(--secondary-01);
+        box-shadow: 0 8px 20px rgba(85, 104, 155, 0.2);
       }
       .login-btn:disabled {
         background: #d2d2d7;
@@ -211,7 +214,7 @@
         transition: var(--ease);
       }
       .input-block:focus-within {
-        border-bottom-color: var(--accent);
+        border-bottom-color: var(--primary);
       }
       .input-block label {
         display: block;
@@ -276,7 +279,7 @@
       }
       /* Action Buttons */
       .btn-primary {
-        background: var(--accent);
+        background: var(--primary);
         color: #fff;
         border: none;
         padding: 20px 50px;
@@ -289,9 +292,9 @@
         margin-top: 20px;
       }
       .btn-primary:hover {
+        background: var(--secondary-01);
         transform: scale(1.02);
-        filter: brightness(1.2);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 20px rgba(85, 104, 155, 0.2);
       }
       .btn-primary:disabled {
         background: #d2d2d7;
@@ -304,7 +307,7 @@
         align-items: flex-end;
         justify-content: space-between;
         margin-bottom: 30px;
-        border-bottom: 2px solid var(--accent);
+        border-bottom: 2px solid var(--primary);
         padding-bottom: 15px;
       }
       .archive-header h2 {
@@ -352,7 +355,7 @@
         font-size: 11px;
         font-weight: 800;
         cursor: pointer;
-        color: var(--accent);
+        color: var(--primary);
         transition: 0.2s;
       }
       .del-btn {
@@ -461,6 +464,14 @@
               type="text"
               id="new_text"
               placeholder="한 줄 요약 문구 (상단 피처드 소개글)"
+            />
+          </div>
+          <div class="input-block">
+            <label>Link URL — 연결 링크 (선택)</label>
+            <input
+              type="text"
+              id="new_link"
+              placeholder="https://example.com"
             />
           </div>
           <div class="input-block">
@@ -640,6 +651,7 @@
             text: document.querySelector("#new_text").value,
             summary: document.querySelector("#new_summary").value,
             detail: document.querySelector("#new_detail").value,
+            link: document.querySelector("#new_link").value,
             createdAt: new Date(),
           };
           if (editId) {
@@ -670,6 +682,7 @@
           document.querySelector("#new_title").value = item.title;
           document.querySelector("#new_img_url").value = item.img;
           document.querySelector("#new_text").value = item.text;
+          document.querySelector("#new_link").value = item.link || "";
           document.querySelector("#new_summary").value = item.summary || "";
           document.querySelector("#new_detail").value = item.detail;
           editId = id;
