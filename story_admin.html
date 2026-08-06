@@ -369,18 +369,57 @@
           display: none;
         }
         main {
-          margin: 100px auto;
-          padding: 0 25px;
+          margin: 90px auto 60px;
+          padding: 0 20px;
         }
         .hero h1 {
           font-size: 32px;
         }
+        .editor-container {
+          gap: 32px;
+        }
+        .login-box {
+          padding: 0 20px;
+        }
         .archive-item {
           grid-template-columns: 60px 1fr;
+          gap: 0 16px;
         }
         .archive-actions {
           grid-column: 2;
           margin-top: 10px;
+        }
+        .btn-primary {
+          width: 100%;
+          text-align: center;
+          padding: 18px 20px;
+        }
+        textarea {
+          height: 100px;
+        }
+      }
+      @media (max-width: 480px) {
+        .login-box h1 {
+          font-size: 24px;
+        }
+        .login-box p {
+          font-size: 12px;
+          margin-bottom: 36px;
+        }
+        .login-btn {
+          padding: 16px;
+          font-size: 13px;
+        }
+        .hero h1 {
+          font-size: 26px;
+        }
+        main {
+          padding: 0 16px;
+        }
+        input,
+        select,
+        textarea {
+          font-size: 16px;
         }
       }
     </style>

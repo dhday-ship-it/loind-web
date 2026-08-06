@@ -1,6 +1,4 @@
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -13,7 +11,13 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui,
+          Roboto,
+          sans-serif;
       }
       body {
         background-color: #ffffff;
@@ -30,9 +34,9 @@
       }
 
       .container {
-        max-width: 1240px; 
+        max-width: 1240px;
         margin: 0 auto;
-        padding: 0 20px; 
+        padding: 0 20px;
       }
 
       /* --- Header --- */
@@ -59,7 +63,7 @@
       }
 
       .logo::before {
-        content: '';
+        content: "";
       }
 
       .nav {
@@ -75,7 +79,8 @@
         transition: color 0.3s;
       }
 
-      .nav a:hover, .nav a.active {
+      .nav a:hover,
+      .nav a.active {
         color: #000;
         font-weight: 700;
       }
@@ -85,7 +90,7 @@
         width: 1px;
         height: 14px;
         background-color: #e0e0e0;
-        margin-left: 22px;   /* Contact와의 거리 */
+        margin-left: 22px; /* Contact와의 거리 */
         margin-right: -23px; /* Works가 가질 기본 45px 마진을 상쇄하여 완벽한 균등 간격 유지 */
       }
 
@@ -94,7 +99,7 @@
         padding: 100px 0;
         min-height: 75vh;
       }
-      
+
       .contact-header {
         margin-bottom: 100px;
         border-bottom: 1px solid #111;
@@ -122,7 +127,7 @@
         grid-template-columns: 1fr 1fr;
         gap: 100px;
       }
-      
+
       .info-left {
         display: flex;
         flex-direction: column;
@@ -186,7 +191,7 @@
         flex-direction: column;
         justify-content: space-between;
         background: #ffffff;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
       }
       .brand-seal .logo-title {
         font-size: 36px;
@@ -254,7 +259,7 @@
 
       /* --- Footer --- */
       .footer {
-        background-color: #000000;
+        background-color: #0b0b0b;
         color: #fff;
         padding: 100px 0;
       }
@@ -320,7 +325,6 @@
         flex-direction: column;
       }
 
-
       /* --- Responsive --- */
       @media (max-width: 1024px) {
         .contact-content {
@@ -336,35 +340,121 @@
       }
 
       @media (max-width: 768px) {
-        .header { padding: 25px 0; }
-        .header .container { flex-direction: column; gap: 20px; text-align: center; }
-        .nav a { margin: 0 10px; }
-        .nav-separator { display: none; } /* 모바일에서는 구분선 숨김 처리 */
-        .contact-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-        .contact-header p { text-align: left; }
-        .info-box .value { font-size: 24px; }
-        .address-item .addr-value { font-size: 18px; }
-        .footer-container { flex-direction: column; gap: 40px; }
-        .footer-right { margin-left: 0; justify-content: space-between; }
-        .footer-links { margin-left: 0; }
-        .footer-link-cols { gap: 30px; }
+        .header {
+          padding: 25px 0;
+        }
+        .header .container {
+          flex-direction: column;
+          gap: 16px;
+          text-align: center;
+        }
+        .nav a {
+          margin: 0 10px;
+        }
+        .nav-separator {
+          display: none;
+        }
+        .contact-container {
+          padding: 60px 0;
+        }
+        .contact-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+          margin-bottom: 60px;
+        }
+        .contact-header h2 {
+          font-size: 42px;
+          letter-spacing: -2px;
+        }
+        .contact-header p {
+          text-align: left;
+          font-size: 14px;
+        }
+        .contact-content {
+          gap: 50px;
+        }
+        .info-box .value {
+          font-size: 24px;
+          letter-spacing: -0.5px;
+        }
+        .address-item .addr-value {
+          font-size: 18px;
+        }
+        .brand-seal {
+          width: 100%;
+          height: auto;
+          padding: 30px;
+        }
+        .brand-seal .logo-title {
+          font-size: 28px;
+        }
+        .footer-container {
+          flex-direction: column;
+          gap: 40px;
+        }
+        .footer-right {
+          margin-left: 0;
+          justify-content: space-between;
+        }
+        .footer-links {
+          margin-left: 0;
+        }
+        .footer-link-cols {
+          gap: 30px;
+        }
+        .footer {
+          padding: 60px 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 18px;
+        }
+        .header {
+          padding: 18px 0;
+        }
+        .nav a {
+          margin: 0 7px;
+          font-size: 13px;
+        }
+        .contact-header h2 {
+          font-size: 34px;
+        }
+        .info-box .value {
+          font-size: 20px;
+        }
+        .address-item .addr-value {
+          font-size: 16px;
+        }
+        .info-box .label {
+          font-size: 10px;
+        }
+        .sns-wrap {
+          gap: 16px;
+        }
       }
     </style>
   </head>
   <body>
-
     <header class="header">
-        <div class="container">
-            <div class="logo" onclick="location.href='index.html'">LOIND</div>
-            <nav class="nav">
-                <a href="about.html">About</a>
-                <a href="service.html">Service</a>
-                <a href="story.html">Story</a>
-                <a href="contact.html">Contact</a>
-                <div class="nav-separator"></div>
-                <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
-            </nav>
-        </div>
+      <div class="container">
+        <div class="logo" onclick="location.href = 'index.html'">LOIND</div>
+        <nav class="nav">
+          <a href="about.html">About</a>
+          <a href="service.html">Service</a>
+          <a href="story.html">Story</a>
+          <a href="contact.html">Contact</a>
+          <div class="nav-separator"></div>
+          <a
+            href="https://www.loindworks.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Works</a
+          >
+        </nav>
+      </div>
     </header>
 
     <main class="container">
@@ -385,19 +475,30 @@
               <div class="address-list">
                 <div class="address-item">
                   <span class="addr-label">도로명</span>
-                  <p class="addr-value">경기 부천시 원미구 소향로 131<br />7층 726호 (중동워크리움)</p>
+                  <p class="addr-value">
+                    경기 부천시 원미구 소향로 131<br />7층 726호 (중동워크리움)
+                  </p>
                 </div>
                 <div class="address-item">
                   <span class="addr-label">지번</span>
-                  <p class="addr-value">경기 부천시 원미구 중동 1161-3<br />7층 726호 (중동워크리움)</p>
+                  <p class="addr-value">
+                    경기 부천시 원미구 중동 1161-3<br />7층 726호 (중동워크리움)
+                  </p>
                 </div>
               </div>
             </div>
 
             <div class="sns-wrap">
               <a href="story.html">Story</a>
-              <a href="#" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-              <a href="https://youtube.com/@loind-youtube?si=X0Cy9L6flUmFkft9" target="_blank" rel="noopener noreferrer">YOUTUBE</a>
+              <a href="#" target="_blank" rel="noopener noreferrer"
+                >INSTAGRAM</a
+              >
+              <a
+                href="https://youtube.com/@loind-youtube?si=X0Cy9L6flUmFkft9"
+                target="_blank"
+                rel="noopener noreferrer"
+                >YOUTUBE</a
+              >
             </div>
           </div>
 
@@ -405,7 +506,9 @@
             <div class="brand-seal" id="cardArea">
               <div class="logo-title">LOIND</div>
               <div class="biz-info">
-                <p style="font-weight: 800; margin-bottom: 6px; font-size:14px;">
+                <p
+                  style="font-weight: 800; margin-bottom: 6px; font-size: 14px"
+                >
                   (주)로인드 (LOIND Co., Ltd.)
                 </p>
                 <p>e-mail : contact@loind.com</p>
@@ -426,43 +529,58 @@
     </main>
 
     <footer class="footer">
-        <div class="container footer-container">
-            <div class="footer-left">
-                <h2 class="footer-logo">LOIND</h2>
-                <p class="footer-copy">© 2026 LOIND. All rights reserved.</p>
-            </div>
-            <div class="footer-right">
-                <div class="footer-links">
-                    <h4>Company</h4>
-                    <div class="footer-link-cols">
-                        <div class="footer-link-col">
-                            <a href="about.html">About</a>
-                            <a href="service.html">Service</a>
-                            <a href="story.html">Story</a>
-                            <a href="contact.html">Contact</a>
-                            <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer">Works</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Resources</h4>
-                    <div class="footer-link-cols">
-                        <div class="footer-link-col">
-                            <a href="story.html">Blog</a>
-                            <a href="https://www.instagram.com/loind_official/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                            <a href="https://youtube.com/@dhday-c6p?si=9aGA101aiGr8QWFV" target="_blank" rel="noopener noreferrer">Youtube</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container footer-container">
+        <div class="footer-left">
+          <h2 class="footer-logo">LOIND</h2>
+          <p class="footer-copy">© 2026 LOIND. All rights reserved.</p>
         </div>
+        <div class="footer-right">
+          <div class="footer-links">
+            <h4>Company</h4>
+            <div class="footer-link-cols">
+              <div class="footer-link-col">
+                <a href="about.html">About</a>
+                <a href="service.html">Service</a>
+                <a href="story.html">Story</a>
+                <a href="contact.html">Contact</a>
+                <a
+                  href="https://www.loindworks.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Works</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Resources</h4>
+            <div class="footer-link-cols">
+              <div class="footer-link-col">
+                <a href="story.html">Blog</a>
+                <a
+                  href="https://www.instagram.com/loind_official/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Instagram</a
+                >
+                <a
+                  href="https://youtube.com/@dhday-c6p?si=9aGA101aiGr8QWFV"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Youtube</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
 
     <script>
       function saveAsPng() {
         const card = document.getElementById("cardArea");
         html2canvas(card, {
-          scale: 3, 
+          scale: 3,
           backgroundColor: "#ffffff",
         }).then((canvas) => {
           const link = document.createElement("a");
