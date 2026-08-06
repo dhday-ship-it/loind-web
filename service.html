@@ -52,7 +52,7 @@
         .popup-btn.primary { background: #111; color: #fff; border-color: #111; }
         .business-section { padding: 80px 0 100px 0; background-color: #ffffff; }
         .business-section h3 { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 28px; display: flex; align-items: center; gap: 8px; }
-        .business-section h3::before { content: ''; display: inline-block; width: 4px; height: 16px; background-color: #5533ff; border-radius: 2px; }
+        .business-section h3::before { content: ''; display: inline-block; width: 4px; height: 16px; background-color: #55689B; border-radius: 2px; }
 
         /* ── 서비스 리스트 ── */
         .service-list { display: grid; grid-template-columns: 200px minmax(0,1fr); gap: 0 80px; min-height: 300px; margin-top: 0; }
@@ -67,7 +67,7 @@
         .item-tag:hover { background: #111; color: #fff; }
 
         /* ── 대희(大喜) 전용 디자인 시스템 ── */
-        :root { --dh-gold: #5533ff; --dh-gold-soft: #f0edff; --dh-ink: #111111; }
+        :root { --dh-gold: #55689B; --dh-gold-soft: #EDF1F7; --dh-ink: #111111; }
 
         .daehee-hero { padding: 120px 0 90px 0; background: #fff; text-align: center; }
         .daehee-eyebrow { font-family: 'Pretendard', sans-serif; font-size: 12px; font-weight: 700; color: var(--dh-gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 22px; }
@@ -133,7 +133,7 @@
             .stage-arrow { display: none; }
         }
 
-        .footer { background-color: #0b0b0b; color: #fff; padding: 100px 0; }
+        .footer { background-color: #000000; color: #fff; padding: 100px 0; }
         .footer-container { display: flex; justify-content: space-between; }
         .footer-left { display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
         .footer-logo { font-size: 32px; font-weight: 800; margin-bottom: 15px; }
@@ -322,7 +322,7 @@
             const verse = verseMatch ? verseMatch[2] : '';
             return `
                 <div style="margin-bottom:35px;display:flex;align-items:flex-start;gap:8px;">
-                    <span style="display:inline-block;width:4px;min-height:16px;background:#5533ff;border-radius:2px;flex-shrink:0;margin-top:2px;"></span>
+                    <span style="display:inline-block;width:4px;min-height:16px;background:#55689B;border-radius:2px;flex-shrink:0;margin-top:2px;"></span>
                     <div>
                         <p style="font-size:18px;font-weight:800;color:#111;letter-spacing:-0.3px;margin-bottom:8px;">LOIND PRINCIPLE</p>
                         <p style="font-size:18px;font-weight:400;color:#aaa;line-height:1.75;word-break:keep-all;">${quote} <span style="font-size:13px;font-weight:600;">${verse}</span></p>
