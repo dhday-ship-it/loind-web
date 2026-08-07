@@ -1,0 +1,232 @@
+/* --- Contact Layout --- */
+.contact-container {
+  padding: 100px 0;
+  min-height: 75vh;
+}
+
+.contact-header {
+  margin-bottom: 100px;
+  border-bottom: 1px solid #111;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.contact-header h2 {
+  font-size: 80px;
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 1;
+}
+.contact-header p {
+  font-size: 16px;
+  color: #666;
+  text-align: right;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+}
+
+.info-left {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.info-box .label {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  color: #55689b;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.info-box .value {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+/* 주소(도로명/지번) 전용 — 긴 문장이라 본문보다 조금 작게 */
+.address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.address-item .addr-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+.address-item .addr-value {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.info-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/* --- 명함 디자인 --- */
+.brand-seal {
+  text-align: right;
+  border: 1px solid #eaeaea;
+  border-radius: 14px;
+  padding: 40px;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+.brand-seal .logo-title {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-align: left;
+}
+.brand-seal .biz-info {
+  font-size: 13px;
+  color: #111;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.brand-seal .tag {
+  font-size: 13px;
+  color: #999;
+  font-weight: 500;
+  margin-top: 15px;
+  border-top: 1px solid #f4f4f4;
+  padding-top: 15px;
+  text-align: right;
+}
+
+/* 저장 아이콘 버튼 */
+.save-card-btn {
+  margin-top: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #aaa;
+  transition: color 0.3s;
+}
+.save-card-btn:hover {
+  color: #55689b;
+}
+.save-card-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.sns-wrap {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+}
+.sns-wrap a {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+  border-bottom: 1px solid #111;
+  padding-bottom: 2px;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+}
+.sns-wrap a:hover {
+  color: #55689b;
+  border-color: #55689b;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  .info-right {
+    align-items: flex-start;
+  }
+  .contact-header h2 {
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 60px 0;
+  }
+  .contact-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 60px;
+  }
+  .contact-header h2 {
+    font-size: 42px;
+    letter-spacing: -2px;
+  }
+  .contact-header p {
+    text-align: left;
+    font-size: 14px;
+  }
+  .contact-content {
+    gap: 50px;
+  }
+  .info-box .value {
+    font-size: 24px;
+    letter-spacing: -0.5px;
+  }
+  .address-item .addr-value {
+    font-size: 18px;
+  }
+  .brand-seal {
+    width: 100%;
+    height: auto;
+    padding: 30px;
+  }
+  .brand-seal .logo-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-header h2 {
+    font-size: 34px;
+  }
+  .info-box .value {
+    font-size: 20px;
+  }
+  .address-item .addr-value {
+    font-size: 16px;
+  }
+  .info-box .label {
+    font-size: 10px;
+  }
+  .sns-wrap {
+    gap: 16px;
+  }
+}

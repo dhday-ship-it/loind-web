@@ -1,0 +1,77 @@
+.stickyChrome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #fff;
+  transition: transform 0.35s ease;
+}
+
+.chromeHidden {
+  transform: translateY(-100%);
+}
+
+.header {
+  background-color: #fff;
+  padding: 35px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.headerInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  margin-left: 45px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.navLink:hover,
+.navLinkActive {
+  color: #000;
+  font-weight: 700;
+}
+
+.navSeparator {
+  width: 1px;
+  height: 14px;
+  background-color: #e0e0e0;
+  margin-left: 22px;
+  margin-right: -23px;
+}
+
+@media (max-width: 768px) {
+  .headerInner {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  .navLink {
+    margin: 0 10px;
+    font-size: 14px;
+  }
+  .navSeparator {
+    display: none;
+  }
+}
