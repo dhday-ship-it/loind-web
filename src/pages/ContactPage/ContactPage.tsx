@@ -40,17 +40,8 @@ export default function ContactPage() {
               <span className={styles["label"]}>Office</span>
               <div className={styles["address-list"]}>
                 <div className={styles["address-item"]}>
-                  <span className={styles["addr-label"]}>도로명</span>
                   <p className={styles["addr-value"]}>
                     경기 부천시 원미구 소향로 131
-                    <br />
-                    7층 726호 (중동워크리움)
-                  </p>
-                </div>
-                <div className={styles["address-item"]}>
-                  <span className={styles["addr-label"]}>지번</span>
-                  <p className={styles["addr-value"]}>
-                    경기 부천시 원미구 중동 1161-3
                     <br />
                     7층 726호 (중동워크리움)
                   </p>

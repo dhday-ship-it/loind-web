@@ -541,8 +541,8 @@
 }
 
 /* --- LOIND IDENTITY / LOIND PRINCIPLE 공통 독립 스냅 섹션 --- */
-#identitySection,
-#principleSection {
+:global(#identitySection),
+:global(#principleSection) {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   scroll-margin-top: var(--chrome-h, 180px);

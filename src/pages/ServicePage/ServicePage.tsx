@@ -30,7 +30,7 @@ function PrincipleBadge({ level, text }: { level: number; text: string }) {
     return (
       <div
         style={{
-          marginBottom: "35px",
+          padding: "28px 0",
           display: "flex",
           alignItems: "flex-start",
           gap: "8px",
@@ -68,7 +68,8 @@ function PrincipleBadge({ level, text }: { level: number; text: string }) {
               wordBreak: "keep-all",
             }}
           >
-            {quote} <span style={{ fontSize: "13px", fontWeight: 600 }}>{verse}</span>
+            {quote}{" "}
+            <span style={{ fontSize: "13px", fontWeight: 600 }}>{verse}</span>
           </p>
         </div>
       </div>
@@ -78,7 +79,7 @@ function PrincipleBadge({ level, text }: { level: number; text: string }) {
     return (
       <div
         style={{
-          marginBottom: "35px",
+          padding: "28px 0",
           display: "flex",
           alignItems: "center",
           gap: "12px",
@@ -92,8 +93,15 @@ function PrincipleBadge({ level, text }: { level: number; text: string }) {
     );
   }
   return (
-    <div style={{ marginBottom: "35px" }}>
-      <span style={{ fontSize: "11px", fontWeight: 500, color: "#aaa", letterSpacing: "0.5px" }}>
+    <div style={{ padding: "28px 0" }}>
+      <span
+        style={{
+          fontSize: "11px",
+          fontWeight: 500,
+          color: "#aaa",
+          letterSpacing: "0.5px",
+        }}
+      >
         LOIND PRINCIPLE &nbsp;—&nbsp; {text}
       </span>
     </div>
@@ -144,13 +152,22 @@ function LoerContent() {
         style={{ background: "#fff", paddingBottom: "20px" }}
       >
         <div className="container">
-          <h2 style={{ fontSize: "34px", letterSpacing: "-0.5px" }}>{d.bannerTitle}</h2>
+          <h2 style={{ fontSize: "34px", letterSpacing: "-0.5px" }}>
+            {d.bannerTitle}
+          </h2>
         </div>
       </section>
       <section className={styles["business-section"]}>
         <div className="container">
-          <div style={{ marginBottom: "56px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+          <div style={{ padding: "28px 0 56px 0" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                marginBottom: "12px",
+              }}
+            >
               <span
                 style={{
                   ...badgeStyle,
@@ -162,7 +179,14 @@ function LoerContent() {
               >
                 LOIND PRINCIPLE
               </span>
-              <span style={{ fontSize: "15px", fontWeight: 400, color: "#555", lineHeight: 1.6 }}>
+              <span
+                style={{
+                  fontSize: "15px",
+                  fontWeight: 400,
+                  color: "#555",
+                  lineHeight: 1.6,
+                }}
+              >
                 {d.standard}
               </span>
             </div>
@@ -178,10 +202,16 @@ function LoerContent() {
               >
                 Slogan
               </span>
-              <span style={{ fontSize: "15px", fontWeight: 400, color: "#555" }}>{d.slogan}</span>
+              <span
+                style={{ fontSize: "15px", fontWeight: 400, color: "#555" }}
+              >
+                {d.slogan}
+              </span>
             </div>
           </div>
-          <h3 style={{ marginTop: 0, marginBottom: "32px" }}>{d.sectionTitle}</h3>
+          <h3 style={{ marginTop: 0, marginBottom: "32px" }}>
+            {d.sectionTitle}
+          </h3>
           <LoerServiceList list={d.serviceList} />
         </div>
       </section>
@@ -195,7 +225,9 @@ function LodnContent() {
     <>
       <section className={styles["middle-banner-section"]}>
         <div className="container">
-          <h2 style={{ fontSize: "34px", letterSpacing: "-0.5px" }}>{d.bannerTitle}</h2>
+          <h2 style={{ fontSize: "34px", letterSpacing: "-0.5px" }}>
+            {d.bannerTitle}
+          </h2>
         </div>
         <div className={styles["lodn-video-wrap"]}>
           <video
@@ -290,14 +322,32 @@ function RippleIcon({ stageIdx }: { stageIdx: number }) {
     return (
       <svg className={styles["stage-ripple"]} viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="9" fill={gold} />
-        <circle className={styles.ring} cx="50" cy="50" r="24" fill="none" stroke={gold} strokeWidth={2} opacity={0.5} />
+        <circle
+          className={styles.ring}
+          cx="50"
+          cy="50"
+          r="24"
+          fill="none"
+          stroke={gold}
+          strokeWidth={2}
+          opacity={0.5}
+        />
       </svg>
     );
   }
   return (
     <svg className={styles["stage-ripple"]} viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="8" fill={gold} />
-      <circle className={styles.ring} cx="50" cy="50" r="20" fill="none" stroke={gold} strokeWidth={2} opacity={0.55} />
+      <circle
+        className={styles.ring}
+        cx="50"
+        cy="50"
+        r="20"
+        fill="none"
+        stroke={gold}
+        strokeWidth={2}
+        opacity={0.55}
+      />
       <circle
         className={`${styles.ring} ${styles["ring-anim"]}`}
         cx="50"
@@ -340,7 +390,8 @@ function DaeheeContent() {
           <h2 className={styles["daehee-question"]}>
             어떤 <span className={styles["daehee-accent"]}>기쁨</span>에
             <br />
-            참여하기 원하세요? <span className={styles["daehee-accent"]}>:)</span>
+            참여하기 원하세요?{" "}
+            <span className={styles["daehee-accent"]}>:)</span>
           </h2>
           <p className={styles["daehee-intro"]}>{d.intro}</p>
         </div>
@@ -358,7 +409,9 @@ function DaeheeContent() {
                       style={{ backgroundImage: `url('${s.image}')` }}
                     />
                   ) : (
-                    <div className={`${styles["stage-media"]} ${styles["stage-media-empty"]}`}>
+                    <div
+                      className={`${styles["stage-media"]} ${styles["stage-media-empty"]}`}
+                    >
                       <RippleIcon stageIdx={i} />
                     </div>
                   )}
@@ -391,12 +444,16 @@ function DaeheeContent() {
                   <div className={styles["dh-program-list"]}>
                     {s.items.map((it) => (
                       <div key={it.subtitle}>
-                        <p className={styles["dh-item-subtitle"]}>{it.subtitle}</p>
+                        <p className={styles["dh-item-subtitle"]}>
+                          {it.subtitle}
+                        </p>
                         <p className={styles["dh-item-desc"]}>{it.desc}</p>
                       </div>
                     ))}
                   </div>
-                  {s.callout && <div className={styles["dh-callout"]}>{s.callout}</div>}
+                  {s.callout && (
+                    <div className={styles["dh-callout"]}>{s.callout}</div>
+                  )}
                 </div>
               </div>
             ))}
@@ -419,12 +476,18 @@ export default function ServicePage() {
     window.setTimeout(() => {
       setActiveBrand(key);
       setFading(false);
-      brandContentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      brandContentRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }, 220);
   }
 
   function scrollToBrands() {
-    brandsGridRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    brandsGridRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
   }
 
   return (
@@ -443,7 +506,9 @@ export default function ServicePage() {
               className={`${styles["brand-item"]} ${activeBrand === "lodn" ? styles.active : ""}`}
               onClick={() => switchBrand("lodn")}
             >
-              <span className={styles["brand-name"]}>Creative Studio: LODN</span>
+              <span className={styles["brand-name"]}>
+                Creative Studio: LODN
+              </span>
               <span className={styles["brand-tag"]}>business</span>
             </div>
             <div className={styles["brands-divider"]} />
