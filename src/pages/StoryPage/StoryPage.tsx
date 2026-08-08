@@ -76,7 +76,10 @@ export default function StoryPage() {
     <>
       <section className={styles["featured-section"]}>
         <div className="container">
-          <div className={styles["featured-grid"]}>
+          <div
+            className={styles["featured-grid"]}
+            onClick={() => featured && openModal(featured)}
+          >
             {featured && (
               <>
                 <div className={styles["featured-img-box"]}>
