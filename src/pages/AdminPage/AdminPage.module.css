@@ -263,6 +263,21 @@
   display: none;
 }
 
+.recommend-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+}
+.recommend-toggle input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
 /* Action Buttons */
 .btn-primary {
   background: var(--primary);

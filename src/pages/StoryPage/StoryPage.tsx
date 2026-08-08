@@ -4,6 +4,7 @@ import type { Story } from "../../types/story";
 import styles from "./StoryPage.module.css";
 
 const CATEGORIES = ["Creative Agency", "Creative Studio: LODN", "Impact"];
+const PAGE_SIZE = 3;
 
 type ModalTab = "brief" | "detail";
 
@@ -21,9 +22,10 @@ export default function StoryPage() {
   const [activeCategory, setActiveCategory] = useState<string>(CATEGORIES[0]);
   const [openStoryId, setOpenStoryId] = useState<string | null>(null);
   const [modalTab, setModalTab] = useState<ModalTab>("brief");
+  const [page, setPage] = useState(1);
 
   const featured = stories.length ? stories[0] : null;
-  const recommendList = stories.slice(0, 4);
+  const recommendList = stories.filter((s) => s.is_recommended).slice(0, 5);
 
   const storyData = useMemo(() => {
     const grouped: Record<string, Story[]> = {};
@@ -35,9 +37,18 @@ export default function StoryPage() {
   }, [stories]);
 
   const currentList = storyData[activeCategory] || [];
+  const totalPages = Math.max(1, Math.ceil(currentList.length / PAGE_SIZE));
+  const pagedList = currentList.slice(
+    (page - 1) * PAGE_SIZE,
+    page * PAGE_SIZE,
+  );
   const openStory = openStoryId
     ? (stories.find((s) => s.id === openStoryId) ?? null)
     : null;
+
+  useEffect(() => {
+    setPage(1);
+  }, [activeCategory]);
 
   function openModal(story: Story) {
     setOpenStoryId(story.id);
@@ -112,31 +123,61 @@ export default function StoryPage() {
 
       <div className="container">
         <div className={styles["layout-grid"]}>
-          <ul className={styles["story-board"]}>
-            {loading ? (
-              <li className={styles.empty}>데이터를 불러오는 중...</li>
-            ) : error ? (
-              <li className={styles.empty}>서버 연결 오류가 발생했습니다.</li>
-            ) : currentList.length === 0 ? (
-              <li className={styles.empty}>
-                '{activeCategory}' 카테고리에 등록된 스토리가 없습니다.
-              </li>
-            ) : (
-              currentList.map((item) => (
-                <li key={item.id} onClick={() => openModal(item)}>
-                  <div className={styles["list-txt"]}>
-                    <p className={styles["list-date"]}>
-                      {formatDate(item.created_at)}
-                    </p>
-                    <h4>{item.title}</h4>
-                  </div>
-                  <div className={styles["list-img"]}>
-                    <img src={item.img} alt={item.title} loading="lazy" />
-                  </div>
+          <div className={styles["story-list-col"]}>
+            <ul className={styles["story-board"]}>
+              {loading ? (
+                <li className={styles.empty}>데이터를 불러오는 중...</li>
+              ) : error ? (
+                <li className={styles.empty}>서버 연결 오류가 발생했습니다.</li>
+              ) : currentList.length === 0 ? (
+                <li className={styles.empty}>
+                  '{activeCategory}' 카테고리에 등록된 스토리가 없습니다.
                 </li>
-              ))
+              ) : (
+                pagedList.map((item) => (
+                  <li key={item.id} onClick={() => openModal(item)}>
+                    <div className={styles["list-txt"]}>
+                      <p className={styles["list-date"]}>
+                        {formatDate(item.created_at)}
+                      </p>
+                      <h4>{item.title}</h4>
+                    </div>
+                    <div className={styles["list-img"]}>
+                      <img src={item.img} alt={item.title} loading="lazy" />
+                    </div>
+                  </li>
+                ))
+              )}
+            </ul>
+            {!loading && !error && totalPages > 1 && (
+              <nav className={styles.pagination}>
+                <button
+                  type="button"
+                  disabled={page === 1}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                >
+                  ‹
+                </button>
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button
+                    type="button"
+                    key={i}
+                    className={page === i + 1 ? styles.active : undefined}
+                    onClick={() => setPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  disabled={page === totalPages}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                >
+                  ›
+                </button>
+              </nav>
             )}
-          </ul>
+          </div>
           <aside className={styles.sidebar}>
             <div className={styles["side-box"]}>
               <p className={styles["side-title"]}>추천 소식</p>

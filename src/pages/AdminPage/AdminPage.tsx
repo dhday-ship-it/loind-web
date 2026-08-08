@@ -35,6 +35,7 @@ function AdminPage() {
   const [link, setLink] = useState("");
   const [summary, setSummary] = useState("");
   const [detail, setDetail] = useState("");
+  const [isRecommended, setIsRecommended] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitLabel, setSubmitLabel] = useState("PUBLISH STORY");
@@ -111,6 +112,7 @@ function AdminPage() {
         summary,
         detail,
         link,
+        is_recommended: isRecommended,
       };
       const { error } = editId
         ? await supabase.from("stories").update(payload).eq("id", editId)
@@ -131,6 +133,7 @@ function AdminPage() {
     setLink(story.link || "");
     setSummary(story.summary || "");
     setDetail(story.detail);
+    setIsRecommended(story.is_recommended);
     setEditId(story.id);
     setSubmitLabel("UPDATE STORY");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -277,6 +280,14 @@ function AdminPage() {
                   onChange={(e) => setDetail(e.target.value)}
                 />
               </div>
+              <label className={styles["recommend-toggle"]}>
+                <input
+                  type="checkbox"
+                  checked={isRecommended}
+                  onChange={(e) => setIsRecommended(e.target.checked)}
+                />
+                스토리 페이지 추천 게시물로 노출
+              </label>
               <div>
                 <button
                   className={styles["btn-primary"]}
@@ -307,7 +318,12 @@ function AdminPage() {
                     <div className={styles["archive-item"]} key={story.id}>
                       <img src={story.img} alt={story.title} />
                       <div className={styles["archive-item-info"]}>
-                        <h4>{story.title}</h4>
+                        <h4>
+                          {story.is_recommended && (
+                            <span title="추천 게시물">★ </span>
+                          )}
+                          {story.title}
+                        </h4>
                         <p>{story.category}</p>
                       </div>
                       <div className={styles["archive-actions"]}>

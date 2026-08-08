@@ -9,6 +9,7 @@ export interface Story {
   summary?: string;
   detail: string;
   link?: string;
+  is_recommended: boolean;
   created_at: string;
 }
 

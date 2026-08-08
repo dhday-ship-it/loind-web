@@ -92,6 +92,9 @@ ul {
 }
 
 /* ── Story List ── */
+.story-list-col {
+  min-width: 0;
+}
 .story-board {
   display: flex;
   flex-direction: column;
@@ -153,6 +156,41 @@ ul {
   padding: 60px 0;
   color: #aaa;
   font-size: 14px;
+}
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 36px;
+}
+.pagination button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pagination button:hover:not(:disabled) {
+  background: #f4f4f6;
+  color: #111;
+}
+.pagination button.active {
+  background: #55689b;
+  color: #fff;
+  font-weight: 800;
+}
+.pagination button:disabled {
+  color: #ddd;
+  cursor: not-allowed;
 }
 
 /* ── Sidebar ── */
