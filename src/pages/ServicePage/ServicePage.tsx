@@ -516,7 +516,7 @@ export default function ServicePage() {
               className={`${styles["brand-item"]} ${activeBrand === "daehee" ? styles.active : ""}`}
               onClick={() => switchBrand("daehee")}
             >
-              <span className={styles["brand-name"]}>대희(大喜):</span>
+              <span className={styles["brand-name"]}>Glowy:</span>
               <span className={styles["brand-tag"]}>impact</span>
             </div>
           </div>

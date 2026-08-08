@@ -255,7 +255,7 @@
   opacity: 0.5;
 }
 
-/* ── 대희(大喜) 전용 디자인 시스템 ── */
+/* ── Glowy 전용 디자인 시스템 ── */
 :root {
   --dh-gold: #55689b;
   --dh-gold-soft: #eef2fa;
@@ -591,7 +591,7 @@
     border-right: none;
     border-bottom: 2px solid #111;
   }
-  /* 대희 hero */
+  /* Glowy hero */
   .daehee-hero {
     padding: 60px 0 36px;
   }
@@ -601,7 +601,7 @@
   .daehee-intro {
     font-size: 14px;
   }
-  /* 대희 stages — 가로 카드 레이아웃 */
+  /* Glowy stages — 가로 카드 레이아웃 */
   .daehee-stages {
     padding: 20px 0 50px;
   }
@@ -637,7 +637,7 @@
     font-size: 13px;
     max-width: 100%;
   }
-  /* 대희 services */
+  /* Glowy services */
   .daehee-services {
     padding: 48px 0 56px;
   }

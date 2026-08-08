@@ -163,11 +163,11 @@ export const lodnBrand: LodnBrand = {
 
 export const daeheeBrand: DaeheeBrand = {
   subTitle: "IMPACT BRAND",
-  bannerTitle: "대희(大喜)",
+  bannerTitle: "Glowy",
   standardLevel: 2,
   standard: "TBD",
   intro:
-    "대희(大喜)는 '큰 기쁨'이라는 뜻을 가진 LOIND의 임팩트 브랜드입니다. 기쁨은 머무르지 않는다고 믿습니다. 한 사람에게서 시작된 기쁨은 삶이 되고, 결국 곁으로 번져나갑니다.",
+    "Glowy는 LOIND의 임팩트 브랜드입니다. 기쁨은 머무르지 않는다고 믿습니다. 한 사람에게서 시작된 기쁨은 삶이 되고, 결국 곁으로 번져나갑니다.",
   stages: [
     {
       name: "누림",
@@ -185,7 +185,7 @@ export const daeheeBrand: DaeheeBrand = {
   servicesEyebrow: "번짐의 통로",
   servicesTitle: "기쁨이 흘러가는 네 가지 통로",
   servicesIntro:
-    "대희는 아래 네 가지 통로를 통해 누군가에게서 시작된 기쁨이 실제로 흘러가도록 만듭니다.",
+    "Glowy는 아래 네 가지 통로를 통해 누군가에게서 시작된 기쁨이 실제로 흘러가도록 만듭니다.",
   services: [
     {
       icon: "fund",
@@ -193,7 +193,7 @@ export const daeheeBrand: DaeheeBrand = {
       items: [
         {
           subtitle: "지속 가능한 나눔의 재원",
-          desc: "후원과 협력을 통해 모인 기금으로 대희의 활동을 지속적으로 운영합니다.",
+          desc: "후원과 협력을 통해 모인 기금으로 Glowy의 활동을 지속적으로 운영합니다.",
         },
         {
           subtitle: "필요 중심의 배분",
@@ -201,7 +201,7 @@ export const daeheeBrand: DaeheeBrand = {
         },
       ],
       callout:
-        "모인 기금은 대희가 운영하는 공간과 커뮤니티 모임, 자립을 위한 프로그램에 직접 쓰입니다. 기쁨은 흘러갈 때 비로소 완성된다는 믿음이 기금 운영의 기준입니다.",
+        "모인 기금은 Glowy가 운영하는 공간과 커뮤니티 모임, 자립을 위한 프로그램에 직접 쓰입니다. 기쁨은 흘러갈 때 비로소 완성된다는 믿음이 기금 운영의 기준입니다.",
     },
     {
       icon: "space",
@@ -237,11 +237,11 @@ export const daeheeBrand: DaeheeBrand = {
       items: [
         {
           subtitle: "일상 속 연결",
-          desc: "언제 어디서든 대희의 활동과 모임 소식에 참여할 수 있는 디지털 창구입니다.",
+          desc: "언제 어디서든 Glowy의 활동과 모임 소식에 참여할 수 있는 디지털 창구입니다.",
         },
         {
           subtitle: "참여의 진입점",
-          desc: "처음 대희를 접하는 사람도 쉽게 흐름에 합류할 수 있도록 돕습니다.",
+          desc: "처음 Glowy를 접하는 사람도 쉽게 흐름에 합류할 수 있도록 돕습니다.",
         },
       ],
     },
