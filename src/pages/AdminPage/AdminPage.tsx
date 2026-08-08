@@ -1,19 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import type { ChangeEvent, KeyboardEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-  updateDoc,
-} from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db, storage } from "../../firebase";
+import { supabase } from "../../supabase";
 import type { Story, StoryPayload } from "../../types/story";
 import styles from "./AdminPage.module.css";
 
@@ -54,13 +42,11 @@ function AdminPage() {
 
   const fetchStories = useCallback(async (): Promise<void> => {
     setListLoading(true);
-    const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
-    const list: Story[] = snapshot.docs.map((docSnap) => {
-      const data = docSnap.data() as Omit<Story, "id">;
-      return { id: docSnap.id, ...data };
-    });
-    setStories(list);
+    const { data, error } = await supabase
+      .from("stories")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (!error) setStories((data ?? []) as Story[]);
     setListLoading(false);
   }, []);
 
@@ -71,11 +57,14 @@ function AdminPage() {
     }
     setLoginLoading(true);
     setLoginError("");
-    try {
-      await signInWithEmailAndPassword(auth, "dhday@loind.com", password);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: "dhday@loind.com",
+      password,
+    });
+    if (!error) {
       setLoggedIn(true);
       fetchStories();
-    } catch {
+    } else {
       setLoginError("비밀번호가 올바르지 않습니다.");
       setLoginLoading(false);
       setPassword("");
@@ -105,9 +94,14 @@ function AdminPage() {
     try {
       let url = imgUrl;
       if (file) {
-        const sRef = ref(storage, `images/${Date.now()}_${file.name}`);
-        const upload = await uploadBytes(sRef, file);
-        url = await getDownloadURL(upload.ref);
+        const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+        const path = `${Date.now()}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("story-images")
+          .upload(path, file);
+        if (uploadError) throw uploadError;
+        url = supabase.storage.from("story-images").getPublicUrl(path).data
+          .publicUrl;
       }
       const payload: StoryPayload = {
         category,
@@ -117,13 +111,11 @@ function AdminPage() {
         summary,
         detail,
         link,
-        createdAt: new Date(),
       };
-      if (editId) {
-        await updateDoc(doc(db, "stories", editId), payload);
-      } else {
-        await addDoc(collection(db, "stories"), payload);
-      }
+      const { error } = editId
+        ? await supabase.from("stories").update(payload).eq("id", editId)
+        : await supabase.from("stories").insert(payload);
+      if (error) throw error;
       window.location.reload();
     } catch (e) {
       alert(e instanceof Error ? e.message : String(e));
@@ -146,7 +138,7 @@ function AdminPage() {
 
   const handleDelete = async (id: string): Promise<void> => {
     if (!confirm("Remove this story?")) return;
-    await deleteDoc(doc(db, "stories", id));
+    await supabase.from("stories").delete().eq("id", id);
     fetchStories();
   };
 

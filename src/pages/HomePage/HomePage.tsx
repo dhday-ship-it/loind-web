@@ -275,7 +275,7 @@ export default function HomePage() {
           </div>
           <div className={styles["card-grid-3"]}>
             {stories.map((story) => {
-              const dateText = formatStoryDate(story.createdAt.toDate());
+              const dateText = formatStoryDate(new Date(story.created_at));
               return (
                 <Link
                   key={story.id}

@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Timestamp } from "firebase/firestore";
 import { useStories } from "../../hooks/useStories";
 import type { Story } from "../../types/story";
 import styles from "./StoryPage.module.css";
@@ -8,9 +7,9 @@ const CATEGORIES = ["Creative Agency", "Creative Studio: LODN", "Impact"];
 
 type ModalTab = "brief" | "detail";
 
-function formatDate(ts: Timestamp | undefined): string {
-  if (!ts) return "";
-  const d = ts.toDate();
+function formatDate(isoDate: string | undefined): string {
+  if (!isoDate) return "";
+  const d = new Date(isoDate);
   const y = d.getFullYear();
   const MM = String(d.getMonth() + 1).padStart(2, "0");
   const dd = String(d.getDate()).padStart(2, "0");
@@ -74,7 +73,7 @@ export default function StoryPage() {
                 </div>
                 <div className={styles["featured-txt-box"]}>
                   <p className={styles["featured-date"]}>
-                    {formatDate(featured.createdAt)}
+                    {formatDate(featured.created_at)}
                   </p>
                   <h3 className={styles["featured-title"]}>
                     {featured.title}
@@ -127,7 +126,7 @@ export default function StoryPage() {
                 <li key={item.id} onClick={() => openModal(item)}>
                   <div className={styles["list-txt"]}>
                     <p className={styles["list-date"]}>
-                      {formatDate(item.createdAt)}
+                      {formatDate(item.created_at)}
                     </p>
                     <h4>{item.title}</h4>
                   </div>

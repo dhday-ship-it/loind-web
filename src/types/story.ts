@@ -1,5 +1,3 @@
-import type { Timestamp } from "firebase/firestore";
-
 export type StoryCategory = "Creative Agency" | "Studio" | "Impact" | string;
 
 export interface Story {
@@ -11,9 +9,7 @@ export interface Story {
   summary?: string;
   detail: string;
   link?: string;
-  createdAt: Timestamp;
+  created_at: string;
 }
 
-export type StoryPayload = Omit<Story, "id" | "createdAt"> & {
-  createdAt: Date;
-};
+export type StoryPayload = Omit<Story, "id" | "created_at">;
