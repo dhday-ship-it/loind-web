@@ -5,6 +5,7 @@ import styles from "./StoryPage.module.css";
 
 const CATEGORIES = ["Creative Agency", "Creative Studio: LODN", "Impact"];
 const PAGE_SIZE = 3;
+const FEATURED_SLIDE_INTERVAL_MS = 5000;
 
 type ModalTab = "brief" | "detail";
 
@@ -23,8 +24,14 @@ export default function StoryPage() {
   const [openStoryId, setOpenStoryId] = useState<string | null>(null);
   const [modalTab, setModalTab] = useState<ModalTab>("brief");
   const [page, setPage] = useState(1);
+  const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [featuredTransition, setFeaturedTransition] = useState(true);
 
-  const featured = stories.length ? stories[0] : null;
+  const featuredList = stories.slice(0, 3);
+  // Append a clone of the first slide so the loop can always advance forward
+  // instead of sliding backward when wrapping from the last slide to the first.
+  const featuredSlides =
+    featuredList.length > 1 ? [...featuredList, featuredList[0]] : featuredList;
   const recommendList = stories.filter((s) => s.is_recommended).slice(0, 5);
 
   const storyData = useMemo(() => {
@@ -49,6 +56,35 @@ export default function StoryPage() {
   useEffect(() => {
     setPage(1);
   }, [activeCategory]);
+
+  useEffect(() => {
+    setFeaturedIndex(0);
+    setFeaturedTransition(true);
+  }, [featuredList.length]);
+
+  useEffect(() => {
+    if (featuredList.length <= 1) return;
+    const id = window.setInterval(() => {
+      setFeaturedTransition(true);
+      setFeaturedIndex((prev) => prev + 1);
+    }, FEATURED_SLIDE_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [featuredList.length]);
+
+  // After sliding onto the appended clone slide, snap back to the real first
+  // slide with the transition disabled so the jump is invisible.
+  function handleFeaturedTransitionEnd() {
+    if (featuredIndex === featuredSlides.length - 1) {
+      setFeaturedTransition(false);
+      setFeaturedIndex(0);
+    }
+  }
+
+  useEffect(() => {
+    if (featuredTransition) return;
+    const raf = requestAnimationFrame(() => setFeaturedTransition(true));
+    return () => cancelAnimationFrame(raf);
+  }, [featuredTransition]);
 
   function openModal(story: Story) {
     setOpenStoryId(story.id);
@@ -76,33 +112,65 @@ export default function StoryPage() {
     <>
       <section className={styles["featured-section"]}>
         <div className="container">
-          <div
-            className={styles["featured-grid"]}
-            onClick={() => featured && openModal(featured)}
-          >
-            {featured && (
-              <>
-                <div className={styles["featured-img-box"]}>
-                  <img src={featured.img} alt={featured.title} />
-                </div>
-                <div className={styles["featured-txt-box"]}>
-                  <p className={styles["featured-date"]}>
-                    {formatDate(featured.created_at)}
-                  </p>
-                  <h3 className={styles["featured-title"]}>
-                    {featured.title}
-                  </h3>
-                  <p className={styles["featured-desc"]}>
-                    {featured.text || ""}
-                  </p>
-                  <div
-                    className={styles["view-featured-detail"]}
-                    onClick={() => openModal(featured)}
-                  >
-                    스토리 보기 →
+          <div className={styles["featured-slider"]}>
+            <div
+              className={styles["featured-slider-track"]}
+              style={{
+                transform: `translateX(-${featuredIndex * 100}%)`,
+                transition: featuredTransition
+                  ? undefined
+                  : "none",
+              }}
+              onTransitionEnd={(e) => {
+                if (e.propertyName === "transform") {
+                  handleFeaturedTransitionEnd();
+                }
+              }}
+            >
+              {featuredSlides.map((story, i) => (
+                <div
+                  key={`${story.id}-${i}`}
+                  className={styles["featured-grid"]}
+                  onClick={() => openModal(story)}
+                >
+                  <div className={styles["featured-img-box"]}>
+                    <img src={story.img} alt={story.title} />
+                  </div>
+                  <div className={styles["featured-txt-box"]}>
+                    <p className={styles["featured-date"]}>
+                      {formatDate(story.created_at)}
+                    </p>
+                    <h3 className={styles["featured-title"]}>
+                      {story.title}
+                    </h3>
+                    <p className={styles["featured-desc"]}>
+                      {story.text || ""}
+                    </p>
+                    <div className={styles["view-featured-detail"]}>
+                      스토리 보기 →
+                    </div>
                   </div>
                 </div>
-              </>
+              ))}
+            </div>
+            {featuredList.length > 1 && (
+              <div className={styles["featured-dots"]}>
+                {featuredList.map((story, i) => (
+                  <span
+                    key={story.id}
+                    className={
+                      i === featuredIndex % featuredList.length
+                        ? styles.active
+                        : undefined
+                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFeaturedTransition(true);
+                      setFeaturedIndex(i);
+                    }}
+                  />
+                ))}
+              </div>
             )}
           </div>
         </div>

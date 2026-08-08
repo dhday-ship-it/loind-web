@@ -5,12 +5,39 @@ ul {
 .featured-section {
   padding: 52px 0 36px;
 }
+.featured-slider {
+  position: relative;
+  overflow: hidden;
+}
+.featured-slider-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
 .featured-grid {
+  flex: 0 0 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: 40px;
   align-items: center;
   cursor: pointer;
+}
+.featured-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.featured-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.featured-dots span.active {
+  background: #55689b;
 }
 .featured-img-box {
   width: 100%;
