@@ -28,6 +28,26 @@ export interface LodnBrand {
   features: LodnFeature[];
 }
 
+export interface DaeheeBanner {
+  image: string;
+  dDay: string;
+  title: string;
+  topicLabel: string;
+  topic: string;
+  verseLabel: string;
+  verse: string;
+  dateLabel: string;
+  date: string;
+}
+
+export interface ValueItem {
+  icon: DaeheeIcon;
+  name: string;
+  topic: string;
+  verse: string;
+  desc: string;
+}
+
 export interface DaeheeStage {
   name: string;
   line: string;
@@ -55,6 +75,8 @@ export interface DaeheeBrand {
   standardLevel: number;
   standard: string;
   intro: string;
+  banner: DaeheeBanner;
+  schedule: ValueItem[];
   stages: DaeheeStage[];
   servicesEyebrow: string;
   servicesTitle: string;
@@ -136,6 +158,47 @@ export const daeheeBrand: DaeheeBrand = {
   standard: "TBD",
   intro:
     "Glowy는 LOIND의 임팩트 브랜드입니다. 기쁨은 머무르지 않는다고 믿습니다. 한 사람에게서 시작된 기쁨은 삶이 되고, 결국 곁으로 번져나갑니다.",
+  banner: {
+    image: "/INDEX_DAEHEE.png",
+    dDay: "D-129",
+    title: "Glowy",
+    topicLabel: "",
+    topic: "",
+    verseLabel: "",
+    verse: "",
+    dateLabel: "",
+    date: "하나님과 사람 사이에서 축복의 통로 쓰임받는 일들을 만들어갑니다",
+  },
+  schedule: [
+    {
+      icon: "fund",
+      name: "기금",
+      topic: "주제가 들어갑니다",
+      verse: "말씀이 들어갑니다",
+      desc: "설명이 들어갑니다",
+    },
+    {
+      icon: "space",
+      name: "공간",
+      topic: "주제가 들어갑니다",
+      verse: "말씀이 들어갑니다",
+      desc: "설명이 들어갑니다",
+    },
+    {
+      icon: "community",
+      name: "커뮤니티",
+      topic: "주제가 들어갑니다",
+      verse: "말씀이 들어갑니다",
+      desc: "설명이 들어갑니다",
+    },
+    {
+      icon: "app",
+      name: "앱",
+      topic: "주제가 들어갑니다",
+      verse: "말씀이 들어갑니다",
+      desc: "설명이 들어갑니다",
+    },
+  ],
   stages: [
     {
       name: "누림",

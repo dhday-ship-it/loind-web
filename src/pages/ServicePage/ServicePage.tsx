@@ -1,11 +1,10 @@
-import { useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import styles from "./ServicePage.module.css";
 import {
   loerBrand,
   lodnBrand,
   daeheeBrand,
   type ServiceCategory,
-  type DaeheeIcon,
 } from "../../data/serviceBrands";
 
 type BrandKey = "loer" | "lodn" | "daehee";
@@ -261,202 +260,71 @@ function LodnContent() {
   );
 }
 
-const channelIconPaths: Record<DaeheeIcon, ReactNode> = {
-  fund: (
-    <>
-      <ellipse cx="12" cy="6" rx="7" ry="3" />
-      <path d="M5 6v5c0 1.66 3.13 3 7 3s7-1.34 7-3V6" />
-      <path d="M5 11v5c0 1.66 3.13 3 7 3s7-1.34 7-3v-5" />
-    </>
-  ),
-  space: (
-    <>
-      <path d="M3 10.5 12 3l9 7.5" />
-      <path d="M5 9.5V21h14V9.5" />
-      <path d="M9.5 21v-6h5v6" />
-    </>
-  ),
-  community: (
-    <>
-      <circle cx="9" cy="9" r="3.2" />
-      <circle cx="17" cy="10.5" r="2.4" />
-      <path d="M3.5 20c0-3.3 2.5-6 5.5-6s5.5 2.7 5.5 6" />
-      <path d="M14.8 15.2c2.3.3 4.2 2.4 4.2 4.8" />
-    </>
-  ),
-  app: (
-    <>
-      <rect x="6" y="2.5" width="12" height="19" rx="2.5" />
-      <path d="M10.5 18.2h3" />
-    </>
-  ),
-};
-
-function ChannelIcon({ icon }: { icon: DaeheeIcon }) {
-  return (
-    <svg
-      className={styles["channel-icon"]}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {channelIconPaths[icon]}
-    </svg>
-  );
-}
-
-/** Faithful port of legacy `rippleIcon()` — used as a fallback when a stage has no image. */
-function RippleIcon({ stageIdx }: { stageIdx: number }) {
-  const gold = "var(--dh-gold)";
-  if (stageIdx === 0) {
-    return (
-      <svg className={styles["stage-ripple"]} viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="11" fill={gold} />
-      </svg>
-    );
-  }
-  if (stageIdx === 1) {
-    return (
-      <svg className={styles["stage-ripple"]} viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="9" fill={gold} />
-        <circle
-          className={styles.ring}
-          cx="50"
-          cy="50"
-          r="24"
-          fill="none"
-          stroke={gold}
-          strokeWidth={2}
-          opacity={0.5}
-        />
-      </svg>
-    );
-  }
-  return (
-    <svg className={styles["stage-ripple"]} viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="8" fill={gold} />
-      <circle
-        className={styles.ring}
-        cx="50"
-        cy="50"
-        r="20"
-        fill="none"
-        stroke={gold}
-        strokeWidth={2}
-        opacity={0.55}
-      />
-      <circle
-        className={`${styles.ring} ${styles["ring-anim"]}`}
-        cx="50"
-        cy="50"
-        r="33"
-        fill="none"
-        stroke={gold}
-        strokeWidth={2}
-        opacity={0.32}
-      />
-      <circle
-        className={`${styles.ring} ${styles["ring-anim"]}`}
-        style={{ animationDelay: "1s" }}
-        cx="50"
-        cy="50"
-        r="46"
-        fill="none"
-        stroke={gold}
-        strokeWidth={1.5}
-        opacity={0.16}
-      />
-    </svg>
-  );
-}
-
 function DaeheeContent() {
   const d = daeheeBrand;
+  const b = d.banner;
+  const [activeValue, setActiveValue] = useState(0);
+
   return (
     <>
       <section className={styles["daehee-hero"]}>
         <div className="container">
-          <p className={styles["daehee-eyebrow"]}>
-            {d.subTitle} · {d.bannerTitle}
-          </p>
-          {d.standard && d.standard !== "TBD" && (
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <PrincipleBadge level={d.standardLevel} text={d.standard} />
+          <div className={styles["daehee-banner"]}>
+            <div className={styles["daehee-banner-image"]}>
+              <img src={b.image} alt={b.title} />
             </div>
-          )}
-          <h2 className={styles["daehee-question"]}>
-            어떤 <span className={styles["daehee-accent"]}>기쁨</span>에
-            <br />
-            참여하기 원하세요?{" "}
-            <span className={styles["daehee-accent"]}>:)</span>
-          </h2>
-          <p className={styles["daehee-intro"]}>{d.intro}</p>
-        </div>
-      </section>
-      <section className={styles["daehee-stages"]}>
-        <div className="container">
-          <div className={styles["stage-flow"]}>
-            {d.stages.map((s, i) => (
-              <div key={s.name} style={{ display: "contents" }}>
-                {i > 0 && <div className={styles["stage-arrow"]}>→</div>}
-                <div className={styles["stage-block"]}>
-                  {s.image ? (
-                    <div
-                      className={styles["stage-media"]}
-                      style={{ backgroundImage: `url('${s.image}')` }}
-                    />
-                  ) : (
-                    <div
-                      className={`${styles["stage-media"]} ${styles["stage-media-empty"]}`}
-                    >
-                      <RippleIcon stageIdx={i} />
-                    </div>
-                  )}
-                  <p className={styles["stage-name"]}>{s.name}</p>
-                  <p className={styles["stage-line"]}>{s.line}</p>
-                  <p className={styles["stage-desc"]}>{s.desc}</p>
-                </div>
+            <div className={styles["daehee-banner-info"]}>
+              <h3 className={styles["daehee-banner-title"]}>{b.title}</h3>
+              <div className={styles["daehee-banner-details"]}>
+                {b.topicLabel && (
+                  <div className={styles["daehee-banner-row"]}>
+                    <span className={styles["daehee-banner-label"]}>{b.topicLabel}</span>
+                    <p className={styles["daehee-banner-value"]}>{b.topic}</p>
+                  </div>
+                )}
+                {b.verseLabel && (
+                  <div className={styles["daehee-banner-row"]}>
+                    <span className={styles["daehee-banner-label"]}>{b.verseLabel}</span>
+                    <p className={styles["daehee-banner-value"]}>{b.verse}</p>
+                  </div>
+                )}
+                {b.date && (
+                  <div className={styles["daehee-banner-row"]}>
+                    {b.dateLabel && <span className={styles["daehee-banner-label"]}>{b.dateLabel}</span>}
+                    <p className={styles["daehee-banner-value"]}>{b.date}</p>
+                  </div>
+                )}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
-      <section className={styles["daehee-services"]}>
+
+      <section className={styles["schedule-section"]}>
         <div className="container">
-          <p className={styles["daehee-eyebrow"]}>{d.servicesEyebrow}</p>
-          <h3 className={styles["daehee-services-title"]}>{d.servicesTitle}</h3>
-          <p className={styles["daehee-services-intro"]}>{d.servicesIntro}</p>
-          <div className={styles["daehee-programs"]}>
-            {d.services.map((s) => (
-              <div key={s.title} className={styles["dh-program"]}>
-                <div className={styles["dh-program-media"]}>
-                  <ChannelIcon icon={s.icon} />
-                  <span className={styles["media-caption"]}>사진 준비 중</span>
+          <p className={styles["schedule-eyebrow"]}>SERVICE</p>
+          <h2 className={styles["schedule-title"]}>I am a Christian.</h2>
+          <div className={styles["schedule-panel"]}>
+            <div className={styles["schedule-list"]}>
+              {d.schedule.map((item, i) => (
+                <div
+                  key={item.name}
+                  className={`${styles["schedule-item"]} ${i === activeValue ? styles.active : ""}`}
+                  onClick={() => setActiveValue(i)}
+                >
+                  <span className={styles["schedule-name"]}>{item.name}</span>
                 </div>
-                <div className={styles["dh-program-content"]}>
-                  <div className={styles["dh-program-heading"]}>
-                    <ChannelIcon icon={s.icon} />
-                    <h4 className={styles["dh-program-title"]}>{s.title}</h4>
-                  </div>
-                  <div className={styles["dh-program-list"]}>
-                    {s.items.map((it) => (
-                      <div key={it.subtitle}>
-                        <p className={styles["dh-item-subtitle"]}>
-                          {it.subtitle}
-                        </p>
-                        <p className={styles["dh-item-desc"]}>{it.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                  {s.callout && (
-                    <div className={styles["dh-callout"]}>{s.callout}</div>
-                  )}
+              ))}
+            </div>
+            <div className={styles["schedule-detail"]}>
+              {d.schedule[activeValue] && (
+                <div className={styles["detail-card"]}>
+                  <span className={styles["detail-topic"]}>{d.schedule[activeValue].topic}</span>
+                  <h4 className={styles["detail-name"]}>{d.schedule[activeValue].name}</h4>
+                  <p className={styles["detail-desc"]}>{d.schedule[activeValue].desc}</p>
                 </div>
-              </div>
-            ))}
+              )}
+            </div>
           </div>
         </div>
       </section>
