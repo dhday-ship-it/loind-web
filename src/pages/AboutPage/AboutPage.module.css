@@ -1,80 +1,4 @@
-/* --- AboutPage-specific styles (legacy about.html <style> block,
-   minus reset / .container / header / nav / footer, which are handled
-   by src/styles/global.css and the shared Header/Footer components) --- */
-
-/* 1240px 컨테이너 (레거시 about.html 전용 24px 패딩 버전) */
-.container {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 24px;
-  width: 100%;
-}
-
-/* 카테고리 내비 */
-.dot-nav {
-  position: fixed;
-  right: 28px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 90;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-}
-.dot-nav-item {
-  position: relative;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #d8d8df;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition:
-    background-color 0.25s ease,
-    transform 0.25s ease;
-}
-.dot-nav-item:hover {
-  background-color: #8e8e93;
-}
-.dot-nav-item.active {
-  background-color: #111111;
-  transform: scale(1.5);
-}
-.dot-nav-item::before {
-  content: attr(data-label);
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
-  font-size: 11px;
-  font-weight: 600;
-  color: #111111;
-  background: #ffffff;
-  padding: 4px 9px;
-  border-radius: 6px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-.dot-nav-item:hover::before {
-  opacity: 1;
-}
-.dot-nav-item.active::before {
-  opacity: 1;
-}
-/* 점만 표시하고 텍스트 라벨은 아예 없는 항목 (예: 인트로) */
-.dot-nav-item.dot-plain::before {
-  content: none;
-  display: none;
-}
-/* 버튼 클릭으로 스크롤 이동하는 동안에는 라벨이 화면에 떠 있지 않도록 숨김 */
-.dot-nav.is-scrolling .dot-nav-item::before {
-  opacity: 0 !important;
-}
+/* --- AboutPage-specific styles --- */
 
 /* --- 콘텐츠 본문 레이아웃 영역 --- */
 .snap-main {
@@ -82,687 +6,524 @@
   padding-top: var(--chrome-h, 96px);
 }
 
-/* 거대한 LOIND 탑 섹션 껍데기 (스냅 단위 아님, 안쪽 패널들이 각각 스냅됨) */
-.loind-top-mega-section {
-  background-color: #ffffff;
-  width: 100%;
-}
-
 /* 개별 스냅 단위 컴포넌트 (커버 영역) */
 .snap-panel {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 100px 0;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  scroll-margin-top: var(--chrome-h, 96px);
 }
 
-/* 콘텐츠 블록 내부 각 구간을 독립 스냅 패널로 분리 */
-.content-snap-panel {
-  min-height: calc(100vh - var(--chrome-h, 96px));
-  min-height: calc(100dvh - var(--chrome-h, 96px));
+/* --- About 히어로 --- */
+.about-hero {
+  position: relative;
+  background: #fff;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  scroll-margin-top: var(--chrome-h, 96px);
-  padding: 60px 0;
-}
-
-/* 최상단 브랜드 비주얼 커버 */
-.cover-sub-panel {
-  min-height: calc(100vh - var(--chrome-h, 96px));
-  min-height: calc(100dvh - var(--chrome-h, 96px));
   align-items: center;
-  text-align: center;
   padding: 0;
 }
-.cover-sub-panel .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 48px;
-  margin: auto 0;
-}
-.cover-logo-img {
-  display: block;
-  max-width: min(650px, 85%);
+.about-hero-content {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  height: auto;
-  animation: logoRiseIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 60px 40px;
+  display: flex;
+  flex-direction: column;
+}
+.about-hero-top {
+  margin-bottom: 0;
+}
+.about-hero-title {
+  font-family: "Pretendard", sans-serif;
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 900;
+  color: #111;
+  letter-spacing: -2px;
+  line-height: 1.15;
+  margin: 0 0 20px 0;
+}
+.about-hero-subtitle {
+  font-family: "Pretendard", sans-serif;
+  font-size: clamp(18px, 2.5vw, 26px);
+  font-weight: 600;
+  color: #333;
+  letter-spacing: -0.5px;
+  margin: 0;
 }
 
-@keyframes logoRiseIn {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* --- About 동등 섹션 (Calling / Vision / Mission) --- */
+.about-sections {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 60px 40px;
 }
-
-.loind-contents-block {
-  padding: 0;
+.about-section-block {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 60px;
+  align-items: start;
 }
-
-.content-inner-box {
-  max-width: 100%;
+.about-section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #111;
+  padding-top: 3px;
+}
+.about-section-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #111;
+}
+.about-section-content {
+  max-width: 600px;
+}
+.about-section-heading {
+  font-family: "Pretendard", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.5;
+  margin: 0 0 12px 0;
   word-break: keep-all;
 }
-
-/* 하이라이트 밑줄 공통 클래스 */
-.txt-glow {
-  font-weight: 700;
-  color: #111111;
-  background: linear-gradient(
-    to top,
-    rgba(85, 104, 155, 0.14) 40%,
-    transparent 40%
-  );
-  padding: 1px 4px;
-  border-radius: 4px;
+.about-section-desc {
+  font-family: "Pretendard", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #888;
+  line-height: 1.9;
+  word-break: keep-all;
+  margin: 0;
 }
-
-/* --- 로인드 내부 컴포넌트 세부 마감 간격 조율 --- */
-.world-draw-wrap {
+.about-section-desc b {
+  display: block;
+  margin-top: 8px;
+  font-weight: 400;
+  color: #bbb;
+  font-size: 13px;
+}
+.verse-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 0 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: "Pretendard", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #55689b;
+  cursor: pointer;
+}
+.verse-toggle-icon {
+  display: inline-flex;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+.verse-toggle-icon.open {
+  transform: rotate(180deg);
+}
+.verse-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-left: 18px;
+  padding-left: 14px;
+  border-left: 2px solid #eee;
+  transition: grid-template-rows 0.35s ease;
+}
+.verse-panel.open {
+  grid-template-rows: 1fr;
+}
+.verse-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+.about-section-verse {
+  font-family: "Pretendard", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #999;
+  line-height: 1.9;
+  word-break: keep-all;
+  margin: 12px 0 0 0;
+  padding: 0;
+}
+.about-section-verse-highlight {
+  color: #55689b;
+}
+.mission-diagram {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  width: 100%;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
 }
-
-/* 두 영역을 구분 짓는 미니멀 라인 스타일링 */
-.section-divider {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 24px;
+.mission-diagram-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 12px;
+  padding-bottom: 20px;
 }
-.section-divider .line {
+.mission-diagram-step:last-child {
+  padding-bottom: 0;
+}
+.mission-diagram-step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 22px;
+  bottom: 0;
+  width: 1px;
+  background: #e5e5e5;
+}
+.mission-diagram-num {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  border: 1px solid #55689b;
+  background: #fff;
+  font-family: "Pretendard", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #55689b;
+}
+.mission-diagram-label {
+  font-family: "Pretendard", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  line-height: 1.4;
+  word-break: keep-all;
+  margin: 0;
+  padding-top: 2px;
+}
+.mission-diagram-label span {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #999;
+}
+.about-section-divider {
   width: 100%;
   height: 1px;
-  background-color: #eaeaea;
+  background: #f0f0f0;
+  margin: 48px 0;
 }
-
-/* 단 구분 구조 스트림 영역 */
-.loind-content-stream {
+.about-section-arrow {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1060px;
-  margin: 0 auto;
-  position: relative;
-}
-.stream-row {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 70px;
   align-items: center;
-  opacity: 0;
-  transform: translateY(35px);
-  transition:
-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  justify-content: center;
+  margin: 36px 0;
+  font-size: 16px;
+  color: #ddd;
+  letter-spacing: 2px;
 }
-.stream-row.reverse-layout {
-  grid-template-columns: 0.88fr 1.12fr;
-  gap: 80px;
+.principle-pillars {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 2px;
 }
-.stream-row.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+.pillar-text {
+  font-family: "Pretendard", sans-serif;
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 700;
+  color: #333;
+  letter-spacing: -0.3px;
 }
-
-.stream-text h3 {
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 22px;
-  color: #111111;
-  letter-spacing: -0.02em;
-}
-.stream-text p {
-  font-size: 17px;
-  line-height: 2;
-  color: #3a3a3a;
+.pillar-arrow {
+  font-size: 16px;
   font-weight: 400;
-  letter-spacing: -0.01em;
+  color: #55689b;
 }
 
-.stream-img-box {
-  width: 100%;
-  aspect-ratio: 4/3;
-  background: radial-gradient(circle at center, #fbfaf7 0%, #ededed 100%);
-  border: 1px solid #ededed;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.03);
-  position: relative;
-  z-index: 2;
+/* --- Culture / Way of Working --- */
+.culture-section {
+  background: #fff;
+  padding: 40px 0 120px;
 }
-.stream-img-box img {
+.culture-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+.culture-divider {
+  width: 100%;
+  height: 1px;
+  background: #eee;
+  margin-bottom: 32px;
+}
+.culture-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Pretendard", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 48px;
+}
+.culture-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #111;
+}
+.culture-cards {
+  display: flex;
+}
+.culture-banner {
+  position: relative;
+  width: 100%;
+  min-height: clamp(200px, 22vw, 280px);
+  border-radius: 24px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(160deg, #3d4d78 0%, #55689b 55%, #8fa8c4 100%);
+  box-shadow: 0 24px 44px rgba(85, 104, 155, 0.25);
+}
+.culture-banner-text {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  font-family: "Pretendard", sans-serif;
+  font-size: clamp(20px, 2.6vw, 30px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.4px;
+  word-break: keep-all;
+  line-height: 1.5;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  margin: 0;
+}
+
+/* --- Leadership --- */
+.leadership-section {
+  background: #fff;
+  padding: 20px 0 120px;
+}
+.leadership-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+.leadership-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 40px;
+}
+.leadership-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+}
+.leadership-photo {
+  position: relative;
+  flex-shrink: 0;
+  width: 320px;
+  aspect-ratio: 3 / 4.3;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #f4f4f6 0%, #e6e8ec 100%);
+  border: 1px solid #ececef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.leadership-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
-
-.stream-right-column {
+.leadership-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 22px;
-  width: 100%;
+  padding-top: 4px;
+  max-width: 600px;
 }
-.stream-arrow-indicator {
-  font-size: 26px;
-  color: #55689b;
-  font-weight: 700;
-  animation: bounceArrow 2s infinite ease-in-out;
-  margin-top: 5px;
-}
-
-.stream-extracted-label {
-  font-family: "Courier New", ui-monospace, monospace;
-  width: 170px;
-  aspect-ratio: 2.05 / 1;
-  padding: 13px 14px;
-  border: 0;
-  text-align: left;
-  background: #55689b;
-  color: #ffffff;
-  box-shadow: 0 16px 32px rgba(85, 104, 155, 0.16);
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-.stream-extracted-label::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.09) 0 1px,
-    transparent 1px 3px
-  );
-  mix-blend-mode: soft-light;
-  pointer-events: none;
-}
-
-@keyframes bounceArrow {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translateY(10px);
-    opacity: 1;
-  }
-}
-
-/* --- Labels in Heart 인터랙션 세팅 --- */
-.heart-demo {
-  --ink: #141414;
-  --paper: #f6f5f1;
-  --line: rgba(20, 20, 20, 0.12);
-  --active: #ffffff;
-  color: var(--ink);
-  background: transparent;
-  border-radius: 0;
-  overflow: visible;
-  box-shadow: none;
-  width: 100%;
-}
-.heart-demo button {
-  font: inherit;
-  color: inherit;
-}
-
-.heart-demo .caption-index,
-.label-card,
-.stream-extracted-label {
-  font-family: "Courier New", ui-monospace, monospace;
-}
-
-.heart-demo .interaction-stage {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 550px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  background: #fafafc;
-  isolation: isolate;
-}
-.heart-demo .stage-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(20, 20, 20, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(20, 20, 20, 0.04) 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.65),
-    transparent 84%
-  );
-}
-.heart-demo .labels-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-}
-
-.label-card {
-  position: absolute;
-  width: clamp(125px, 10vw, 155px);
-  aspect-ratio: 2.05 / 1;
-  padding: 11px 12px;
-  border: 0;
-  text-align: left;
-  background: var(--label-color);
-  cursor: pointer;
-  pointer-events: auto;
-  transform-origin: center;
-  transition:
-    filter 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.label-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.09) 0 1px,
-    transparent 1px 3px
-  );
-  mix-blend-mode: soft-light;
-  pointer-events: none;
-}
-.label-card:hover,
-.label-card:focus-visible {
-  filter: saturate(1.08) contrast(1.03);
-  box-shadow: 0 22px 36px rgba(0, 0, 0, 0.18);
-  outline: 2px solid #141414;
-  outline-offset: 4px;
-}
-
-.label-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 11px;
-}
-.label-name {
-  display: block;
-  margin-top: 3px;
-  font-weight: 700;
-  font-size: 11px;
-}
-.label-meta {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 5px;
-  margin-top: 5px;
-  font-size: 7px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-.label-vertical {
-  position: absolute;
-  left: 6px;
-  bottom: 5px;
-  transform: rotate(-90deg);
-  transform-origin: left bottom;
-  font-size: 8px;
-  font-weight: 700;
-}
-
-.heart-demo .heart-stage {
-  position: absolute;
-  inset: 11% 8% 12%;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-}
-.heart-demo .heart-shell {
-  position: relative;
-  width: clamp(210px, 24vw, 290px);
-  transform: translateY(3%);
-  animation: heartFloat 6s ease-in-out infinite;
-}
-.heart-demo .heart {
-  display: block;
-  width: 100%;
-  overflow: visible;
-  filter: drop-shadow(0 18px 25px rgba(0, 0, 0, 0.08));
-}
-.heart-demo .heart-fill {
-  opacity: 0.16;
-  transition: opacity 0.5s ease;
-  filter: url(#paperGrain);
-}
-.heart-demo .heart.is-filled .heart-fill {
-  opacity: 1;
-}
-.heart-demo .heart-outline {
-  fill: rgba(255, 255, 255, 0.32);
-  stroke: var(--ink);
-  stroke-width: 4;
-  vector-effect: non-scaling-stroke;
-}
-.heart-demo .heart-inner-line {
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 1.3;
-  stroke-dasharray: 4 7;
-  opacity: 0.42;
-  vector-effect: non-scaling-stroke;
-}
-.heart-demo .heart-notes {
-  fill: var(--ink);
-  stroke: var(--ink);
-  stroke-width: 1;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  opacity: 0.58;
-}
-.heart-demo .heart-notes line {
-  opacity: 0.4;
-}
-.heart-demo .heart-shadow {
-  position: absolute;
-  left: 17%;
-  right: 17%;
-  bottom: -2%;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.06);
-  filter: blur(17px);
-  transform: scaleX(0.88);
-  opacity: 0.45;
-}
-
-.heart-demo .stage-caption {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-  text-align: left;
-}
-.heart-demo .caption-index {
-  display: block;
-  font-size: 15px;
-  font-weight: 700;
-  color: #55689b;
-  margin-bottom: 8px;
-}
-.heart-demo .stage-caption h3 {
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 22px;
-  color: #111111;
-  letter-spacing: -0.02em;
-}
-.heart-demo .stage-caption p {
-  margin: 0;
-  font-size: 17px;
-  line-height: 2;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: #3a3a3a;
+.leadership-name {
   font-family: "Pretendard", sans-serif;
-}
-
-.flying-label {
-  position: fixed !important;
-  z-index: 9999 !important;
-  pointer-events: none !important;
-  margin: 0 !important;
-}
-
-@keyframes heartFloat {
-  0%,
-  100% {
-    transform: translateY(3%) rotate(-1deg);
-  }
-  50% {
-    transform: translateY(0) rotate(1deg);
-  }
-}
-
-/* --- LOIND IDENTITY / LOIND PRINCIPLE 공통 독립 스냅 섹션 --- */
-:global(#identitySection),
-:global(#principleSection) {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  scroll-margin-top: var(--chrome-h, 180px);
-  min-height: calc(100vh - var(--chrome-h, 180px));
-  min-height: calc(100dvh - var(--chrome-h, 180px));
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 100px 0;
-  background-color: #ffffff;
-}
-
-/* --- LOIND IDENTITY 섹션 (이름의 의미 + CI 컬러) --- */
-.identity-wrapper {
-  width: 100%;
-}
-
-/* 로고(좌) + 이름 의미 텍스트(우) 2단 레이아웃 */
-.identity-header-row {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 60px;
-  align-items: center;
-  margin-bottom: 70px;
-}
-.identity-logo-col {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.identity-logo-img {
-  display: block;
-  width: 100%;
-  max-width: 320px;
-  height: auto;
-}
-.identity-text-col {
-  text-align: left;
-}
-.identity-text-col h2 {
-  font-size: 32px;
-  font-weight: 800;
-  color: #111111;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 900;
+  color: #111;
   letter-spacing: -0.5px;
-  margin-bottom: 24px;
+  margin: 0 0 16px 0;
 }
-.identity-text-col .identity-meaning-text {
-  font-size: 18px;
-  line-height: 1.9;
-  color: #3a3a3a;
+.leadership-name span {
+  color: #ccc;
+  font-weight: 400;
+  margin: 0 2px;
+}
+.leadership-quote {
+  font-family: "Pretendard", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.7;
   word-break: keep-all;
-  margin-bottom: 16px;
+  margin: 0 0 32px 0;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #f0f0f0;
 }
-.identity-text-col .identity-meaning-text:last-child {
+.leadership-block {
+  margin-bottom: 28px;
+}
+.leadership-block:last-child {
   margin-bottom: 0;
 }
-
-.scatter-stage-wrapper {
-  position: relative;
-  width: 100%;
+.leadership-block-title {
+  font-family: "Pretendard", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #55689b;
+  letter-spacing: 0.3px;
+  margin: 0 0 12px 0;
 }
-.scatter-stage-title {
-  margin-bottom: 55px;
-  text-align: center;
+.leadership-bio {
+  font-family: "Pretendard", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  line-height: 1.9;
+  word-break: keep-all;
+  white-space: pre-line;
+  margin: 0;
 }
-.scatter-stage-title h2 {
-  font-size: 32px;
-  font-weight: 800;
-  color: #111111;
-  letter-spacing: -0.5px;
-}
-.scatter-cards-arena {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
-  width: 100%;
-}
-.scatter-card {
-  background: #ffffff;
-  border-radius: 28px;
-  padding: 55px 35px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+.leadership-career {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition:
-    transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-    box-shadow 0.3s ease;
+  gap: 10px;
 }
-.scatter-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 30px 60px rgba(85, 104, 155, 0.08);
-  border-color: rgba(85, 104, 155, 0.15);
-}
-.card-graphic-icon {
-  font-size: 44px;
-  font-weight: 700;
-  line-height: 1;
-  margin-bottom: 35px;
-  background: linear-gradient(135deg, #4da1ff 0%, #a276ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  user-select: none;
-}
-.card-title-group {
-  margin-bottom: 24px;
-  width: 100%;
-}
-.std-card-main-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: #111111;
-  line-height: 1.2;
-}
-.std-card-sub-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #6c727f;
-  margin-top: 6px;
-}
-.std-card-main-desc {
+.leadership-career-row {
+  display: flex;
+  gap: 20px;
+  font-family: "Pretendard", sans-serif;
   font-size: 14px;
-  line-height: 1.8;
-  color: #4e5566;
-  text-align: center;
+  line-height: 1.6;
+}
+.leadership-career-year {
+  flex-shrink: 0;
+  width: 48px;
+  font-weight: 700;
+  color: #111;
+}
+.leadership-career-text {
+  color: #666;
+  word-break: keep-all;
+}
+
+/* --- Corporation --- */
+.corp-section {
+  background: #fff;
+  padding: 100px 0 120px;
+}
+.corp-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+.corp-brand {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  margin-top: 40px;
+}
+.corp-logo {
+  flex-shrink: 0;
+  width: 320px;
+  height: auto;
+  border: 1px solid #ececef;
+  border-radius: 24px;
+}
+.corp-name {
+  font-family: "Pretendard", sans-serif;
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 900;
+  color: #111;
+  letter-spacing: -0.5px;
+  margin: 0 0 12px 0;
+}
+.corp-desc {
+  font-family: "Pretendard", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  line-height: 1.9;
+  word-break: keep-all;
+  max-width: 620px;
+  margin: 0;
 }
 
 /* --- Responsive Media Queries --- */
-@media (max-width: 1200px) {
-  .scatter-cards-arena {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-}
-@media (max-width: 900px) {
-  .scatter-card {
-    padding: 45px 25px;
-  }
-  .stream-row,
-  .stream-row.reverse-layout {
-    grid-template-columns: 1fr !important;
-    gap: 45px;
-  }
-  .heart-demo .interaction-stage {
-    min-height: 480px;
-  }
-  .identity-header-row {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    text-align: center;
-  }
-  .identity-text-col {
-    text-align: center;
-  }
-  .identity-logo-img {
-    max-width: 220px;
+@media (max-width: 640px) {
+  .culture-banner {
+    padding: 28px 24px;
   }
 }
 @media (max-width: 768px) {
-  .dot-nav {
-    display: none;
-  }
   .snap-main {
     padding-top: 70px;
   }
-  .cover-sub-panel {
-    min-height: calc(100vh - 70px);
+  .culture-section {
+    padding: 72px 0;
   }
-  .cover-logo-img {
-    max-width: 70%;
+  .culture-inner {
+    padding: 0 28px;
   }
-  .content-snap-panel {
-    min-height: unset;
-    padding: 50px 0;
+  .leadership-section {
+    padding: 16px 0 72px;
   }
-  .identity-text-col h2 {
-    font-size: 24px;
+  .leadership-inner {
+    padding: 0 28px;
   }
-  .identity-meaning-text {
-    font-size: 16px;
+  .leadership-card {
+    flex-direction: column;
+    gap: 24px;
   }
-  .stream-text h3 {
-    font-size: 20px;
+  .leadership-photo {
+    width: 180px;
   }
-  .stream-text p {
-    font-size: 15px;
+  .corp-section {
+    padding: 72px 0;
   }
-  .heart-demo .interaction-stage {
-    min-height: 360px;
+  .corp-inner {
+    padding: 0 28px;
   }
-  .scatter-stage-title h2 {
-    font-size: 24px;
+  .corp-brand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
   }
-  .scatter-card {
-    padding: 36px 20px;
+  .about-hero-content {
+    padding: 120px 28px 60px;
   }
-  .std-card-main-title {
-    font-size: 22px;
-  }
-}
-@media (max-width: 650px) {
-  .scatter-cards-arena {
+  .about-section-block {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
   }
-}
-@media (max-width: 480px) {
-  .container {
-    padding: 0 18px;
-  }
-  .stream-text h3 {
-    font-size: 18px;
-  }
-  .heart-demo .interaction-stage {
-    min-height: 300px;
-  }
-  .scatter-card {
-    padding: 28px 16px;
+  .principle-pillars {
+    gap: 10px 14px;
   }
 }
