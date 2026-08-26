@@ -67,7 +67,7 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
   },
   impact: {
     desc: "크리스천이라는 신념 아래 모두의 기쁨이 되기 위한 마땅한 일들을 해나갑니다.",
-    caption: "Glowy 프로젝트 보기",
+    caption: "Impact 프로젝트 보기",
     image: "INDEX_DAEHEE.png",
   },
 };
@@ -75,7 +75,7 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
 const brandListItems: { key: BrandKey; label: string }[] = [
   { key: "agency", label: "크리에이티브 에이전시" },
   { key: "studio", label: "크리에이티브 스튜디오" },
-  { key: "impact", label: "임팩트 - Glowy" },
+  { key: "impact", label: "임팩트" },
 ];
 
 function formatStoryDate(date: Date): string {
