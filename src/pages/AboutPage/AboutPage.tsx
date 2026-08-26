@@ -298,8 +298,7 @@ export default function AboutPage() {
               <div>
                 <h3 className={styles["corp-name"]}>LOIND Corporation</h3>
                 <p className={styles["corp-desc"]}>
-                  로인드는 크리에이티브 에이전시 LOER, 크리에이티브 스튜디오
-                  LODN, 임팩트 브랜드 Glowy 등 여러 브랜드를 통해 크리스천
+                  로인드는 크리에이티브 에이전시, 크리에이티브 스튜디오, 임팩트 브랜드 Glowy 등 여러 브랜드를 통해 크리스천
                   정체성을 담은 사업을 운영하며, 각자의 자리에서 세상에 선한
                   영향력을 전합니다.
                 </p>
