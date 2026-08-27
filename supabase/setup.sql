@@ -12,8 +12,13 @@ create table if not exists public.stories (
   detail text not null,
   link text,
   is_recommended boolean not null default false,
+  is_home_featured boolean not null default false,
   created_at timestamptz not null default now()
 );
+
+-- 기존 프로젝트용: 컬럼이 없으면 추가 (메인페이지 노출 스토리 선택용)
+alter table public.stories
+  add column if not exists is_home_featured boolean not null default false;
 
 alter table public.stories enable row level security;
 

@@ -36,10 +36,14 @@ function AdminPage() {
   const [summary, setSummary] = useState("");
   const [detail, setDetail] = useState("");
   const [isRecommended, setIsRecommended] = useState(false);
+  const [isHomeFeatured, setIsHomeFeatured] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitLabel, setSubmitLabel] = useState("PUBLISH STORY");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const HOME_FEATURED_LIMIT = 3;
+  const homeFeaturedCount = stories.filter((s) => s.is_home_featured).length;
 
   const fetchStories = useCallback(async (): Promise<void> => {
     setListLoading(true);
@@ -90,6 +94,17 @@ function AdminPage() {
       alert("제목을 입력하세요.");
       return;
     }
+    if (isHomeFeatured) {
+      const alreadyFeatured = editId
+        ? (stories.find((s) => s.id === editId)?.is_home_featured ?? false)
+        : false;
+      if (!alreadyFeatured && homeFeaturedCount >= HOME_FEATURED_LIMIT) {
+        alert(
+          `메인페이지 노출 스토리는 최대 ${HOME_FEATURED_LIMIT}개까지 선택할 수 있습니다. 다른 스토리를 먼저 해제하세요.`,
+        );
+        return;
+      }
+    }
     setSubmitting(true);
     setSubmitLabel("PUBLISHING...");
     try {
@@ -113,6 +128,7 @@ function AdminPage() {
         detail,
         link,
         is_recommended: isRecommended,
+        is_home_featured: isHomeFeatured,
       };
       const { error } = editId
         ? await supabase.from("stories").update(payload).eq("id", editId)
@@ -134,9 +150,29 @@ function AdminPage() {
     setSummary(story.summary || "");
     setDetail(story.detail);
     setIsRecommended(story.is_recommended);
+    setIsHomeFeatured(story.is_home_featured);
     setEditId(story.id);
     setSubmitLabel("UPDATE STORY");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleToggleHomeFeatured = async (story: Story): Promise<void> => {
+    const next = !story.is_home_featured;
+    if (next && homeFeaturedCount >= HOME_FEATURED_LIMIT) {
+      alert(
+        `메인페이지 노출 스토리는 최대 ${HOME_FEATURED_LIMIT}개까지 선택할 수 있습니다. 다른 스토리를 먼저 해제하세요.`,
+      );
+      return;
+    }
+    const { error } = await supabase
+      .from("stories")
+      .update({ is_home_featured: next })
+      .eq("id", story.id);
+    if (error) {
+      alert(error.message);
+      return;
+    }
+    fetchStories();
   };
 
   const handleDelete = async (id: string): Promise<void> => {
@@ -288,6 +324,15 @@ function AdminPage() {
                 />
                 스토리 페이지 추천 게시물로 노출
               </label>
+              <label className={styles["recommend-toggle"]}>
+                <input
+                  type="checkbox"
+                  checked={isHomeFeatured}
+                  onChange={(e) => setIsHomeFeatured(e.target.checked)}
+                />
+                메인페이지 스토리로 노출 (최대 {HOME_FEATURED_LIMIT}개 · 현재{" "}
+                {homeFeaturedCount}/{HOME_FEATURED_LIMIT})
+              </label>
               <div>
                 <button
                   className={styles["btn-primary"]}
@@ -309,6 +354,16 @@ function AdminPage() {
             <section className={styles["archive-section"]}>
               <div className={styles["archive-header"]}>
                 <h2>Archive.</h2>
+                <span
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: 800,
+                    textTransform: "uppercase",
+                    color: "var(--sub-text)",
+                  }}
+                >
+                  메인페이지 노출 {homeFeaturedCount}/{HOME_FEATURED_LIMIT}
+                </span>
               </div>
               <div id="story_list">
                 {listLoading ? (
@@ -322,11 +377,20 @@ function AdminPage() {
                           {story.is_recommended && (
                             <span title="추천 게시물">★ </span>
                           )}
+                          {story.is_home_featured && (
+                            <span title="메인페이지 노출">🏠 </span>
+                          )}
                           {story.title}
                         </h4>
                         <p>{story.category}</p>
                       </div>
                       <div className={styles["archive-actions"]}>
+                        <button
+                          className={styles["edit-btn"]}
+                          onClick={() => handleToggleHomeFeatured(story)}
+                        >
+                          {story.is_home_featured ? "메인 해제" : "메인 노출"}
+                        </button>
                         <button
                           className={styles["edit-btn"]}
                           onClick={() => handleEdit(story)}

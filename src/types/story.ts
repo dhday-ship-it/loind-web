@@ -10,6 +10,7 @@ export interface Story {
   detail: string;
   link?: string;
   is_recommended: boolean;
+  is_home_featured: boolean;
   created_at: string;
 }
 

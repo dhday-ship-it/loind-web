@@ -93,7 +93,11 @@ export default function HomePage() {
   const [rollingIndex, setRollingIndex] = useState(0);
   const [activeBrand, setActiveBrand] = useState<BrandKey>("agency");
 
-  const { stories } = useStories(3);
+  // 메인페이지 노출 스토리는 어드민에서 선택합니다(최대 3개).
+  // 아직 선택된 스토리가 없으면 최신 3개로 대체 노출합니다.
+  const { stories: featuredStories } = useStories(3, { homeFeatured: true });
+  const { stories: latestStories } = useStories(3);
+  const stories = featuredStories.length > 0 ? featuredStories : latestStories;
 
   // --- Hero carousel auto-advance ---
   useEffect(() => {
