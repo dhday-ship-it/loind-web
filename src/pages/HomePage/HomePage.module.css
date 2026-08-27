@@ -1,11 +1,14 @@
 /* --- HERO SECTION --- */
 .hero-section {
-  padding: 0 0 80px 0;
+  /* 하단 섹션들(.container: max-width 1240 + 좌우 20 패딩)과 폭을 맞춘다 */
+  padding: 0 20px 80px 20px;
 }
 
 .hero-carousel-container {
   position: relative;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   height: 720px;
   border-radius: 0;
   overflow: hidden;
@@ -327,15 +330,17 @@
 }
 
 .section-header {
-  margin-bottom: 60px;
+  margin-bottom: 45px;
   text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 18px;
 }
 
 .section-desc {
-  font-size: 25px;
+  font-size: 30px;
   color: #111111;
-  font-weight: 700;
-  letter-spacing: -0.6px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
 }
 
 .brand-showcase {
@@ -649,7 +654,7 @@
 
 @media (max-width: 768px) {
   .hero-section {
-    padding: 0;
+    padding: 0 20px;
   }
   .hero-carousel-container {
     height: 500px;
@@ -685,7 +690,10 @@
     border-radius: 20px;
   }
   .section-desc {
-    font-size: 20px;
+    font-size: 22px;
+  }
+  .section-header {
+    margin-bottom: 28px;
   }
 }
 
