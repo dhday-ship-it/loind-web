@@ -1,4 +1,9 @@
-import { useEffect, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useState,
+  type ReactNode,
+  type TransitionEvent as ReactTransitionEvent,
+} from "react";
 import { Link } from "react-router-dom";
 import { useStories } from "../../hooks/useStories";
 import styles from "./HomePage.module.css";
@@ -86,7 +91,10 @@ function formatStoryDate(date: Date): string {
 }
 
 export default function HomePage() {
+  // currentIndex 는 0..TOTAL_SLIDES 범위. TOTAL_SLIDES 값은 맨 앞 슬라이드의
+  // 복제본으로, 여기 도달하면 애니메이션 없이 0으로 스냅해 무한 정방향 루프를 만든다.
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [heroAnimate, setHeroAnimate] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [gaugeKey, setGaugeKey] = useState(0);
   const [restartSignal, setRestartSignal] = useState(0);
@@ -99,15 +107,31 @@ export default function HomePage() {
   const { stories: latestStories } = useStories(3);
   const stories = featuredStories.length > 0 ? featuredStories : latestStories;
 
-  // --- Hero carousel auto-advance ---
+  // --- Hero carousel auto-advance (정방향 무한 루프) ---
   useEffect(() => {
     if (!isPlaying) return;
     const id = window.setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % TOTAL_SLIDES);
+      setHeroAnimate(true);
+      setCurrentIndex((prev) => prev + 1);
       setGaugeKey((k) => k + 1);
     }, SLIDE_INTERVAL_MS);
     return () => window.clearInterval(id);
   }, [isPlaying, restartSignal]);
+
+  // 복제 슬라이드로 넘어간 뒤엔 트랜지션을 끈 채 첫 슬라이드로 되돌려 점프를 감춘다.
+  function handleHeroTransitionEnd(e: ReactTransitionEvent<HTMLDivElement>) {
+    if (e.propertyName !== "transform") return;
+    if (currentIndex >= TOTAL_SLIDES) {
+      setHeroAnimate(false);
+      setCurrentIndex(0);
+    }
+  }
+
+  useEffect(() => {
+    if (heroAnimate) return;
+    const raf = requestAnimationFrame(() => setHeroAnimate(true));
+    return () => cancelAnimationFrame(raf);
+  }, [heroAnimate]);
 
   // --- Rolling tagline cross-fade ---
   useEffect(() => {
@@ -118,6 +142,7 @@ export default function HomePage() {
   }, []);
 
   const handleDotClick = (index: number) => {
+    setHeroAnimate(true);
     if (isPlaying) {
       setCurrentIndex(index);
       setGaugeKey((k) => k + 1);
@@ -132,95 +157,108 @@ export default function HomePage() {
   };
 
   const activeBrandData = brandShowcaseData[activeBrand];
+  const activeDot = ((currentIndex % TOTAL_SLIDES) + TOTAL_SLIDES) % TOTAL_SLIDES;
+
+  const heroAgentSlideInner = (
+    <>
+      <div className={styles["hero-content"]}>
+        <span className={styles["service-tag"]}>Service</span>
+        <h1 className={styles["hero-title"]}>어떤 파트너십이 필요하세요?</h1>
+
+        <div className={styles["search-bubble"]}>
+          <span>✨</span>
+          <div className={styles["rolling-wrapper"]}>
+            {rollingItems.map((text, i) => (
+              <div
+                key={text}
+                className={`${styles["rolling-item"]} ${
+                  i === rollingIndex ? styles.active : ""
+                }`}
+              >
+                {text}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles["hash-tags"]}>
+          {hashTags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles["hero-image"]}>
+        <div className={styles["double-tag-container"]}>
+          <div className={styles["unified-tag-hole"]}></div>
+          <div className={styles["main-tag-base"]}>
+            <div className={styles["main-tag-logo"]}>
+              LOIND
+              <br />
+              AGENCY
+            </div>
+          </div>
+          <div className={styles["sub-tag-overlap"]}>
+            <div className={styles["sub-tag-text"]}></div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <>
       <section className={styles["hero-section"]}>
-        <div className="container">
-          <div className={styles["hero-carousel-container"]}>
-            <div
-              className={styles["hero-slider-track"]}
-              style={{
-                transform: `translateX(-${currentIndex * (100 / TOTAL_SLIDES)}%)`,
-              }}
-            >
-              <div className={`${styles["hero-slide"]} ${styles["slide-agent"]}`}>
-                <div className={styles["hero-content"]}>
-                  <span className={styles["service-tag"]}>Service</span>
-                  <h1 className={styles["hero-title"]}>
-                    어떤 파트너십이 필요하세요?
-                  </h1>
-
-                  <div className={styles["search-bubble"]}>
-                    <span>✨</span>
-                    <div className={styles["rolling-wrapper"]}>
-                      {rollingItems.map((text, i) => (
-                        <div
-                          key={text}
-                          className={`${styles["rolling-item"]} ${
-                            i === rollingIndex ? styles.active : ""
-                          }`}
-                        >
-                          {text}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className={styles["hash-tags"]}>
-                    {hashTags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className={styles["hero-image"]}>
-                  <div className={styles["double-tag-container"]}>
-                    <div className={styles["unified-tag-hole"]}></div>
-                    <div className={styles["main-tag-base"]}>
-                      <div className={styles["main-tag-logo"]}>
-                        LOIND
-                        <br />
-                        AGENCY
-                      </div>
-                    </div>
-                    <div className={styles["sub-tag-overlap"]}>
-                      <div className={styles["sub-tag-text"]}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className={`${styles["hero-slide"]} ${styles["slide-image"]}`}>
-                <img src="/img/1.png" alt="Dream for Dreamer" />
-              </div>
-
-              <div className={`${styles["hero-slide"]} ${styles["slide-image"]}`}>
-                <img src="/img/2.png" alt="Coram Deo New Album" />
-              </div>
+        <div className={styles["hero-carousel-container"]}>
+          <div
+            className={styles["hero-slider-track"]}
+            style={{
+              transform: `translateX(-${currentIndex * (100 / (TOTAL_SLIDES + 1))}%)`,
+              transition: heroAnimate ? undefined : "none",
+            }}
+            onTransitionEnd={handleHeroTransitionEnd}
+          >
+            <div className={`${styles["hero-slide"]} ${styles["slide-agent"]}`}>
+              {heroAgentSlideInner}
             </div>
 
-            <div className={styles["banner-controls"]}>
-              <div
-                className={`${styles["control-dots"]} ${
-                  !isPlaying ? styles.paused : ""
-                }`}
-              >
-                <div className={styles["control-dots"]}>
-                  {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
-                    <span
-                      key={
-                        i === currentIndex ? `active-${i}-${gaugeKey}` : `dot-${i}`
-                      }
-                      className={i === currentIndex ? styles.active : ""}
-                      onClick={() => handleDotClick(i)}
-                    ></span>
-                  ))}
-                </div>
+            <div className={`${styles["hero-slide"]} ${styles["slide-image"]}`}>
+              <img src="/img/1.png" alt="Dream for Dreamer" />
+            </div>
+
+            <div className={`${styles["hero-slide"]} ${styles["slide-image"]}`}>
+              <img src="/img/2.png" alt="Coram Deo New Album" />
+            </div>
+
+            {/* 무한 정방향 루프용 첫 슬라이드 복제본 */}
+            <div
+              className={`${styles["hero-slide"]} ${styles["slide-agent"]}`}
+              aria-hidden="true"
+            >
+              {heroAgentSlideInner}
+            </div>
+          </div>
+
+          <div className={styles["banner-controls"]}>
+            <div
+              className={`${styles["control-dots"]} ${
+                !isPlaying ? styles.paused : ""
+              }`}
+            >
+              <div className={styles["control-dots"]}>
+                {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
+                  <span
+                    key={
+                      i === activeDot ? `active-${i}-${gaugeKey}` : `dot-${i}`
+                    }
+                    className={i === activeDot ? styles.active : ""}
+                    onClick={() => handleDotClick(i)}
+                  ></span>
+                ))}
               </div>
-              <div className={styles["control-pause"]} onClick={handlePauseToggle}>
-                {isPlaying ? "||" : "▶"}
-              </div>
+            </div>
+            <div className={styles["control-pause"]} onClick={handlePauseToggle}>
+              {isPlaying ? "||" : "▶"}
             </div>
           </div>
         </div>
@@ -283,7 +321,7 @@ export default function HomePage() {
               return (
                 <Link
                   key={story.id}
-                  to="/story"
+                  to={`/story?story=${story.id}`}
                   className={styles["story-card"]}
                 >
                   <div className={styles["story-thumb-wrapper"]}>

@@ -18,11 +18,15 @@ export function useStories(maxCount?: number, options?: UseStoriesOptions) {
 
     async function load() {
       setLoading(true);
-      let query = supabase
-        .from("stories")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (homeFeatured) query = query.eq("is_home_featured", true);
+      let query = supabase.from("stories").select("*");
+      if (homeFeatured) {
+        query = query
+          .eq("is_home_featured", true)
+          .order("home_order", { ascending: true })
+          .order("created_at", { ascending: false });
+      } else {
+        query = query.order("created_at", { ascending: false });
+      }
       if (maxCount) query = query.limit(maxCount);
 
       const { data, error } = await query;

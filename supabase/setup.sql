@@ -13,12 +13,22 @@ create table if not exists public.stories (
   link text,
   is_recommended boolean not null default false,
   is_home_featured boolean not null default false,
+  home_order integer not null default 0,
+  images jsonb not null default '[]'::jsonb,
   created_at timestamptz not null default now()
 );
 
 -- 기존 프로젝트용: 컬럼이 없으면 추가 (메인페이지 노출 스토리 선택용)
 alter table public.stories
   add column if not exists is_home_featured boolean not null default false;
+
+-- 기존 프로젝트용: 메인페이지 노출 순서 컬럼 추가
+alter table public.stories
+  add column if not exists home_order integer not null default 0;
+
+-- 기존 프로젝트용: 이미지 앨범(여러 장) 컬럼 추가
+alter table public.stories
+  add column if not exists images jsonb not null default '[]'::jsonb;
 
 alter table public.stories enable row level security;
 
