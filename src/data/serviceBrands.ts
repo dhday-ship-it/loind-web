@@ -40,12 +40,19 @@ export interface DaeheeBanner {
   date: string;
 }
 
+export interface ValueDetailItem {
+  label: string;
+  detail: string;
+}
+
 export interface ValueItem {
   icon: DaeheeIcon;
   name: string;
+  nameKo?: string;
   topic: string;
   verse: string;
   desc: string;
+  details?: ValueDetailItem[];
 }
 
 export interface DaeheeStage {
@@ -172,31 +179,15 @@ export const daeheeBrand: DaeheeBrand = {
   schedule: [
     {
       icon: "fund",
-      name: "기금",
-      topic: "TBD",
-      verse: "TBD",
-      desc: "TBD",
-    },
-    {
-      icon: "space",
-      name: "공간",
-      topic: "TBD",
-      verse: "TBD",
-      desc: "TBD",
-    },
-    {
-      icon: "community",
-      name: "커뮤니티",
-      topic: "TBD",
-      verse: "TBD",
-      desc: "TBD",
-    },
-    {
-      icon: "app",
-      name: "앱",
-      topic: "TBD",
-      verse: "TBD",
-      desc: "TBD",
+      name: "Gartin: Christian life Movement",
+      nameKo: "갈틴: 크리스천 라이프 무브먼트",
+      topic: "",
+      verse: "",
+      desc: "",
+      details: [
+        { label: "크리스천 플랫폼 : 닛시", detail: "TBD" },
+        { label: "미래자립교회 : 야하드", detail: "TBD" },
+      ],
     },
   ],
   stages: [

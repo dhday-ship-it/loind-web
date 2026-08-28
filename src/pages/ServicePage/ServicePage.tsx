@@ -264,6 +264,7 @@ function DaeheeContent() {
   const d = daeheeBrand;
   const b = d.banner;
   const [activeValue, setActiveValue] = useState(0);
+  const [openDetail, setOpenDetail] = useState<number | null>(null);
 
   return (
     <>
@@ -310,18 +311,44 @@ function DaeheeContent() {
                 <div
                   key={item.name}
                   className={`${styles["schedule-item"]} ${i === activeValue ? styles.active : ""}`}
-                  onClick={() => setActiveValue(i)}
+                  onClick={() => {
+                    setActiveValue(i);
+                    setOpenDetail(null);
+                  }}
                 >
                   <span className={styles["schedule-name"]}>{item.name}</span>
+                  {item.nameKo && (
+                    <span className={styles["schedule-name-ko"]}>{item.nameKo}</span>
+                  )}
                 </div>
               ))}
             </div>
             <div className={styles["schedule-detail"]}>
               {d.schedule[activeValue] && (
-                <div className={styles["detail-card"]}>
-                  <span className={styles["detail-topic"]}>{d.schedule[activeValue].topic}</span>
-                  <h4 className={styles["detail-name"]}>{d.schedule[activeValue].name}</h4>
-                  <p className={styles["detail-desc"]}>{d.schedule[activeValue].desc}</p>
+                <div className={styles["detail-boxes"]}>
+                  {(d.schedule[activeValue].details ?? []).map((item, i) => (
+                    <div
+                      key={item.label}
+                      className={styles["detail-card"]}
+                      onClick={() => setOpenDetail(openDetail === i ? null : i)}
+                    >
+                      <div className={styles["detail-line-row"]}>
+                        <p className={styles["detail-line"]}>{item.label}</p>
+                        <span
+                          className={`${styles["detail-toggle-icon"]} ${openDetail === i ? styles.open : ""}`}
+                        >
+                          +
+                        </span>
+                      </div>
+                      <div
+                        className={`${styles["detail-panel"]} ${openDetail === i ? styles.open : ""}`}
+                      >
+                        <div className={styles["detail-panel-inner"]}>
+                          <p className={styles["detail-panel-text"]}>{item.detail}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

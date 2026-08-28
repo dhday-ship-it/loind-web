@@ -439,43 +439,86 @@
   font-weight: 700;
   color: #fff;
 }
+.schedule-name-ko {
+  font-family: "Pretendard", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 4px;
+}
 .schedule-detail {
   padding: 40px 36px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
-.detail-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 40px 44px;
-  width: 100%;
-  max-width: 420px;
+.detail-boxes {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 10px;
+  gap: 14px;
+  width: 100%;
+  max-width: 420px;
 }
-.detail-topic {
+.detail-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  border-left: 3px solid #55689b;
+  padding: 22px 26px;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.detail-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.detail-line-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.detail-line {
+  font-family: "Pretendard", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.2px;
+  margin: 0;
+  word-break: keep-all;
+}
+.detail-toggle-icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+  color: #8ea2d0;
+  transition: transform 0.3s ease;
+}
+.detail-toggle-icon.open {
+  transform: rotate(45deg);
+}
+.detail-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.detail-panel.open {
+  grid-template-rows: 1fr;
+}
+.detail-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+.detail-panel-text {
+  margin: 0;
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   font-family: "Pretendard", sans-serif;
   font-size: 13px;
-  font-weight: 500;
-  color: #999;
-}
-.detail-name {
-  font-family: "Pretendard", sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  color: #111;
-  margin: 4px 0;
-}
-.detail-desc {
-  font-family: "Pretendard", sans-serif;
-  font-size: 14px;
   font-weight: 400;
-  color: #888;
+  color: rgba(255, 255, 255, 0.55);
   line-height: 1.7;
-  margin: 0;
   word-break: keep-all;
 }
 
@@ -952,11 +995,8 @@
     padding: 24px 20px;
   }
   .detail-card {
-    padding: 28px 24px;
+    padding: 20px 22px;
     max-width: 100%;
-  }
-  .detail-name {
-    font-size: 22px;
   }
   /* Glowy stages — 가로 카드 레이아웃 */
   .daehee-stages {
