@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import styles from "./AboutPage.module.css";
 
+const primaryColor = { role: "Primary Color", hex: "#8FA8C4" };
+
 const leadershipItems = [
   {
     name: "정대희",
@@ -302,6 +304,29 @@ export default function AboutPage() {
                   정체성을 담은 사업을 운영하며, 각자의 자리에서 세상에 선한
                   영향력을 전합니다.
                 </p>
+              </div>
+            </div>
+
+            <div className={styles["corp-meta-row"]}>
+              <div className={styles["corp-slogan"]}>
+                <p className={styles["corp-slogan-label"]}>Slogan</p>
+                <p className={styles["corp-slogan-en"]}>Never let love leave you</p>
+                <p className={styles["corp-slogan-ko"]}>그리고 네 곁에 사랑이 떠나지 않게 하라</p>
+                <p className={styles["corp-slogan-verse"]}>[골로새서 3:14]</p>
+              </div>
+
+              <div className={styles["corp-colors"]}>
+                <p className={styles["corp-colors-label"]}>Color System</p>
+                <div className={styles["color-primary"]}>
+                  <div
+                    className={styles["color-primary-chip"]}
+                    style={{ background: primaryColor.hex }}
+                  />
+                  <div className={styles["color-primary-info"]}>
+                    <span className={styles["color-role"]}>{primaryColor.role}</span>
+                    <span className={styles["color-hex"]}>{primaryColor.hex}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
