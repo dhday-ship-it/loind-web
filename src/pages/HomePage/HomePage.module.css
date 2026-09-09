@@ -659,6 +659,12 @@
   .hero-carousel-container {
     height: 500px;
   }
+  .slide-image {
+    background: #0f1420;
+  }
+  .slide-image img {
+    object-fit: contain;
+  }
   .hero-title {
     font-size: 26px;
     letter-spacing: -0.5px;
