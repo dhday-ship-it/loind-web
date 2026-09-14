@@ -179,8 +179,8 @@ export const daeheeBrand: DaeheeBrand = {
   schedule: [
     {
       icon: "fund",
-      name: "Gartin: Christian life Movement",
-      nameKo: "갈틴: 크리스천 라이프 무브먼트",
+      name: "Plord: Christian life Movement",
+      nameKo: "플로드: 크리스천 라이프 무브먼트",
       topic: "",
       verse: "",
       desc: "",
