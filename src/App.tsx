@@ -7,6 +7,8 @@ import StoryPage from "./pages/StoryPage/StoryPage";
 import StoryDetailPage from "./pages/StoryDetailPage/StoryDetailPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import ComingSoonPage from "./pages/ComingSoonPage/ComingSoonPage";
+import CreatorGroundPage from "./pages/CreatorGroundPage/CreatorGroundPage";
 
 export default function App() {
   return (
@@ -18,8 +20,11 @@ export default function App() {
         <Route path="story" element={<StoryPage />} />
         <Route path="story/:id" element={<StoryDetailPage />} />
         <Route path="contact" element={<ContactPage />} />
+        <Route path="artisan" element={<ComingSoonPage title="아티즌, 기독교 아웃소싱" />} />
+        <Route path="rise" element={<ComingSoonPage title="라이즈, 크리스천 사역 인큐베이팅" />} />
       </Route>
       <Route path="admin" element={<AdminPage />} />
+      <Route path="creator" element={<CreatorGroundPage />} />
     </Routes>
   );
 }

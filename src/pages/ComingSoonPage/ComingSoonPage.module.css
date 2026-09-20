@@ -1,0 +1,27 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 80px 20px;
+  text-align: center;
+}
+.eyebrow {
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #8fa8c4;
+}
+.title {
+  margin-bottom: 12px;
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: #17233d;
+}
+.desc {
+  font-size: 15px;
+  color: #86868b;
+}
