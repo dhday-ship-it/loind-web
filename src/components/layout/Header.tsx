@@ -1,50 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
+import { artisanCategories, riseRows } from "../../data/christianBusiness";
 
 interface HeaderProps {
   /** "sticky" auto-hides the header on downward scroll (used on the About page). */
   variant?: "static" | "sticky";
 }
 
-const artisanCategories: { title: string; items: string[]; wide?: boolean }[] = [
-  { title: "홈페이지/웹", items: ["반응형 공식 웹사이트"] },
-  { title: "영상", items: ["설교 요약 릴스/쇼츠", "행사 홍보 영상", "유튜브 인트로/아웃트로"] },
-  {
-    title: "굿즈/기념품",
-    items: ["수련회 단체 티셔츠", "성경책 커버", "창립기념/세례·성찬 기념품", "커스텀 굿즈"],
-  },
-  { title: "기타", items: ["로비 현판", "간판"] },
-  { title: "인쇄", items: [] },
-  {
-    title: "디자인",
-    wide: true,
-    items: [
-      "주보",
-      "헌금봉투",
-      "현수막(강단/외벽)",
-      "배너·X배너·롤업배너",
-      "수련회/행사 포스터",
-      "초청장",
-      "로고 디자인",
-      "명함",
-      "교회 소식지·뉴스레터",
-      "말씀카드",
-      "SNS카드뉴스",
-      "각종 썸네일",
-    ],
-  },
-];
-
 const generalBusiness = [
   { name: "Creative Agency", items: ["영상프로덕션", "디자인", "IT-개발 에이전시", "이벤트"] },
   { name: "Creative Studio", items: ["음악", "영상", "IP 비즈니스"] },
-];
-
-const riseRows = [
-  { name: "사역 임팩트 펀드 운영", items: ["재원 조성 및 운용", "기금 운용 및 포트폴리오 관리"] },
-  { name: "목적사업 운영", items: ["미래자립교회", "사역단체"] },
-  { name: "성과·임팩트 관리", items: ["성과관리 및 확산"] },
 ];
 
 const navLinkClassName = ({ isActive }: { isActive: boolean }) =>

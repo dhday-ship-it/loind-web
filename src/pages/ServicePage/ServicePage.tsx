@@ -1,13 +1,14 @@
 import { useRef, useState, type CSSProperties } from "react";
+import { Link } from "react-router-dom";
 import styles from "./ServicePage.module.css";
+import { christianGroups } from "../../data/christianBusiness";
 import {
   loerBrand,
   lodnBrand,
-  daeheeBrand,
   type ServiceCategory,
 } from "../../data/serviceBrands";
 
-type BrandKey = "loer" | "lodn" | "daehee";
+type BrandKey = "loer" | "lodn" | "christian";
 
 const badgeStyle: CSSProperties = {
   fontSize: "10px",
@@ -260,11 +261,9 @@ function LodnContent() {
   );
 }
 
-function DaeheeContent() {
-  const d = daeheeBrand;
-  const b = d.banner;
-  const [activeValue, setActiveValue] = useState(0);
-  const [openDetail, setOpenDetail] = useState<number | null>(null);
+function ChristianBusinessContent() {
+  const [selected, setSelected] = useState(0);
+  const group = christianGroups[selected];
 
   return (
     <>
@@ -272,86 +271,81 @@ function DaeheeContent() {
         <div className="container">
           <div className={styles["daehee-banner"]}>
             <div className={styles["daehee-banner-image"]}>
-              <img src={b.image} alt={b.title} />
+              <img src="/INDEX_DAEHEE.png" alt="Impact" />
             </div>
             <div className={styles["daehee-banner-info"]}>
-              <h3 className={styles["daehee-banner-title"]}>{b.title}</h3>
+              <h3 className={styles["daehee-banner-title"]}>Impact</h3>
               <div className={styles["daehee-banner-details"]}>
-                {b.topicLabel && (
-                  <div className={styles["daehee-banner-row"]}>
-                    <span className={styles["daehee-banner-label"]}>{b.topicLabel}</span>
-                    <p className={styles["daehee-banner-value"]}>{b.topic}</p>
-                  </div>
-                )}
-                {b.verseLabel && (
-                  <div className={styles["daehee-banner-row"]}>
-                    <span className={styles["daehee-banner-label"]}>{b.verseLabel}</span>
-                    <p className={styles["daehee-banner-value"]}>{b.verse}</p>
-                  </div>
-                )}
-                {b.date && (
-                  <div className={styles["daehee-banner-row"]}>
-                    {b.dateLabel && <span className={styles["daehee-banner-label"]}>{b.dateLabel}</span>}
-                    <p className={styles["daehee-banner-value"]}>{b.date}</p>
-                  </div>
-                )}
+                <div className={styles["daehee-banner-row"]}>
+                  <p className={styles["daehee-banner-value"]}>
+                    하나님과 사람 사이에서 축복의 통로 쓰임받는 일들을 만들어갑니다
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className={styles["schedule-section"]}>
+      <section className={styles["cb-section"]}>
         <div className="container">
           <p className={styles["schedule-eyebrow"]}>SERVICE</p>
           <h2 className={styles["schedule-title"]}>I am a Christian.</h2>
-          <div className={styles["schedule-panel"]}>
-            <div className={styles["schedule-list"]}>
-              {d.schedule.map((item, i) => (
-                <div
-                  key={item.name}
-                  className={`${styles["schedule-item"]} ${i === activeValue ? styles.active : ""}`}
-                  onClick={() => {
-                    setActiveValue(i);
-                    setOpenDetail(null);
-                  }}
+
+          <div className={styles["cb-app"]}>
+            <aside className={styles["cb-side"]}>
+              <h3 className={styles["cb-side-title"]}>Service</h3>
+              <p className={styles["cb-side-sub"]}>항목</p>
+              {christianGroups.map((g, gi) => (
+                <button
+                  key={g.name}
+                  type="button"
+                  className={`${styles["cb-item"]} ${gi === selected ? styles["cb-item-active"] : ""}`}
+                  onClick={() => setSelected(gi)}
                 >
-                  <span className={styles["schedule-name"]}>{item.name}</span>
-                  {item.nameKo && (
-                    <span className={styles["schedule-name-ko"]}>{item.nameKo}</span>
-                  )}
-                </div>
+                  <span className={styles["cb-icon"]}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    </svg>
+                  </span>
+                  <span className={styles["cb-item-text"]}>
+                    <span className={styles["cb-item-name"]}>{g.name}</span>
+                    <span className={styles["cb-item-ko"]}>{g.nameKo}</span>
+                  </span>
+                  <i className={`${styles["cb-status"]} ${gi === selected ? styles["cb-status-on"] : ""}`} />
+                </button>
               ))}
-            </div>
-            <div className={styles["schedule-detail"]}>
-              {d.schedule[activeValue] && (
-                <div className={styles["detail-boxes"]}>
-                  {(d.schedule[activeValue].details ?? []).map((item, i) => (
-                    <div
-                      key={item.label}
-                      className={styles["detail-card"]}
-                      onClick={() => setOpenDetail(openDetail === i ? null : i)}
-                    >
-                      <div className={styles["detail-line-row"]}>
-                        <p className={styles["detail-line"]}>{item.label}</p>
-                        <span
-                          className={`${styles["detail-toggle-icon"]} ${openDetail === i ? styles.open : ""}`}
-                        >
-                          +
-                        </span>
-                      </div>
-                      <div
-                        className={`${styles["detail-panel"]} ${openDetail === i ? styles.open : ""}`}
-                      >
-                        <div className={styles["detail-panel-inner"]}>
-                          <p className={styles["detail-panel-text"]}>{item.detail}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+            </aside>
+
+            <section className={styles["cb-detail"]}>
+              <div key={group.name} className={styles["cb-detail-inner"]}>
+                <h3 className={styles["cb-detail-title"]}>
+                  {group.name}
+                  <span>{group.nameKo}</span>
+                </h3>
+
+                {group.cards.map((card) => (
+                  <div key={card.label} className={styles["cb-block"]}>
+                    <h4>{card.label}</h4>
+                    {card.items.length === 0 ? (
+                      <p className={styles["cb-empty"]}>등록된 내용이 없습니다.</p>
+                    ) : (
+                      <p className={styles["cb-items"]}>
+                        {card.items.map((item) => (
+                          <span key={item}>{item}</span>
+                        ))}
+                      </p>
+                    )}
+                  </div>
+                ))}
+
+                <div className={styles["cb-foot"]}>
+                  <Link to={group.to} className={styles["cb-link"]}>
+                    {group.name} 페이지 바로가기 <span aria-hidden>→</span>
+                  </Link>
                 </div>
-              )}
-            </div>
+              </div>
+            </section>
           </div>
         </div>
       </section>
@@ -408,11 +402,11 @@ export default function ServicePage() {
             </div>
             <div className={styles["brands-divider"]} />
             <div
-              className={`${styles["brand-item"]} ${activeBrand === "daehee" ? styles.active : ""}`}
-              onClick={() => switchBrand("daehee")}
+              className={`${styles["brand-item"]} ${activeBrand === "christian" ? styles.active : ""}`}
+              onClick={() => switchBrand("christian")}
             >
-              <span className={styles["brand-name"]}>Impact Brand</span>
-              <span className={styles["brand-tag"]}>impact</span>
+              <span className={styles["brand-name"]}>Christian Business</span>
+              <span className={styles["brand-tag"]}>christian</span>
             </div>
           </div>
           <div className={styles["section-divider"]} />
@@ -426,7 +420,7 @@ export default function ServicePage() {
       >
         {activeBrand === "loer" && <LoerContent />}
         {activeBrand === "lodn" && <LodnContent />}
-        {activeBrand === "daehee" && <DaeheeContent />}
+        {activeBrand === "christian" && <ChristianBusinessContent />}
       </div>
 
       <div className={styles["back-to-top-wrap"]}>
