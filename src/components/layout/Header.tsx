@@ -130,8 +130,8 @@ export default function Header({ variant = "static" }: HeaderProps) {
                   <section className={styles.menuPanelBlock}>
                     <h4 className={styles.menuBlockTitle}>그룹 소개</h4>
                     <p className={styles.menuIntroText}>
-                      로인드는 크리에이티브 에이전시, 크리에이티브 스튜디오, 임팩트 브랜드 등 여러 브랜드를 통해
-                      크리스천 정체성을 담은 사업을 운영하며, 각자의 자리에서 세상에 선한 영향력을 전합니다.
+                      로인드는 크리에이티브 에이전시, 크리에이티브 스튜디오, 크리스천 브랜드 등 여러 브랜드를 통해
+                      크리스천 정체성을 담은 사업을 전개하고 있습니다.
                     </p>
                     <Link to="/about" className={styles.menuGoLink} onClick={closeMenu}>
                       그룹 소개 페이지 보기 →
