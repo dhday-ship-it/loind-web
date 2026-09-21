@@ -260,7 +260,7 @@ export default function ServicePage() {
               onClick={() => switchBrand("loer")}
             >
               <span className={styles["brand-name"]}>Creative Agency</span>
-              <span className={styles["brand-tag"]}>business</span>
+              <span className={styles["brand-tag"]}>에이전시</span>
             </div>
             <div className={styles["brands-divider"]} />
             <div
@@ -268,7 +268,7 @@ export default function ServicePage() {
               onClick={() => switchBrand("lodn")}
             >
               <span className={styles["brand-name"]}>Studio LODN</span>
-              <span className={styles["brand-tag"]}>business</span>
+              <span className={styles["brand-tag"]}>로든 스튜디오</span>
             </div>
             <div className={styles["brands-divider"]} />
             <div
@@ -276,7 +276,7 @@ export default function ServicePage() {
               onClick={() => switchBrand("christian")}
             >
               <span className={styles["brand-name"]}>Christian Business</span>
-              <span className={styles["brand-tag"]}>christian</span>
+              <span className={styles["brand-tag"]}>크리스천 비즈니스</span>
             </div>
           </div>
           <div className={styles["section-divider"]} />
