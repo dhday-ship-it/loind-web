@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import ImageAlbum from "../../components/ImageAlbum/ImageAlbum";
 import { useStories } from "../../hooks/useStories";
-import { getStoryImages } from "../../types/story";
+import { displayCategory, getStoryImages } from "../../types/story";
 import styles from "./StoryDetailPage.module.css";
 
 function formatDate(isoDate: string | undefined): string {
@@ -39,7 +39,7 @@ export default function StoryDetailPage() {
         ) : (
           <article className={styles.article}>
             <div className={styles.meta}>
-              <span className={styles.cat}>{story.category}</span>
+              <span className={styles.cat}>{displayCategory(story.category)}</span>
               <span className={styles.date}>
                 {formatDate(story.created_at)}
               </span>

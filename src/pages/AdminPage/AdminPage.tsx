@@ -7,6 +7,7 @@ import {
   type Story,
   type StoryPayload,
 } from "../../types/story";
+import { displayCategory } from "../../types/story";
 import styles from "./AdminPage.module.css";
 
 const CATEGORY_OPTIONS = [
@@ -443,7 +444,7 @@ function AdminPage() {
                 >
                   {CATEGORY_OPTIONS.map((opt) => (
                     <option key={opt} value={opt}>
-                      {opt}
+                      {displayCategory(opt)}
                     </option>
                   ))}
                 </select>
@@ -708,7 +709,7 @@ function AdminPage() {
                     }`}
                     onClick={() => setArchiveCategory(cat)}
                   >
-                    {cat}
+                    {displayCategory(cat)}
                   </button>
                 ))}
               </div>
@@ -733,7 +734,7 @@ function AdminPage() {
                           )}
                           {story.title}
                         </h4>
-                        <p>{story.category}</p>
+                        <p>{displayCategory(story.category)}</p>
                       </div>
                       <div className={styles["archive-actions"]}>
                         <button

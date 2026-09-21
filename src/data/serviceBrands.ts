@@ -8,7 +8,6 @@ export interface ServiceCategory {
 
 export interface LoerBrand {
   standard: string;
-  slogan: string;
   bannerTitle: string;
   sectionTitle: string;
   serviceList: ServiceCategory[];
@@ -23,7 +22,6 @@ export interface LodnFeature {
 
 export interface LodnBrand {
   bannerTitle: string;
-  standardLevel: number;
   standard: string;
   features: LodnFeature[];
 }
@@ -94,7 +92,6 @@ export interface DaeheeBrand {
 export const loerBrand: LoerBrand = {
   standard:
     '"Whatever you do, work at it with all your heart, as working for the Lord, not for human masters" [Colossians 3:23]',
-  slogan: "We make it real",
   bannerTitle: "크리에이티브 에이전시",
   sectionTitle: "주요 비즈니스 및 서비스",
   serviceList: [
@@ -132,8 +129,7 @@ export const loerBrand: LoerBrand = {
 };
 
 export const lodnBrand: LodnBrand = {
-  bannerTitle: "크리에이티브 스튜디오 : LODN",
-  standardLevel: 2,
+  bannerTitle: "Studio LODN",
   standard:
     '"Let everything that has breath praise the Lord. Praise the Lord." (Psalm 150:6)',
   features: [

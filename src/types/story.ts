@@ -29,3 +29,8 @@ export function getStoryImages(story: Pick<Story, "img" | "images">): string[] {
   if (Array.isArray(story.images) && story.images.length > 0) return story.images;
   return story.img ? [story.img] : [];
 }
+
+/** 저장된 카테고리 값(DB)은 그대로 두고 화면에 보이는 이름만 바꾼다. */
+export function displayCategory(category: StoryCategory): string {
+  return category === "Creative Studio: LODN" ? "Studio LODN" : category;
+}

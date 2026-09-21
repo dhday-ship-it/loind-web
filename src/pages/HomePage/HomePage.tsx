@@ -6,6 +6,7 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 import { useStories } from "../../hooks/useStories";
+import { displayCategory } from "../../types/story";
 import styles from "./HomePage.module.css";
 
 const TOTAL_SLIDES = 3;
@@ -41,46 +42,28 @@ interface BrandData {
 }
 
 // ※ 아래 설명/태그 문구는 임시 카피입니다 — 확정 카피로 교체해주세요.
-// "LOIND PRINCIPLE" 텍스트에 about 페이지의 PRINCIPLE 섹션으로 가는 링크가 걸려 있습니다.
-const principleLink = (
-  <Link to="/about#principleSection" className={styles["principle-link"]}>
-    LOIND PRINCIPLE
-    <span className={styles.arrow}>↗</span>
-  </Link>
-);
-
 const brandShowcaseData: Record<BrandKey, BrandData> = {
   agency: {
-    desc: (
-      <>
-        {principleLink} 아래 함께하는 모든 파트너들과 최고의 파트너십, 최고의
-        결과물을 만들어갑니다
-      </>
-    ),
+    desc: "탁월한 전문성으로 함께하는 모든 파트너들과 최고의 파트너십, 최고의 결과물을 만들어갑니다",
     caption: "LOER 프로젝트 보기",
     image: "INDEX_CREATIVE AGENCY.png",
   },
   studio: {
-    desc: (
-      <>
-        {principleLink}에 근거한 영감으로 웹, 영상, 음악 등 실행 가능한
-        결과물로 인류의 경험을 만들어갑니다.
-      </>
-    ),
+    desc: "탁월한 전문성에 근거한 영감으로 웹, 영상, 음악 등 실행 가능한 결과물로 인류의 경험을 만들어갑니다.",
     caption: "LODN 프로젝트 보기",
     image: "INDEX_STUDIO.png",
   },
   impact: {
     desc: "크리스천이라는 신념 아래 모두의 기쁨이 되기 위한 마땅한 일들을 해나갑니다.",
-    caption: "Impact 프로젝트 보기",
+    caption: "크리스천 비즈니스 프로젝트 보기",
     image: "INDEX_DAEHEE.png",
   },
 };
 
 const brandListItems: { key: BrandKey; label: string }[] = [
   { key: "agency", label: "크리에이티브 에이전시" },
-  { key: "studio", label: "크리에이티브 스튜디오" },
-  { key: "impact", label: "임팩트" },
+  { key: "studio", label: "스튜디오 로든" },
+  { key: "impact", label: "크리스천 비즈니스" },
 ];
 
 function formatStoryDate(date: Date): string {
@@ -341,7 +324,7 @@ export default function HomePage() {
                   >
                     <div className={styles["story-meta"]}>
                       <span className={styles["story-cat"]}>
-                        {story.category}
+                        {displayCategory(story.category)}
                       </span>
                       <p className={styles["story-date"]}>{dateText}</p>
                     </div>
@@ -350,7 +333,7 @@ export default function HomePage() {
                     <div className={styles["story-footer"]}>
                       <div className={styles["story-tags"]}>
                         <span className={styles["story-tag-item"]}>
-                          {story.category}
+                          {displayCategory(story.category)}
                         </span>
                       </div>
                       <div className={styles["story-arrow-click"]}>➔</div>

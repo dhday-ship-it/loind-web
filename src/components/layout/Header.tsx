@@ -10,7 +10,7 @@ interface HeaderProps {
 
 const generalBusiness = [
   { name: "Creative Agency", items: ["영상프로덕션", "디자인", "IT-개발 에이전시", "이벤트"] },
-  { name: "Creative Studio", items: ["음악", "영상", "IP 비즈니스"] },
+  { name: "Studio LODN", items: ["음악", "영상", "IP 비즈니스"] },
 ];
 
 const navLinkClassName = ({ isActive }: { isActive: boolean }) =>

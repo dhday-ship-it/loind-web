@@ -6,7 +6,7 @@ import type {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ImageAlbum from "../../components/ImageAlbum/ImageAlbum";
 import { useStories } from "../../hooks/useStories";
-import { getStoryImages, type Story } from "../../types/story";
+import { displayCategory, getStoryImages, type Story } from "../../types/story";
 import styles from "./StoryPage.module.css";
 
 const CATEGORIES = ["Creative Agency", "Creative Studio: LODN", "Impact"];
@@ -263,7 +263,7 @@ export default function StoryPage() {
                 className={cat === activeCategory ? styles.on : undefined}
                 onClick={() => setActiveCategory(cat)}
               >
-                {cat}
+                {displayCategory(cat)}
               </li>
             ))}
           </ul>

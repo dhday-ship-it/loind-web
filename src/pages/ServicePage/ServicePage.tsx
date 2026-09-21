@@ -1,4 +1,4 @@
-import { useRef, useState, type CSSProperties } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./ServicePage.module.css";
 import { christianGroups } from "../../data/christianBusiness";
@@ -10,101 +10,19 @@ import {
 
 type BrandKey = "loer" | "lodn" | "christian";
 
-const badgeStyle: CSSProperties = {
-  fontSize: "10px",
-  fontWeight: 700,
-  color: "#fff",
-  background: "#111",
-  padding: "4px 10px",
-  borderRadius: "4px",
-  letterSpacing: "1px",
-  textTransform: "uppercase",
-};
-
-/** Faithful port of legacy `renderStandard()` — supports the 3 principle-badge layouts. */
-function PrincipleBadge({ level, text }: { level: number; text: string }) {
-  if (level === 1) {
-    const verseMatch = text.match(/^(.*?)(\[.*?\])$/s);
-    const quote = verseMatch ? verseMatch[1].trim() : text;
-    const verse = verseMatch ? verseMatch[2] : "";
-    return (
-      <div
-        style={{
-          padding: "28px 0",
-          display: "flex",
-          alignItems: "flex-start",
-          gap: "8px",
-        }}
-      >
-        <span
-          style={{
-            display: "inline-block",
-            width: "4px",
-            minHeight: "16px",
-            background: "#55689B",
-            borderRadius: "2px",
-            flexShrink: 0,
-            marginTop: "2px",
-          }}
-        />
-        <div>
-          <p
-            style={{
-              fontSize: "18px",
-              fontWeight: 800,
-              color: "#111",
-              letterSpacing: "-0.3px",
-              marginBottom: "8px",
-            }}
-          >
-            LOIND PRINCIPLE
-          </p>
-          <p
-            style={{
-              fontSize: "18px",
-              fontWeight: 400,
-              color: "#aaa",
-              lineHeight: 1.75,
-              wordBreak: "keep-all",
-            }}
-          >
-            {quote}{" "}
-            <span style={{ fontSize: "13px", fontWeight: 600 }}>{verse}</span>
-          </p>
-        </div>
-      </div>
-    );
-  }
-  if (level === 2) {
-    return (
-      <div
-        style={{
-          padding: "28px 0",
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-        }}
-      >
-        <span style={badgeStyle}>LOIND PRINCIPLE</span>
-        <span style={{ fontSize: "14px", fontWeight: 500, color: "#555" }}>
-          {text}
-        </span>
-      </div>
-    );
-  }
+function Verse({ text }: { text: string }) {
   return (
-    <div style={{ padding: "28px 0" }}>
-      <span
-        style={{
-          fontSize: "11px",
-          fontWeight: 500,
-          color: "#aaa",
-          letterSpacing: "0.5px",
-        }}
-      >
-        LOIND PRINCIPLE &nbsp;—&nbsp; {text}
-      </span>
-    </div>
+    <p
+      style={{
+        padding: "28px 0",
+        fontSize: "16px",
+        lineHeight: 1.8,
+        color: "#555",
+        wordBreak: "keep-all",
+      }}
+    >
+      {text}
+    </p>
   );
 }
 
@@ -159,55 +77,8 @@ function LoerContent() {
       </section>
       <section className={styles["business-section"]}>
         <div className="container">
-          <div style={{ padding: "28px 0 56px 0" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                marginBottom: "12px",
-              }}
-            >
-              <span
-                style={{
-                  ...badgeStyle,
-                  padding: "5px 10px",
-                  flexShrink: 0,
-                  minWidth: "112px",
-                  textAlign: "center",
-                }}
-              >
-                LOIND PRINCIPLE
-              </span>
-              <span
-                style={{
-                  fontSize: "15px",
-                  fontWeight: 400,
-                  color: "#555",
-                  lineHeight: 1.6,
-                }}
-              >
-                {d.standard}
-              </span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <span
-                style={{
-                  ...badgeStyle,
-                  padding: "5px 10px",
-                  flexShrink: 0,
-                  minWidth: "112px",
-                  textAlign: "center",
-                }}
-              >
-                Slogan
-              </span>
-              <span
-                style={{ fontSize: "15px", fontWeight: 400, color: "#555" }}
-              >
-                {d.slogan}
-              </span>
-            </div>
+          <div style={{ paddingBottom: "28px" }}>
+            <Verse text={d.standard} />
           </div>
           <h3 style={{ marginTop: 0, marginBottom: "32px" }}>
             {d.sectionTitle}
@@ -243,7 +114,7 @@ function LodnContent() {
       </section>
       <section className={styles["business-section"]}>
         <div className="container">
-          <PrincipleBadge level={d.standardLevel} text={d.standard} />
+          <Verse text={d.standard} />
           <div className={styles["lodn-features"]}>
             {d.features.map((f) => (
               <div key={f.title} className={styles["lodn-feature"]}>
@@ -391,13 +262,12 @@ export default function ServicePage() {
               <span className={styles["brand-name"]}>Creative Agency</span>
               <span className={styles["brand-tag"]}>business</span>
             </div>
+            <div className={styles["brands-divider"]} />
             <div
               className={`${styles["brand-item"]} ${activeBrand === "lodn" ? styles.active : ""}`}
               onClick={() => switchBrand("lodn")}
             >
-              <span className={styles["brand-name"]}>
-                Creative Studio: LODN
-              </span>
+              <span className={styles["brand-name"]}>Studio LODN</span>
               <span className={styles["brand-tag"]}>business</span>
             </div>
             <div className={styles["brands-divider"]} />
