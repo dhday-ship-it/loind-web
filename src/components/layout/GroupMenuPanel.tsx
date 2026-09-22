@@ -2,8 +2,10 @@ import { useState } from "react";
 import styles from "./Header.module.css";
 import { artisanCategories, riseRows } from "../../data/christianBusiness";
 
-export function GroupMenuPanel({ onClose }: { onClose: () => void }) {
-  const [menuTab, setMenuTab] = useState<"intro" | "pledged" | "service">("service");
+type MenuTab = "intro" | "pledged" | "service";
+
+export function GroupMenuPanel({ onClose, initialTab = "service" }: { onClose: () => void; initialTab?: MenuTab }) {
+  const [menuTab, setMenuTab] = useState<MenuTab>(initialTab);
   return <>
     <div className={styles.menuBackdrop} onClick={onClose} />
     <div className={`${styles.menuPanel} shared-group-menu`}>

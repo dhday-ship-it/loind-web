@@ -43,15 +43,15 @@ export default function Header({ variant = "static" }: HeaderProps) {
     <div className={`container ${styles.headerInner}`}>
       <div className={styles.brandArea}>
         <GroupMenuTrigger open={menuOpen} onClick={() => setMenuOpen((value) => !value)} />
-        <div className={styles.logo} onClick={() => navigate("/")}>LOIND</div>
+        <div className={styles.logo} onClick={() => { closeMenu(); navigate("/"); }}>LOIND</div>
       </div>
       <nav className={styles.nav}>
-        <NavLink to="/about" className={navLinkClassName}>About</NavLink>
-        <NavLink to="/service" className={navLinkClassName}>Service</NavLink>
-        <NavLink to="/story" className={navLinkClassName}>Story</NavLink>
-        <NavLink to="/contact" className={navLinkClassName}>Contact</NavLink>
+        <NavLink to="/about" className={navLinkClassName} onClick={closeMenu}>About</NavLink>
+        <NavLink to="/service" className={navLinkClassName} onClick={closeMenu}>Service</NavLink>
+        <NavLink to="/story" className={navLinkClassName} onClick={closeMenu}>Story</NavLink>
+        <NavLink to="/contact" className={navLinkClassName} onClick={closeMenu}>Contact</NavLink>
         <div className={styles.navSeparator} />
-        <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer" className={styles.navLink}>Works</a>
+        <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer" className={styles.navLink} onClick={closeMenu}>Works</a>
       </nav>
     </div>
     {menuOpen && <GroupMenuPanel onClose={closeMenu} />}
