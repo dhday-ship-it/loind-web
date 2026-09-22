@@ -2,7 +2,7 @@
 
 export const artisanCategories: { title: string; items: string[]; wide?: boolean }[] = [
   { title: "홈페이지/웹", items: ["반응형 공식 웹사이트"] },
-  { title: "영상", items: ["설교 요약 릴스/쇼츠", "행사 홍보 영상", "유튜브 인트로/아웃트로"] },
+  { title: "영상", items: ["설교 요약 릴스/쇼츠", "행사 홍보 영상", "강의영상제작", "유튜브 인트로/아웃트로"] },
   {
     title: "굿즈/기념품",
     items: ["수련회 단체 티셔츠", "성경책 커버", "창립기념/세례·성찬 기념품", "커스텀 굿즈"],
