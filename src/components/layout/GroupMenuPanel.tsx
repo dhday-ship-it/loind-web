@@ -6,8 +6,8 @@ export function GroupMenuPanel({ onClose }: { onClose: () => void }) {
   const [menuTab, setMenuTab] = useState<"intro" | "pledged" | "service">("service");
   return <>
     <div className={styles.menuBackdrop} onClick={onClose} />
-    <div className={styles.menuPanel}>
-      <div className={`container ${styles.menuPanelInner}`}>
+    <div className={`${styles.menuPanel} shared-group-menu`}>
+      <div className={`container ${styles.menuPanelInner} shared-group-menu__inner`}>
         <div className={styles.menuSideCol}>
           <button type="button" className={`${styles.menuTabCard} ${menuTab === "service" ? styles.menuTabActive : ""}`} onClick={() => setMenuTab("service")}><span className={styles.menuEyebrow}>SERVICE</span><span className={styles.menuCardTitle}>서비스 항목</span></button>
           <div className={styles.menuSideDivider} />

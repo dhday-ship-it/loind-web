@@ -174,54 +174,56 @@
   border-radius: 2px;
 }
 
-/* ── 서비스 리스트 (LOER 탭) ── */
-.service-list {
+/* ── 서비스 카드 그리드 (LOER) ── */
+.service-grid {
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: 0 80px;
-  min-height: 300px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 32px;
   margin-top: 0;
 }
-.tab-list {
+.service-card {
+  padding: 30px 32px;
+  border: 1px solid #ececec;
+  border-radius: 20px;
+  background: #fafafa;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.service-card:hover {
+  border-color: #e0e0e0;
+  box-shadow: 0 16px 30px rgba(30, 34, 60, 0.06);
+}
+.service-card-head {
   display: flex;
-  flex-direction: column;
-  border-right: 1px solid #e8e8e8;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
 }
-.svc-tab {
-  font-size: 14px;
+.service-card-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px rgba(63, 74, 120, 0.22));
+}
+.service-card-title {
+  font-size: 16px;
   font-weight: 700;
-  color: #bbb;
-  letter-spacing: 0.3px;
-  padding: 16px 0;
-  cursor: pointer;
-  border-right: 2px solid transparent;
-  margin-right: -1px;
-  transition: all 0.2s;
-  text-transform: uppercase;
-}
-.svc-tab:hover {
-  color: #777;
-}
-.svc-tab.active {
   color: #111;
-  border-right: 2px solid #111;
-}
-.items-panel {
-  padding-top: 6px;
+  letter-spacing: -0.2px;
+  margin: 0;
 }
 .items-tags {
-  display: none;
+  display: flex;
   flex-wrap: wrap;
   gap: 10px;
-}
-.items-tags.active {
-  display: flex;
 }
 .item-tag {
   font-size: 13.5px;
   font-weight: 500;
   color: #444;
-  background: #f6f6f6;
+  background: #fff;
+  border: 1px solid #ececec;
   padding: 9px 16px;
   border-radius: 20px;
   transition:
@@ -230,6 +232,7 @@
 }
 .item-tag:hover {
   background: #111;
+  border-color: #111;
   color: #fff;
 }
 
@@ -911,29 +914,17 @@
   .brand-sub {
     font-size: 12px;
   }
-  /* 서비스 리스트 탭 */
-  .service-list {
+  /* 서비스 카드 그리드 */
+  .service-grid {
     grid-template-columns: 1fr;
-    gap: 0;
+    gap: 18px;
   }
-  .tab-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    border-right: none;
-    border-bottom: 1px solid #e8e8e8;
-    margin-bottom: 20px;
-    gap: 0;
+  .service-card {
+    padding: 22px 20px;
   }
-  .svc-tab {
-    border-right: none;
-    border-bottom: 2px solid transparent;
-    margin-right: 0;
-    padding: 12px 12px;
-    font-size: 11px;
-  }
-  .svc-tab.active {
-    border-right: none;
-    border-bottom: 2px solid #111;
+  .service-card-icon {
+    width: 32px;
+    height: 32px;
   }
   /* Glowy hero */
   .daehee-hero {
@@ -1066,9 +1057,8 @@
   .brand-name {
     font-size: 13px;
   }
-  .svc-tab {
-    padding: 10px 8px;
-    font-size: 10px;
+  .service-card-title {
+    font-size: 14px;
   }
   .item-tag {
     font-size: 12px;

@@ -26,37 +26,27 @@ function Verse({ text }: { text: string }) {
   );
 }
 
-/** LOER's internal tabbed service-category list (legacy `switchSvcTab`). */
+/** LOER's service-category grid: every category visible at once (legacy version used click-to-reveal tabs). */
 function LoerServiceList({ list }: { list: ServiceCategory[] }) {
-  const [activeTab, setActiveTab] = useState(0);
-
   return (
-    <div className={styles["service-list"]}>
-      <div className={styles["tab-list"]}>
-        {list.map((c, i) => (
-          <div
-            key={c.cat}
-            className={`${styles["svc-tab"]} ${i === activeTab ? styles.active : ""}`}
-            onClick={() => setActiveTab(i)}
-          >
-            {c.cat}
+    <div className={styles["service-grid"]}>
+      {list.map((c) => (
+        <div key={c.cat} className={styles["service-card"]}>
+          <div className={styles["service-card-head"]}>
+            {c.icon && (
+              <img src={c.icon} alt="" className={styles["service-card-icon"]} />
+            )}
+            <p className={styles["service-card-title"]}>{c.cat}</p>
           </div>
-        ))}
-      </div>
-      <div className={styles["items-panel"]}>
-        {list.map((c, i) => (
-          <div
-            key={c.cat}
-            className={`${styles["items-tags"]} ${i === activeTab ? styles.active : ""}`}
-          >
+          <div className={styles["items-tags"]}>
             {c.items.map((it) => (
               <span key={it} className={styles["item-tag"]}>
                 {it}
               </span>
             ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }
