@@ -213,6 +213,19 @@
   letter-spacing: -0.2px;
   margin: 0;
 }
+.service-subgroup {
+  margin-top: 30px;
+}
+.service-subgroup:first-of-type {
+  margin-top: 0;
+}
+.service-subgroup-label {
+  margin: 0 0 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #9aa0ac;
+  letter-spacing: 0.02em;
+}
 .items-tags {
   display: flex;
   flex-wrap: wrap;

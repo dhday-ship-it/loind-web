@@ -38,13 +38,18 @@ function LoerServiceList({ list }: { list: ServiceCategory[] }) {
             )}
             <p className={styles["service-card-title"]}>{c.cat}</p>
           </div>
-          <div className={styles["items-tags"]}>
-            {c.items.map((it) => (
-              <span key={it} className={styles["item-tag"]}>
-                {it}
-              </span>
-            ))}
-          </div>
+          {c.groups.map((g) => (
+            <div key={g.label} className={styles["service-subgroup"]}>
+              <p className={styles["service-subgroup-label"]}>{g.label}</p>
+              <div className={styles["items-tags"]}>
+                {g.items.map((it) => (
+                  <span key={it} className={styles["item-tag"]}>
+                    {it}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       ))}
     </div>
