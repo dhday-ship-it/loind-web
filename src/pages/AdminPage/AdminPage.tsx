@@ -13,6 +13,7 @@ import styles from "./AdminPage.module.css";
 const CATEGORY_OPTIONS = [
   "Creative Agency",
   "Creative Studio: LODN",
+  "Artisan",
   "Impact",
 ];
 

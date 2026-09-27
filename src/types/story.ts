@@ -1,4 +1,4 @@
-export type StoryCategory = "Creative Agency" | "Studio" | "Impact" | string;
+export type StoryCategory = "Creative Agency" | "Studio" | "Artisan" | "Impact" | string;
 
 export interface Story {
   id: string;
@@ -33,7 +33,8 @@ export function getStoryImages(story: Pick<Story, "img" | "images">): string[] {
 /** 저장된 카테고리 값(DB)은 그대로 두고 화면에 보이는 이름만 바꾼다. */
 const CATEGORY_LABELS: Record<string, string> = {
   "Creative Studio: LODN": "Studio LODN",
-  Impact: "Christian Business",
+  Artisan: "크리스천 비즈니스 : 아티즌",
+  Impact: "크리스천 비즈니스 : 라이즈",
 };
 
 export function displayCategory(category: StoryCategory): string {
