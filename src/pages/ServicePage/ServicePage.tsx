@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactElement } from "react";
 import { Link } from "react-router-dom";
 import styles from "./ServicePage.module.css";
 import { christianGroups } from "../../data/christianBusiness";
@@ -19,7 +19,7 @@ const CARD_GRADIENTS = [
 
 type BrandKey = "loer" | "lodn" | "christian";
 
-const GENRE_ICONS: Record<string, JSX.Element> = {
+const GENRE_ICONS: Record<string, ReactElement> = {
   인터뷰영상: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <rect x="9" y="2.5" width="6" height="11" rx="3" />
