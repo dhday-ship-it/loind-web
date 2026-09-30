@@ -5,20 +5,62 @@ import { christianGroups } from "../../data/christianBusiness";
 import {
   loerBrand,
   lodnBrand,
+  videoProductionGenres,
   type ServiceCategory,
+  type ServiceItemCard,
 } from "../../data/serviceBrands";
 
+const CARD_GRADIENTS = [
+  "linear-gradient(155deg, #6a63e0, #8f8ff2)",
+  "linear-gradient(155deg, #f2a93c, #f6c866)",
+  "linear-gradient(155deg, #ea6f8e, #f2a0ac)",
+  "linear-gradient(155deg, #4fb677, #7fd39b)",
+];
+
 type BrandKey = "loer" | "lodn" | "christian";
+
+const GENRE_ICONS: Record<string, JSX.Element> = {
+  인터뷰영상: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="2.5" width="6" height="11" rx="3" />
+      <path d="M5.5 11a6.5 6.5 0 0 0 13 0" />
+      <path d="M12 17.5v4" />
+      <path d="M8.5 21.5h7" />
+    </svg>
+  ),
+  스케치영상: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 20.5 4.7 17l10-10 2.8 2.8-10 10-3.5.7Z" />
+      <path d="M13.2 8.5 15.5 6l2.8 2.8-2.3 2.5" />
+    </svg>
+  ),
+  강의영상: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4.5" width="18" height="12" rx="2" />
+      <path d="M9 20.5h6" />
+      <path d="M12 16.5v4" />
+      <path d="M7.5 12.5 10.5 9l2 2 3.5-4" />
+    </svg>
+  ),
+  홍보영상: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 10.5v3a1 1 0 0 0 1 1h2l4.5 3.2a1 1 0 0 0 1.6-.8V7.1a1 1 0 0 0-1.6-.8L6 9.5H4a1 1 0 0 0-1 1Z" />
+      <path d="M15.5 9.5a3 3 0 0 1 0 5" />
+      <path d="M18 7.3a6 6 0 0 1 0 9.4" />
+    </svg>
+  ),
+};
 
 function Verse({ text }: { text: string }) {
   return (
     <p
       style={{
-        padding: "28px 0",
+        padding: "8px 0",
         fontSize: "16px",
         lineHeight: 1.8,
         color: "#555",
         wordBreak: "keep-all",
+        textAlign: "center",
       }}
     >
       {text}
@@ -26,32 +68,97 @@ function Verse({ text }: { text: string }) {
   );
 }
 
-/** LOER's service-category grid: every category visible at once (legacy version used click-to-reveal tabs). */
-function LoerServiceList({ list }: { list: ServiceCategory[] }) {
+/** 영상 프로덕션 전용: 장르별 카드를 그리드로 한 번에 보여준다. */
+function VideoProductionCard() {
   return (
-    <div className={styles["service-grid"]}>
-      {list.map((c) => (
-        <div key={c.cat} className={styles["service-card"]}>
-          <div className={styles["service-card-head"]}>
-            {c.icon && (
-              <img src={c.icon} alt="" className={styles["service-card-icon"]} />
+    <div className={styles["genre-card-grid"]}>
+      {videoProductionGenres.map((g, i) => (
+        <Link key={g.name} to="/story" className={styles["genre-card"]}>
+          <div
+            className={styles["genre-card-top"]}
+            style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}
+          >
+            {g.image ? (
+              <img src={g.image} alt="" className={styles["genre-card-image"]} />
+            ) : (
+              <span className={styles["genre-card-icon"]}>{GENRE_ICONS[g.name]}</span>
             )}
-            <p className={styles["service-card-title"]}>{c.cat}</p>
           </div>
-          {c.groups.map((g) => (
-            <div key={g.label} className={styles["service-subgroup"]}>
-              <p className={styles["service-subgroup-label"]}>{g.label}</p>
-              <div className={styles["items-tags"]}>
-                {g.items.map((it) => (
-                  <span key={it} className={styles["item-tag"]}>
-                    {it}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+          <div className={styles["genre-card-body"]}>
+            <h4 className={styles["genre-card-title"]}>{g.name}</h4>
+          </div>
+        </Link>
       ))}
+    </div>
+  );
+}
+
+/** 영상 프로덕션처럼 이미지 카드 그리드로 보여주는 범용 컴포넌트. */
+function ItemCardGrid({ cards, note }: { cards: ServiceItemCard[]; note?: string }) {
+  return (
+    <>
+      <div className={styles["genre-card-grid"]}>
+        {cards.map((item, i) => (
+          <Link key={item.name} to="/story" className={styles["genre-card"]}>
+            <div
+              className={styles["genre-card-top"]}
+              style={{ background: CARD_GRADIENTS[i % CARD_GRADIENTS.length] }}
+            >
+              {item.image ? (
+                <img src={item.image} alt="" className={styles["genre-card-image"]} />
+              ) : (
+                <span className={styles["genre-card-tbd"]}>TBD</span>
+              )}
+            </div>
+            <div className={styles["genre-card-body"]}>
+              <h4 className={styles["genre-card-title"]}>{item.name}</h4>
+            </div>
+          </Link>
+        ))}
+      </div>
+      {note && (
+        <p className={styles["cards-note"]}>
+          {note.split("\n").map((line, i) => (
+            <span key={i} className={i === 0 ? undefined : styles["cards-note-sub"]}>
+              {line}
+              {i < note.split("\n").length - 1 && <br />}
+            </span>
+          ))}
+        </p>
+      )}
+    </>
+  );
+}
+
+/** LOER's service categories: 위 아이콘을 클릭하면 아래 내용이 바뀐다. */
+function LoerServiceList({ list, title }: { list: ServiceCategory[]; title: string }) {
+  const [selected, setSelected] = useState(0);
+  const current = list[selected];
+
+  return (
+    <div className={styles["service-tabs"]}>
+      <h3 className={styles["service-tabs-title"]}>{title}</h3>
+      <div className={styles["category-icon-row"]}>
+        {list.map((c, i) => (
+          <button
+            key={c.cat}
+            type="button"
+            className={`${styles["category-icon-btn"]} ${i === selected ? styles.active : ""}`}
+            onClick={() => setSelected(i)}
+          >
+            {c.icon && <img src={c.icon} alt="" />}
+            <span>{c.cat}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className={styles["service-panel"]}>
+        {current.cat === "영상 프로덕션" ? (
+          <VideoProductionCard />
+        ) : (
+          <ItemCardGrid cards={current.cards ?? []} note={current.cardsNote} />
+        )}
+      </div>
     </div>
   );
 }
@@ -62,7 +169,7 @@ function LoerContent() {
     <>
       <section
         className={styles["middle-banner-section"]}
-        style={{ background: "#fff", paddingBottom: "20px" }}
+        style={{ background: "#fff", paddingBottom: "6px" }}
       >
         <div className="container">
           <h2 style={{ fontSize: "34px", letterSpacing: "-0.5px" }}>
@@ -75,10 +182,7 @@ function LoerContent() {
           <div style={{ paddingBottom: "28px" }}>
             <Verse text={d.standard} />
           </div>
-          <h3 style={{ marginTop: 0, marginBottom: "32px" }}>
-            {d.sectionTitle}
-          </h3>
-          <LoerServiceList list={d.serviceList} />
+          <LoerServiceList list={d.serviceList} title={d.sectionTitle} />
         </div>
       </section>
     </>
@@ -206,9 +310,20 @@ function ChristianBusinessContent() {
                 ))}
 
                 <div className={styles["cb-foot"]}>
-                  <Link to={group.to} className={styles["cb-link"]}>
-                    {group.name} 페이지 바로가기 <span aria-hidden>→</span>
-                  </Link>
+                  {group.to.startsWith("http") ? (
+                    <a
+                      href={group.to}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles["cb-link"]}
+                    >
+                      {group.name} 페이지 바로가기 <span aria-hidden>→</span>
+                    </a>
+                  ) : (
+                    <Link to={group.to} className={styles["cb-link"]}>
+                      {group.name} 페이지 바로가기 <span aria-hidden>→</span>
+                    </Link>
+                  )}
                 </div>
               </div>
             </section>

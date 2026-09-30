@@ -28,29 +28,11 @@
 .brand-item.active {
   opacity: 1;
 }
-.brand-logo-wrap {
-  width: 120px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.brand-logo-wrap img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
 .brand-name {
   font-size: 17px;
   font-weight: 800;
   color: #111;
   letter-spacing: -0.3px;
-}
-.brand-sub {
-  font-size: 13px;
-  font-weight: 400;
-  color: #444;
-  margin-top: -8px;
 }
 .brand-tag {
   font-size: 12px;
@@ -76,7 +58,7 @@
 /* ── 미들 배너 (브랜드 타이틀) ── */
 .middle-banner-section {
   background-color: #fafafa;
-  padding: 60px 0;
+  padding: 40px 0;
   text-align: center;
 }
 .middle-banner-section .sub-title {
@@ -91,7 +73,7 @@
   font-size: 28px;
   font-weight: 800;
   color: #111;
-  margin-bottom: 30px;
+  margin-bottom: 0;
 }
 
 /* ── LODN 영상 쇼케이스 ── */
@@ -153,7 +135,7 @@
 
 /* ── 비즈니스 섹션 공통 ── */
 .business-section {
-  padding: 80px 0 100px 0;
+  padding: 0 0 100px 0;
   background-color: #ffffff;
 }
 .business-section h3 {
@@ -173,80 +155,141 @@
   background-color: #55689b;
   border-radius: 2px;
 }
+.service-tabs-title {
+  justify-content: center;
+}
 
-/* ── 서비스 카드 그리드 (LOER) ── */
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px 32px;
-  margin-top: 0;
-}
-.service-card {
-  padding: 30px 32px;
-  border: 1px solid #ececec;
-  border-radius: 20px;
-  background: #fafafa;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.service-card:hover {
-  border-color: #e0e0e0;
-  box-shadow: 0 16px 30px rgba(30, 34, 60, 0.06);
-}
-.service-card-head {
+/* ── 서비스 탭 (LOER): 위 아이콘 선택 → 아래 패널 전환. 아티즌 사이트의
+   "의뢰 스테이션" 카테고리 아이콘/타입 리스트와 같은 시각 언어로 맞춤. ── */
+.service-tabs {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 20px;
 }
-.service-card-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 12px rgba(63, 74, 120, 0.22));
-}
-.service-card-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #111;
-  letter-spacing: -0.2px;
-  margin: 0;
-}
-.service-subgroup {
-  margin-top: 30px;
-}
-.service-subgroup:first-of-type {
-  margin-top: 0;
-}
-.service-subgroup-label {
-  margin: 0 0 10px;
-  font-size: 11.5px;
-  font-weight: 700;
-  color: #9aa0ac;
-  letter-spacing: 0.02em;
-}
-.items-tags {
+.category-icon-row {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
-.item-tag {
-  font-size: 13.5px;
-  font-weight: 500;
-  color: #444;
-  background: #fff;
+.category-icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 96px;
+  padding: 14px 8px;
+  border-radius: 14px;
   border: 1px solid #ececec;
-  padding: 9px 16px;
-  border-radius: 20px;
+  background: #fff;
+  cursor: pointer;
   transition:
-    background 0.2s ease,
-    color 0.2s ease;
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
-.item-tag:hover {
-  background: #111;
-  border-color: #111;
+.category-icon-btn img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+.category-icon-btn span {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #656b76;
+  text-align: center;
+  line-height: 1.3;
+  word-break: keep-all;
+}
+.category-icon-btn:hover {
+  border-color: #b7c0e6;
+}
+.category-icon-btn.active {
+  border-color: #55689b;
+  background: #eef0ff;
+}
+.category-icon-btn.active span {
+  color: #55689b;
+}
+
+.genre-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 18px;
+  margin-top: 8px;
+}
+.genre-card {
+  display: block;
+  border: 1px solid #ececec;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(30, 34, 60, 0.06);
+  color: inherit;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.genre-card:hover {
+  box-shadow: 0 16px 30px rgba(30, 34, 60, 0.1);
+  transform: translateY(-2px);
+}
+.genre-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+}
+.genre-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.genre-card-tbd {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.75);
+}
+.genre-card-icon {
+  display: flex;
+  width: 40px;
+  height: 40px;
   color: #fff;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.18));
+}
+.genre-card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.genre-card-body {
+  display: flex;
+  justify-content: center;
+  padding: 12px 10px 16px;
+}
+.genre-card-title {
+  display: inline-block;
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.1px;
+  color: #111;
+  text-align: center;
+  background: linear-gradient(transparent 62%, #d9deee 62%);
+}
+.cards-note {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #55689b;
+  text-align: center;
+  line-height: 1.6;
+}
+.cards-note-sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: #9aa0ac;
+}
+.service-panel {
+  min-width: 0;
 }
 
 /* ── 브랜드 선택으로 돌아가기 ── */
@@ -312,18 +355,6 @@
   justify-content: center;
   gap: 20px;
 }
-.daehee-banner-dday {
-  display: inline-block;
-  align-self: flex-start;
-  font-family: "Pretendard", sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
-  padding: 6px 16px;
-  letter-spacing: 1px;
-}
 .daehee-banner-title {
   font-family: "Pretendard", sans-serif;
   font-size: 36px;
@@ -343,14 +374,6 @@
   flex-direction: column;
   gap: 0;
 }
-.daehee-banner-label {
-  font-family: "Pretendard", sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
 .daehee-banner-value {
   font-family: "Pretendard", sans-serif;
   font-size: 15px;
@@ -361,537 +384,12 @@
   margin: 0;
 }
 
-/* ── CORE Programs 스케줄 섹션 ── */
-.schedule-section {
-  padding: 100px 0 80px 0;
-  background: #fff;
-  text-align: center;
-}
-.schedule-eyebrow {
-  font-family: "Pretendard", sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: #999;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 14px;
-}
-.schedule-title {
-  font-family: "Pretendard", sans-serif;
-  font-size: 34px;
-  font-weight: 800;
-  color: #111;
-  margin: 0 0 32px 0;
-  letter-spacing: -0.5px;
-}
-.schedule-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 40px;
-}
-.schedule-tab {
-  font-family: "Pretendard", sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 10px 24px;
-  border-radius: 30px;
-  border: 1.5px solid #111;
-  background: transparent;
-  color: #111;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.schedule-tab.active {
-  background: #111;
-  color: #fff;
-}
-.schedule-tab:hover:not(.active) {
-  background: #f5f5f5;
-}
-.schedule-panel {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #111;
-  text-align: left;
-  min-height: 380px;
-}
-.schedule-list {
-  padding: 40px 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-}
-.schedule-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 18px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.schedule-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-.schedule-item.active {
-  background: rgba(255, 255, 255, 0.08);
-}
-.schedule-time {
-  font-family: "Pretendard", sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.45);
-  letter-spacing: 0.5px;
-}
-.schedule-name {
-  font-family: "Pretendard", sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: #fff;
-}
-.schedule-name-ko {
-  font-family: "Pretendard", sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 4px;
-}
-.schedule-detail {
-  padding: 40px 36px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-.detail-boxes {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
-  max-width: 420px;
-}
-.detail-card {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
-  border-left: 3px solid #55689b;
-  padding: 22px 26px;
-  width: 100%;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.detail-card:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-.detail-line-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.detail-line {
-  font-family: "Pretendard", sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: -0.2px;
-  margin: 0;
-  word-break: keep-all;
-}
-.detail-toggle-icon {
-  flex-shrink: 0;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 1;
-  color: #8ea2d0;
-  transition: transform 0.3s ease;
-}
-.detail-toggle-icon.open {
-  transform: rotate(45deg);
-}
-.detail-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
-}
-.detail-panel.open {
-  grid-template-rows: 1fr;
-}
-.detail-panel-inner {
-  min-height: 0;
-  overflow: hidden;
-}
-.detail-panel-text {
-  margin: 0;
-  padding-top: 14px;
-  margin-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  font-family: "Pretendard", sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.55);
-  line-height: 1.7;
-  word-break: keep-all;
-  white-space: pre-line;
-}
-
-.daehee-accent {
-  color: var(--dh-gold);
-}
-
-/* ── VALUE Section ── */
-.value-section {
-  padding: 100px 0 120px 0;
-  background: #fff;
-  text-align: center;
-}
-.value-eyebrow {
-  font-family: "Pretendard", sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: #999;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 14px;
-}
-.value-title {
-  font-family: "Pretendard", sans-serif;
-  font-size: 36px;
-  font-weight: 800;
-  color: #111;
-  margin: 0 0 40px 0;
-}
-.value-panel {
-  display: flex;
-  background: #111;
-  border-radius: 16px;
-  overflow: hidden;
-  min-height: 380px;
-  text-align: left;
-}
-.value-list {
-  flex: 0 0 280px;
-  display: flex;
-  flex-direction: column;
-  padding: 36px 28px;
-  gap: 4px;
-}
-.value-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.value-item .channel-icon {
-  width: 22px;
-  height: 22px;
-  color: rgba(255, 255, 255, 0.5);
-  flex-shrink: 0;
-}
-.value-item.active .channel-icon {
-  color: #fff;
-}
-.value-item.active {
-  background: rgba(255, 255, 255, 0.08);
-}
-.value-item:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.04);
-}
-.value-item-name {
-  font-family: "Pretendard", sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.5);
-}
-.value-item.active .value-item-name {
-  color: #fff;
-}
-.value-detail {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 36px;
-}
-.value-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 36px 32px;
-  width: 100%;
-  max-width: 440px;
-}
-.value-card-name {
-  font-family: "Pretendard", sans-serif;
-  font-size: 22px;
-  font-weight: 800;
-  color: #111;
-  margin: 0 0 24px 0;
-}
-.value-card-row {
-  margin-bottom: 16px;
-}
-.value-card-row:last-child {
-  margin-bottom: 0;
-}
-.value-card-label {
-  font-family: "Pretendard", sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: #999;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 4px;
-}
-.value-card-text {
-  font-family: "Pretendard", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #444;
-  line-height: 1.7;
-  margin: 0;
-  word-break: keep-all;
-}
-
-.daehee-stages {
-  padding: 20px 0 100px 0;
-  background: #fff;
-}
-.stage-flow {
-  display: flex;
-  align-items: flex-start;
-  gap: 0;
-}
-.stage-block {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.stage-media {
-  width: 100%;
-  aspect-ratio: 4/3;
-  margin-bottom: 26px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: transform 0.35s ease;
-}
-.stage-block:hover .stage-media {
-  transform: scale(1.015);
-}
-.stage-media-empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.stage-ripple {
-  width: 88px;
-  height: 88px;
-}
-.stage-ripple circle.ring {
-  transform-origin: 50px 50px;
-}
-.stage-name {
-  font-family: "Pretendard", sans-serif;
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--dh-ink);
-  margin-bottom: 10px;
-}
-.stage-line {
-  font-family: "Pretendard", sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--dh-gold);
-  margin-bottom: 12px;
-}
-.stage-desc {
-  font-family: "Pretendard", sans-serif;
-  font-size: 13.5px;
-  line-height: 1.7;
-  color: #888;
-  word-break: keep-all;
-  max-width: 260px;
-}
-.stage-arrow {
-  flex: 0 0 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 34px;
-  font-family: "Pretendard", sans-serif;
-  font-size: 20px;
-  color: #ddd;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .stage-ripple .ring-anim {
-    animation: dh-ripple 3.2s ease-out infinite;
-  }
-}
-@keyframes dh-ripple {
-  0% {
-    opacity: 0.55;
-    transform: scale(0.85);
-  }
-  70% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.15);
-  }
-}
-
-.daehee-services {
-  padding: 90px 0 110px 0;
-  background: #fafaf8;
-}
-.daehee-services-title {
-  font-family: "Pretendard", sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--dh-ink);
-  margin: 14px 0 20px 0;
-  word-break: keep-all;
-}
-.daehee-services-intro {
-  font-family: "Pretendard", sans-serif;
-  font-size: 15px;
-  line-height: 1.8;
-  color: #888;
-  max-width: 560px;
-  margin-bottom: 30px;
-  word-break: keep-all;
-}
-
-.daehee-programs {
-  display: flex;
-  flex-direction: column;
-}
-.dh-program {
-  display: flex;
-  align-items: center;
-  gap: 64px;
-  padding: 56px 0;
-  border-bottom: 1px solid #ece9e2;
-}
-.dh-program:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-.dh-program:nth-child(even) {
-  flex-direction: row-reverse;
-}
-.dh-program-media {
-  flex: 0 0 40%;
-  aspect-ratio: 4/3;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #eef2fa, #d0ddf0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-.dh-program:hover .dh-program-media {
-  transform: translateY(-4px);
-}
-.dh-program-media .channel-icon {
-  width: 72px;
-  height: 72px;
-  color: var(--dh-gold);
-  opacity: 0.85;
-}
-.dh-program-media .media-caption {
-  position: absolute;
-  bottom: 14px;
-  right: 18px;
-  font-family: "Pretendard", sans-serif;
-  font-size: 11px;
-  color: #9b93c9;
-  font-weight: 600;
-}
-.dh-program-content {
-  flex: 1;
-}
-.dh-program-heading {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 22px;
-}
-.dh-program-heading .channel-icon {
-  width: 26px;
-  height: 26px;
-  color: var(--dh-gold);
-}
-.dh-program-title {
-  font-family: "Pretendard", sans-serif;
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--dh-ink);
-}
-.dh-program-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.dh-item-subtitle {
-  font-family: "Pretendard", sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--dh-ink);
-  margin-bottom: 5px;
-}
-.dh-item-desc {
-  font-family: "Pretendard", sans-serif;
-  font-size: 13.5px;
-  line-height: 1.75;
-  color: #888;
-  word-break: keep-all;
-}
-.dh-callout {
-  margin-top: 26px;
-  background: var(--dh-gold-soft);
-  border-radius: 12px;
-  padding: 22px 24px;
-  font-family: "Pretendard", sans-serif;
-  font-size: 13px;
-  line-height: 1.85;
-  color: #2a3a6e;
-  word-break: keep-all;
-}
-
 @media (max-width: 1024px) {
   .brands-grid {
     gap: 40px;
   }
   .daehee-banner-info {
     padding: 36px 32px;
-  }
-}
-@media (max-width: 900px) {
-  .dh-program,
-  .dh-program:nth-child(even) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    padding: 36px 0;
-  }
-  .dh-program-media {
-    width: 100%;
-    flex: none;
-    aspect-ratio: 16/9;
   }
 }
 @media (max-width: 768px) {
@@ -917,27 +415,18 @@
     border-bottom: 2px solid #111;
     opacity: 1;
   }
-  .brand-logo-wrap {
-    width: 72px;
-    height: 72px;
-  }
   .brand-name {
     font-size: 14px;
   }
-  .brand-sub {
-    font-size: 12px;
-  }
-  /* 서비스 카드 그리드 */
-  .service-grid {
-    grid-template-columns: 1fr;
+  /* 서비스 탭 */
+  .service-tabs {
     gap: 18px;
   }
-  .service-card {
-    padding: 22px 20px;
+  .category-icon-btn {
+    width: 84px;
   }
-  .service-card-icon {
-    width: 32px;
-    height: 32px;
+  .genre-card-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
   /* Glowy hero */
   .daehee-hero {
@@ -957,105 +446,8 @@
   .daehee-banner-title {
     font-size: 24px;
   }
-  /* Value section mobile */
-  .value-section {
-    padding: 60px 0 70px;
-  }
-  .value-title {
-    font-size: 26px;
-  }
-  .value-panel {
-    flex-direction: column;
-    min-height: auto;
-  }
-  .value-list {
-    flex: none;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 24px 20px;
-    gap: 8px;
-  }
-  .value-detail {
-    padding: 20px;
-  }
-  .value-card {
-    max-width: 100%;
-  }
-  /* Glowy schedule */
-  .schedule-section {
-    padding: 60px 0 50px;
-  }
   .schedule-title {
     font-size: 24px;
-  }
-  .schedule-panel {
-    grid-template-columns: 1fr;
-  }
-  .schedule-list {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 24px 20px;
-  }
-  .schedule-detail {
-    padding: 24px 20px;
-  }
-  .detail-card {
-    padding: 20px 22px;
-    max-width: 100%;
-  }
-  /* Glowy stages — 가로 카드 레이아웃 */
-  .daehee-stages {
-    padding: 20px 0 50px;
-  }
-  .stage-flow {
-    flex-direction: column;
-    gap: 24px;
-    align-items: stretch;
-  }
-  .stage-arrow {
-    display: none;
-  }
-  .stage-block {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0;
-  }
-  .stage-media {
-    width: 100%;
-    max-width: 260px;
-    aspect-ratio: 4/3;
-    margin-bottom: 20px;
-    flex-shrink: 1;
-  }
-  .stage-name {
-    font-size: 18px;
-  }
-  .stage-line {
-    font-size: 13px;
-    margin-bottom: 6px;
-  }
-  .stage-desc {
-    font-size: 13px;
-    max-width: 100%;
-  }
-  /* Glowy services */
-  .daehee-services {
-    padding: 48px 0 56px;
-  }
-  .daehee-services-title {
-    font-size: 22px;
-  }
-  .dh-program {
-    padding: 30px 0;
-    gap: 18px;
-  }
-  .dh-program-title {
-    font-size: 20px;
-  }
-  .dh-callout {
-    padding: 16px 18px;
-    font-size: 12px;
   }
 }
 @media (max-width: 480px) {
@@ -1070,31 +462,30 @@
   .brand-name {
     font-size: 13px;
   }
-  .service-card-title {
-    font-size: 14px;
-  }
-  .item-tag {
-    font-size: 12px;
-    padding: 7px 12px;
-  }
   .daehee-banner-title {
     font-size: 18px;
   }
   .daehee-banner-value {
     font-size: 12px;
   }
-  .stage-media {
-    max-width: 200px;
-  }
-  .stage-name {
-    font-size: 16px;
-  }
-  .dh-program-title {
-    font-size: 18px;
-  }
-  .dh-item-subtitle {
-    font-size: 14px;
-  }
+}
+
+.schedule-eyebrow {
+  font-family: "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.schedule-title {
+  font-family: "Pretendard", sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 32px 0;
+  letter-spacing: -0.5px;
 }
 
 /* ── Christian Business 서비스 목록 ── */
@@ -1260,19 +651,17 @@
   color: #a0a6b4;
 }
 .cb-items {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 22px;
   font-size: 14px;
-  line-height: 1.9;
   color: #6b7080;
 }
 .cb-items span {
   display: inline-block;
+  line-height: 1.6;
   word-break: keep-all;
-}
-.cb-items span:not(:last-child)::after {
-  content: "·";
-  margin: 0 11px;
-  font-weight: 800;
-  color: #c3cad6;
 }
 .cb-foot {
   padding-top: 22px;

@@ -45,7 +45,7 @@ interface BrandData {
 const brandShowcaseData: Record<BrandKey, BrandData> = {
   agency: {
     desc: "탁월한 전문성으로 함께하는 모든 파트너들과 최고의 파트너십, 최고의 결과물을 만들어갑니다",
-    caption: "LOER 프로젝트 보기",
+    caption: "에이전시 프로젝트 보기",
     image: "INDEX_CREATIVE AGENCY.png",
   },
   studio: {

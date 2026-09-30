@@ -1,14 +1,15 @@
 // Data for the Service page's brand-switcher content.
 // Ported from legacy/service.html's `brandData` object.
 
-export interface ServiceSubgroup {
-  label: string;
-  items: string[];
+export interface ServiceItemCard {
+  name: string;
+  image?: string;
 }
 
 export interface ServiceCategory {
   cat: string;
-  groups: ServiceSubgroup[];
+  cards?: ServiceItemCard[];
+  cardsNote?: string;
   icon?: string;
 }
 
@@ -18,6 +19,53 @@ export interface LoerBrand {
   sectionTitle: string;
   serviceList: ServiceCategory[];
 }
+
+export interface VideoProcessStep {
+  name: string;
+  included: boolean;
+}
+
+export interface VideoGenre {
+  name: string;
+  image?: string;
+  processes: VideoProcessStep[];
+}
+
+// 영상 프로덕션: 장르 선택 → 필요한 공정을 보여주는 구성.
+export const videoProductionGenres: VideoGenre[] = [
+  {
+    name: "스케치영상",
+    image: "/img/video-genre-sketch.jpg",
+    processes: [
+      { name: "촬영", included: true },
+      { name: "모션·그래픽", included: true },
+    ],
+  },
+  {
+    name: "강의영상",
+    image: "/img/video-genre-lecture.jpg",
+    processes: [
+      { name: "촬영", included: true },
+      { name: "모션·그래픽", included: false },
+    ],
+  },
+  {
+    name: "홍보영상",
+    image: "/img/video-genre-promo.jpg",
+    processes: [
+      { name: "촬영", included: true },
+      { name: "모션·그래픽", included: true },
+    ],
+  },
+  {
+    name: "인터뷰영상",
+    image: "/img/video-genre-interview-v3.jpg",
+    processes: [
+      { name: "촬영", included: true },
+      { name: "모션·그래픽", included: false },
+    ],
+  },
+];
 
 export interface LodnFeature {
   image: string;
@@ -104,107 +152,33 @@ export const loerBrand: LoerBrand = {
     {
       cat: "영상 프로덕션",
       icon: "/icons/video-production.png",
-      groups: [
-        {
-          label: "콘텐츠 영상",
-          items: [
-            "인터뷰 영상",
-            "다큐멘터리",
-            "뮤직비디오",
-            "브랜드 필름",
-            "광고·CF 영상",
-            "유튜브 콘텐츠 제작",
-            "프로모션 영상",
-            "제품 소개 영상",
-            "라이브 커머스 영상",
-            "강의영상 제작",
-          ],
-        },
-        {
-          label: "모션·그래픽",
-          items: ["2D 모션 그래픽", "3D 모션 그래픽", "타이포 모션", "CGI 합성", "애니메이션 영상"],
-        },
-        {
-          label: "촬영",
-          items: ["행사·컨퍼런스 촬영", "드론 촬영", "제품 촬영"],
-        },
-        {
-          label: "후반작업·사운드",
-          items: ["영상 편집·색보정", "자막·더빙", "상업 음향"],
-        },
-      ],
     },
     {
       cat: "디자인",
       icon: "/icons/design.png",
-      groups: [
-        {
-          label: "브랜딩",
-          items: ["브랜드 아이덴티티(BI/CI)", "로고 디자인", "캐릭터 디자인"],
-        },
-        {
-          label: "마케팅·콘텐츠 디자인",
-          items: [
-            "상세페이지 디자인",
-            "포스터·배너 디자인",
-            "카탈로그·브로슈어 디자인",
-            "SNS 콘텐츠 디자인",
-            "인포그래픽",
-            "편집 디자인(출판물)",
-          ],
-        },
-        {
-          label: "제품·공간",
-          items: ["패키지 디자인", "굿즈 기획", "공간·전시 디자인"],
-        },
-        {
-          label: "디지털 UX",
-          items: ["UI/UX 디자인"],
-        },
+      cards: [
+        { name: "로고 디자인", image: "/img/design-logo.jpg" },
+        { name: "캐릭터 디자인", image: "/img/design-character-v2.jpg" },
+        { name: "포스터·배너 디자인", image: "/img/design-promo-goods-v3.jpg" },
+        { name: "각종 판촉물", image: "/img/design-promo-items.jpg" },
       ],
+      cardsNote:
+        "인쇄 서비스까지 지원하고 있습니다.\n(디자인부터 납품까지 합리적인 가격으로 만나보세요)",
     },
     {
       cat: "IT개발(앱,웹)",
       icon: "/icons/it-dev.png",
-      groups: [
-        {
-          label: "웹·앱 개발",
-          items: ["반응형 웹사이트 제작", "앱 개발", "쇼핑몰 구축", "랜딩페이지 제작", "퍼블리싱"],
-        },
-        {
-          label: "시스템·연동",
-          items: ["관리자(어드민) 시스템 개발", "API 연동", "서버·인프라 구축", "챗봇 개발"],
-        },
-        {
-          label: "AI·운영",
-          items: ["생성형 AI 활용", "유지보수"],
-        },
+      cards: [
+        { name: "웹 개발(+관리)", image: "/img/itdev-web-v2.jpg" },
+        { name: "앱 개발(관리)" },
       ],
     },
     {
       cat: "온라인·오프라인 세미나",
       icon: "/icons/seminar.png",
-      groups: [
-        {
-          label: "온라인",
-          items: ["웨비나 기획·운영", "라이브 스트리밍", "온라인 강연 진행", "온라인 설문·투표 운영", "녹화본 편집·아카이빙"],
-        },
-        {
-          label: "오프라인",
-          items: [
-            "세미나·강연 기획",
-            "컨퍼런스 기획",
-            "워크숍 진행",
-            "패널 토론 진행",
-            "현장 진행",
-            "행사 사회·MC 섭외",
-            "오프라인 대관·장소 섭외",
-          ],
-        },
-        {
-          label: "부가 서비스",
-          items: ["발표자료·굿즈 제작 연계", "다국어 동시통역 지원"],
-        },
+      cards: [
+        { name: "오프라인 세미나", image: "/img/seminar-offline.jpg" },
+        { name: "온라인세미나(웹 세미나)", image: "/img/seminar-online.jpg" },
       ],
     },
   ],

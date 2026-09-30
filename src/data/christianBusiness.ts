@@ -1,14 +1,13 @@
 // Shared by the header mega menu and the Service page (Christian Business tab).
 
 export const artisanCategories: { title: string; items: string[]; wide?: boolean }[] = [
-  { title: "홈페이지/웹", items: ["반응형 공식 웹사이트"] },
-  { title: "영상", items: ["설교 요약 릴스/쇼츠", "행사 홍보 영상", "강의영상제작", "유튜브 인트로/아웃트로"] },
+  { title: "굿즈/기념품", items: ["굿즈,기념품 제작"] },
+  { title: "영상", items: ["촬영", "편집", "그래픽"] },
+  { title: "사진 촬영", items: ["사진 촬영"] },
   {
-    title: "굿즈/기념품",
-    items: ["수련회 단체 티셔츠", "성경책 커버", "창립기념/세례·성찬 기념품", "커스텀 굿즈"],
+    title: "홈페이지/웹",
+    items: ["템플릿형 웹페이지", "커스텀형 웹페이지", "기타 웹페이지"],
   },
-  { title: "기타", items: ["로비 현판", "간판"] },
-  { title: "인쇄", items: [] },
   {
     title: "디자인",
     wide: true,
@@ -40,7 +39,7 @@ export const christianGroups = [
   {
     name: "아티즌",
     nameKo: "기독교 아웃소싱(외주)",
-    to: "/artisan",
+    to: "https://artisan.loind.com",
     cards: artisanCategories.map((c) => ({ label: c.title, items: c.items })),
   },
   {
