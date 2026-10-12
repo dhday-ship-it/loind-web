@@ -237,17 +237,17 @@ function ChristianBusinessContent() {
 
   return (
     <>
-      <section className={styles["daehee-hero"]}>
+      <section className={styles["rise-hero"]}>
         <div className="container">
-          <div className={styles["daehee-banner"]}>
-            <div className={styles["daehee-banner-image"]}>
+          <div className={styles["rise-banner"]}>
+            <div className={styles["rise-banner-image"]}>
               <img src="/INDEX_DAEHEE.png" alt="Impact" />
             </div>
-            <div className={styles["daehee-banner-info"]}>
-              <h3 className={styles["daehee-banner-title"]}>Impact</h3>
-              <div className={styles["daehee-banner-details"]}>
-                <div className={styles["daehee-banner-row"]}>
-                  <p className={styles["daehee-banner-value"]}>
+            <div className={styles["rise-banner-info"]}>
+              <h3 className={styles["rise-banner-title"]}>Impact</h3>
+              <div className={styles["rise-banner-details"]}>
+                <div className={styles["rise-banner-row"]}>
+                  <p className={styles["rise-banner-value"]}>
                     하나님과 사람 사이에서 축복의 통로 쓰임받는 일들을 만들어갑니다
                   </p>
                 </div>

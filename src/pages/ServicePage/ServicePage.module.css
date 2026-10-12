@@ -159,7 +159,7 @@
   justify-content: center;
 }
 
-/* ── 서비스 탭 (LOER): 위 아이콘 선택 → 아래 패널 전환. 아티즌 사이트의
+/* ── 서비스 탭 (아티즌): 위 아이콘 선택 → 아래 패널 전환. 아티즌 사이트의
    "의뢰 스테이션" 카테고리 아이콘/타입 리스트와 같은 시각 언어로 맞춤. ── */
 .service-tabs {
   display: flex;
@@ -321,13 +321,13 @@
   --dh-ink: #111111;
 }
 
-.daehee-hero {
+.rise-hero {
   padding: 80px 0 60px 0;
   background: #000;
 }
 
 /* ── Glowy 배너 ── */
-.daehee-banner {
+.rise-banner {
   display: flex;
   align-items: center;
   border-radius: 20px;
@@ -335,19 +335,19 @@
   background: #111;
   min-height: 420px;
 }
-.daehee-banner-image {
+.rise-banner-image {
   flex: 0 0 55%;
   position: relative;
   overflow: hidden;
   align-self: stretch;
 }
-.daehee-banner-image img {
+.rise-banner-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-.daehee-banner-info {
+.rise-banner-info {
   flex: 1;
   padding: 56px 56px;
   display: flex;
@@ -355,7 +355,7 @@
   justify-content: center;
   gap: 20px;
 }
-.daehee-banner-title {
+.rise-banner-title {
   font-family: "Pretendard", sans-serif;
   font-size: 36px;
   font-weight: 800;
@@ -363,18 +363,18 @@
   margin: 8px 0 0 0;
   letter-spacing: -0.5px;
 }
-.daehee-banner-details {
+.rise-banner-details {
   display: flex;
   flex-direction: column;
   gap: 0;
   margin-top: 12px;
 }
-.daehee-banner-row {
+.rise-banner-row {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
-.daehee-banner-value {
+.rise-banner-value {
   font-family: "Pretendard", sans-serif;
   font-size: 15px;
   font-weight: 400;
@@ -388,7 +388,7 @@
   .brands-grid {
     gap: 40px;
   }
-  .daehee-banner-info {
+  .rise-banner-info {
     padding: 36px 32px;
   }
 }
@@ -429,21 +429,21 @@
     grid-template-columns: repeat(2, 1fr);
   }
   /* Glowy hero */
-  .daehee-hero {
+  .rise-hero {
     padding: 40px 0 36px;
   }
-  .daehee-banner {
+  .rise-banner {
     flex-direction: column;
     min-height: auto;
   }
-  .daehee-banner-image {
+  .rise-banner-image {
     flex: none;
     height: 220px;
   }
-  .daehee-banner-info {
+  .rise-banner-info {
     padding: 32px 28px;
   }
-  .daehee-banner-title {
+  .rise-banner-title {
     font-size: 24px;
   }
   .schedule-title {
@@ -462,10 +462,10 @@
   .brand-name {
     font-size: 13px;
   }
-  .daehee-banner-title {
+  .rise-banner-title {
     font-size: 18px;
   }
-  .daehee-banner-value {
+  .rise-banner-value {
     font-size: 12px;
   }
 }
