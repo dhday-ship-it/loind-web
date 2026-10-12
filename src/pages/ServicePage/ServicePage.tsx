@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import styles from "./ServicePage.module.css";
 import { christianGroups } from "../../data/christianBusiness";
 import {
-  loerBrand,
-  lodnBrand,
+  artisanBrand,
+  rodenBrand,
   videoProductionGenres,
   type ServiceCategory,
   type ServiceItemCard,
@@ -17,7 +17,7 @@ const CARD_GRADIENTS = [
   "linear-gradient(155deg, #4fb677, #7fd39b)",
 ];
 
-type BrandKey = "loer" | "lodn" | "christian";
+type BrandKey = "artisan" | "roden" | "rise";
 
 const GENRE_ICONS: Record<string, ReactElement> = {
   인터뷰영상: (
@@ -130,7 +130,7 @@ function ItemCardGrid({ cards, note }: { cards: ServiceItemCard[]; note?: string
   );
 }
 
-/** LOER's service categories: 위 아이콘을 클릭하면 아래 내용이 바뀐다. */
+/** 아티즌 서비스 카테고리: 위 아이콘을 클릭하면 아래 내용이 바뀐다. */
 function LoerServiceList({ list, title }: { list: ServiceCategory[]; title: string }) {
   const [selected, setSelected] = useState(0);
   const current = list[selected];
@@ -164,7 +164,7 @@ function LoerServiceList({ list, title }: { list: ServiceCategory[]; title: stri
 }
 
 function LoerContent() {
-  const d = loerBrand;
+  const d = artisanBrand;
   return (
     <>
       <section
@@ -190,7 +190,7 @@ function LoerContent() {
 }
 
 function LodnContent() {
-  const d = lodnBrand;
+  const d = rodenBrand;
   return (
     <>
       <section className={styles["middle-banner-section"]}>
@@ -334,7 +334,7 @@ function ChristianBusinessContent() {
 }
 
 export default function ServicePage() {
-  const [activeBrand, setActiveBrand] = useState<BrandKey>("loer");
+  const [activeBrand, setActiveBrand] = useState<BrandKey>("artisan");
   const [fading, setFading] = useState(false);
   const brandsGridRef = useRef<HTMLDivElement>(null);
   const brandContentRef = useRef<HTMLDivElement>(null);
@@ -365,24 +365,24 @@ export default function ServicePage() {
         <div className="container">
           <div className={styles["brands-grid"]} ref={brandsGridRef}>
             <div
-              className={`${styles["brand-item"]} ${activeBrand === "loer" ? styles.active : ""}`}
-              onClick={() => switchBrand("loer")}
+              className={`${styles["brand-item"]} ${activeBrand === "artisan" ? styles.active : ""}`}
+              onClick={() => switchBrand("artisan")}
             >
               <span className={styles["brand-name"]}>아티즌</span>
               <span className={styles["brand-tag"]}>제작 스튜디오</span>
             </div>
             <div className={styles["brands-divider"]} />
             <div
-              className={`${styles["brand-item"]} ${activeBrand === "lodn" ? styles.active : ""}`}
-              onClick={() => switchBrand("lodn")}
+              className={`${styles["brand-item"]} ${activeBrand === "roden" ? styles.active : ""}`}
+              onClick={() => switchBrand("roden")}
             >
               <span className={styles["brand-name"]}>로든</span>
               <span className={styles["brand-tag"]}>브랜드 콘텐츠</span>
             </div>
             <div className={styles["brands-divider"]} />
             <div
-              className={`${styles["brand-item"]} ${activeBrand === "christian" ? styles.active : ""}`}
-              onClick={() => switchBrand("christian")}
+              className={`${styles["brand-item"]} ${activeBrand === "rise" ? styles.active : ""}`}
+              onClick={() => switchBrand("rise")}
             >
               <span className={styles["brand-name"]}>라이즈</span>
               <span className={styles["brand-tag"]}>크리스천 비즈니스</span>
@@ -397,9 +397,9 @@ export default function ServicePage() {
         ref={brandContentRef}
         className={`${styles["brand-content"]} ${fading ? styles.fading : ""}`}
       >
-        {activeBrand === "loer" && <LoerContent />}
-        {activeBrand === "lodn" && <LodnContent />}
-        {activeBrand === "christian" && <ChristianBusinessContent />}
+        {activeBrand === "artisan" && <LoerContent />}
+        {activeBrand === "roden" && <LodnContent />}
+        {activeBrand === "rise" && <ChristianBusinessContent />}
       </div>
 
       <div className={styles["back-to-top-wrap"]}>

@@ -33,7 +33,7 @@ const hashTags: string[] = [
   "#디지털 / 테크 에이전시",
 ];
 
-type BrandKey = "agency" | "studio" | "impact";
+type BrandKey = "artisan" | "roden" | "rise";
 
 interface BrandData {
   desc: ReactNode;
@@ -43,17 +43,17 @@ interface BrandData {
 
 // ※ 아래 설명/태그 문구는 임시 카피입니다 — 확정 카피로 교체해주세요.
 const brandShowcaseData: Record<BrandKey, BrandData> = {
-  agency: {
+  artisan: {
     desc: "탁월한 전문성으로 함께하는 모든 파트너들과 최고의 파트너십, 최고의 결과물을 만들어갑니다",
     caption: "아티즌 프로젝트 보기",
     image: "INDEX_CREATIVE AGENCY.png",
   },
-  studio: {
+  roden: {
     desc: "탁월한 전문성에 근거한 영감으로 웹, 영상, 음악 등 실행 가능한 결과물로 인류의 경험을 만들어갑니다.",
     caption: "LODN 프로젝트 보기",
     image: "INDEX_STUDIO.png",
   },
-  impact: {
+  rise: {
     desc: "크리스천이라는 신념 아래 모두의 기쁨이 되기 위한 마땅한 일들을 해나갑니다.",
     caption: "크리스천 비즈니스 프로젝트 보기",
     image: "INDEX_DAEHEE.png",
@@ -61,9 +61,9 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
 };
 
 const brandListItems: { key: BrandKey; label: string }[] = [
-  { key: "agency", label: "제작 스튜디오 : 아티즌" },
-  { key: "studio", label: "브랜드 콘텐츠 : 로든" },
-  { key: "impact", label: "크리스천 비즈니스 : 라이즈" },
+  { key: "artisan", label: "제작 스튜디오 : 아티즌" },
+  { key: "roden", label: "브랜드 콘텐츠 : 로든" },
+  { key: "rise", label: "크리스천 비즈니스 : 라이즈" },
 ];
 
 function formatStoryDate(date: Date): string {
@@ -82,7 +82,7 @@ export default function HomePage() {
   const [gaugeKey, setGaugeKey] = useState(0);
   const [restartSignal, setRestartSignal] = useState(0);
   const [rollingIndex, setRollingIndex] = useState(0);
-  const [activeBrand, setActiveBrand] = useState<BrandKey>("agency");
+  const [activeBrand, setActiveBrand] = useState<BrandKey>("artisan");
 
   // 메인페이지 노출 스토리는 어드민에서 선택합니다(최대 3개).
   // 아직 선택된 스토리가 없으면 최신 3개로 대체 노출합니다.
