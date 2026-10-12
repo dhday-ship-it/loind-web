@@ -4,7 +4,7 @@ import styles from "./ServicePage.module.css";
 import { christianGroups } from "../../data/christianBusiness";
 import {
   artisanBrand,
-  rodenBrand,
+  lodnBrand,
   videoProductionGenres,
   type ServiceCategory,
   type ServiceItemCard,
@@ -17,7 +17,7 @@ const CARD_GRADIENTS = [
   "linear-gradient(155deg, #4fb677, #7fd39b)",
 ];
 
-type BrandKey = "artisan" | "roden" | "rise";
+type BrandKey = "artisan" | "lodn" | "rise";
 
 const GENRE_ICONS: Record<string, ReactElement> = {
   인터뷰영상: (
@@ -190,7 +190,7 @@ function LoerContent() {
 }
 
 function LodnContent() {
-  const d = rodenBrand;
+  const d = lodnBrand;
   return (
     <>
       <section className={styles["middle-banner-section"]}>
@@ -373,8 +373,8 @@ export default function ServicePage() {
             </div>
             <div className={styles["brands-divider"]} />
             <div
-              className={`${styles["brand-item"]} ${activeBrand === "roden" ? styles.active : ""}`}
-              onClick={() => switchBrand("roden")}
+              className={`${styles["brand-item"]} ${activeBrand === "lodn" ? styles.active : ""}`}
+              onClick={() => switchBrand("lodn")}
             >
               <span className={styles["brand-name"]}>로든</span>
               <span className={styles["brand-tag"]}>브랜드 콘텐츠</span>
@@ -398,7 +398,7 @@ export default function ServicePage() {
         className={`${styles["brand-content"]} ${fading ? styles.fading : ""}`}
       >
         {activeBrand === "artisan" && <LoerContent />}
-        {activeBrand === "roden" && <LodnContent />}
+        {activeBrand === "lodn" && <LodnContent />}
         {activeBrand === "rise" && <ChristianBusinessContent />}
       </div>
 

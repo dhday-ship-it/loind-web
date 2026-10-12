@@ -33,7 +33,7 @@ const hashTags: string[] = [
   "#디지털 / 테크 에이전시",
 ];
 
-type BrandKey = "artisan" | "roden" | "rise";
+type BrandKey = "artisan" | "lodn" | "rise";
 
 interface BrandData {
   desc: ReactNode;
@@ -48,7 +48,7 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
     caption: "아티즌 프로젝트 보기",
     image: "INDEX_CREATIVE AGENCY.png",
   },
-  roden: {
+  lodn: {
     desc: "탁월한 전문성에 근거한 영감으로 웹, 영상, 음악 등 실행 가능한 결과물로 인류의 경험을 만들어갑니다.",
     caption: "LODN 프로젝트 보기",
     image: "INDEX_STUDIO.png",
@@ -62,7 +62,7 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
 
 const brandListItems: { key: BrandKey; label: string }[] = [
   { key: "artisan", label: "제작 스튜디오 : 아티즌" },
-  { key: "roden", label: "브랜드 콘텐츠 : 로든" },
+  { key: "lodn", label: "브랜드 콘텐츠 : 로든" },
   { key: "rise", label: "크리스천 비즈니스 : 라이즈" },
 ];
 

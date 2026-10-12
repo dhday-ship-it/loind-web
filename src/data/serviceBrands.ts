@@ -74,7 +74,7 @@ export interface LodnFeature {
   desc: string;
 }
 
-export interface RodenBrand {
+export interface LodnBrand {
   bannerTitle: string;
   standard: string;
   features: LodnFeature[];
@@ -121,7 +121,7 @@ export const artisanBrand: ArtisanBrand = {
   ],
 };
 
-export const rodenBrand: RodenBrand = {
+export const lodnBrand: LodnBrand = {
   bannerTitle: "로든",
   standard:
     '"Let everything that has breath praise the Lord. Praise the Lord." (Psalm 150:6)',

@@ -9,7 +9,7 @@ import { useStories } from "../../hooks/useStories";
 import { displayCategory, getStoryImages, type Story } from "../../types/story";
 import styles from "./StoryPage.module.css";
 
-const CATEGORIES = ["Artisan", "Roden", "Rise"];
+const CATEGORIES = ["Artisan", "LODN", "Rise"];
 const PAGE_SIZE = 3;
 const FEATURED_SLIDE_INTERVAL_MS = 5000;
 

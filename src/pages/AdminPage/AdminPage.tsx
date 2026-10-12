@@ -10,7 +10,7 @@ import {
 import { displayCategory } from "../../types/story";
 import styles from "./AdminPage.module.css";
 
-const CATEGORY_OPTIONS = ["Artisan", "Roden", "Rise"];
+const CATEGORY_OPTIONS = ["Artisan", "LODN", "Rise"];
 
 type AdminView = "list" | "new" | "order";
 
