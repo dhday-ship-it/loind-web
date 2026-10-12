@@ -298,8 +298,8 @@ export default function AboutPage() {
               <div>
                 <h3 className={styles["corp-name"]}>LOIND Corporation</h3>
                 <p className={styles["corp-desc"]}>
-                  로인드는 크리에이티브 에이전시, 크리에이티브 스튜디오, 크리스천 브랜드 등 여러 브랜드를 통해 크리스천
-                  정체성을 담은 사업을 전개하고 있습니다.
+                  로인드는 크리에이티브 에이전시 아티즌, 크리에이티브 스튜디오 로든, 크리스천 브랜드 라이즈 등 여러 브랜드를
+                  통해 크리스천 정체성을 담은 사업을 전개하고 있습니다.
                 </p>
               </div>
             </div>

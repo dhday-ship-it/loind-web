@@ -146,7 +146,7 @@ export interface DaeheeBrand {
 export const loerBrand: LoerBrand = {
   standard:
     '"Whatever you do, work at it with all your heart, as working for the Lord, not for human masters" [Colossians 3:23]',
-  bannerTitle: "크리에이티브 에이전시",
+  bannerTitle: "아티즌",
   sectionTitle: "주요 비즈니스 및 서비스",
   serviceList: [
     {
@@ -185,7 +185,7 @@ export const loerBrand: LoerBrand = {
 };
 
 export const lodnBrand: LodnBrand = {
-  bannerTitle: "Studio LODN",
+  bannerTitle: "로든",
   standard:
     '"Let everything that has breath praise the Lord. Praise the Lord." (Psalm 150:6)',
   features: [

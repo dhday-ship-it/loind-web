@@ -37,14 +37,14 @@ export const riseRows = [
 
 export const christianGroups = [
   {
-    name: "아티즌",
-    nameKo: "기독교 아웃소싱(외주)",
+    name: "아웃소싱",
+    nameKo: "with 아티즌",
     to: "https://artisan.loind.com",
     cards: artisanCategories.map((c) => ({ label: c.title, items: c.items })),
   },
   {
-    name: "라이즈",
-    nameKo: "크리스천 사역 인큐베이팅",
+    name: "인큐베이팅",
+    nameKo: "",
     to: "/rise",
     cards: riseRows.map((r) => ({ label: r.name, items: r.items })),
   },

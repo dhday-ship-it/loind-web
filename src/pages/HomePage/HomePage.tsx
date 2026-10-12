@@ -45,7 +45,7 @@ interface BrandData {
 const brandShowcaseData: Record<BrandKey, BrandData> = {
   agency: {
     desc: "탁월한 전문성으로 함께하는 모든 파트너들과 최고의 파트너십, 최고의 결과물을 만들어갑니다",
-    caption: "에이전시 프로젝트 보기",
+    caption: "아티즌 프로젝트 보기",
     image: "INDEX_CREATIVE AGENCY.png",
   },
   studio: {
@@ -61,9 +61,9 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
 };
 
 const brandListItems: { key: BrandKey; label: string }[] = [
-  { key: "agency", label: "크리에이티브 에이전시" },
-  { key: "studio", label: "스튜디오 로든" },
-  { key: "impact", label: "크리스천 비즈니스" },
+  { key: "agency", label: "제작 스튜디오 : 아티즌" },
+  { key: "studio", label: "브랜드 콘텐츠 : 로든" },
+  { key: "impact", label: "크리스천 비즈니스 : 라이즈" },
 ];
 
 function formatStoryDate(date: Date): string {
