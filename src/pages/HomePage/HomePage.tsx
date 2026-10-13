@@ -58,7 +58,7 @@ const heroSlides: HeroSlide[] = [
   {
     key: "lodn",
     logo: "/img/logo-lodn.png",
-    logoHeight: 11.7,
+    logoHeight: 12,
     name: "LOIND LODN",
     eyebrow: "브랜드 콘텐츠",
     title: "로든",
