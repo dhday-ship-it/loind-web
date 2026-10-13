@@ -1,46 +1,118 @@
-/* --- HERO SECTION --- */
+/* --- HERO SECTION (브랜드 카드 캐러셀) --- */
 .hero-section {
   /* 하단 섹션들(.container: max-width 1240 + 좌우 20 패딩)과 폭을 맞춘다 */
-  padding: 0 20px 80px 20px;
+  padding: 48px 20px 80px 20px;
 }
 
-.hero-carousel-container {
+.hero-panel {
+  --hero-slide-w: 72%;
+  --hero-gap: 24px;
+  --hero-offset: calc((100% - var(--hero-slide-w)) / 2);
+  /* 모든 카드(브랜드·광고) 공통 글자 크기: 라이즈 카드 기준 */
+  --card-title-size: 36px;
+  --card-desc-size: 17px;
+  --card-logo-gap: 10px;
   position: relative;
-  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  height: 720px;
-  border-radius: 0;
   overflow: hidden;
-  contain: paint;
-  isolation: isolate;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
-.hero-slider-track {
+.hero-viewport {
+  position: relative;
+}
+
+.hero-track {
   display: flex;
-  width: 400%;
-  height: 100%;
+  gap: var(--hero-gap);
   will-change: transform;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 복제 슬라이드 → 원본으로 스냅할 때 트랙·카드·버튼 전환을 모두 끈다 (깜빡임 방지) */
+.hero-track.no-anim,
+.hero-track.no-anim .hero-card,
+.hero-track.no-anim .hero-cta {
+  transition: none;
 }
 
 .hero-slide {
-  width: 25%;
-  height: 100%;
-  flex-shrink: 0;
-  flex-grow: 0;
+  flex: 0 0 var(--hero-slide-w);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 80px;
-  position: relative;
-  overflow: hidden;
 }
 
-/* --- SLIDE 1: 에이전시 배너 --- */
-.slide-agent {
+.hero-card {
+  /* 슬라이드끼리 카드 높이를 맞춘다 (트랙이 가장 높은 슬라이드에 맞춰 늘어남) */
+  flex: 1;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 20px 48px 20px 20px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #eef1f8 0%, #f2f2f5 100%);
+  transform: scale(0.92);
+  opacity: 0.45;
+  transition:
+    transform 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.7s ease;
+}
+
+.hero-card-image {
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #e9ecf3;
+}
+.hero-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-card-body {
+  display: flex;
+  flex-direction: column;
+}
+/* 부가설명 자리에 들어가는 브랜드 로고 (높이는 슬라이드 데이터에서 지정) */
+.card-logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  align-self: flex-start;
+}
+.hero-card-eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  color: #55689b;
+}
+.hero-card-title {
+  margin-top: var(--card-logo-gap);
+  font-size: var(--card-title-size);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #111;
+}
+.hero-card-desc {
+  margin-top: 16px;
+  font-size: var(--card-desc-size);
+  line-height: 1.7;
+  color: #555;
+  word-break: keep-all;
+}
+
+/* --- 아티즌 카드: 에이전시 배너 (어떤 파트너십이 필요하세요?) --- */
+.hero-card-agent {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 48px 0 48px 56px;
   background: linear-gradient(135deg, #e4eaf7 0%, #e3e3e9 100%);
+  overflow: hidden;
 }
 
 .hero-content {
@@ -51,50 +123,49 @@
 }
 
 .service-tag {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 25px;
-  font-weight: 500;
+  margin-bottom: var(--card-logo-gap);
 }
 
 .hero-title {
-  font-size: 44px;
-  font-weight: 700;
-  line-height: 1.45;
-  margin-bottom: 40px;
-  letter-spacing: -1px;
+  font-size: var(--card-title-size);
+  font-weight: 800;
+  line-height: 1.35;
+  margin-bottom: 28px;
+  letter-spacing: -0.02em;
   color: #111;
+  word-break: keep-all;
 }
 
 .search-bubble {
   background: linear-gradient(90deg, #55689b 0%, #8fa8c4 100%);
-  padding: 0 38px;
-  height: 64px;
+  padding: 0 30px;
+  height: 56px;
   border-radius: 50px;
   color: white;
-  font-size: 19px;
+  font-size: var(--card-desc-size);
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   box-shadow: 0 12px 25px rgba(85, 104, 155, 0.25);
   align-self: flex-start;
-  margin-bottom: 35px;
-  transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
 }
 
+/* 폭은 JS 가 활성 문구 폭으로 지정 → 길이가 바뀔 때 부드럽게 늘고 줄어든다 */
 .rolling-wrapper {
   position: relative;
-  height: 64px;
+  height: 56px;
   display: inline-block;
+  overflow: hidden;
+  transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .rolling-item {
   position: absolute;
   left: 0;
   top: 0;
-  height: 64px;
-  line-height: 64px;
+  height: 56px;
+  line-height: 56px;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
@@ -104,7 +175,6 @@
 }
 
 .rolling-item.active {
-  position: relative;
   opacity: 1;
   visibility: visible;
   transition:
@@ -112,38 +182,22 @@
     visibility 0.5s;
 }
 
-.hash-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  max-width: 90%;
-}
-
-.hash-tags span {
-  font-size: 14px;
-  color: #666;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 8px 18px;
-  border-radius: 20px;
-  font-weight: 500;
-}
-
+/* 태그 그래픽은 카드 높이에 영향을 주지 않도록 절대 배치 + 축소 */
 .hero-image {
   flex: 0.6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  align-self: stretch;
+  position: relative;
+  min-width: 200px;
 }
 
-/* 첫 번째 배너 내부 입격 그래픽 태그 요소 그래픽 가속 */
 .double-tag-container {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 280px;
   height: 460px;
-  transform: rotate(-18deg) translateZ(0);
-  -webkit-transform: rotate(-18deg) translateZ(0);
+  transform: translate(-50%, -50%) rotate(-18deg) scale(0.72);
   filter: drop-shadow(-22px 28px 35px rgba(0, 0, 0, 0.13));
-  will-change: transform;
 }
 
 .unified-tag-hole {
@@ -217,43 +271,179 @@
   text-transform: uppercase;
 }
 
-.slide-image {
-  padding: 0;
-  align-items: stretch;
+/* --- 광고 카드: WHOLEGEN WINTER CAMP (캠프 홈페이지 히어로 디자인을 카드 크기로 축소) --- */
+.hero-card-camp {
+  --pw: #9db1ee; /* WHOLEGEN */
+  --pw-light: #dde4ee; /* WINTER */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 44px 56px;
+  background: #0c1424;
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* 포스터 아트를 크게 흐려 깐 배경 */
+.camp-bg {
+  position: absolute;
+  inset: -10%;
+  z-index: -3;
+  background: url("/img/wholegen-art.png") center 55% / cover no-repeat;
+  filter: blur(40px) saturate(1.1) brightness(0.5) hue-rotate(-8deg);
+}
+/* 빛을 든 인물 아트 (왼쪽) */
+.camp-figure {
+  position: absolute;
+  top: -6%;
+  left: 4%;
+  height: 112%;
+  aspect-ratio: 326 / 464;
+  z-index: -2;
+  background: url("/img/wholegen-art.png") center / cover no-repeat;
+  filter: saturate(1.15);
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+}
+/* 오른쪽 글자 쪽을 어둡게 + 아래쪽 그라데이션 */
+.hero-card-camp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(270deg, rgba(10, 20, 40, 0.82) 0%, rgba(10, 20, 40, 0.5) 40%, rgba(10, 20, 40, 0) 70%),
+    linear-gradient(0deg, rgba(11, 15, 23, 0.7) 0%, rgba(11, 15, 23, 0) 30%);
 }
 
-/* [수정] 2, 3번째 슬라이드 이미지 영역에 최고 해상도 복원 가속 주입 */
-.slide-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.camp-main {
+  text-align: right;
+}
+/* 검정 로고 파일을 어두운 배경용 흰색으로 바꿔 오른쪽 정렬 */
+.camp-logo {
+  margin: 0 0 var(--card-logo-gap) auto;
+  align-self: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+.camp-wordmark {
+  font-size: var(--card-title-size);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 40px rgba(8, 13, 25, 0.35);
+}
+.camp-wordmark span {
   display: block;
+}
+.camp-w1 {
+  color: var(--pw);
+}
+.camp-w2 {
+  color: var(--pw-light);
+}
+.camp-w3 {
+  color: #f5f6f8;
+}
+/* WINTER 앞의 ㄴ자 계단 그래픽 */
+.camp-step {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-right: -0.01em;
+  background: var(--pw);
+  clip-path: polygon(0 0, 34% 0, 34% 52%, 100% 52%, 100% 100%, 0 100%);
+}
+.camp-date {
+  margin-top: 16px;
+  font-size: var(--card-desc-size);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+.camp-place {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.88);
+}
+.camp-hl {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--pw);
+  color: #0c1424;
+}
 
-  /* 그래픽 가속 필터링 스펙 추가 */
-  image-rendering: auto;
-  image-rendering: -webkit-optimize-contrast;
+/* 하단 바로가기 버튼 */
+.hero-cta {
+  margin-top: 36px;
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.5s ease,
+    background-color 0.2s;
+}
+.hero-cta:hover {
+  background: #55689b;
+}
 
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform;
+.hero-slide.current .hero-cta {
+  opacity: 1;
+}
+.hero-slide.current .hero-cta {
+  pointer-events: auto;
+}
+.hero-slide.current .hero-card {
+  transform: none;
+  opacity: 1;
+}
+
+/* 좌우 화살표: 가운데 카드 양 끝에 걸치게 */
+.hero-arrow {
+  position: absolute;
+  top: calc((100% - 84px) / 2);
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s;
+}
+.hero-arrow:hover {
+  background: #55689b;
+}
+.hero-arrow.prev {
+  left: calc(var(--hero-offset) - 22px);
+}
+.hero-arrow.next {
+  right: calc(var(--hero-offset) - 22px);
 }
 
 /* --- 슬라이더 컨트롤 --- */
 .banner-controls {
-  position: absolute;
-  right: 40px;
-  bottom: 40px;
-  z-index: 10;
+  margin-top: 28px;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 14px;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 8px 16px;
-  border-radius: 30px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .control-dots {
@@ -265,7 +455,7 @@
 .control-dots span {
   width: 6px;
   height: 6px;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.18);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
@@ -278,7 +468,7 @@
 .control-dots span.active {
   width: 32px;
   height: 8px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.12);
   border-radius: 10px;
 }
 
@@ -289,9 +479,9 @@
   top: 0;
   height: 100%;
   width: 0%;
-  background-color: #ffffff;
+  background-color: #55689b;
   border-radius: 10px;
-  animation: fillGauge 6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fillGauge 9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .control-dots.paused span.active::after {
@@ -308,10 +498,10 @@
 }
 
 .control-pause {
-  color: #ffffff;
+  color: #555;
   font-size: 11px;
   cursor: pointer;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
   padding-left: 12px;
   font-weight: bold;
 }
@@ -597,15 +787,6 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
-  .hero-carousel-container {
-    height: 620px;
-  }
-  .hero-title {
-    font-size: 36px;
-  }
-  .double-tag-container {
-    transform: rotate(-10deg) scale(0.85);
-  }
   .brand-showcase {
     grid-template-columns: 280px 1fr;
     gap: 40px;
@@ -617,11 +798,37 @@
 }
 
 @media (max-width: 950px) {
+  .hero-panel {
+    --hero-slide-w: 84%;
+    --hero-gap: 16px;
+  }
+  .hero-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 16px 16px 28px;
+  }
+  .hero-card-image {
+    aspect-ratio: 16 / 10;
+  }
+  .hero-card-body {
+    padding: 0 8px;
+  }
+  .hero-card-agent {
+    padding: 36px 28px;
+  }
+  .hero-card-camp {
+    padding: 32px 28px;
+  }
+  .camp-figure {
+    left: -12%;
+    opacity: 0.8;
+  }
   .hero-image {
     display: none;
   }
-  .slide-agent {
-    padding: 40px;
+  .hero-arrow {
+    top: auto;
+    bottom: 108px;
   }
   .brand-showcase {
     grid-template-columns: 1fr;
@@ -630,30 +837,29 @@
 }
 
 @media (max-width: 768px) {
-  .hero-section {
-    padding: 0 20px;
+  .hero-panel {
+    --card-title-size: 26px;
+    --card-desc-size: 15px;
   }
-  .hero-carousel-container {
-    height: 500px;
-  }
-  .slide-image {
-    background: #0f1420;
-  }
-  .slide-image img {
-    object-fit: contain;
+  .camp-place {
+    font-size: 12px;
+    line-height: 1.7;
   }
   .hero-title {
-    font-size: 26px;
-    letter-spacing: -0.5px;
+    margin-bottom: 20px;
   }
   .search-bubble {
-    font-size: 13px;
-    padding: 0 20px;
-    height: 52px;
+    padding: 0 18px;
+    height: 46px;
+    gap: 8px;
   }
-  .hash-tags span {
-    font-size: 12px;
-    padding: 6px 12px;
+  .rolling-wrapper,
+  .rolling-item {
+    height: 46px;
+    line-height: 46px;
+  }
+  .hero-section {
+    padding: 28px 20px 0;
   }
   .story-header h2 {
     font-size: 22px;
@@ -681,33 +887,6 @@
 }
 
 @media (max-width: 480px) {
-  .hero-carousel-container {
-    height: 420px;
-  }
-  .slide-agent {
-    padding: 28px 24px;
-  }
-  .hero-title {
-    font-size: 22px;
-  }
-  .search-bubble {
-    font-size: 12px;
-    padding: 0 16px;
-    height: 46px;
-    gap: 8px;
-  }
-  .hash-tags {
-    gap: 6px;
-  }
-  .hash-tags span {
-    font-size: 11px;
-    padding: 5px 10px;
-  }
-  .banner-controls {
-    right: 14px;
-    bottom: 14px;
-    padding: 6px 12px;
-  }
   .carousel-container-boxed {
     padding: 28px 18px;
   }
