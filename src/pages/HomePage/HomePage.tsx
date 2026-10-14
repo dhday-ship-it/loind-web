@@ -95,6 +95,8 @@ const heroSlides: HeroSlide[] = [
 const TOTAL_SLIDES = heroSlides.length;
 // 양옆 카드가 이어 보이도록 [마지막 복제, ...원본, 첫번째 복제] 순서로 렌더
 const loopSlides = [heroSlides[TOTAL_SLIDES - 1], ...heroSlides, heroSlides[0]];
+// 복제 슬라이드(0, TOTAL_SLIDES+1) 바깥의 빈 칸으로는 절대 넘어가지 않게 막는다
+const clampIndex = (i: number) => Math.min(Math.max(i, 0), TOTAL_SLIDES + 1);
 
 function SlideLink({ to, className, children }: { to: string; className: string; children: ReactNode }) {
   return to.startsWith("http") ? (
@@ -169,14 +171,14 @@ export default function HomePage() {
     if (!isPlaying) return;
     const id = window.setInterval(() => {
       setHeroAnimate(true);
-      setCurrentIndex((prev) => prev + 1);
+      setCurrentIndex((prev) => clampIndex(prev + 1));
       setGaugeKey((k) => k + 1);
     }, SLIDE_INTERVAL_MS);
     return () => window.clearInterval(id);
   }, [isPlaying, restartSignal]);
 
-  function handleHeroTransitionEnd(e: ReactTransitionEvent<HTMLDivElement>) {
-    if (e.target !== e.currentTarget || e.propertyName !== "transform") return;
+  // 복제 슬라이드에 도착하면 애니메이션 없이 같은 모양의 원본 슬라이드로 순간이동
+  function snapFromClone() {
     if (currentIndex > TOTAL_SLIDES) {
       setHeroAnimate(false);
       setCurrentIndex(1);
@@ -185,6 +187,18 @@ export default function HomePage() {
       setCurrentIndex(TOTAL_SLIDES);
     }
   }
+
+  function handleHeroTransitionEnd(e: ReactTransitionEvent<HTMLDivElement>) {
+    if (e.target !== e.currentTarget || e.propertyName !== "transform") return;
+    snapFromClone();
+  }
+
+  // 백그라운드 탭 등에서 transitionend 가 오지 않아도 복제 슬라이드에 머물지 않도록 보험
+  useEffect(() => {
+    if (currentIndex >= 1 && currentIndex <= TOTAL_SLIDES) return;
+    const id = window.setTimeout(snapFromClone, 800);
+    return () => window.clearTimeout(id);
+  });
 
   useEffect(() => {
     if (heroAnimate) return;
@@ -222,7 +236,7 @@ export default function HomePage() {
   // 수동 이동 시 자동재생 타이머·게이지를 처음부터 다시 시작
   const goTo = (index: number) => {
     setHeroAnimate(true);
-    setCurrentIndex(index);
+    setCurrentIndex(clampIndex(index));
     setGaugeKey((k) => k + 1);
     if (isPlaying) setRestartSignal((s) => s + 1);
   };
