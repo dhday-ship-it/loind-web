@@ -6,7 +6,7 @@ const leadershipItems = [
     name: "정대희",
     title: "CEO",
     photo: "/daeheejeong.JPG",
-    quote: "하나님과 사람에게 큰 기쁨이 되는 일을 합니다.",
+    quote: "하나님과 사람에게 기쁨이 되는 일을 합니다.",
     bio: "Love Bind, LOIND.\n로인드라는 이름은 하나님 사랑, 이웃 사랑으로 묶인 공동체를 뜻합니다.\n이 귀한 가치의 향기를 세상 속에 만들어가는 것이 우리 공동체의 목적이자 동기입니다.\n우리는 하나님 안에서 이 기쁨을 발견하고 만들어가는 약속의 공동체가 되어갈 것을 소망합니다.",
     career: [
       { year: "2026", text: "주식회사 로인드 CEO" },
@@ -36,9 +36,7 @@ export default function AboutPage() {
           <div className={styles["about-hero-content"]}>
             <div className={styles["about-hero-top"]}>
               <h1 className={styles["about-hero-title"]}>LOIND Corporation</h1>
-              <p className={styles["about-hero-subtitle"]}>
-                우리는 크리스천으로서 크리스천의 방식으로 일을 합니다.
-              </p>
+              <p className={styles["about-hero-subtitle"]}>Creating Joy for God and People</p>
             </div>
           </div>
         </div>
