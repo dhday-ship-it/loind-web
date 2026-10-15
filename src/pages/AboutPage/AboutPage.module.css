@@ -7,6 +7,11 @@
 }
 
 /* 개별 스냅 단위 컴포넌트 (커버 영역) */
+/* 섹션 간격 리듬: 섹션 사이 96px + 구분선, 구분선→내용 64px (모바일 56px / 40px) */
+.snap-main {
+  --section-gap: 96px;
+  --divider-gap: 64px;
+}
 .snap-panel {
   display: flex;
   flex-direction: column;
@@ -28,7 +33,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 100px 60px 40px;
+  padding: 100px 60px 0;
   display: flex;
   flex-direction: column;
 }
@@ -42,27 +47,38 @@
   color: #111;
   letter-spacing: -2px;
   line-height: 1.15;
-  margin: 0 0 20px 0;
+  margin: 0;
 }
+/* 제목 위에 올라간 핵심 문구 */
 .about-hero-subtitle {
   font-family: "Pretendard", sans-serif;
   font-size: clamp(18px, 2.5vw, 26px);
   font-weight: 600;
   color: #111;
   letter-spacing: -0.5px;
-  margin: 0;
+  margin: 0 0 12px 0;
+}
+
+.about-hero-intro {
+  font-family: "Pretendard", sans-serif;
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 500;
+  line-height: 1.7;
+  color: #555;
+  margin: 28px 0 0 0;
+  word-break: keep-all;
 }
 
 /* --- About 동등 섹션 (Calling / Vision / Mission) --- */
 .about-sections {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 60px 40px;
+  padding: var(--section-gap) 60px 0;
 }
 .about-section-block {
   display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 60px;
+  grid-template-columns: 180px 1fr; /* 'One Identity, Many Forms' 가 한 줄로 들어가는 폭 */
+  gap: 40px;
   align-items: start;
 }
 .about-section-label {
@@ -95,9 +111,9 @@
 }
 .about-section-desc {
   font-family: "Pretendard", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
-  color: #888;
+  color: #555;
   line-height: 1.9;
   word-break: keep-all;
   margin: 0;
@@ -109,218 +125,26 @@
   color: #bbb;
   font-size: 13px;
 }
-.verse-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 20px 0 0 0;
-  padding: 0;
-  border: none;
-  background: none;
-  font-family: "Pretendard", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: #55689b;
-  cursor: pointer;
-}
-.verse-toggle-icon {
-  display: inline-flex;
-  font-size: 12px;
-  transition: transform 0.3s ease;
-}
-.verse-toggle-icon.open {
-  transform: rotate(180deg);
-}
-.verse-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  margin-left: 18px;
-  padding-left: 14px;
-  border-left: 2px solid #eee;
-  transition: grid-template-rows 0.35s ease;
-}
-.verse-panel.open {
-  grid-template-rows: 1fr;
-}
-.verse-panel-inner {
-  min-height: 0;
-  overflow: hidden;
-}
-.about-section-verse {
-  font-family: "Pretendard", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #999;
-  line-height: 1.9;
-  word-break: keep-all;
-  margin: 12px 0 0 0;
-  padding: 0;
-}
-.about-section-verse-highlight {
-  color: #55689b;
-}
-.mission-diagram {
-  display: flex;
-  flex-direction: column;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid #eee;
-}
-.mission-diagram-step {
-  position: relative;
-  display: grid;
-  grid-template-columns: 22px 1fr;
-  gap: 12px;
-  padding-bottom: 20px;
-}
-.mission-diagram-step:last-child {
-  padding-bottom: 0;
-}
-.mission-diagram-step:not(:last-child)::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 22px;
-  bottom: 0;
-  width: 1px;
-  background: #e5e5e5;
-}
-.mission-diagram-num {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 21px;
-  height: 21px;
-  border-radius: 50%;
-  border: 1px solid #55689b;
-  background: #fff;
-  font-family: "Pretendard", sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  color: #55689b;
-}
-.mission-diagram-label {
-  font-family: "Pretendard", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: #111;
-  line-height: 1.4;
-  word-break: keep-all;
-  margin: 0;
-  padding-top: 2px;
-}
-.mission-diagram-label span {
-  display: block;
-  margin-top: 3px;
-  font-size: 11px;
-  font-weight: 400;
-  color: #999;
-}
+
 .about-section-divider {
   width: 100%;
   height: 1px;
   background: #f0f0f0;
-  margin: 48px 0;
-}
-.about-section-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 36px 0;
-  font-size: 16px;
-  color: #ddd;
-  letter-spacing: 2px;
-}
-.principle-pillars {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding-top: 2px;
-}
-.pillar-text {
-  font-family: "Pretendard", sans-serif;
-  font-size: clamp(15px, 1.6vw, 18px);
-  font-weight: 700;
-  color: #333;
-  letter-spacing: -0.3px;
-}
-.pillar-arrow {
-  font-size: 16px;
-  font-weight: 400;
-  color: #55689b;
-}
-
-/* --- Culture / Way of Working --- */
-.culture-section {
-  background: #fff;
-  padding: 40px 0 120px;
-}
-.culture-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 60px;
-}
-.culture-divider {
-  width: 100%;
-  height: 1px;
-  background: #eee;
-  margin-bottom: 32px;
-}
-.culture-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: "Pretendard", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: #111;
-  margin-bottom: 48px;
-}
-.culture-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #111;
-}
-.culture-cards {
-  display: flex;
-}
-.culture-banner {
-  position: relative;
-  width: 100%;
-  min-height: clamp(200px, 22vw, 280px);
-  border-radius: 24px;
-  padding: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  background: linear-gradient(160deg, #3d4d78 0%, #55689b 55%, #8fa8c4 100%);
-  box-shadow: 0 24px 44px rgba(85, 104, 155, 0.25);
-}
-.culture-banner-text {
-  position: relative;
-  z-index: 1;
-  max-width: 720px;
-  font-family: "Pretendard", sans-serif;
-  font-size: clamp(20px, 2.6vw, 30px);
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -0.4px;
-  word-break: keep-all;
-  line-height: 1.5;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-  margin: 0;
+  margin: 0 0 var(--divider-gap);
 }
 
 /* --- Leadership --- */
 .leadership-section {
   background: #fff;
-  padding: 20px 0 120px;
+  padding: var(--section-gap) 0 0;
+}
+/* 섹션 앞 구분선 (One Identity 와 같은 규칙) */
+.leadership-inner::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: var(--divider-gap);
+  background: #f0f0f0;
 }
 .leadership-inner {
   max-width: 1200px;
@@ -437,12 +261,20 @@
 /* --- Corporation --- */
 .corp-section {
   background: #fff;
-  padding: 100px 0 120px;
+  padding: var(--section-gap) 0 120px;
 }
 .corp-inner {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 60px;
+}
+/* 섹션 앞 구분선 (다른 섹션과 같은 규칙) */
+.corp-inner::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: var(--divider-gap);
+  background: #f0f0f0;
 }
 .corp-brand {
   display: flex;
@@ -454,8 +286,42 @@
   flex-shrink: 0;
   width: 320px;
   height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  padding: 72px;
+  box-sizing: border-box;
   border: 1px solid #ececef;
   border-radius: 24px;
+  background: #fafafa;
+}
+/* 설명 아래 브랜드 컬러: 동그라미만 (이름·코드는 마우스를 올리면 표시) */
+.corp-colors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.corp-colors li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.corp-colors-label {
+  margin-right: 6px;
+  font-family: "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+}
+.corp-swatch {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e4e6ea;
+  border-radius: 50%;
 }
 .corp-name {
   font-family: "Pretendard", sans-serif;
@@ -475,25 +341,16 @@
   max-width: 620px;
   margin: 0;
 }
-
-/* --- Responsive Media Queries --- */
-@media (max-width: 640px) {
-  .culture-banner {
-    padding: 28px 24px;
-  }
-}
 @media (max-width: 768px) {
   .snap-main {
     padding-top: 70px;
+    --section-gap: 56px;
+    --divider-gap: 40px;
   }
-  .culture-section {
-    padding: 72px 0;
-  }
-  .culture-inner {
-    padding: 0 28px;
-  }
+  
+  
   .leadership-section {
-    padding: 16px 0 72px;
+    padding: var(--section-gap) 0 0;
   }
   .leadership-inner {
     padding: 0 28px;
@@ -506,7 +363,7 @@
     width: 180px;
   }
   .corp-section {
-    padding: 72px 0;
+    padding: var(--section-gap) 0 72px;
   }
   .corp-inner {
     padding: 0 28px;
@@ -517,13 +374,11 @@
     gap: 24px;
   }
   .about-hero-content {
-    padding: 120px 28px 60px;
+    padding: 120px 28px 0;
   }
   .about-section-block {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  .principle-pillars {
-    gap: 10px 14px;
-  }
+  
 }

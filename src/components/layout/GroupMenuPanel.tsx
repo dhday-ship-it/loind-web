@@ -17,7 +17,7 @@ export function GroupMenuPanel({ onClose, initialTab = "service" }: { onClose: (
           <button type="button" className={`${styles.menuTabCard} ${menuTab === "pledged" ? styles.menuTabActive : ""}`} onClick={() => setMenuTab("pledged")}><span className={styles.menuEyebrow}>LOIND</span><span className={styles.menuCardTitle}>PLEDGED</span></button>
         </div>
         <div className={styles.menuMainCol}>
-          {menuTab === "intro" && <section className={styles.menuPanelBlock}><h4 className={styles.menuBlockTitle}>그룹 소개</h4><p className={styles.menuIntroText}>로인드는 크리에이티브 에이전시 아티즌, 크리에이티브 스튜디오 로든, 크리스천 브랜드 라이즈 등 여러 브랜드를 통해 크리스천 정체성을 담은 사업을 전개하고 있습니다.</p><a href="/about" className={styles.menuGoLink} onClick={onClose}>그룹 소개 페이지 보기 →</a></section>}
+          {menuTab === "intro" && <section className={styles.menuPanelBlock}><h4 className={styles.menuBlockTitle}>그룹 소개</h4><p className={styles.menuIntroText}>로인드는 제작 스튜디오 아티즌, 브랜드 콘텐츠 로든, 크리스천 비즈니스 라이즈 등 여러 브랜드를 통해 크리스천 정체성을 담은 사업을 전개하고 있습니다.</p><a href="/about" className={styles.menuGoLink} onClick={onClose}>그룹 소개 페이지 보기 →</a></section>}
           {menuTab === "pledged" && <section className={styles.menuPanelBlock}><h4 className={styles.menuBlockTitle}>LOIND PLEDGED</h4><p className={styles.menuIntroText}>준비 중입니다.</p></section>}
           {menuTab === "service" && <section className={styles.menuPanelBlock}>
             <div className={styles.menuGroupGrid}>
