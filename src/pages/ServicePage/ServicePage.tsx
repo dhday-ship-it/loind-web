@@ -148,6 +148,7 @@ function LoerServiceList({ list, title }: { list: ServiceCategory[]; title: stri
           >
             {c.icon && <img src={c.icon} alt="" />}
             <span>{c.cat}</span>
+            {c.catSub && <small className={styles["category-icon-sub"]}>{c.catSub}</small>}
           </button>
         ))}
       </div>

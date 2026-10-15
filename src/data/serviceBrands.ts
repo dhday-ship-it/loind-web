@@ -8,6 +8,7 @@ export interface ServiceItemCard {
 
 export interface ServiceCategory {
   cat: string;
+  catSub?: string; // 카테고리 이름 아래 작은 보조 문구 (예: "(+납품 서비스)")
   cards?: ServiceItemCard[];
   cardsNote?: string;
   icon?: string;
@@ -92,6 +93,7 @@ export const artisanBrand: ArtisanBrand = {
     },
     {
       cat: "디자인",
+      catSub: "(+납품 서비스)",
       icon: "/icons/design.png",
       cards: [
         { name: "로고 디자인", image: "/img/design-logo.jpg" },

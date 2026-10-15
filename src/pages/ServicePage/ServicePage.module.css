@@ -200,6 +200,17 @@
   line-height: 1.3;
   word-break: keep-all;
 }
+.category-icon-sub {
+  margin-top: -3px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #9aa0ab;
+  line-height: 1.2;
+  word-break: keep-all;
+}
+.category-icon-btn.active .category-icon-sub {
+  color: #8fa8c4;
+}
 .category-icon-btn:hover {
   border-color: #b7c0e6;
 }

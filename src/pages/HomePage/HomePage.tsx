@@ -27,6 +27,17 @@ const rollingItems: string[] = [
   "온·오프라인 세미나가 필요하세요?",
 ];
 
+// 롤링 문구 순서와 같은 순서의 실제 작업 이미지 (아티즌 카드 오른쪽 카드 묶음)
+const rollingImages: string[] = [
+  "/img/video-genre-sketch.jpg",
+  "/img/video-genre-interview-v3.jpg",
+  "/img/design-logo.jpg",
+  "/img/design-promo-goods-v3.jpg",
+  "/img/design-promo-items.jpg",
+  "/img/itdev-web-v2.jpg",
+  "/img/seminar-offline.jpg",
+];
+
 interface HeroSlide {
   key: string;
   agent?: boolean; // true 면 이미지 카드 대신 에이전시 배너(파트너십 문구 + 태그 그래픽)를 보여준다
@@ -277,20 +288,16 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className={styles["hero-image"]}>
-        <div className={styles["double-tag-container"]}>
-          <div className={styles["unified-tag-hole"]}></div>
-          <div className={styles["main-tag-base"]}>
-            <div className={styles["main-tag-logo"]}>
-              LOIND
-              <br />
-              AGENCY
+      {/* 오른쪽: 실제 작업 이미지 3장을 겹친 카드 묶음. 맨 앞 카드는 지금 롤링 문구의 작업 */}
+      <div className={styles["work-stack"]} aria-hidden="true">
+        {[2, 1, 0].map((offset) => {
+          const idx = (rollingIndex + offset) % rollingImages.length;
+          return (
+            <div key={offset} className={`${styles["work-card"]} ${styles[`work-card-${offset}`]}`}>
+              <img key={idx} src={rollingImages[idx]} alt="" />
             </div>
-          </div>
-          <div className={styles["sub-tag-overlap"]}>
-            <div className={styles["sub-tag-text"]}></div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </>
   );
