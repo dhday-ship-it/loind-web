@@ -1,0 +1,123 @@
+.privacy {
+  max-width: 800px;
+  padding-top: clamp(56px, 7vw, 96px);
+  padding-bottom: 120px;
+  font-size: 15px;
+  line-height: 1.85;
+  color: #333;
+  word-break: keep-all;
+}
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8fa8c4;
+}
+.title {
+  margin: 0 0 22px;
+  font-size: clamp(30px, 3.4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #111;
+}
+.lead {
+  margin: 0 0 48px;
+  color: #666;
+}
+.privacy section {
+  padding: 30px 0;
+  border-top: 1px solid #eee;
+}
+.privacy h2 {
+  margin: 0 0 12px;
+  font-size: 17px;
+  font-weight: 800;
+  color: #111;
+}
+.privacy p {
+  margin: 0 0 10px;
+}
+.privacy ul {
+  margin: 0 0 10px;
+  padding-left: 18px;
+  list-style: disc;
+}
+.privacy li + li {
+  margin-top: 4px;
+}
+.privacy a {
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.muted {
+  margin-top: 14px !important;
+  font-size: 13px;
+  color: #999;
+}
+
+/* 서비스별 처리 내용 카드 */
+.service {
+  margin: 16px 0;
+  padding: 22px 24px;
+  border-radius: 16px;
+  background: #f7f8fa;
+}
+.service h3 {
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #111;
+}
+.service dl {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px 16px;
+  margin: 0;
+  font-size: 14px;
+}
+.service dt {
+  font-weight: 700;
+  color: #55689b;
+}
+.service dd {
+  margin: 0;
+}
+.service dd ul {
+  margin: 0;
+}
+.service b {
+  display: inline-block;
+  min-width: 34px;
+  margin-right: 4px;
+  font-weight: 700;
+  color: #111;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.table th,
+.table td {
+  padding: 11px 14px;
+  border: 1px solid #eee;
+  text-align: left;
+}
+.table th {
+  background: #f7f8fa;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .service dl {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .service dd {
+    margin-bottom: 10px;
+  }
+}

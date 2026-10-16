@@ -22,6 +22,37 @@
   margin-bottom: 15px;
 }
 
+.footerCompany {
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.footerCompany p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #777;
+}
+.footerCompany span {
+  margin: 0 8px;
+  color: #3a3a3a;
+}
+.footerCompany a {
+  color: #999;
+  transition: color 0.2s;
+}
+.footerCompany a:hover {
+  color: #fff;
+}
+.footerCompany .footerLegal {
+  margin-top: 8px;
+}
+.footerCompany .footerLegal a {
+  color: #fff;
+  font-weight: 700;
+}
+
 .footerCopy {
   font-size: 14px;
   color: #666;
