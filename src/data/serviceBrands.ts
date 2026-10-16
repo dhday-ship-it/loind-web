@@ -108,8 +108,8 @@ export const artisanBrand: ArtisanBrand = {
       cat: "IT개발(앱,웹)",
       icon: "/icons/it-dev.png",
       cards: [
-        { name: "웹 개발(+관리)", image: "/img/itdev-web-v2.jpg" },
-        { name: "앱 개발(관리)" },
+        { name: "웹 개발", image: "/img/itdev-wholegen.jpg" },
+        { name: "앱 개발" },
       ],
     },
     {

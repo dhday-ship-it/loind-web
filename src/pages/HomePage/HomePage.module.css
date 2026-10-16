@@ -136,116 +136,172 @@
   word-break: keep-all;
 }
 
-.search-bubble {
-  background: linear-gradient(90deg, #55689b 0%, #8fa8c4 100%);
-  padding: 0 30px;
-  height: 56px;
-  border-radius: 50px;
-  color: white;
-  font-size: var(--card-desc-size);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 12px 25px rgba(85, 104, 155, 0.25);
-  align-self: flex-start;
-}
-
-/* 폭은 JS 가 활성 문구 폭으로 지정 → 길이가 바뀔 때 부드럽게 늘고 줄어든다 */
-.rolling-wrapper {
-  position: relative;
-  height: 56px;
-  display: inline-block;
-  overflow: hidden;
-  transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.rolling-item {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 56px;
-  line-height: 56px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.3s ease-in-out,
-    visibility 0.3s;
-}
-
-.rolling-item.active {
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity 0.5s ease-in-out,
-    visibility 0.5s;
-}
-
-
-/* 아티즌 카드 오른쪽: 실제 작업 이미지 3장을 살짝 기울여 겹친 카드 묶음 */
+/* 아티즌 카드: 왼쪽 큰 원 + 오른쪽 (로고 · 두 줄 제목 · 카테고리 썸네일) */
 .hero-card-agent {
   position: relative;
+  display: grid;
+  grid-template-columns: 56% minmax(0, 1fr); /* 왼쪽은 사진이 가득 채움 (흐려지는 구간 포함) */
+  column-gap: 0;
+  min-width: 0; /* 내용 때문에 카드가 다른 카드보다 넓어지지 않게 */
+  align-items: center;
+  padding: 0 48px 0 0;
+  overflow: hidden;
 }
-.work-stack {
-  position: absolute;
-  top: 50%;
-  right: 6%;
-  width: 36%;
-  aspect-ratio: 16 / 10;
-  transform: translateY(-50%);
-  pointer-events: none;
+/* 큰 사진 칸: 카드 높이 전체 */
+.dish-wrap {
+  position: relative;
+  align-self: stretch;
 }
-.work-card {
+/* 큰 사진: 틀 없이 가장자리가 카드 배경으로 부드럽게 사라짐 */
+.dish {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* 위·아래·왼쪽은 카드 끝까지 꽉 채우고, 글 쪽(오른쪽)만 서서히 사라지게.
+     직선 그라데이션은 경계가 띠처럼 보여서, 여러 단계로 완만하게(ease-out) 줄어들게 함 */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 40%,
+    rgba(0, 0, 0, 0.94) 50%,
+    rgba(0, 0, 0, 0.82) 58%,
+    rgba(0, 0, 0, 0.64) 66%,
+    rgba(0, 0, 0, 0.44) 74%,
+    rgba(0, 0, 0, 0.26) 82%,
+    rgba(0, 0, 0, 0.12) 89%,
+    rgba(0, 0, 0, 0.04) 95%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 40%,
+    rgba(0, 0, 0, 0.94) 50%,
+    rgba(0, 0, 0, 0.82) 58%,
+    rgba(0, 0, 0, 0.64) 66%,
+    rgba(0, 0, 0, 0.44) 74%,
+    rgba(0, 0, 0, 0.26) 82%,
+    rgba(0, 0, 0, 0.12) 89%,
+    rgba(0, 0, 0, 0.04) 95%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+.dish img {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  border-radius: 16px;
-  background: #fff;
-  border: 4px solid #fff;
-  box-shadow:
-    0 24px 48px rgba(30, 40, 70, 0.16),
-    0 6px 14px rgba(30, 40, 70, 0.08);
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.work-card img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  animation: workIn 0.6s ease;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
 }
-/* 맨 앞(0) → 뒤(2): 뒤로 갈수록 작아지고 반대로 기울며 위로 */
-.work-card-0 {
-  z-index: 3;
-  transform: rotate(-3deg);
+.dish img.dish-on {
+  opacity: 1;
+  transform: none;
 }
-.work-card-1 {
-  z-index: 2;
-  transform: translate(9%, -12%) rotate(4deg) scale(0.9);
-  opacity: 0.92;
+.hero-card-agent .hero-content {
+  flex: none;
+  margin-left: -6%; /* 사진이 흐려지는 끝부분과 글이 살짝 겹쳐 하나로 이어지게 */
 }
-.work-card-2 {
-  z-index: 1;
-  transform: translate(-7%, -20%) rotate(-8deg) scale(0.8);
-  opacity: 0.75;
+.hero-card-agent .service-tag {
+  margin-bottom: 18px;
 }
-@keyframes workIn {
-  from {
-    opacity: 0;
-    transform: scale(1.04);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* 한 줄 제목 */
+.dish-title {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  color: #111;
+}
+/* 아티즌 로고: 이 카드의 주인공이라 다른 카드보다 크게 */
+.hero-card-agent .card-logo {
+  height: 22px !important;
+}
+/* 카테고리 썸네일: 제목 아래 왼쪽 정렬 */
+.dish-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(17, 20, 28, 0.08);
+}
+.dish-thumb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 76px;
+  padding: 4px 4px 14px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+.dish-thumb img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 6px 14px rgba(20, 24, 34, 0.12);
+  opacity: 0.6;
+  filter: saturate(0.55);
+  transition: opacity 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.dish-thumb span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #a0a5b1;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+.dish-thumb-sub {
+  margin-top: -7px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #a0a5b1;
+  white-space: nowrap;
+}
+/* 선택 표시: 제목·바로가기 버튼과 같은 먹색 링 + 글자 아래 짧은 막대 */
+.dish-thumb::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  margin-left: -7px;
+  border-radius: 2px;
+  background: #1b1f2a;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.dish-thumb:hover img {
+  opacity: 0.9;
+  filter: none;
+  transform: translateY(-2px);
+}
+.dish-thumb-on img {
+  opacity: 1;
+  filter: none;
+  box-shadow: 0 0 0 1.5px #1b1f2a, 0 10px 18px rgba(20, 24, 34, 0.18);
+}
+.dish-thumb-on span {
+  color: #1b1f2a;
+  font-weight: 700;
+}
+.dish-thumb-on::after {
+  opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
-  .work-card,
-  .work-card img {
+  .dish img {
     transition: none;
-    animation: none;
   }
 }
 
@@ -578,8 +634,20 @@
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  transition: transform 0.5s ease;
 }
 
+/* 이미지 전체가 바로가기 링크 */
+a.brand-detail-image {
+  text-decoration: none;
+  cursor: pointer;
+}
+a.brand-detail-image:hover .brand-detail-caption {
+  background: #fff;
+}
+a.brand-detail-image:hover .brand-detail-photo {
+  transform: scale(1.02);
+}
 .brand-detail-caption {
   position: relative;
   z-index: 1;
@@ -794,8 +862,35 @@
   .hero-card-agent {
     padding: 36px 28px;
   }
-  .work-stack {
-    display: none; /* 좁은 화면: 글이 카드 전체를 씀 */
+  .hero-card-agent {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+    justify-items: center;
+    text-align: center;
+  }
+  .dish-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+  }
+  .dish {
+    -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+  }
+  .dish-title {
+    font-size: 24px;
+    white-space: normal;
+  }
+  .hero-card-agent .card-logo {
+    height: 16px !important;
+  }
+  .hero-card-agent .card-logo {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .dish-thumbs {
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
   }
   .hero-card-camp {
     padding: 32px 28px;
@@ -825,16 +920,6 @@
   }
   .hero-title {
     margin-bottom: 20px;
-  }
-  .search-bubble {
-    padding: 0 18px;
-    height: 46px;
-    gap: 8px;
-  }
-  .rolling-wrapper,
-  .rolling-item {
-    height: 46px;
-    line-height: 46px;
   }
   .hero-section {
     padding: 28px 20px 0;

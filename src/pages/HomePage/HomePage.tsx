@@ -1,7 +1,5 @@
 import {
   useEffect,
-  useLayoutEffect,
-  useRef,
   useState,
   type ReactNode,
   type TransitionEvent as ReactTransitionEvent,
@@ -15,27 +13,12 @@ import styles from "./HomePage.module.css";
 const SLIDE_INTERVAL_MS = 9000;
 const ROLLING_INTERVAL_MS = 3000;
 
-// 아티즌 카드 안의 "어떤 파트너십이 필요하세요?" 배너 문구
-// ※ 실제 서비스 항목(data/serviceBrands.ts 의 artisanBrand)과 맞춰둡니다.
-const rollingItems: string[] = [
-  "스케치·홍보영상이 필요하세요?",
-  "인터뷰·강의영상이 필요하세요?",
-  "로고·캐릭터 디자인이 필요하세요?",
-  "포스터·배너 디자인이 필요하세요?",
-  "판촉물 제작이 필요하세요?",
-  "웹·앱 개발이 필요하세요?",
-  "온·오프라인 세미나가 필요하세요?",
-];
-
-// 롤링 문구 순서와 같은 순서의 실제 작업 이미지 (아티즌 카드 오른쪽 카드 묶음)
-const rollingImages: string[] = [
-  "/img/video-genre-sketch.jpg",
-  "/img/video-genre-interview-v3.jpg",
-  "/img/design-logo.jpg",
-  "/img/design-promo-goods-v3.jpg",
-  "/img/design-promo-items.jpg",
-  "/img/itdev-web-v2.jpg",
-  "/img/seminar-offline.jpg",
+// 아티즌 카드: 4개 카테고리 대표 작업. image 는 큰 사진(가로형), thumb 는 동그란 썸네일용 정사각형
+const artisanWorks = [
+  { label: "영상 프로덕션", image: "/img/orbs/promo-wide.jpg", thumb: "/img/orbs/promo.jpg" },
+  { label: "디자인", sub: "(+납품 서비스)", image: "/img/design-promo-items.jpg", thumb: "/img/orbs/goods.jpg" },
+  { label: "IT개발", image: "/img/orbs/web-wholegen-wide.jpg", thumb: "/img/orbs/web-wholegen.jpg" },
+  { label: "온·오프 세미나", image: "/img/seminar-offline.jpg", thumb: "/img/orbs/seminar.jpg" },
 ];
 
 interface HeroSlide {
@@ -123,6 +106,7 @@ interface BrandData {
   desc: ReactNode;
   caption: string;
   image: string;
+  to: string; // 바로가기: 브랜드 홈페이지 (http 로 시작하면 새 탭)
 }
 
 // ※ 아래 설명/태그 문구는 임시 카피입니다 — 확정 카피로 교체해주세요.
@@ -131,16 +115,21 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
     desc: "탁월한 전문성으로 함께하는 모든 파트너들과 최고의 파트너십, 결과물을 만들어갑니다",
     caption: "아티즌 프로젝트 보기",
     image: "INDEX_CREATIVE AGENCY.png",
+    to: "https://artisan.loind.com",
   },
   lodn: {
     desc: "말씀을 근거로하는 콘텐츠로 인류의 경험을 만들어갑니다",
     caption: "LODN 프로젝트 보기",
     image: "INDEX_STUDIO.png",
+    // TODO: 로든 홈페이지 주소가 정해지면 교체
+    to: "/service",
   },
   rise: {
     desc: "크리스천이라는 신념 아래 모두의 기쁨이 되기 위한 마땅한 일들을 해나갑니다.",
     caption: "크리스천 비즈니스 프로젝트 보기",
     image: "INDEX_DAEHEE.png",
+    // TODO: 라이즈 홈페이지 주소가 정해지면 교체
+    to: "/rise",
   },
 };
 
@@ -167,9 +156,6 @@ export default function HomePage() {
   const [restartSignal, setRestartSignal] = useState(0);
   const [activeBrand, setActiveBrand] = useState<BrandKey>("artisan");
   const [rollingIndex, setRollingIndex] = useState(0);
-  // 롤링 문구 폭을 재서 말풍선 폭을 부드럽게 늘이고 줄인다 (auto 폭은 트랜지션이 안 되므로)
-  const rollingItemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [rollingWidth, setRollingWidth] = useState<number>();
 
   // 메인페이지 노출 스토리는 어드민에서 선택합니다(최대 3개).
   // 아직 선택된 스토리가 없으면 최신 3개로 대체 노출합니다.
@@ -227,22 +213,10 @@ export default function HomePage() {
   // --- 에이전시 배너 롤링 문구 cross-fade ---
   useEffect(() => {
     const id = window.setInterval(() => {
-      setRollingIndex((prev) => (prev + 1) % rollingItems.length);
+      setRollingIndex((prev) => (prev + 1) % artisanWorks.length);
     }, ROLLING_INTERVAL_MS);
     return () => window.clearInterval(id);
   }, []);
-
-  useLayoutEffect(() => {
-    const measure = () => {
-      const el = rollingItemRefs.current[rollingIndex];
-      if (el) setRollingWidth(el.offsetWidth);
-    };
-    measure();
-    // 웹폰트 로딩·반응형 글자 크기 변경 후에도 폭을 다시 잰다
-    document.fonts?.ready.then(measure);
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [rollingIndex]);
 
   // 수동 이동 시 자동재생 타이머·게이지를 처음부터 다시 시작
   const goTo = (index: number) => {
@@ -261,6 +235,16 @@ export default function HomePage() {
 
   const agentBannerInner = (
     <>
+      {/* 왼쪽: 지금 작업을 담은 큰 원 */}
+      <div className={styles["dish-wrap"]}>
+        <div className={styles["dish"]} aria-hidden="true">
+          {artisanWorks.map((w, i) => (
+            <img key={w.image} src={w.image} alt="" className={i === rollingIndex ? styles["dish-on"] : ""} />
+          ))}
+        </div>
+      </div>
+
+      {/* 오른쪽: 로고 + 두 줄 제목 + 카테고리 썸네일 */}
       <div className={styles["hero-content"]}>
         <img
           className={`${styles["service-tag"]} ${styles["card-logo"]}`}
@@ -268,37 +252,24 @@ export default function HomePage() {
           alt={heroSlides[0].name}
           style={{ height: heroSlides[0].logoHeight }}
         />
-        <h1 className={styles["hero-title"]}>어떤 파트너십이 필요하세요?</h1>
-
-        <div className={styles["search-bubble"]}>
-          <span>✨</span>
-          <div className={styles["rolling-wrapper"]} style={{ width: rollingWidth }}>
-            {rollingItems.map((text, i) => (
-              <div
-                key={text}
-                ref={(el) => {
-                  rollingItemRefs.current[i] = el;
-                }}
-                className={`${styles["rolling-item"]} ${i === rollingIndex ? styles.active : ""}`}
-              >
-                {text}
-              </div>
-            ))}
-          </div>
+        <h1 className={styles["dish-title"]}>어떤 파트너십이 필요하세요?</h1>
+        {/* 카테고리 썸네일 (누르면 큰 원이 바뀜) */}
+        <div className={styles["dish-thumbs"]}>
+          {artisanWorks.map((w, i) => (
+            <button
+              key={w.image}
+              type="button"
+              className={`${styles["dish-thumb"]} ${i === rollingIndex ? styles["dish-thumb-on"] : ""}`}
+              onClick={() => setRollingIndex(i)}
+            >
+              <img src={w.thumb} alt="" />
+              <span>{w.label}</span>
+              {"sub" in w && <small className={styles["dish-thumb-sub"]}>{w.sub}</small>}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* 오른쪽: 실제 작업 이미지 3장을 겹친 카드 묶음. 맨 앞 카드는 지금 롤링 문구의 작업 */}
-      <div className={styles["work-stack"]} aria-hidden="true">
-        {[2, 1, 0].map((offset) => {
-          const idx = (rollingIndex + offset) % rollingImages.length;
-          return (
-            <div key={offset} className={`${styles["work-card"]} ${styles[`work-card-${offset}`]}`}>
-              <img key={idx} src={rollingImages[idx]} alt="" />
-            </div>
-          );
-        })}
-      </div>
     </>
   );
 
@@ -441,7 +412,7 @@ export default function HomePage() {
               <p className={styles["brand-detail-desc"]}>
                 {activeBrandData.desc}
               </p>
-              <div className={styles["brand-detail-image"]}>
+              <SlideLink to={activeBrandData.to} className={styles["brand-detail-image"]}>
                 {activeBrandData.image && (
                   <img
                     className={styles["brand-detail-photo"]}
@@ -453,7 +424,7 @@ export default function HomePage() {
                 <span className={styles["brand-detail-caption"]}>
                   {activeBrandData.caption} <span>›</span>
                 </span>
-              </div>
+              </SlideLink>
             </div>
           </div>
         </div>
