@@ -4,7 +4,11 @@ import styles from "./PrivacyPage.module.css";
 
 // 로인드 그룹 통합 개인정보처리방침 (loind.com/privacy)
 // 공통 내용은 한 번만, 서비스마다 다른 수집 항목·목적·보유 기간은 [서비스별 처리 내용]에 서비스 단위로 추가한다.
-// ※ 새 서비스가 개인정보를 받기 시작하면 SERVICES 에 항목을 추가하고, 시행일을 갱신해주세요.
+// ※ 새 서비스가 개인정보를 받기 시작하면:
+//    1) SERVICES 에 카드 하나 추가 (그 서비스만의 제3자 제공·위탁이 있으면 provision / processors 에)
+//    2) 새 위탁 업체가 생기면 PROCESSORS 에 추가하고 services 에 서비스 이름 표시
+//    3) EFFECTIVE_DATE 갱신
+//    공통 항목(2~8)은 특정 서비스 이야기를 넣지 않고 그대로 둔다.
 const EFFECTIVE_DATE = "2026년 10월 16일";
 
 interface ServiceRecord {
@@ -15,6 +19,7 @@ interface ServiceRecord {
   extra?: string;
   purpose: string[];
   retention: string;
+  provision?: string; // 이 서비스에서만 일어나는 제3자 제공 (예: 배송을 위한 택배사 전달)
 }
 
 const SERVICES: ServiceRecord[] = [
@@ -31,13 +36,15 @@ const SERVICES: ServiceRecord[] = [
       "문의 응대 및 분쟁이 생겼을 때 사실 확인",
     ],
     retention: "의뢰 완료(또는 취소)일로부터 1년",
+    provision: "실물 납품을 선택한 경우, 배송을 위해 택배사에 받는 분의 성함·연락처·주소를 전달합니다.",
   },
 ];
 
+// 위탁 업체: 어느 서비스에서 쓰이는지 services 에 표시
 const PROCESSORS = [
-  { name: "Supabase Inc.", task: "서비스 데이터 저장 (데이터베이스, 서울 리전)" },
-  { name: "Vercel Inc.", task: "웹사이트·서버 운영, 첨부 파일 저장" },
-  { name: "Google LLC", task: "접수 알림 메일 발송 (Gmail)" },
+  { name: "Supabase Inc.", task: "서비스 데이터 저장 (데이터베이스, 서울 리전)", services: "아티즌" },
+  { name: "Vercel Inc.", task: "웹사이트·서버 운영, 첨부 파일 저장", services: "로인드 홈페이지, 아티즌" },
+  { name: "Google LLC", task: "접수 알림 메일 발송 (Gmail)", services: "아티즌" },
 ];
 
 export default function PrivacyPage() {
@@ -90,6 +97,12 @@ export default function PrivacyPage() {
               </dd>
               <dt>보유 기간</dt>
               <dd>{s.retention} (관련 법령에 따라 보관이 필요한 경우 그 기간까지)</dd>
+              {s.provision && (
+                <>
+                  <dt>제3자 제공</dt>
+                  <dd>{s.provision}</dd>
+                </>
+              )}
             </dl>
           </div>
         ))}
@@ -112,8 +125,8 @@ export default function PrivacyPage() {
       <section>
         <h2>3. 개인정보의 제3자 제공</h2>
         <p>
-          회사는 이용자의 동의 없이 개인정보를 외부에 제공하지 않습니다. 다만 실물 제작물 배송을 위해 택배사에 받는 분의
-          성함·연락처·주소를 전달하는 경우, 그리고 법령에 따라 요구되는 경우는 예외로 합니다.
+          회사는 이용자의 동의 없이 개인정보를 외부에 제공하지 않습니다. 다만 서비스 제공에 꼭 필요해 ‘서비스별 처리 내용’에
+          적어 둔 경우(예: 배송), 그리고 법령에 따라 요구되는 경우는 예외로 합니다.
         </p>
       </section>
 
@@ -125,6 +138,7 @@ export default function PrivacyPage() {
             <tr>
               <th>위탁받는 자</th>
               <th>위탁 업무</th>
+              <th>이용 서비스</th>
             </tr>
           </thead>
           <tbody>
@@ -132,6 +146,7 @@ export default function PrivacyPage() {
               <tr key={p.name}>
                 <td>{p.name}</td>
                 <td>{p.task}</td>
+                <td>{p.services}</td>
               </tr>
             ))}
           </tbody>

@@ -515,7 +515,7 @@
   width: 0%;
   background-color: #55689b;
   border-radius: 10px;
-  animation: fillGauge 9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fillGauge var(--gauge-ms, 9s) cubic-bezier(0.4, 0, 0.2, 1) forwards; /* 슬라이드별 시간 */
 }
 
 .control-dots.paused span.active::after {

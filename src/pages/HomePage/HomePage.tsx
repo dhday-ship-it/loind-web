@@ -1,6 +1,7 @@
 import {
   useEffect,
   useState,
+  type CSSProperties,
   type ReactNode,
   type TransitionEvent as ReactTransitionEvent,
 } from "react";
@@ -9,7 +10,8 @@ import { useStories } from "../../hooks/useStories";
 import { displayCategory } from "../../types/story";
 import styles from "./HomePage.module.css";
 
-// ※ 바꿀 때 HomePage.module.css 의 fillGauge 애니메이션 시간도 같이 맞춰주세요.
+// 한 슬라이드에 머무는 시간. 아티즌 슬라이드는 카테고리 4개가 한 번씩 다 나오도록 더 길게 (slideDuration 참고)
+// 게이지 길이는 각 슬라이드 시간에 맞춰 자동으로 바뀐다 (--gauge-ms)
 const SLIDE_INTERVAL_MS = 9000;
 const ROLLING_INTERVAL_MS = 3000;
 
@@ -164,15 +166,21 @@ export default function HomePage() {
   const stories = featuredStories.length > 0 ? featuredStories : latestStories;
 
   // --- Hero carousel auto-advance ---
+  // 슬라이드마다 머무는 시간이 다를 수 있어 interval 대신 매번 timeout 을 건다
+  const slideIndex = (((currentIndex - 1) % TOTAL_SLIDES) + TOTAL_SLIDES) % TOTAL_SLIDES;
+  const isArtisanSlide = !!heroSlides[slideIndex].agent;
+  const slideDuration = isArtisanSlide ? ROLLING_INTERVAL_MS * artisanWorks.length : SLIDE_INTERVAL_MS;
   useEffect(() => {
     if (!isPlaying) return;
-    const id = window.setInterval(() => {
+    const id = window.setTimeout(() => {
       setHeroAnimate(true);
       setCurrentIndex((prev) => clampIndex(prev + 1));
       setGaugeKey((k) => k + 1);
-    }, SLIDE_INTERVAL_MS);
-    return () => window.clearInterval(id);
-  }, [isPlaying, restartSignal]);
+    }, slideDuration);
+    return () => window.clearTimeout(id);
+    // gaugeKey: 다음 슬라이드로 넘어가거나 직접 이동할 때마다 새로 시작
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying, restartSignal, gaugeKey]);
 
   // 복제 슬라이드에 도착하면 애니메이션 없이 같은 모양의 원본 슬라이드로 순간이동
   function snapFromClone() {
@@ -210,13 +218,16 @@ export default function HomePage() {
     };
   }, [heroAnimate]);
 
-  // --- 에이전시 배너 롤링 문구 cross-fade ---
+  // --- 아티즌 카테고리 순환 ---
+  // 아티즌 슬라이드에 들어올 때마다 첫 카테고리부터 시작해서, 넘어가기 전까지 4개가 한 번씩 다 나온다
   useEffect(() => {
+    if (!isArtisanSlide) return;
+    setRollingIndex(0);
     const id = window.setInterval(() => {
       setRollingIndex((prev) => (prev + 1) % artisanWorks.length);
     }, ROLLING_INTERVAL_MS);
     return () => window.clearInterval(id);
-  }, []);
+  }, [isArtisanSlide, gaugeKey]);
 
   // 수동 이동 시 자동재생 타이머·게이지를 처음부터 다시 시작
   const goTo = (index: number) => {
@@ -375,6 +386,7 @@ export default function HomePage() {
                 <span
                   key={i === activeDot ? `active-${i}-${gaugeKey}` : `dot-${i}`}
                   className={i === activeDot ? styles.active : ""}
+                  style={i === activeDot ? ({ "--gauge-ms": `${slideDuration}ms` } as CSSProperties) : undefined}
                   onClick={() => goTo(i + 1)}
                   aria-label={slide.title}
                 ></span>
