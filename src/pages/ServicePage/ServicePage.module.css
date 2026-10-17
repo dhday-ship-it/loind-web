@@ -404,23 +404,30 @@
   }
 }
 @media (max-width: 768px) {
-  /* 브랜드 선택 탭 */
+  /* 브랜드 선택 탭: 아티즌·로든·라이즈 3칸 한 줄 */
+  .services-top-section {
+    padding: 28px 0 32px;
+  }
+  .section-divider {
+    margin-top: 32px;
+  }
   .brands-grid {
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     gap: 0;
-    padding: 0 8px;
+    padding: 0;
   }
   .brands-divider {
     display: none;
   }
   .brand-item {
-    flex: 1 1 40%;
-    padding: 18px 8px;
-    min-width: 120px;
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 10px;
+    padding: 14px 4px;
     text-align: center;
-    border-bottom: 2px solid transparent;
+    border-bottom: 2px solid #eee;
   }
   .brand-item.active {
     border-bottom: 2px solid #111;
@@ -433,8 +440,17 @@
   .service-tabs {
     gap: 18px;
   }
+  /* 카테고리 아이콘: 개수와 상관없이 한 줄 */
+  .category-icon-row {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
   .category-icon-btn {
-    width: 84px;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 96px;
+    width: auto;
+    padding: 12px 4px;
   }
   .genre-card-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -466,12 +482,12 @@
     gap: 0;
     padding: 0;
   }
-  .brand-item {
-    flex: 1 1 45%;
-    padding: 14px 4px;
-  }
   .brand-name {
-    font-size: 13px;
+    font-size: 14px;
+  }
+  .brand-tag {
+    font-size: 11px;
+    white-space: nowrap;
   }
   .rise-banner-title {
     font-size: 18px;

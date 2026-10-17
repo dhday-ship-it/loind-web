@@ -1,8 +1,10 @@
 import {
   useEffect,
+  useRef,
   useState,
   type CSSProperties,
   type ReactNode,
+  type TouchEvent as ReactTouchEvent,
   type TransitionEvent as ReactTransitionEvent,
 } from "react";
 import { Link } from "react-router-dom";
@@ -237,6 +239,22 @@ export default function HomePage() {
     if (isPlaying) setRestartSignal((s) => s + 1);
   };
 
+  // 모바일: 화살표 대신 좌우 스와이프로 넘긴다 (세로 스크롤은 그대로)
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const handleTouchStart = (e: ReactTouchEvent) => {
+    const t = e.touches[0];
+    touchStart.current = { x: t.clientX, y: t.clientY };
+  };
+  const handleTouchEnd = (e: ReactTouchEvent) => {
+    if (!touchStart.current) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStart.current.x;
+    const dy = t.clientY - touchStart.current.y;
+    touchStart.current = null;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    goTo(currentIndex + (dx < 0 ? 1 : -1));
+  };
+
   const handlePauseToggle = () => {
     setIsPlaying((prev) => !prev);
   };
@@ -288,7 +306,7 @@ export default function HomePage() {
     <>
       <section className={styles["hero-section"]}>
         <div className={styles["hero-panel"]}>
-          <div className={styles["hero-viewport"]}>
+          <div className={styles["hero-viewport"]} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             <div
               className={`${styles["hero-track"]} ${heroAnimate ? "" : styles["no-anim"]}`}
               style={{

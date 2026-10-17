@@ -868,7 +868,10 @@ a.brand-detail-image:hover .brand-detail-photo {
     justify-items: center;
     text-align: center;
   }
+  /* 비율(aspect-ratio)과 늘이기(stretch)를 같이 쓰면 사파리에서 카드가 점점 커질 수 있어
+     세로 배치에서는 늘이기를 끈다 */
   .dish-wrap {
+    align-self: auto;
     width: 100%;
     aspect-ratio: 16 / 10;
   }
@@ -910,19 +913,156 @@ a.brand-detail-image:hover .brand-detail-photo {
 }
 
 @media (max-width: 768px) {
+  /* 모바일 히어로: 카드 한 장이 화면 폭을 다 쓰고, 넘기기는 스와이프·점으로.
+     모든 카드 높이를 고정해서 (1) 짧은 카드에 빈 공간이 생기지 않고
+     (2) 비율(aspect-ratio)+늘이기(stretch)가 맞물려 iOS 사파리에서 아티즌 카드가
+     점점 커지던 현상이 생기지 않게 한다 */
   .hero-panel {
-    --card-title-size: 26px;
-    --card-desc-size: 15px;
+    --hero-slide-w: 100%;
+    --hero-gap: 16px;
+    --card-title-size: 24px;
+    --card-desc-size: 14.5px;
+    --card-logo-gap: 8px;
+    --card-h: 410px;
+  }
+  .hero-viewport {
+    touch-action: pan-y;
+  }
+  .hero-arrow {
+    display: none;
+  }
+  .hero-card {
+    flex: none;
+    height: var(--card-h);
+    align-content: start;
+    gap: 18px;
+    padding: 14px 14px 24px;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .hero-card-image {
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+  }
+  .hero-card-body {
+    padding: 0 6px;
+  }
+  .hero-card-desc {
+    margin-top: 10px;
+    line-height: 1.65;
+  }
+
+  /* 아티즌: 사진(위, 카드 끝까지) → 로고 → 한 줄 제목 → 썸네일 4개 한 줄 */
+  .hero-card-agent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 0 0 20px;
+  }
+  .dish-wrap {
+    flex: none;
+    align-self: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+  .hero-card-agent .hero-content {
+    width: 100%;
+    margin: 4px 0 0;
+    padding: 0 16px;
+  }
+  .hero-card-agent .card-logo {
+    height: 15px !important;
+  }
+  .hero-card-agent .service-tag {
+    margin-bottom: 10px;
+  }
+  .dish-title {
+    font-size: 21px;
+    word-break: keep-all;
+  }
+  .dish-thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+  .dish-thumb {
+    min-width: 0;
+    gap: 7px;
+    padding: 2px 0 12px;
+  }
+  .dish-thumb img {
+    width: 42px;
+    height: 42px;
+    border-width: 2px;
+  }
+  .dish-thumb span {
+    font-size: 11.5px;
+    letter-spacing: -0.02em;
+  }
+  .dish-thumb-sub {
+    margin-top: -5px;
+    font-size: 9.5px;
+  }
+
+  /* 캠프 광고: 인물 아트를 위쪽 가운데에, 글은 아래 가운데 정렬 */
+  .hero-card-camp {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 24px 20px 28px;
+  }
+  .camp-figure {
+    top: -4%;
+    left: 50%;
+    height: 78%;
+    transform: translateX(-50%);
+    opacity: 0.9;
+  }
+  .hero-card-camp::before {
+    background: linear-gradient(0deg, rgba(10, 16, 30, 0.92) 0%, rgba(10, 16, 30, 0.6) 38%, rgba(10, 16, 30, 0) 62%);
+  }
+  .camp-main {
+    width: 100%;
+    text-align: center;
+  }
+  .camp-logo {
+    margin: 0 auto var(--card-logo-gap);
+  }
+  .camp-wordmark {
+    font-size: 28px;
+  }
+  .camp-date {
+    margin-top: 12px;
   }
   .camp-place {
+    margin-top: 8px;
     font-size: 12px;
-    line-height: 1.7;
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+  .camp-hl {
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .hero-cta {
+    margin-top: 22px;
+    height: 44px;
+    padding: 0 24px;
+    font-size: 14px;
+  }
+  .banner-controls {
+    margin-top: 18px;
   }
   .hero-title {
     margin-bottom: 20px;
   }
   .hero-section {
-    padding: 28px 20px 0;
+    padding: 24px 20px 44px;
   }
   .story-header h2 {
     font-size: 22px;

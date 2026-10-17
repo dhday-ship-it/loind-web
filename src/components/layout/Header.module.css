@@ -458,16 +458,53 @@
   .menuInline .menuColItem + .menuColItem::before {
     margin-right: 12px;
   }
+  /* 모바일 헤더: ☰ LOIND + 메뉴를 한 줄로 (높이 약 60px).
+     아주 좁은 화면에서는 메뉴만 가로로 스크롤된다 */
+  .header {
+    padding: 16px 0;
+  }
   .headerInner {
-    flex-direction: column;
     gap: 16px;
-    text-align: center;
+    padding: 0 16px;
+  }
+  .brandArea {
+    flex: none;
+    gap: 10px;
+  }
+  .logo {
+    font-size: 20px;
+  }
+  .nav {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar {
+    display: none;
   }
   .navLink {
-    margin: 0 10px;
-    font-size: 14px;
+    flex: none;
+    margin-left: 12px;
+    font-size: 13px;
+  }
+  .navLink:first-child {
+    margin-left: 0;
   }
   .navSeparator {
+    display: none;
+  }
+}
+
+/* 아주 좁은 폰(360px 등): 외부 링크 Works 는 숨김 (푸터에 같은 링크가 있음) */
+@media (max-width: 380px) {
+  .headerInner {
+    gap: 12px;
+    padding: 0 14px;
+  }
+  .navLink {
+    margin-left: 11px;
+  }
+  .navSeparator + .navLink {
     display: none;
   }
 }
