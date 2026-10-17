@@ -318,6 +318,9 @@
   color: #fff;
   overflow: hidden;
   isolation: isolate;
+  /* 사파리는 흐림(blur) 배경이 들어간 카드에서 border-radius 로 잘라내지 못해 모서리가
+     네모로 보인다 → 둥근 모서리를 clip-path 로 직접 자른다 (.hero-card 의 radius 와 같은 값) */
+  clip-path: inset(0 round 28px);
 }
 /* 포스터 아트를 크게 흐려 깐 배경 */
 .camp-bg {
@@ -1010,6 +1013,7 @@ a.brand-detail-image:hover .brand-detail-photo {
 
   /* 캠프 광고: 인물 아트를 위쪽 가운데에, 글은 아래 가운데 정렬 */
   .hero-card-camp {
+    clip-path: inset(0 round 24px);
     display: flex;
     align-items: flex-end;
     justify-content: center;
