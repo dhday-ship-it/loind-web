@@ -15,7 +15,7 @@ const SITE = 'https://loind.com'
 const SUPABASE_URL = 'https://mgvotfobzdtpyrowhxeq.supabase.co'
 const SUPABASE_ANON_KEY = 'sb_publishable_KzAvae77wuG-8D2gRyfpwg_YfXOCVSD' // src/supabase.ts 와 같은 공개 키
 
-const NAV = '<nav><a href="/">LOIND</a> · <a href="/about">About</a> · <a href="/service">Service</a> · <a href="/story">Story</a> · <a href="/contact">Contact</a> · <a href="https://artisan.loind.com">아티즌</a></nav>'
+const NAV = '<nav><a href="/">LOIND</a> · <a href="/about">About</a> · <a href="/service">Service</a> · <a href="/story">Story</a> · <a href="/contact">Contact</a> · <a href="https://artisan.loind.com">로인드 아티즌</a></nav>'
 
 const ROUTES = [
   {
@@ -23,14 +23,14 @@ const ROUTES = [
     priority: '0.8',
     title: 'About · LOIND 로인드 | 로인드 소개',
     desc: '로인드(LOIND)는 하나님 사랑, 이웃 사랑으로 묶인 공동체입니다. 하나님과 사람에게 기쁨이 되는 브랜드와 서비스를 만듭니다.',
-    body: '<h1>LOIND Corporation — Creating Joy for God and People</h1><p>LOIND는 하나님과 사람에게 기쁨이 되는 브랜드와 서비스를 만듭니다. 대표 정대희. 로인드는 제작 스튜디오 아티즌, 브랜드 콘텐츠 로든, 크리스천 비즈니스 라이즈 등 여러 브랜드를 통해 크리스천 정체성을 담은 사업을 전개하고 있습니다.</p>',
+    body: '<h1>LOIND Corporation — Creating Joy for God and People</h1><p>LOIND는 하나님과 사람에게 기쁨이 되는 브랜드와 서비스를 만듭니다. 대표 정대희. 로인드는 제작 스튜디오 로인드 아티즌, 브랜드 콘텐츠 로든, 크리스천 비즈니스 라이즈 등 여러 브랜드를 통해 크리스천 정체성을 담은 사업을 전개하고 있습니다.</p>',
   },
   {
     path: 'service',
     priority: '0.8',
-    title: 'Service · LOIND 로인드 | 아티즌 · 로든 · 라이즈',
-    desc: '제작 스튜디오 아티즌(영상 프로덕션·디자인·IT개발·세미나), 브랜드 콘텐츠 로든, 크리스천 비즈니스 라이즈 — 로인드의 서비스를 소개합니다.',
-    body: '<h1>로인드 서비스</h1><h2>제작 스튜디오 : 아티즌</h2><p>영상 프로덕션 · 디자인(+납품 서비스) · IT개발(앱, 웹) · 온라인·오프라인 세미나</p><h2>브랜드 콘텐츠 : 로든</h2><p>음악 · 영상 · IP 비즈니스</p><h2>크리스천 비즈니스 : 라이즈</h2><p>아웃소싱(외주) · 사역 인큐베이팅</p>',
+    title: 'Service · LOIND 로인드 | 로인드 아티즌 · 로든 · 라이즈',
+    desc: '제작 스튜디오 로인드 아티즌(영상 프로덕션·디자인·IT개발·세미나), 브랜드 콘텐츠 로든, 크리스천 비즈니스 라이즈 — 로인드의 서비스를 소개합니다.',
+    body: '<h1>로인드 서비스</h1><h2>제작 스튜디오 : <a href="https://artisan.loind.com">로인드 아티즌 (LOIND ARTISAN)</a></h2><p>영상 프로덕션 · 디자인(+납품 서비스) · IT개발(앱, 웹) · 온라인·오프라인 세미나</p><h2>브랜드 콘텐츠 : 로든</h2><p>음악 · 영상 · IP 비즈니스</p><h2>크리스천 비즈니스 : 라이즈</h2><p>아웃소싱(외주) · 사역 인큐베이팅</p>',
   },
   {
     path: 'story',
