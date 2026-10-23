@@ -51,7 +51,7 @@ export default function Header({ variant = "static" }: HeaderProps) {
         <NavLink to="/story" className={navLinkClassName} onClick={closeMenu}>Story</NavLink>
         <NavLink to="/contact" className={navLinkClassName} onClick={closeMenu}>Contact</NavLink>
         <div className={styles.navSeparator} />
-        <a href="https://www.loindworks.com" target="_blank" rel="noopener noreferrer" className={styles.navLink} onClick={closeMenu}>Works</a>
+        <NavLink to="/pray" className={navLinkClassName} onClick={closeMenu}>Prayer</NavLink>
       </nav>
     </div>
     {menuOpen && <GroupMenuPanel onClose={closeMenu} />}

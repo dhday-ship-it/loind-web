@@ -495,16 +495,20 @@
   }
 }
 
-/* 아주 좁은 폰(360px 등): 외부 링크 Works 는 숨김 (푸터에 같은 링크가 있음) */
+/* 아주 좁은 폰(360px 등): 메뉴 5개가 한 줄에 다 보이도록 간격·글자 조금 줄임 */
 @media (max-width: 380px) {
   .headerInner {
-    gap: 12px;
-    padding: 0 14px;
+    gap: 10px;
+    padding: 0 12px;
+  }
+  .brandArea {
+    gap: 8px;
+  }
+  .logo {
+    font-size: 18px;
   }
   .navLink {
-    margin-left: 11px;
-  }
-  .navSeparator + .navLink {
-    display: none;
+    margin-left: 9px;
+    font-size: 12.5px;
   }
 }
