@@ -76,6 +76,69 @@
   margin-bottom: 0;
 }
 
+/* ── 아티즌: 말씀 구절 아래 '아티즌 브랜드 페이지 바로가기' ──
+   크리스천 비즈니스의 '… 페이지 바로가기'(.cb-link)와 같은 옅은 테두리 알약 */
+/* 브랜드 소개 블록 (흰 바탕) — 아래 '주요 비즈니스 및 서비스'와 구분선으로 나뉨 */
+.artisan-intro {
+  background: #fff;
+  padding: 40px 0 56px;
+}
+.artisan-intro h2 {
+  margin-bottom: 12px;
+}
+.artisan-biz {
+  padding-top: 56px;
+  border-top: 1px solid #eef0f4;
+}
+.artisan-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.artisan-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid #dfe4ee;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  color: #17233d;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.artisan-cta-btn span {
+  transition: transform 0.2s ease;
+}
+.artisan-cta-btn:hover {
+  border-color: #55689b;
+  background: #55689b;
+  color: #fff;
+}
+.artisan-cta-btn:hover span {
+  transform: translateX(3px);
+}
+.artisan-cta-btn:focus-visible {
+  outline: 2px solid #8fa8c4;
+  outline-offset: 2px;
+}
+@media (max-width: 768px) {
+  .artisan-intro {
+    padding: 32px 0 40px;
+  }
+  .artisan-biz {
+    padding-top: 40px;
+  }
+  .artisan-cta {
+    margin-top: 16px;
+  }
+  .artisan-cta-btn {
+    padding: 9px 18px;
+    font-size: 12.5px;
+  }
+}
+
 /* ── LODN 영상 쇼케이스 ── */
 .lodn-video-wrap {
   position: relative;

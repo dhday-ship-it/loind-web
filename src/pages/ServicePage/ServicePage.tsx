@@ -168,21 +168,30 @@ function LoerContent() {
   const d = artisanBrand;
   return (
     <>
+      {/* 브랜드 소개: 이름 · 말씀 구절 · 아티즌 브랜드 페이지 바로가기 */}
       <section
-        className={styles["middle-banner-section"]}
-        style={{ background: "#fff", paddingBottom: "6px" }}
+        className={`${styles["middle-banner-section"]} ${styles["artisan-intro"]}`}
       >
         <div className="container">
           <h2 style={{ fontSize: "34px", letterSpacing: "-0.5px" }}>
             {d.bannerTitle}
           </h2>
+          <Verse text={d.standard} />
+          <div className={styles["artisan-cta"]}>
+            <a
+              href="https://artisan.loind.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles["artisan-cta-btn"]}
+            >
+              아티즌 브랜드 페이지 바로가기 <span aria-hidden>→</span>
+            </a>
+          </div>
         </div>
       </section>
+      {/* 주요 비즈니스 및 서비스: 구분선 아래 새 섹션 */}
       <section className={styles["business-section"]}>
-        <div className="container">
-          <div style={{ paddingBottom: "28px" }}>
-            <Verse text={d.standard} />
-          </div>
+        <div className={`container ${styles["artisan-biz"]}`}>
           <LoerServiceList list={d.serviceList} title={d.sectionTitle} />
         </div>
       </section>
