@@ -10,7 +10,6 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import ComingSoonPage from "./pages/ComingSoonPage/ComingSoonPage";
 import CreatorGroundPage from "./pages/CreatorGroundPage/CreatorGroundPage";
 import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
-import PrayPage from "./pages/PrayPage/PrayPage";
 
 export default function App() {
   return (
@@ -23,7 +22,6 @@ export default function App() {
         <Route path="story/:id" element={<StoryDetailPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="privacy" element={<PrivacyPage />} />
-        <Route path="pray" element={<PrayPage />} />
         <Route path="rise" element={<ComingSoonPage title="라이즈, 크리스천 사역 인큐베이팅" />} />
       </Route>
       <Route path="admin" element={<AdminPage />} />

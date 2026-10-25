@@ -377,14 +377,6 @@
   font-weight: 700;
 }
 
-.navSeparator {
-  width: 1px;
-  height: 14px;
-  background-color: #e0e0e0;
-  margin-left: 22px;
-  margin-right: -23px;
-}
-
 @media (max-width: 1024px) {
   .menuPanelInner {
     grid-template-columns: 1fr;
@@ -490,25 +482,15 @@
   .navLink:first-child {
     margin-left: 0;
   }
-  .navSeparator {
-    display: none;
-  }
 }
 
-/* 아주 좁은 폰(360px 등): 메뉴 5개가 한 줄에 다 보이도록 간격·글자 조금 줄임 */
+/* 아주 좁은 폰(360px 등): 메뉴 간격 조금 줄임 */
 @media (max-width: 380px) {
   .headerInner {
-    gap: 10px;
-    padding: 0 12px;
-  }
-  .brandArea {
-    gap: 8px;
-  }
-  .logo {
-    font-size: 18px;
+    gap: 12px;
+    padding: 0 14px;
   }
   .navLink {
-    margin-left: 9px;
-    font-size: 12.5px;
+    margin-left: 11px;
   }
 }
