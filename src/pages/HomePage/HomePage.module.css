@@ -645,25 +645,45 @@ a.brand-detail-image {
   text-decoration: none;
   cursor: pointer;
 }
-a.brand-detail-image:hover .brand-detail-caption {
-  background: #fff;
-}
 a.brand-detail-image:hover .brand-detail-photo {
   transform: scale(1.02);
 }
-.brand-detail-caption {
-  position: relative;
-  z-index: 1;
-  display: flex;
+
+/* 이미지 아래: 프로젝트 보기 · 홈페이지(또는 서비스 페이지) 바로가기 */
+.brand-detail-actions {
+  /* 두 버튼 너비를 긴 쪽에 맞춰 똑같이, 오른쪽 정렬 */
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 10px;
+  width: fit-content;
+  margin: 20px 0 0 auto;
+}
+.brand-action-button {
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #111111;
-  background: rgba(255, 255, 255, 0.75);
-  padding: 8px 14px;
-  border-radius: 20px;
-  backdrop-filter: blur(6px);
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 26px;
+  border: 1px solid #111;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.brand-action-button:hover {
+  border-color: #55689b;
+  background: #55689b;
+  color: #fff;
+}
+.brand-action-light {
+  border-color: #d5dae3;
+  background: #fff;
+  color: #111;
 }
 
 /* --- STORY SECTION --- */
@@ -1100,6 +1120,17 @@ a.brand-detail-image:hover .brand-detail-photo {
   .brand-list-item {
     font-size: 16px;
     padding: 14px 16px;
+  }
+  .brand-detail-actions {
+    grid-auto-flow: row;
+    gap: 8px;
+    width: auto;
+    margin-top: 14px;
+  }
+  .brand-action-button {
+    height: 44px;
+    padding: 0 18px;
+    font-size: 14px;
   }
   .brand-detail-image {
     aspect-ratio: 16/9;

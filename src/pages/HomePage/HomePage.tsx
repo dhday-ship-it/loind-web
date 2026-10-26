@@ -111,15 +111,19 @@ interface BrandData {
   caption: string;
   image: string;
   to: string; // 바로가기: 브랜드 홈페이지 (http 로 시작하면 새 탭)
+  homeLabel: string; // 브랜드 목록 아래 바로가기 버튼 문구
+  home: string; // 브랜드 목록 아래 바로가기 버튼 주소
 }
 
 // ※ 아래 설명/태그 문구는 임시 카피입니다 — 확정 카피로 교체해주세요.
 const brandShowcaseData: Record<BrandKey, BrandData> = {
   artisan: {
     desc: "탁월한 전문성으로 함께하는 모든 파트너들과 최고의 파트너십, 결과물을 만들어갑니다",
-    caption: "아티즌 프로젝트 보기",
+    caption: "아티즌 포트폴리오 보기",
     image: "INDEX_CREATIVE AGENCY.png",
     to: "https://artisan.loind.com",
+    homeLabel: "아티즌 홈페이지 바로가기",
+    home: "https://artisan.loind.com",
   },
   lodn: {
     desc: "말씀을 근거로하는 콘텐츠로 인류의 경험을 만들어갑니다",
@@ -127,6 +131,8 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
     image: "INDEX_STUDIO.png",
     // TODO: 로든 홈페이지 주소가 정해지면 교체
     to: "/service",
+    homeLabel: "로든 페이지 바로가기",
+    home: "/service?brand=lodn",
   },
   rise: {
     desc: "크리스천이라는 신념 아래 모두의 기쁨이 되기 위한 마땅한 일들을 해나갑니다.",
@@ -134,6 +140,8 @@ const brandShowcaseData: Record<BrandKey, BrandData> = {
     image: "INDEX_DAEHEE.png",
     // TODO: 라이즈 홈페이지 주소가 정해지면 교체
     to: "/rise",
+    homeLabel: "라이즈 페이지 바로가기",
+    home: "/service?brand=rise",
   },
 };
 
@@ -451,10 +459,15 @@ export default function HomePage() {
                     style={{ display: "block" }}
                   />
                 )}
-                <span className={styles["brand-detail-caption"]}>
-                  {activeBrandData.caption} <span>›</span>
-                </span>
               </SlideLink>
+              <div className={styles["brand-detail-actions"]}>
+                <SlideLink to={activeBrandData.to} className={`${styles["brand-action-button"]} ${styles["brand-action-light"]}`}>
+                  {activeBrandData.caption} <span aria-hidden>›</span>
+                </SlideLink>
+                <SlideLink to={activeBrandData.home} className={styles["brand-action-button"]}>
+                  {activeBrandData.homeLabel} <span aria-hidden>{activeBrandData.home.startsWith("http") ? "↗" : "→"}</span>
+                </SlideLink>
+              </div>
             </div>
           </div>
         </div>

@@ -126,7 +126,7 @@
   gap: 6px;
   min-height: 96px;
   padding: 22px 26px;
-  border: 1px solid #e4e8ef;
+  border: 1px solid #e5e7eb;
   border-radius: 24px;
   background: #fff;
   text-align: left;
@@ -135,30 +135,30 @@
   transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .menuTabCard:hover {
-  border-color: #8fa8c4;
+  border-color: #55689b;
 }
 .menuTabActive,
 .menuTabActive:hover {
   border-color: transparent;
-  background: linear-gradient(150deg, #55689b 0%, #8fa8c4 100%);
+  background: linear-gradient(150deg, #111111 0%, #55689b 100%);
   box-shadow: 0 18px 34px rgba(85, 104, 155, 0.28);
 }
 .menuSideDivider {
   height: 1px;
   margin: 4px 0;
-  background: #e4e8ef;
+  background: #e5e7eb;
 }
 .menuEyebrow {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.6px;
-  color: #8fa8c4;
+  color: #55689b;
 }
 .menuCardTitle {
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.4px;
-  color: #17233d;
+  color: #111111;
 }
 .menuTabActive .menuEyebrow {
   color: rgba(255, 255, 255, 0.75);
@@ -183,7 +183,7 @@
 .menuGoLink {
   font-size: 13px;
   font-weight: 700;
-  color: #55689b;
+  color: #111111;
 }
 .menuGoLink:hover {
   text-decoration: underline;
@@ -191,7 +191,7 @@
 .menuPanelBlock {
   padding: 24px 28px 26px;
   border-radius: 22px;
-  background: #f8f9fb;
+  background: #ffffff;
 }
 .menuBlockTitle {
   display: flex;
@@ -200,20 +200,20 @@
   margin: 0 0 16px 0;
   font-size: 15px;
   font-weight: 800;
-  color: #17233d;
+  color: #111111;
 }
 .menuBlockTitle::before {
   content: "";
   width: 4px;
   height: 14px;
   border-radius: 2px;
-  background: #55689b;
+  background: #111111;
 }
 .menuPill {
   display: inline-block;
   padding: 7px 14px;
   border-radius: 999px;
-  background: #eef2f8;
+  background: #f3f4f6;
   font-size: 12.5px;
   font-weight: 700;
   color: #111;
@@ -226,28 +226,28 @@
   margin-bottom: 14px;
   padding: 14px 20px;
   border-radius: 14px;
-  background: #e7edf6;
+  background: #f3f4f6;
   transition: background 0.2s ease;
 }
 .menuSubBar:hover {
-  background: #d9e3f1;
+  background: #e9ebef;
 }
 .menuSubBarName {
   font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.2px;
-  color: #17233d;
+  color: #111111;
 }
 .menuSubBarGo {
   flex-shrink: 0;
   font-size: 12.5px;
   font-weight: 700;
-  color: #55689b;
+  color: #111111;
 }
 .menuSubDivider {
   height: 1px;
   margin: 28px 0 24px;
-  background: #e4e8ef;
+  background: #e5e7eb;
 }
 .menuGroupGrid {
   display: flex;
@@ -268,12 +268,12 @@
   margin-left: auto;
   font-size: 12.5px;
   font-weight: 700;
-  color: #55689b;
+  color: #111111;
   white-space: nowrap;
   transition: color 0.2s ease;
 }
 .menuHRowGo:hover {
-  color: #17233d;
+  color: #111111;
 }
 .menuHRow .menuInline .menuColItem {
   margin: 0;
@@ -292,7 +292,7 @@
   margin: 0 0 10px 0;
   font-size: 13px;
   font-weight: 800;
-  color: #55689b;
+  color: #111111;
 }
 .menuColTitleMuted {
   margin: 0;
@@ -310,7 +310,7 @@
 .menuCat {
   min-width: 0;
   padding: 18px 20px;
-  border: 1px solid #ebeef3;
+  border: 1px solid #e5e7eb;
   border-radius: 16px;
   background: #fff;
 }

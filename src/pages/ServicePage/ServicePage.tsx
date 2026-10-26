@@ -1,5 +1,5 @@
-import { useRef, useState, type ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState, type ReactElement } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import styles from "./ServicePage.module.css";
 import { christianGroups } from "../../data/christianBusiness";
 import {
@@ -18,6 +18,9 @@ const CARD_GRADIENTS = [
 ];
 
 type BrandKey = "artisan" | "lodn" | "rise";
+
+const isBrandKey = (value: string | null): value is BrandKey =>
+  value === "artisan" || value === "lodn" || value === "rise";
 
 const GENRE_ICONS: Record<string, ReactElement> = {
   인터뷰영상: (
@@ -344,10 +347,18 @@ function ChristianBusinessContent() {
 }
 
 export default function ServicePage() {
-  const [activeBrand, setActiveBrand] = useState<BrandKey>("artisan");
+  // 햄버거 메뉴의 브랜드별 바로가기(/service?brand=lodn 등)로 들어오면 해당 브랜드 탭을 연다
+  const [searchParams] = useSearchParams();
+  const brandParam = searchParams.get("brand");
+  const linkedBrand = isBrandKey(brandParam) ? brandParam : null;
+  const [activeBrand, setActiveBrand] = useState<BrandKey>(linkedBrand ?? "artisan");
   const [fading, setFading] = useState(false);
   const brandsGridRef = useRef<HTMLDivElement>(null);
   const brandContentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (linkedBrand) setActiveBrand(linkedBrand);
+  }, [linkedBrand]);
 
   function switchBrand(key: BrandKey) {
     if (key === activeBrand) return;
