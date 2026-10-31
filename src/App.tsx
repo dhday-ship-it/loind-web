@@ -6,7 +6,6 @@ import ServicePage from "./pages/ServicePage/ServicePage";
 import StoryPage from "./pages/StoryPage/StoryPage";
 import StoryDetailPage from "./pages/StoryDetailPage/StoryDetailPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
-import AdminPage from "./pages/AdminPage/AdminPage";
 import ComingSoonPage from "./pages/ComingSoonPage/ComingSoonPage";
 import CreatorGroundPage from "./pages/CreatorGroundPage/CreatorGroundPage";
 import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
@@ -24,7 +23,6 @@ export default function App() {
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="rise" element={<ComingSoonPage title="라이즈, 크리스천 사역 인큐베이팅" />} />
       </Route>
-      <Route path="admin" element={<AdminPage />} />
       <Route path="creator" element={<CreatorGroundPage />} />
     </Routes>
   );
